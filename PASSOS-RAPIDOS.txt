@@ -1,0 +1,16 @@
+PASSOS RÁPIDOS
+
+1. Crie um projeto em Supabase.
+2. Rode supabase-schema.sql no SQL Editor.
+3. Em Authentication > Users, crie:
+   klenio@ete.example.com
+   miguel@ete.example.com
+   ronaldo@ete.example.com
+   monitor@ete.example.com
+   Use as senhas iniciais combinadas internamente e troque-as no primeiro acesso.
+4. Copie Project URL e Publishable key para config.js.
+5. Envie estes arquivos ao GitHub.
+6. Ative GitHub Pages.
+
+Quando estiver configurado, o topo do site mostrará "Sincronizado".
+Uma alteração feita em um computador será recebida pelos outros em tempo real.
