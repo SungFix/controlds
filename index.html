@@ -1180,6 +1180,7 @@ tbody tr:hover td{background:#132037 !important}
 .syncbadge.connecting{background:#1c1a10;color:#d9b957;border-color:#5b4c29}
 .syncbadge.synced{background:#0e211a;color:#66cf9e;border-color:#275a45}
 .syncbadge.error{background:#241216;color:#e58a94;border-color:#63333d}
+.syncbadge.offline{background:#23180f;color:#edae69;border-color:#76512b}
 .backendstatus{
   margin-top:14px;
   padding:10px 12px;
@@ -1540,10 +1541,14 @@ const sb=SUPABASE_CONFIGURED
     })
   : null;
 let remoteReady=false;
+let remoteDbReady=false;
+let realtimeReady=false;
 let remoteApplying=false;
 let remoteWriteTimer=null;
 let remoteChannel=null;
 let remoteUserId=null;
+let remoteLastUpdatedAt=null;
+let remoteSavePending=false;
 const DEFAULT_USERS=[{"id": "u-klenio", "username": "klenio", "displayName": "Klenio", "role": "adm", "roleLabel": "Administrador", "salt": "d8428166a492405120a23cdb76f59406", "pbkdf2Hash": "10301622bde5fb06bed76bc136eeb73f4400c50b1d2ed6fb96f308d07503a972", "fallbackHash": "dfa0a956", "active": true, "credentialVersion": 2}, {"id": "u-miguel", "username": "miguel", "displayName": "Miguel", "role": "diretor", "roleLabel": "Diretor", "salt": "f6eb870158a07922c0c92596f940a883", "pbkdf2Hash": "cc49d6deb66d72c777dff2760479ae348d75e5d8d03a875b6ac5e95ac1050cb1", "fallbackHash": "1bb6f778", "active": true, "credentialVersion": 2}, {"id": "u-ronaldo", "username": "ronaldo", "displayName": "Ronaldo", "role": "diretor", "roleLabel": "Diretor", "salt": "ba33eecb014fc07c2c3613463bf1c492", "pbkdf2Hash": "5e560d1932270b2e80063dc6c2799722652b1e6eb234983263c81d6a01031301", "fallbackHash": "7817d8e0", "active": true, "credentialVersion": 2}, {"id": "u-monitor", "username": "monitor", "displayName": "Monitor", "role": "monitor", "roleLabel": "Monitor", "salt": "eb73e5fd1381f34c6d07885980e233a4", "pbkdf2Hash": "6c81731608b3935f0f49ac433183d523b14056538cc05bf109ff9a2993830e05", "fallbackHash": "3887e1bb", "active": true, "credentialVersion": 2}];
 
 const PERIODS=[
@@ -1610,28 +1615,42 @@ function loadState(){
 function localPersist(){
  localStorage.setItem(STORAGE_KEY,JSON.stringify(state))
 }
-function setSyncStatus(mode,text){
+function syncStatusLabel(mode){
+ return{local:"Local",connecting:"Conectando",synced:"Sincronizado",error:"Erro de sincronização",offline:"Sem internet"}[mode]||"Local"
+}
+function isOffline(){
+ return typeof navigator!=="undefined"&&navigator.onLine===false
+}
+function setSyncStatus(mode,detail=""){
+ const label=syncStatusLabel(mode);
  const badge=$("#syncBadge"),login=$("#loginSyncStatus");
  if(badge){
    badge.className=`syncbadge ${mode}`;
-   badge.textContent=text;
+   badge.textContent=label;
  }
  if(login){
    login.className="backendstatus "+(
-     mode==="synced"?"ok":
-     mode==="error"?"bad":
-     mode==="connecting"?"warn":""
-   );
-   login.textContent=
-     mode==="synced"?"Banco online conectado. Alterações serão sincronizadas entre os usuários.":
-     mode==="connecting"?"Conectando ao banco online...":
-     mode==="error"?`Falha na sincronização: ${text}`:
-     "Modo local. Configure o Supabase para compartilhar os dados entre computadores.";
- }
+      mode==="synced"?"ok":
+      mode==="error"?"bad":
+      mode==="connecting"||mode==="offline"?"warn":""
+    );
+    login.textContent=
+      mode==="synced"?"Banco online conectado, autenticado e com Realtime ativo.":
+      mode==="connecting"?detail||"Conectando ao banco online...":
+      mode==="offline"?"Sem internet. As alterações ficam no cache local e serão enviadas quando a conexão voltar.":
+      mode==="error"?`Falha na sincronização: ${detail||"verifique Supabase Auth, RLS e Realtime."}`:
+      "Modo local. Configure o Supabase para compartilhar os dados entre computadores.";
+  }
+}
+function refreshSyncStatus(detail=""){
+ if(!SUPABASE_CONFIGURED){setSyncStatus("local");return}
+ if(isOffline()){setSyncStatus("offline",detail);return}
+ if(remoteReady&&remoteDbReady&&realtimeReady){setSyncStatus("synced");return}
+ setSyncStatus("connecting",detail||"Faça login para conectar ao banco online.")
 }
 function authEmailForUsername(username){
- const configured=window.ETE_CONFIG?.authEmails?.[username];
- return configured||`${username}@ete.example.com`;
+  const configured=window.ETE_CONFIG?.authEmails?.[username];
+  return configured||`${username}@ete.example.com`;
 }
 function normalizeRemoteState(data){
  const s={...blankState(),...(data||{})};
@@ -1655,27 +1674,160 @@ function normalizeRemoteState(data){
    if(typeof r.onTime!=="number")r.onTime=0;
    if(typeof r.late!=="number")r.late=0;
    if(typeof r.events!=="number")r.events=(r.onTime||0)+(r.late||0);
- });
- return s
+  });
+  return s
+}
+function isoMs(value){
+ const t=Date.parse(value||"");
+ return Number.isFinite(t)?t:0
+}
+function uidMs(id){
+ const m=String(id||"").match(/-(\d{10,})-/);
+ return m?Number(m[1]):0
+}
+function recordMs(record){
+ if(!record)return 0;
+ return Math.max(
+   uidMs(record.id),
+   isoMs(record.updatedAt),
+   isoMs(record.createdAt),
+   isoMs(record.approvedAt),
+   isoMs(record.rejectedAt),
+   isoMs(record.pickedAt),
+   isoMs(record.returnedAt),
+   isoMs(record.completedAt),
+   isoMs(record.latePenaltyAt),
+   isoMs(record.passwordChangedAt),
+   isoMs(record.lastLoginAt),
+   isoMs(record.at)
+ )
+}
+function newestRecord(a,b){
+ const am=recordMs(a),bm=recordMs(b);
+ if(bm>am)return b;
+ return a
+}
+function mergeRecords(remoteItems=[],localItems=[],keyFn,preferFn=newestRecord){
+ const map=new Map();
+ const put=item=>{
+   const key=keyFn(item);
+   if(!key)return;
+   const existing=map.get(key);
+   map.set(key,clone(existing?preferFn(existing,item):item))
+ };
+ remoteItems.forEach(put);
+ localItems.forEach(put);
+ return[...map.values()]
+}
+function mergeReputation(remoteItems=[],localItems=[]){
+ return mergeRecords(remoteItems,localItems,r=>r.key||keyName(r.name),(a,b)=>{
+   const ae=Number(a.events)||0,be=Number(b.events)||0;
+   if(be>ae)return b;
+   if(ae>be)return a;
+   return newestRecord(a,b)
+ })
+}
+function olderCreatedAt(a,b){
+ const am=isoMs(a),bm=isoMs(b);
+ if(am&&bm)return am<=bm?a:b;
+ return a||b||new Date().toISOString()
+}
+function mergeSharedState(remoteData,localData){
+ const remote=normalizeRemoteState(remoteData);
+ const local=normalizeRemoteState(localData);
+ const usersOrder=new Map(DEFAULT_USERS.map((u,i)=>[u.username,i]));
+ const merged={...blankState(),...remote,version:Math.max(remote.version||3,local.version||3),createdAt:olderCreatedAt(remote.createdAt,local.createdAt)};
+ merged.requests=mergeRecords(remote.requests,local.requests,r=>r.id).sort((a,b)=>recordMs(b)-recordMs(a));
+ merged.history=mergeRecords(remote.history,local.history,h=>h.id||`${h.at}|${h.category}|${h.subject}|${h.action}|${h.responsible}|${h.detail||""}`).sort((a,b)=>recordMs(b)-recordMs(a));
+ merged.reputation=mergeReputation(remote.reputation,local.reputation).sort((a,b)=>(b.points||0)-(a.points||0)||String(a.name||"").localeCompare(String(b.name||""),"pt-BR"));
+ merged.users=mergeRecords(remote.users,local.users,u=>u.username||u.id).sort((a,b)=>(usersOrder.get(a.username)??99)-(usersOrder.get(b.username)??99)||String(a.username||"").localeCompare(String(b.username||""),"pt-BR"));
+ return normalizeRemoteState(merged)
+}
+function applySharedState(nextState,shouldRender=false){
+ remoteApplying=true;
+ try{
+   state=normalizeRemoteState(nextState);
+   localPersist();
+ }finally{
+   remoteApplying=false;
+ }
+ if(currentUser){
+   const updatedUser=state.users.find(u=>u.username===currentUser.username&&u.active!==false);
+   if(updatedUser)currentUser=updatedUser;
+   applyRole();
+   if(shouldRender)renderAll();
+ }
 }
 async function pushRemoteState(){
- if(!sb||!remoteReady||remoteApplying)return;
- const snapshot=clone(state);
- const {error}=await sb.from("app_state").upsert(
-   {id:REMOTE_STATE_ID,data:snapshot},
-   {onConflict:"id"}
- );
- if(error){
-   console.error("Supabase save:",error);
-   setSyncStatus("error","erro ao salvar");
+ if(!sb||!remoteReady||!remoteDbReady||remoteApplying)return;
+ if(isOffline()){
+   remoteSavePending=true;
+   setSyncStatus("offline");
    return
  }
- setSyncStatus("synced","Sincronizado")
+ const localSnapshot=clone(state);
+ setSyncStatus("connecting","Salvando alterações no banco online...");
+ for(let attempt=0;attempt<3;attempt++){
+   const {data:remoteRow,error:readError}=await sb
+     .from("app_state")
+     .select("id,data,updated_at")
+     .eq("id",REMOTE_STATE_ID)
+     .maybeSingle();
+   if(readError){
+     remoteSavePending=true;
+     console.error("Supabase read before save:",readError);
+     setSyncStatus("error",readError.message);
+     return
+   }
+   const snapshot=remoteRow?.data?mergeSharedState(remoteRow.data,localSnapshot):normalizeRemoteState(localSnapshot);
+   if(remoteRow?.id){
+     const {data:savedRow,error:saveError}=await sb
+       .from("app_state")
+       .update({data:snapshot})
+       .eq("id",REMOTE_STATE_ID)
+       .eq("updated_at",remoteRow.updated_at)
+       .select("updated_at")
+       .maybeSingle();
+     if(saveError){
+       remoteSavePending=true;
+       console.error("Supabase save:",saveError);
+       setSyncStatus("error",saveError.message);
+       return
+     }
+     if(!savedRow)continue;
+     remoteLastUpdatedAt=savedRow.updated_at;
+   }else{
+     const {data:savedRow,error:insertError}=await sb
+       .from("app_state")
+       .insert({id:REMOTE_STATE_ID,data:snapshot})
+       .select("updated_at")
+       .single();
+     if(insertError?.code==="23505")continue;
+     if(insertError){
+       remoteSavePending=true;
+       console.error("Supabase insert:",insertError);
+       setSyncStatus("error",insertError.message);
+       return
+     }
+     remoteLastUpdatedAt=savedRow?.updated_at||null;
+   }
+   remoteSavePending=false;
+   applySharedState(snapshot,true);
+   refreshSyncStatus();
+   return
+ }
+ remoteSavePending=true;
+ setSyncStatus("error","conflito de gravação; tente novamente")
 }
 function scheduleRemotePersist(){
- if(!remoteReady||remoteApplying)return;
- clearTimeout(remoteWriteTimer);
- remoteWriteTimer=setTimeout(pushRemoteState,180)
+ if(!remoteReady||!remoteDbReady||remoteApplying)return;
+ if(isOffline()){
+   remoteSavePending=true;
+   setSyncStatus("offline");
+   return
+ }
+  clearTimeout(remoteWriteTimer);
+  remoteWriteTimer=setTimeout(pushRemoteState,180)
 }
 function persist(){
  localPersist();
@@ -1683,90 +1835,115 @@ function persist(){
 }
 async function loadRemoteStateOrSeed(){
  if(!sb)return;
- setSyncStatus("connecting","Conectando");
+ setSyncStatus("connecting","Validando banco online...");
  const {data,error}=await sb
    .from("app_state")
    .select("id,data,updated_at")
    .eq("id",REMOTE_STATE_ID)
    .maybeSingle();
- if(error)throw error;
- if(data?.data){
-   remoteApplying=true;
-   state=normalizeRemoteState(data.data);
-   localPersist();
-   remoteApplying=false;
- }else{
-   const {error:seedError}=await sb.from("app_state").insert({
-     id:REMOTE_STATE_ID,
-     data:clone(state)
-   });
-   if(seedError&&seedError.code!=="23505")throw seedError;
-   if(seedError?.code==="23505"){
-     return loadRemoteStateOrSeed()
-   }
- }
- setSyncStatus("synced","Sincronizado")
+  if(error)throw error;
+  if(data?.data){
+    remoteLastUpdatedAt=data.updated_at||null;
+    applySharedState(data.data,false);
+  }else{
+    const {data:seededRow,error:seedError}=await sb.from("app_state").insert({
+      id:REMOTE_STATE_ID,
+      data:normalizeRemoteState(state)
+    }).select("updated_at").single();
+    if(seedError&&seedError.code!=="23505")throw seedError;
+    if(seedError?.code==="23505"){
+      return loadRemoteStateOrSeed()
+    }
+    remoteLastUpdatedAt=seededRow?.updated_at||null;
+  }
+ remoteDbReady=true;
+ refreshSyncStatus("Banco online acessível. Ativando Realtime...")
 }
 function subscribeRealtime(){
  if(!sb||remoteChannel)return;
+ if(isOffline()){
+   realtimeReady=false;
+   setSyncStatus("offline");
+   return
+ }
+ realtimeReady=false;
+ setSyncStatus("connecting","Ativando Realtime...");
  remoteChannel=sb
-   .channel("ete-app-state")
-   .on(
-     "postgres_changes",
-     {event:"*",schema:"public",table:"app_state",filter:`id=eq.${REMOTE_STATE_ID}`},
-     payload=>{
-       const incoming=payload.new?.data;
-       if(!incoming)return;
-       remoteApplying=true;
-       state=normalizeRemoteState(incoming);
-       localPersist();
-       remoteApplying=false;
-       if(currentUser){
-         const updatedUser=state.users.find(u=>u.username===currentUser.username&&u.active!==false);
-         if(updatedUser)currentUser=updatedUser;
-         applyRole();
-         renderAll();
-       }
-       setSyncStatus("synced","Sincronizado")
-     }
-   )
-   .subscribe(status=>{
-     if(status==="SUBSCRIBED")setSyncStatus("synced","Sincronizado");
-     else if(status==="CHANNEL_ERROR"||status==="TIMED_OUT")setSyncStatus("error","canal indisponível")
-   })
+    .channel("ete-app-state")
+    .on(
+      "postgres_changes",
+      {event:"*",schema:"public",table:"app_state",filter:`id=eq.${REMOTE_STATE_ID}`},
+      payload=>{
+        const incoming=payload.new?.data;
+        if(!incoming)return;
+        remoteLastUpdatedAt=payload.new?.updated_at||remoteLastUpdatedAt;
+        applySharedState(incoming,true);
+        refreshSyncStatus()
+      }
+    )
+    .subscribe(status=>{
+      if(status==="SUBSCRIBED"){
+        realtimeReady=true;
+        refreshSyncStatus();
+        if(remoteSavePending)scheduleRemotePersist()
+      }else if(status==="CHANNEL_ERROR"||status==="TIMED_OUT"||status==="CLOSED"){
+        realtimeReady=false;
+        setSyncStatus("error","canal Realtime indisponível")
+      }
+    })
 }
 async function authenticateRemote(username,password){
  if(!SUPABASE_CONFIGURED){
    setSyncStatus("local","Local");
    return{ok:true,localOnly:true}
  }
- setSyncStatus("connecting","Conectando");
+ if(isOffline()){
+   setSyncStatus("offline");
+   return{ok:false,error:new Error("offline")}
+ }
+ remoteDbReady=false;
+ realtimeReady=false;
+ setSyncStatus("connecting","Autenticando no Supabase...");
  const email=authEmailForUsername(username);
  const {data,error}=await sb.auth.signInWithPassword({email,password});
  if(error){
    console.error("Supabase auth:",error);
+   remoteReady=false;
    setSyncStatus("error","login online falhou");
    return{ok:false,error}
  }
  remoteUserId=data.user?.id||null;
  remoteReady=true;
- await loadRemoteStateOrSeed();
- subscribeRealtime();
+ try{
+   await loadRemoteStateOrSeed();
+   subscribeRealtime();
+ }catch(error){
+   remoteReady=false;
+   remoteDbReady=false;
+   realtimeReady=false;
+   throw error
+ }
  return{ok:true}
 }
 async function restoreRemoteSession(){
  if(!SUPABASE_CONFIGURED)return false;
- const {data,error}=await sb.auth.getSession();
- if(error||!data.session)return false;
- remoteUserId=data.session.user?.id||null;
- remoteReady=true;
- await loadRemoteStateOrSeed();
- subscribeRealtime();
- return true
+ if(isOffline()){setSyncStatus("offline");return false}
+  const {data,error}=await sb.auth.getSession();
+  if(error||!data.session)return false;
+  remoteUserId=data.session.user?.id||null;
+  remoteReady=true;
+ remoteDbReady=false;
+ realtimeReady=false;
+  await loadRemoteStateOrSeed();
+  subscribeRealtime();
+  return true
 }
 async function disconnectRemote(){
  remoteReady=false;
- clearTimeout(remoteWriteTimer);
+ remoteDbReady=false;
+ realtimeReady=false;
+ remoteSavePending=false;
+  clearTimeout(remoteWriteTimer);
  if(sb&&remoteChannel){
    try{await sb.removeChannel(remoteChannel)}catch(e){}
    remoteChannel=null
@@ -1778,6 +1955,7 @@ async function disconnectRemote(){
 }
 function saveAndRender(){persist();renderAll()}
 function uid(p){return p+"-"+Date.now()+"-"+Math.random().toString(16).slice(2)}
+function touchRecord(record,at=nowISO()){if(record)record.updatedAt=at;return record}
 function esc(v=""){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
 function normalizeName(v){return String(v||"").trim().replace(/\s+/g," ")}
 function keyName(v){return normalizeName(v).toLocaleLowerCase("pt-BR")}
@@ -1874,18 +2052,20 @@ function getRep(name,create=false){
 }
 function repLevel(points){if(points>=75)return["Muito confiável","good"];if(points>=55)return["Confiável","good"];if(points>=40)return["Atenção","mid"];return["Baixa confiança","bad"]}
 function adjustRep(name,delta,onTime,reason,responsible){
- const r=getRep(name,true);r.points=Math.max(0,Math.min(100,r.points+delta));r.events++;
- if(onTime)r.onTime++;else r.late++;
- logEvent("reputation",r.name,`${delta>0?"+":""}${delta} reputação`,responsible,reason);
- return r
+  const r=getRep(name,true);r.points=Math.max(0,Math.min(100,r.points+delta));r.events++;
+  if(onTime)r.onTime++;else r.late++;
+  r.updatedAt=nowISO();
+  logEvent("reputation",r.name,`${delta>0?"+":""}${delta} reputação`,responsible,reason);
+  return r
 }
 function processLatePenalties(){
  let changed=false;
  state.requests.forEach(r=>{
-   if(r.status==="picked"&&isOverdue(r)&&!r.latePenaltyApplied){
-     r.latePenaltyApplied=true;
-     r.latePenaltyAt=nowISO();
-     adjustRep(
+    if(r.status==="picked"&&isOverdue(r)&&!r.latePenaltyApplied){
+      r.latePenaltyApplied=true;
+      r.latePenaltyAt=nowISO();
+      touchRecord(r,r.latePenaltyAt);
+      adjustRep(
        r.studentName,
        -REP_STEP,
        false,
@@ -1925,6 +2105,7 @@ async function logout(auto=false){
  await disconnectRemote();
  clearSession();
  currentUser=null;
+ refreshSyncStatus("Faça login para conectar ao banco online.");
  $("#loginGate").classList.remove("hidden");
  $("#loginPass").value="";
  $("#loginError").classList.remove("show");
@@ -1932,7 +2113,7 @@ async function logout(auto=false){
 }
 function openApp(user,fromLogin=false){
  currentUser=user;lastActivity=Date.now();setSession(user);$("#loginGate").classList.add("hidden");$("#userLabel").textContent=user.displayName;$("#roleLabel").textContent=roleLabel(user.role);
- if(fromLogin){user.lastLoginAt=nowISO();logEvent("audit",user.displayName,"Login realizado",user.displayName,roleLabel(user.role));persist()}
+ if(fromLogin){user.lastLoginAt=nowISO();user.updatedAt=user.lastLoginAt;logEvent("audit",user.displayName,"Login realizado",user.displayName,roleLabel(user.role));persist()}
  applyRole();showPage(defaultPage())
 }
 function applyRole(){
@@ -2155,7 +2336,7 @@ $("#loginForm").addEventListener("submit",async e=>{
  try{
    const remote=await authenticateRemote(username,pass);
    if(!remote.ok){
-     $("#loginError").textContent="A senha local está correta, mas o login online falhou. Confira os usuários no Supabase Auth.";
+     $("#loginError").textContent=remote.error?.message==="offline"?"Sem internet. Conecte este computador para entrar no modo online.":"A senha local está correta, mas o login online falhou. Confira os usuários no Supabase Auth.";
      $("#loginError").classList.add("show");
      $("#loginPass").value="";
      return
@@ -2201,13 +2382,13 @@ document.addEventListener("click",e=>{
  lastActivity=Date.now();
  const nav=e.target.closest("[data-page]");if(nav)showPage(nav.dataset.page);
  if(e.target.closest("[data-close]")||e.target.id==="backdrop")closeModals();
- const app=e.target.closest("[data-approve]");if(app){const r=state.requests.find(x=>x.id===app.dataset.approve);if(r&&canApprove()&&requestStatus(r)==="pending"){r.status="approved";r.approvedAt=nowISO();r.approvedBy=currentUserName();logEvent("request",r.studentName,"Pedido aprovado",currentUserName(),`${formatDate(r.dateKey)} · ${periodsText(r.periodIds)}`);saveAndRender();toast("Pedido aprovado.")}}
- const rej=e.target.closest("[data-reject]");if(rej){const r=state.requests.find(x=>x.id===rej.dataset.reject);if(r&&canApprove()&&requestStatus(r)==="pending"){r.status="rejected";r.rejectedAt=nowISO();logEvent("request",r.studentName,"Pedido recusado",currentUserName(),r.reason);saveAndRender();toast("Pedido recusado.")}}
+ const app=e.target.closest("[data-approve]");if(app){const r=state.requests.find(x=>x.id===app.dataset.approve);if(r&&canApprove()&&requestStatus(r)==="pending"){r.status="approved";r.approvedAt=nowISO();r.approvedBy=currentUserName();touchRecord(r,r.approvedAt);logEvent("request",r.studentName,"Pedido aprovado",currentUserName(),`${formatDate(r.dateKey)} · ${periodsText(r.periodIds)}`);saveAndRender();toast("Pedido aprovado.")}}
+ const rej=e.target.closest("[data-reject]");if(rej){const r=state.requests.find(x=>x.id===rej.dataset.reject);if(r&&canApprove()&&requestStatus(r)==="pending"){r.status="rejected";r.rejectedAt=nowISO();touchRecord(r,r.rejectedAt);logEvent("request",r.studentName,"Pedido recusado",currentUserName(),r.reason);saveAndRender();toast("Pedido recusado.")}}
  const ver=e.target.closest("[data-verify]");if(ver)openVerify(ver.dataset.verify);
  const ret=e.target.closest("[data-return]");if(ret)openReturn(ret.dataset.return);
  const stu=e.target.closest("[data-student]");if(stu)showStudent(stu.dataset.student);
  const rp=e.target.closest("[data-resetpass]");if(rp&&canManageUsers())openResetPassword(rp.dataset.resetpass);
- const tu=e.target.closest("[data-toggleuser]");if(tu&&canManageUsers()){const u=state.users.find(x=>x.id===tu.dataset.toggleuser);if(u){u.active=u.active===false?true:false;logEvent("audit",u.displayName,u.active?"Usuário ativado":"Usuário desativado",currentUserName(),`@${u.username}`);saveAndRender();toast(u.active?"Usuário ativado.":"Usuário desativado.")}}
+ const tu=e.target.closest("[data-toggleuser]");if(tu&&canManageUsers()){const u=state.users.find(x=>x.id===tu.dataset.toggleuser);if(u){u.active=u.active===false?true:false;u.updatedAt=nowISO();logEvent("audit",u.displayName,u.active?"Usuário ativado":"Usuário desativado",currentUserName(),`@${u.username}`);saveAndRender();toast(u.active?"Usuário ativado.":"Usuário desativado.")}}
 });
 ["mousemove","keydown","touchstart","scroll"].forEach(ev=>window.addEventListener(ev,()=>{lastActivity=Date.now()},{passive:true}));
 
@@ -2231,7 +2412,8 @@ $("#requestForm").addEventListener("submit",e=>{
  const dup=duplicateRequest(student,day,ids);
  if(dup){updateDuplicateWarning();toast(`Já existe um pedido ativo para ${student} em horário coincidente.`);return}
 
- const req={id:uid("r"),studentName:student,passwordHash:hashText(pin),type,dateKey:day,periodIds:ids,reason:normalizeName($("#reqReason").value),room,requestedBy:currentUser.username,requestedByLabel:currentUser.displayName,createdAt:nowISO(),status:"approved",approvedAt:nowISO(),approvedBy:currentUser.displayName};
+ const createdAt=nowISO();
+ const req={id:uid("r"),studentName:student,passwordHash:hashText(pin),type,dateKey:day,periodIds:ids,reason:normalizeName($("#reqReason").value),room,requestedBy:currentUser.username,requestedByLabel:currentUser.displayName,createdAt,updatedAt:createdAt,status:"approved",approvedAt:createdAt,approvedBy:currentUser.displayName};
  state.requests.unshift(req);getRep(student,true);logEvent("request",student,"Pedido criado e aprovado",currentUserName(),`${requestType(req.type)} · ${formatDate(day)} · ${periodsText(ids)} · Sala ${roomOf(req)}`);saveAndRender();closeModals();toast("Pedido criado e aprovado.")
 });
 
@@ -2240,18 +2422,18 @@ $("#verifyForm").addEventListener("submit",e=>{
  if(hashText($("#verifyPassword").value)!==r.passwordHash){$("#verifyResult").className="result show bad";$("#verifyResult").innerHTML="<b>Senha incorreta.</b> Não libere o aluno.";logEvent("audit",r.studentName,"Senha do aluno incorreta",currentUserName(),`Pedido ${r.id}`);persist();return}
  $("#verifyResult").className="result show ok";$("#verifyResult").innerHTML="<b>Senha correta.</b> Confirme o atendimento.";$("#verifyBtn").style.display="none";$("#confirmAccessBtn").style.display=(r.type==="access"||r.type==="both")?"":"none";$("#pickupBtn").style.display=(r.type==="notebook"||r.type==="both")?"":"none"
 });
-$("#confirmAccessBtn").addEventListener("click",()=>{const r=state.requests.find(x=>x.id===$("#verifyRequestId").value);if(!r)return;if(r.type==="access"){r.status="completed";r.completedAt=nowISO()}else r.accessConfirmedAt=nowISO();logEvent("request",r.studentName,"Acesso confirmado",currentUserName(),r.reason);saveAndRender();closeModals();toast("Acesso confirmado.")});
+$("#confirmAccessBtn").addEventListener("click",()=>{const r=state.requests.find(x=>x.id===$("#verifyRequestId").value);if(!r)return;const at=nowISO();if(r.type==="access"){r.status="completed";r.completedAt=at}else r.accessConfirmedAt=at;touchRecord(r,at);logEvent("request",r.studentName,"Acesso confirmado",currentUserName(),r.reason);saveAndRender();closeModals();toast("Acesso confirmado.")});
 $("#pickupBtn").addEventListener("click",()=>openPickup($("#verifyRequestId").value));
 $("#pickupForm").addEventListener("submit",e=>{
  e.preventDefault();const code=$("#pickupCode").value,r=state.requests.find(x=>x.id===$("#pickupRequestId").value);
  if(!/^\d{6}$/.test(code)){toast("O código precisa ter exatamente 6 números.");return}if(computerInUse(code)){updateComputerSmart();return}if(!r)return;
- r.status="picked";r.computerCode=code;r.pickedAt=nowISO();r.pickedBy=currentUserName();logEvent("computer",r.studentName,"Computador retirado",currentUserName(),`Computador ${code} · Sala ${roomOf(r)} · devolver até ${returnDeadlineText(r)}`);saveAndRender();closeModals();toast(`Retirada do computador ${code} confirmada.`)
+ r.status="picked";r.computerCode=code;r.pickedAt=nowISO();r.pickedBy=currentUserName();touchRecord(r,r.pickedAt);logEvent("computer",r.studentName,"Computador retirado",currentUserName(),`Computador ${code} · Sala ${roomOf(r)} · devolver até ${returnDeadlineText(r)}`);saveAndRender();closeModals();toast(`Retirada do computador ${code} confirmada.`)
 });
 $("#returnForm").addEventListener("submit",e=>{
  e.preventDefault();const r=state.requests.find(x=>x.id===$("#returnRequestId").value);if(!r||r.status!=="picked")return;
  const late=isOverdue(r);
  if(late&&!r.latePenaltyApplied){r.latePenaltyApplied=true;r.latePenaltyAt=nowISO();adjustRep(r.studentName,-REP_STEP,false,`Computador ${r.computerCode} · prazo ${returnDeadlineText(r)} ultrapassado`,"Sistema")}
- r.status="completed";r.returnedAt=nowISO();r.returnedLate=late;r.returnConfirmedBy=currentUserName();
+ r.status="completed";r.returnedAt=nowISO();r.returnedLate=late;r.returnConfirmedBy=currentUserName();touchRecord(r,r.returnedAt);
  if(late)logEvent("computer",r.studentName,"Devolução confirmada após o prazo",currentUserName(),`Computador ${r.computerCode} · sem nova perda de pontos`);
  else{adjustRep(r.studentName,REP_STEP,true,`Computador ${r.computerCode} devolvido até ${returnDeadlineText(r)}`,currentUserName());logEvent("computer",r.studentName,"Notebook devolvido no prazo",currentUserName(),`Computador ${r.computerCode} · +5 reputação`)}
  saveAndRender();closeModals();toast(late?"Devolução confirmada após o prazo.":"Devolução no prazo. +5 de reputação.")
@@ -2269,7 +2451,8 @@ $("#userForm").addEventListener("submit",async e=>{
  if(state.users.some(u=>u.username===username)){toast("Este nome de usuário já existe.");return}
  if(!strongPassword(password)){toast("A senha precisa ter 10+ caracteres, número e símbolo.");return}
  const rec=await passwordRecord(password);
- const u={id:uid("u"),username,displayName:display,role,roleLabel:roleLabel(role),active:true,createdAt:nowISO(),...rec};
+ const createdAt=nowISO();
+ const u={id:uid("u"),username,displayName:display,role,roleLabel:roleLabel(role),active:true,createdAt,updatedAt:createdAt,...rec};
  state.users.push(u);
  logEvent("audit",display,"Usuário criado",currentUserName(),`@${username} · ${roleLabel(role)}`);
  saveAndRender();
@@ -2288,6 +2471,7 @@ $("#resetPasswordForm").addEventListener("submit",async e=>{
  if(!strongPassword(password)){toast("A senha precisa ter 10+ caracteres, número e símbolo.");return}
  Object.assign(u,await passwordRecord(password));
  u.passwordChangedAt=nowISO();
+ u.updatedAt=u.passwordChangedAt;
  logEvent("audit",u.displayName,"Senha redefinida pelo ADM",currentUserName(),`@${u.username}`);
  saveAndRender();
  closeModals();
@@ -2312,6 +2496,7 @@ $("#changeMyPasswordForm").addEventListener("submit",async e=>{
  const u=state.users.find(x=>x.id===currentUser.id);
  Object.assign(u,await passwordRecord(nw));
  u.passwordChangedAt=nowISO();
+ u.updatedAt=u.passwordChangedAt;
  currentUser=u;
  logEvent("audit",u.displayName,"Senha alterada",u.displayName,SUPABASE_CONFIGURED?"Senha local e Supabase Auth atualizadas":"Alteração local");
  saveAndRender();
@@ -2359,8 +2544,18 @@ setInterval(()=>{
   if(currentUser) renderAll();
 },60000);
 
-if(SUPABASE_CONFIGURED)setSyncStatus("connecting","Conectando");
-else setSyncStatus("local","Local");
+window.addEventListener("offline",()=>setSyncStatus("offline"));
+window.addEventListener("online",()=>{
+ if(!SUPABASE_CONFIGURED){setSyncStatus("local");return}
+ if(remoteReady&&remoteDbReady){
+   refreshSyncStatus("Conexão restabelecida. Verificando pendências...");
+   if(remoteSavePending)scheduleRemotePersist();
+   return
+ }
+ refreshSyncStatus("Faça login para conectar ao banco online.")
+});
+
+refreshSyncStatus("Faça login para conectar ao banco online.");
 
 (async()=>{
  const s=session();
@@ -2370,7 +2565,7 @@ else setSyncStatus("local","Local");
      const ok=await restoreRemoteSession();
      if(!ok){
        clearSession();
-       setSyncStatus("local","Sessão online encerrada");
+       refreshSyncStatus("Sessão online encerrada. Faça login novamente.");
        return
      }
    }

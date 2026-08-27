@@ -12,5 +12,5 @@ PASSOS RÁPIDOS
 5. Envie estes arquivos ao GitHub.
 6. Ative GitHub Pages.
 
-Quando estiver configurado, o topo do site mostrará "Sincronizado".
+Quando estiver configurado, autenticado, com a tabela acessível e Realtime ativo, o topo do site mostrará "Sincronizado".
 Uma alteração feita em um computador será recebida pelos outros em tempo real.

@@ -70,7 +70,22 @@ Depois que o usuário entra:
 - o site mantém um canal Realtime aberto;
 - quando outro computador altera o registro, os demais recebem a mudança e redesenham a tela automaticamente.
 
-## 6. Publicar no GitHub Pages
+O topo só mostra **Sincronizado** quando os quatro pontos abaixo estão verdadeiros ao mesmo tempo:
+
+- `config.js` possui Project URL e Publishable/anon key válidos;
+- o usuário está autenticado no Supabase Auth;
+- `public.app_state` foi lida ou criada com sucesso;
+- a subscription Realtime da tabela `public.app_state` está ativa.
+
+Se a conexão cair, o topo mostra **Sem internet**. As alterações continuam no `localStorage` e são reenviadas quando a conexão voltar.
+
+## 6. Concorrência
+
+Esta versão ainda salva o sistema em um único registro JSON (`public.app_state`, id `main`). Para reduzir sobrescritas entre computadores, antes de gravar o app relê o estado online e une pedidos, histórico, reputação e usuários por identidade, gravando apenas se o `updated_at` remoto não mudou durante a tentativa.
+
+Esse controle protege alterações independentes comuns, como um diretor criando um pedido enquanto o monitor confirma uma devolução. Ainda assim, a evolução recomendada para máxima segurança é separar `requests`, `history`, `reputation` e `users` em tabelas próprias com políticas/RPCs específicas.
+
+## 7. Publicar no GitHub Pages
 
 Envie todos os arquivos desta pasta para a raiz do repositório.
 

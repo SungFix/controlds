@@ -12,11 +12,13 @@ create table if not exists public.app_state (
 );
 
 alter table public.app_state enable row level security;
+alter table public.app_state replica identity full;
 
 -- O visitante sem login NÃO pode ler nem alterar o banco.
 revoke all on table public.app_state from anon;
 
 -- Usuários autenticados pelo Supabase podem usar a tabela.
+grant usage on schema public to authenticated;
 grant select, insert, update on table public.app_state to authenticated;
 
 drop policy if exists "ete_authenticated_select" on public.app_state;
