@@ -8,10 +8,9 @@ window.ETE_CONFIG = {
   supabasePublishableKey: "sb_publishable_Wc3EyfhAQGbrf3n_NE0Clg_ermVC_Pq",
 
   // E-mails internos usados no Supabase Auth.
-  authEmails: {
-    klenio: "klenio@ete.example.com",
-    miguel: "miguel@ete.example.com",
-    ronaldo: "ronaldo@ete.example.com",
-    monitor: "monitor@ete.example.com"
-  }
-};
+ authEmails: {
+  klenio: "klenio@email.com",
+  miguel: "miguel@email.com",
+  ronaldo: "ronaldo@email.com",
+  monitor: "monitor@email.com"
+}
