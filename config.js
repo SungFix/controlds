@@ -79,6 +79,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlThemeParityStyles", "theme-light-parity.css?v=2");
     ensureStylesheet("controlVisualPrimeStyles", "visual-prime.css?v=3");
     ensureStylesheet("controlAccessibilityPrimeStyles", "accessibility-prime.css?v=2");
+    ensureStylesheet("controlStudentLightPolishStyles", "student-light-polish.css?v=1");
 
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
