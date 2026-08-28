@@ -51,6 +51,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=9");
     ensureStylesheet("controlHeaderPolishStyles", "header-polish.css?v=2");
     ensureStylesheet("controlMobileMenuStyles", "mobile-menu-enhance.css?v=1");
+    ensureStylesheet("controlMobilePolishStyles", "mobile-polish.css?v=1");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=2");
   }
 
