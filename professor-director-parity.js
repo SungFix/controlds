@@ -3,18 +3,25 @@
 
   const directorLevelRoles=["adm","diretor","professor"];
 
+  function getCurrentRole(){
+    try{
+      if(typeof currentUser!=="undefined" && currentUser) return String(currentUser.role||"").toLowerCase();
+    }catch(_){}
+    return "";
+  }
+
   function hasDirectorLevel(){
-    return !!window.currentUser && directorLevelRoles.includes(String(window.currentUser.role||"").toLowerCase());
+    return directorLevelRoles.includes(getCurrentRole());
   }
 
   function install(){
-    try{ window.canCreateRequest=hasDirectorLevel; }catch(_){}
-    try{ window.canManageStudents=hasDirectorLevel; }catch(_){}
-    try{ window.canCreatePermission=hasDirectorLevel; }catch(_){}
-    try{ window.canClearHistory=hasDirectorLevel; }catch(_){}
+    try{ canCreateRequest=hasDirectorLevel; }catch(_){}
+    try{ canManageStudents=hasDirectorLevel; }catch(_){}
+    try{ canCreatePermission=hasDirectorLevel; }catch(_){}
+    try{ canClearHistory=hasDirectorLevel; }catch(_){}
 
     try{
-      if(typeof window.applyRoleUI==="function") window.applyRoleUI();
+      if(typeof applyRoleUI==="function") applyRoleUI();
     }catch(_){}
   }
 
