@@ -1,0 +1,86 @@
+name: Browser smoke audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/browser-smoke-audit.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install browser test runtime
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-save playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install chromium >/dev/null 2>&1
+      - name: Run browser tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/control-ds-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          sleep 2
+          cat > control-ds-smoke.mjs <<'JS'
+          import { chromium } from 'playwright';
+          const browser=await chromium.launch({headless:true});
+          const results=[];
+          async function run(url,label,invalidLogin=false){
+            const page=await browser.newPage({viewport:{width:1366,height:768}});
+            const pageErrors=[];
+            page.on('pageerror',e=>pageErrors.push(e.message));
+            const res=await page.goto(url,{waitUntil:'networkidle',timeout:30000});
+            if(!res?.ok()) throw new Error(`${label}: HTTP ${res?.status()}`);
+            await page.locator('#loginGate').waitFor({state:'visible'});
+            const checks={
+              username:await page.locator('#loginUsername').getAttribute('placeholder'),
+              password:await page.locator('#loginPassword').getAttribute('placeholder'),
+              button:await page.locator('#loginSubmit').isVisible(),
+              title:await page.title(),
+              overflow:await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+2),
+              favicon:await page.locator('link[rel="icon"]').getAttribute('href')
+            };
+            if(checks.username!=='Nome de usuário') throw new Error(`${label}: placeholder de usuário incorreto`);
+            if(checks.password!=='Digite sua senha') throw new Error(`${label}: placeholder de senha incorreto`);
+            if(!checks.button) throw new Error(`${label}: botão Entrar não visível`);
+            if(checks.title!=='Control Ds') throw new Error(`${label}: título inesperado ${checks.title}`);
+            if(checks.overflow) throw new Error(`${label}: overflow horizontal desktop`);
+            if(!checks.favicon?.includes('favicon.svg')) throw new Error(`${label}: favicon não configurado`);
+            if(pageErrors.length) throw new Error(`${label}: page errors ${pageErrors.join(' | ')}`);
+            if(invalidLogin){
+              await page.fill('#loginUsername','usuario_inexistente_teste');
+              await page.fill('#loginPassword','senha_invalida_teste');
+              await page.click('#loginSubmit');
+              await page.waitForTimeout(1800);
+              if(!(await page.locator('#loginError').isVisible())) throw new Error(`${label}: login inválido não exibiu erro`);
+            }
+            results.push(`${label} desktop PASS`);
+            await page.setViewportSize({width:390,height:844});
+            await page.reload({waitUntil:'networkidle'});
+            await page.locator('#loginGate').waitFor({state:'visible'});
+            if(await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+2)) throw new Error(`${label}: overflow horizontal mobile`);
+            const card=page.locator('.login-card');
+            const box=await card.boundingBox();
+            if(!box || box.x<0 || box.x+box.width>390.5) throw new Error(`${label}: card fora da tela mobile`);
+            results.push(`${label} mobile PASS`);
+            await page.close();
+          }
+          await run('http://127.0.0.1:4173/','local',true);
+          for(const [url,label] of [
+            ['https://ete-controle-notebooks.pages.dev/','cloudflare'],
+            ['https://sungfix.github.io/ete-controle-notebooks/','github-pages']
+          ]){
+            try{await run(url,label,false)}catch(e){results.push(`${label} WARN: ${e.message}`)}
+          }
+          console.log('=== BROWSER RESULTS ===');
+          results.forEach(x=>console.log(x));
+          await browser.close();
+          JS
+          node control-ds-smoke.mjs
