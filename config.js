@@ -31,12 +31,27 @@ window.ETE_CONFIG = {
     link.href = href;
   }
 
+  function ensureScript(id, src){
+    let script = document.getElementById(id);
+    if (!script) {
+      script = document.createElement("script");
+      script.id = id;
+      script.src = src;
+      script.defer = true;
+      document.head.appendChild(script);
+    } else {
+      script.src = src;
+    }
+  }
+
   function ensureThemeStyles(){
     ensureStylesheet("controlThemeStyles", "theme-light.css?v=6");
     ensureStylesheet("controlThemeRefineStyles", "theme-light-refine.css?v=2");
     ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=11");
     ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=9");
     ensureStylesheet("controlHeaderPolishStyles", "header-polish.css?v=2");
+    ensureStylesheet("controlMobileMenuStyles", "mobile-menu-enhance.css?v=1");
+    ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=2");
   }
 
   function updateButton(button){
