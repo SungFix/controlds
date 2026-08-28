@@ -21,6 +21,13 @@
 
     function isMobile(){return window.matchMedia('(max-width:820px)').matches;}
     function isOpen(){return root.classList.contains('mobile-menu-open');}
+    function clearTapVisual(){
+      try{ menuButton.blur(); }catch(_){}
+      if(window.getSelection){
+        const sel=window.getSelection();
+        if(sel&&typeof sel.removeAllRanges==='function') sel.removeAllRanges();
+      }
+    }
     function syncButton(){
       const open=isOpen();
       menuButton.innerHTML=open?closeIcon:menuIcon;
@@ -38,15 +45,27 @@
       root.classList.remove('mobile-menu-open');
       body.classList.remove('mobile-menu-open');
       syncButton();
+      clearTapVisual();
     }
     function toggleMenu(ev){
       if(!isMobile()) return;
       ev.preventDefault();
       ev.stopPropagation();
       isOpen()?closeMenu():openMenu();
+      requestAnimationFrame(clearTapVisual);
+      setTimeout(clearTapVisual,0);
     }
 
+    menuButton.addEventListener('pointerdown',function(ev){
+      if(isMobile() && ev.pointerType!=='mouse') ev.preventDefault();
+    },{passive:false});
+    menuButton.addEventListener('touchstart',function(ev){
+      if(isMobile()) ev.preventDefault();
+    },{passive:false});
     menuButton.addEventListener('click',toggleMenu,true);
+    menuButton.addEventListener('pointerup',clearTapVisual);
+    menuButton.addEventListener('touchend',clearTapVisual,{passive:true});
+
     backdrop.addEventListener('click',closeMenu);
     backdrop.addEventListener('touchend',function(ev){ev.preventDefault();closeMenu();},{passive:false});
 
