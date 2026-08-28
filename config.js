@@ -35,7 +35,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlThemeStyles", "theme-light.css?v=6");
     ensureStylesheet("controlThemeRefineStyles", "theme-light-refine.css?v=2");
     ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=6");
-    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=4");
+    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=5");
   }
 
   function updateButton(button){
