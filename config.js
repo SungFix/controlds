@@ -58,6 +58,7 @@ window.ETE_CONFIG = {
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=2");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=1");
     ensureScript("controlPermissionDetailsScript", "permission-details-enhance.js?v=2");
+    ensureScript("controlRoleLabelFixScript", "role-label-fix.js?v=1");
   }
 
   function updateButton(button){
