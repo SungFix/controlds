@@ -47,8 +47,24 @@
   function notify(message){
     try{
       if(typeof toast==="function") toast(message);
-      else window.alert(message);
+      else if(window.ControlActionModal) window.ControlActionModal.notice({message});
+      else console.warn(message);
     }catch(_){ }
+  }
+
+  async function askDelete(request){
+    if(!window.ControlActionModal){
+      notify("O sistema de confirmação ainda está carregando. Tente novamente.");
+      return false;
+    }
+    return window.ControlActionModal.confirm({
+      title:"Apagar computador devolvido",
+      subtitle:"O registro do notebook será removido do sistema.",
+      message:`Deseja apagar o registro do notebook ${request.code||"sem código"} de ${request.student||"aluno"}?`,
+      details:["Lista de computadores","Lista de pedidos","Agenda"],
+      warning:"Essa ação não pode ser desfeita.",
+      confirmText:"Apagar registro"
+    });
   }
 
   async function deleteComputerRecord(id,button){
@@ -67,9 +83,7 @@
     }
     if(deletingIds.has(String(id))) return;
 
-    const code=String(request.code||"");
-    const student=String(request.student||"aluno");
-    const confirmed=window.confirm(`Apagar o registro do notebook ${code}?\n\nAluno: ${student}\n\nIsso remove o pedido concluído da lista de computadores, pedidos e agenda. Esta ação não pode ser desfeita.`);
+    const confirmed=await askDelete(request);
     if(!confirmed) return;
 
     deletingIds.add(String(id));
