@@ -82,8 +82,13 @@ async function setTheme(page,theme){
 
 async function auditButtonHierarchy(page,label){
   const result=await page.evaluate(()=>{
-    const primary=document.querySelector('.btn.primary:visible');
-    const danger=document.querySelector('.btn.danger:visible,[data-delete-request]:visible,[data-delete-student]:visible,[data-delete-permission]:visible,[data-delete-computer-record]:visible');
+    const visible=el=>{
+      if(!el) return false;
+      const s=getComputedStyle(el);
+      return s.display!=="none"&&s.visibility!=="hidden"&&el.getClientRects().length>0;
+    };
+    const primary=[...document.querySelectorAll('.btn.primary')].find(visible)||null;
+    const danger=[...document.querySelectorAll('.btn.danger,[data-delete-request],[data-delete-student],[data-delete-permission],[data-delete-computer-record]')].find(visible)||null;
     const css=el=>el?getComputedStyle(el):null;
     return {
       hasPolish:document.documentElement.dataset.finalPolish==='1',
