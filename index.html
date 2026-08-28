@@ -7261,7 +7261,7 @@ setGroupPickerValue("newStudentGroup","1°A DS");
 setIntervalPickerValue("permissionFilter","all",false);
 setIntervalPickerValue("permissionInterval","morning",false);
 
-applySharedState(loadLocalSharedState());
+applySharedState({requests:[],history:[],students:[],permissions:[],deletedRequestIds:[],historyClearedAt:""});
 setSyncState("login");
 
 (async()=>{
