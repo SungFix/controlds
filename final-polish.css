@@ -48,6 +48,32 @@ html:not([data-theme="light"]) #page-students .student-last-use{
   color:#b1bbc3 !important;
 }
 
+/* ---------- Computadores: contraste de textos pequenos no escuro ---------- */
+html:not([data-theme="light"]) #page-computers .computer-stat .label,
+html:not([data-theme="light"]) #page-computers .computer-stat small,
+html:not([data-theme="light"]) #page-computers .computer-code-wrap span,
+html:not([data-theme="light"]) #page-computers .computer-owner span,
+html:not([data-theme="light"]) #page-computers .computer-meta-box span,
+html:not([data-theme="light"]) #page-computers .computer-state-note,
+html:not([data-theme="light"]) #page-computers .computer-results-label,
+html:not([data-theme="light"]) #page-computers .computer-tab{
+  color:#b6c0c7 !important;
+}
+html:not([data-theme="light"]) #page-computers .computer-owner strong,
+html:not([data-theme="light"]) #page-computers .computer-meta-box strong,
+html:not([data-theme="light"]) #page-computers .computer-code-wrap strong{
+  color:#f2f5f7 !important;
+}
+html:not([data-theme="light"]) #page-computers .computer-meta-box{
+  background:#171e25 !important;
+  border-color:#35414c !important;
+}
+html:not([data-theme="light"]) #page-computers .computer-device-icon{
+  background:#202932 !important;
+  border-color:#43505c !important;
+  color:#e8eef2 !important;
+}
+
 /* ---------- Pedidos, Permissões e Computadores ---------- */
 .request-card-top,.permission-card-top,.computer-item-head{
   background:var(--ui-surface-2) !important;
