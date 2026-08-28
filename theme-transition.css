@@ -1,29 +1,9 @@
-/* Control Ds — transição suave sem clarão de tela inteira */
+/* Control Ds — transição de tema sem clarão */
 
+/* Sem overlay de tela inteira: evita flash branco/cinza/preto na troca. */
 html.theme-transitioning::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:2147483646;
-  pointer-events:none;
-  opacity:0;
-  background:#667983;
-  transition:opacity 140ms ease-out !important;
-}
-
-/* A cobertura é neutra e translúcida nos dois sentidos para evitar clarão */
-html.theme-target-light::after,
-html.theme-target-dark::after{
-  background:#667983 !important;
-}
-
-html.theme-transition-cover::after{
-  opacity:.14;
-}
-
-html.theme-transition-reveal::after{
-  opacity:0;
-  transition-duration:180ms !important;
+  display:none !important;
+  content:none !important;
 }
 
 html.theme-transitioning body,
@@ -57,14 +37,15 @@ html.theme-transitioning .login-gate,
 html.theme-transitioning .login-card,
 html.theme-transitioning .control-theme-toggle{
   transition:
-    background-color 320ms cubic-bezier(.22,.61,.36,1),
-    color 260ms cubic-bezier(.22,.61,.36,1),
-    border-color 300ms cubic-bezier(.22,.61,.36,1),
-    box-shadow 320ms cubic-bezier(.22,.61,.36,1) !important;
+    background-color 240ms ease,
+    color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 240ms ease !important;
 }
 
 @media (prefers-reduced-motion: reduce){
-  html.theme-transitioning::after{display:none !important}
   html.theme-transitioning body,
-  html.theme-transitioning body *{transition-duration:0ms !important}
+  html.theme-transitioning body *{
+    transition-duration:0ms !important;
+  }
 }
