@@ -7,10 +7,7 @@ const browser=await chromium.launch({headless:true});
 const sections=['home','agenda','permissions','requests','students','computers','history'];
 
 async function noOverflow(page,label){
-  const {sw,cw}=await page.evaluate(()=>({
-    sw:document.documentElement.scrollWidth,
-    cw:document.documentElement.clientWidth
-  }));
+  const {sw,cw}=await page.evaluate(()=>({sw:document.documentElement.scrollWidth,cw:document.documentElement.clientWidth}));
   if(sw>cw+2) throw new Error(`${label}: overflow horizontal ${sw}/${cw}`);
 }
 
@@ -76,10 +73,70 @@ async function clickSection(page,section,isMobile){
 
 async function setTheme(page,theme){
   await page.evaluate(theme=>{
-    document.documentElement.dataset.theme=theme;
+    if(window.ControlTheme?.set) window.ControlTheme.set(theme);
+    else document.documentElement.dataset.theme=theme;
     try{localStorage.setItem('control-ds-theme',theme);}catch(_){}
   },theme);
-  await page.waitForTimeout(30);
+  await page.waitForTimeout(40);
+}
+
+async function auditButtonHierarchy(page,label){
+  const result=await page.evaluate(()=>{
+    const primary=document.querySelector('.btn.primary:visible');
+    const danger=document.querySelector('.btn.danger:visible,[data-delete-request]:visible,[data-delete-student]:visible,[data-delete-permission]:visible,[data-delete-computer-record]:visible');
+    const css=el=>el?getComputedStyle(el):null;
+    return {
+      hasPolish:document.documentElement.dataset.finalPolish==='1',
+      primaryBg:primary?css(primary).backgroundColor:'',
+      dangerBg:danger?css(danger).backgroundColor:'',
+      primaryColor:primary?css(primary).color:'',
+      dangerColor:danger?css(danger).color:''
+    };
+  });
+  if(!result.hasPolish) throw new Error(`${label}: camada final de acabamento não carregou`);
+  if(result.primaryBg&&result.dangerBg&&result.primaryBg===result.dangerBg&&result.primaryColor===result.dangerColor){
+    throw new Error(`${label}: ação principal e destrutiva visualmente indistinguíveis`);
+  }
+}
+
+async function auditLoadingState(page,label){
+  await page.evaluate(()=>{
+    const b=document.querySelector('#newStudentBtn2');
+    if(!b)return;
+    b.dataset.primeOldText=b.textContent;
+    b.disabled=true;
+    b.textContent='Salvando...';
+  });
+  await page.waitForTimeout(80);
+  const loading=await page.locator('#newStudentBtn2').evaluate(el=>el.classList.contains('is-loading')&&el.getAttribute('aria-busy')==='true');
+  if(!loading) throw new Error(`${label}: estado visual de carregamento não foi aplicado`);
+  await page.evaluate(()=>{
+    const b=document.querySelector('#newStudentBtn2');
+    if(!b)return;
+    b.disabled=false;
+    b.textContent=b.dataset.primeOldText||'Novo aluno';
+    delete b.dataset.primeOldText;
+  });
+  await page.waitForTimeout(50);
+}
+
+async function auditEmptyStates(page,label,isMobile){
+  await page.evaluate(()=>{data=[];students=[];permissions=[];history=[];render();});
+  await page.waitForTimeout(100);
+  const checks=[
+    ['requests','.request-empty'],
+    ['permissions','.permission-empty'],
+    ['students','.student-empty'],
+    ['computers','.computer-empty']
+  ];
+  for(const [section,selector] of checks){
+    await clickSection(page,section,isMobile);
+    const empty=page.locator(`#page-${section} ${selector}:visible`).first();
+    if(!(await empty.count())) throw new Error(`${label}-${section}: estado vazio ausente`);
+    if((await empty.getAttribute('role'))!=='status') throw new Error(`${label}-${section}: estado vazio sem semântica de status`);
+    await noOverflow(page,`${label}-empty-${section}`);
+    await auditA11y(page,`${label}-empty-${section}`);
+  }
 }
 
 for(const vp of [
@@ -133,8 +190,17 @@ for(const vp of [
       await clickSection(page,section,isMobile);
       await noOverflow(page,`${vp.label}-${theme}-${section}`);
       await auditA11y(page,`${vp.label}-${theme}-${section}`);
+      if(['requests','permissions','students','computers'].includes(section)) await auditButtonHierarchy(page,`${vp.label}-${theme}-${section}`);
     }
   }
+
+  await clickSection(page,'students',isMobile);
+  await auditLoadingState(page,`${vp.label}-loading`);
+  await setTheme(page,'dark');
+  await auditEmptyStates(page,`${vp.label}-dark`,isMobile);
+  await simulateAdmin(page);
+  await setTheme(page,'light');
+  await auditEmptyStates(page,`${vp.label}-light`,isMobile);
 
   if(pageErrors.length) throw new Error(`${vp.label}: erros JS: ${pageErrors.join(' | ')}`);
   await context.close();
