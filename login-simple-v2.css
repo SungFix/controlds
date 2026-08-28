@@ -1,4 +1,4 @@
-/* SIMPLE_LOGIN_V4 */
+/* SIMPLE_LOGIN_V5 */
 .login-gate{
   padding:20px;
   background:
@@ -18,19 +18,30 @@
 }
 
 .login-card::before{
-  display:none;
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:3px;
+  background:linear-gradient(90deg,#b69a5d,#5e9b75,#a9666d,#5f7fae);
+  opacity:.9;
 }
 
 .login-card .login-brand{
+  width:100%;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   gap:11px;
   margin:0 0 28px;
-  padding:0;
-  border:0;
+  padding:18px 16px;
+  border:1px solid #2a3139;
+  border-radius:18px;
+  background:linear-gradient(180deg,#181c21 0%,#15191e 100%);
   text-align:center;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.015);
 }
 
 body .login-gate .login-card .login-mark{
@@ -41,7 +52,7 @@ body .login-gate .login-card .login-mark{
   border:3px solid transparent !important;
   border-radius:17px;
   background:
-    linear-gradient(#111419,#111419) padding-box,
+    linear-gradient(#15191e,#15191e) padding-box,
     linear-gradient(135deg,#b69a5d 0 25%,#5e9b75 25% 50%,#a9666d 50% 75%,#5f7fae 75%) border-box !important;
   color:#f1f4f7 !important;
   font-size:13px !important;
@@ -50,32 +61,51 @@ body .login-gate .login-card .login-mark{
   box-shadow:0 10px 26px rgba(0,0,0,.22);
 }
 
+.login-card .login-brand>div:last-child{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+
 .login-card .login-brand strong{
+  width:100%;
   display:block;
+  margin:0;
+  text-align:center;
   font-size:16px;
   line-height:1.2;
   color:#f3f5f7;
 }
 
 .login-card .login-brand small{
+  width:100%;
   display:block;
-  margin-top:4px;
-  color:#747e88;
+  margin-top:5px;
+  text-align:center;
+  color:#818a94;
   font-size:10px;
 }
 
 .login-card h1{
-  margin:0;
-  text-align:center;
+  width:100%;
+  display:block;
+  margin:0 auto;
+  padding:0;
+  text-align:center !important;
   font-size:27px;
   line-height:1.15;
   letter-spacing:-.035em;
 }
 
 .login-card>p{
-  max-width:350px;
-  margin:9px auto 27px;
-  text-align:center;
+  width:100%;
+  max-width:330px;
+  display:block;
+  margin:10px auto 27px;
+  padding:0;
+  text-align:center !important;
   color:#818a94;
   font-size:11.5px;
   line-height:1.6;
@@ -150,16 +180,16 @@ body .login-gate .login-card .login-mark{
   text-align:center;
   color:#77818b;
   font-size:9.5px;
-  line-height:1.7;
+  line-height:1.75;
 }
 
 @media(max-width:520px){
   .login-gate{padding:16px}
   .login-card{width:min(420px,100%);padding:30px 22px 24px;border-radius:20px}
-  .login-card .login-brand{margin-bottom:24px}
+  .login-card .login-brand{margin-bottom:24px;padding:16px 14px;border-radius:16px}
   body .login-gate .login-card .login-mark{width:54px;height:54px;border-radius:16px}
   .login-card h1{font-size:25px}
-  .login-card>p{max-width:330px;margin-bottom:23px}
+  .login-card>p{max-width:310px;margin-bottom:23px}
   .login-grid input,.login-card #loginSubmit{min-height:51px}
   .login-note{max-width:320px}
 }
