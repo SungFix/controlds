@@ -177,3 +177,17 @@
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",install,{once:true});
   else install();
 })();
+
+(function loadComputerDeleteEnhancement(){
+  "use strict";
+  function load(){
+    if(document.getElementById("controlComputerDeleteEnhanceScript")) return;
+    const script=document.createElement("script");
+    script.id="controlComputerDeleteEnhanceScript";
+    script.src="computer-delete-enhance.js?v=1";
+    script.async=false;
+    document.head.appendChild(script);
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",load,{once:true});
+  else load();
+})();
