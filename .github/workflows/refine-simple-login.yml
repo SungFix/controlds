@@ -1,0 +1,161 @@
+name: Refine simple login UI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/refine-simple-login.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Refine login styles
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          marker = '/* SIMPLE_LOGIN_V2 */'
+          if marker not in s:
+              css = r'''
+<style>
+/* SIMPLE_LOGIN_V2 */
+.login-gate{
+  padding:24px;
+  background:
+    radial-gradient(circle at 50% -10%,rgba(95,127,174,.10),transparent 34%),
+    #090b0e;
+}
+.login-card{
+  width:min(430px,100%);
+  padding:30px;
+  border:1px solid #303740;
+  border-radius:22px;
+  background:#111419;
+  box-shadow:0 24px 70px rgba(0,0,0,.42);
+}
+.login-card .login-brand{
+  gap:13px;
+  margin-bottom:28px;
+  padding-bottom:20px;
+  border-bottom:1px solid #242a31;
+}
+.login-card .login-mark{
+  width:50px;
+  height:50px;
+  border:0;
+  border-radius:14px;
+  background:url('favicon.svg?v=1') center/cover no-repeat;
+  color:transparent;
+  font-size:0;
+}
+.login-card .login-brand strong{
+  font-size:15px;
+  color:#f3f5f7;
+}
+.login-card .login-brand small{
+  margin-top:5px;
+  font-size:10px;
+  color:#78818b;
+}
+.login-card h1{
+  margin:0;
+  font-size:28px;
+  line-height:1.15;
+  letter-spacing:-.035em;
+}
+.login-card>p{
+  margin:9px 0 24px;
+  color:#858e98;
+  font-size:12px;
+  line-height:1.6;
+}
+.login-grid{
+  gap:15px;
+}
+.login-grid label{
+  color:#a7afb8;
+  font-size:10px;
+  font-weight:750;
+}
+.login-grid input{
+  min-height:54px;
+  margin-top:7px;
+  padding:0 15px;
+  border:1px solid #343b44;
+  border-radius:13px;
+  background:#0c0f13;
+  color:#f3f5f7;
+  font-size:12px;
+  transition:border-color .14s ease, box-shadow .14s ease, background .14s ease;
+}
+.login-grid input::placeholder{
+  color:#626b75;
+}
+.login-grid input:focus{
+  border-color:#697481;
+  background:#0f1318;
+  box-shadow:0 0 0 3px rgba(125,135,146,.10);
+}
+.login-card #loginSubmit{
+  min-height:54px;
+  margin-top:3px;
+  border-radius:13px;
+  font-size:11px;
+  letter-spacing:.01em;
+  box-shadow:none;
+}
+.login-card #loginSubmit:hover{
+  transform:translateY(-1px);
+}
+.login-error{
+  margin-top:14px;
+  border-radius:12px;
+}
+.login-note{
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid #282e35;
+  color:#747d87;
+  font-size:9.5px;
+  line-height:1.65;
+}
+@media(max-width:520px){
+  .login-gate{padding:14px;align-items:center}
+  .login-card{padding:24px 20px;border-radius:18px}
+  .login-card .login-brand{margin-bottom:24px;padding-bottom:18px}
+  .login-card h1{font-size:25px}
+  .login-grid input,.login-card #loginSubmit{min-height:52px}
+}
+</style>
+'''
+              assert '</head>' in s
+              s = s.replace('</head>', css + '\n</head>', 1)
+              p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Validate
+        shell: bash
+        run: |
+          grep -q 'SIMPLE_LOGIN_V2' index.html
+          grep -q "background:url('favicon.svg?v=1')" index.html
+          grep -q 'width:min(430px,100%)' index.html
+
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Refine login screen with simple UI"
+          git push origin HEAD:main
