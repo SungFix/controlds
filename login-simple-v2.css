@@ -209,3 +209,15 @@ body.auth-locked .login-gate .login-card #loginTitle + p{
   margin-right:auto !important;
   text-align:center !important;
 }
+
+/* Accessibility audit: keep the approved dark palette while increasing small-text contrast. */
+.agenda-panel.panel > .panelhead > small,
+#historyCountLabel,
+.quick-card .left small,
+#permissionFilterSubtitle,
+.agenda-empty,
+.student-empty,
+.computer-empty,
+.history-empty{
+  color:#8a949e !important;
+}
