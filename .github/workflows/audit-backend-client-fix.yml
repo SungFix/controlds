@@ -1,0 +1,50 @@
+name: Apply audited pickup client fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/audit-backend-client-fix.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Patch pickup client
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('v46-bridge.js')
+          s=p.read_text(encoding='utf-8')
+          if 'ete_pickup_request_v2' not in s:
+              anchor='scheduleSharedPersist=()=>{};'
+              assert anchor in s
+              helper='''async function v46PickupRpc(args={}){if(!navigator.onLine){setSyncState("error");throw new Error("offline");}setSyncState("saving");const{data:result,error}=await sb.rpc("ete_pickup_request_v2",args);if(error){setSyncState("error");throw error;}if(!result?.ok){setSyncState("online");throw new Error(String(result?.error||"pickup_failed"));}await v46LoadData(false);return result.request;}\n'''
+              s=s.replace(anchor,helper+anchor,1)
+          old='await v46Rpc("ete_pickup_request",'
+          if old in s:
+              s=s.replace(old,'await v46PickupRpc(',1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Validate
+        shell: bash
+        run: |
+          node --check v46-bridge.js
+          grep -q 'ete_pickup_request_v2' v46-bridge.js
+          ! grep -q 'v46Rpc("ete_pickup_request"' v46-bridge.js
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add v46-bridge.js
+          git commit -m "Fix persistent PIN attempt lock"
+          git push origin HEAD:main
