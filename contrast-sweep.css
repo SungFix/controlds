@@ -35,9 +35,12 @@ html[data-theme="light"] :is(.request-tab,.computer-tab):not(.active){
   color:#53656e !important;
 }
 
-/* Rótulos de turma/curso são bem pequenos e a camada específica de Alunos usa ID. */
+/* Alunos: rótulos e subtítulos pequenos precisam vencer as camadas específicas da página. */
 html[data-theme="light"] #page-students .student-meta span{
   color:#506975 !important;
+}
+html[data-theme="light"] #page-students .student-card-title small{
+  color:#4b636e !important;
 }
 
 /* Comprovação de saída e estados de permissão. */
