@@ -45,7 +45,7 @@
       : (name||role||"Responsável");
 
     if(label) label.textContent="Saída confirmada";
-    strong.textContent=`${responsible}\n${formatConfirmedAt(rawDate)}`;
+    strong.textContent=`${responsible} · ${formatConfirmedAt(rawDate)}`;
     proof.classList.add("enhanced-exit-proof");
     proof.dataset.permissionDetailsEnhanced="1";
   }
