@@ -48,6 +48,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlThemeStyles", "theme-light.css?v=6");
     ensureStylesheet("controlThemeRefineStyles", "theme-light-refine.css?v=2");
     ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=11");
+    ensureStylesheet("controlLightPermissionsStyles", "theme-light-permissions.css?v=1");
     ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=9");
     ensureStylesheet("controlHeaderPolishStyles", "header-polish.css?v=2");
     ensureStylesheet("controlMobileMenuStyles", "mobile-menu-enhance.css?v=2");
