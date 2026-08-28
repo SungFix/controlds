@@ -1,0 +1,30 @@
+name: Production security headers audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/security-headers-audit.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  headers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify Cloudflare production headers
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSI https://ete-controle-notebooks.pages.dev/ > /tmp/headers.txt
+          cat /tmp/headers.txt
+          grep -qi '^content-security-policy:' /tmp/headers.txt
+          grep -qi '^x-content-type-options: *nosniff' /tmp/headers.txt
+          grep -qi '^referrer-policy: *no-referrer' /tmp/headers.txt
+          grep -qi '^permissions-policy:' /tmp/headers.txt
+          grep -qi '^x-frame-options: *DENY' /tmp/headers.txt
+          grep -qi '^cross-origin-opener-policy: *same-origin' /tmp/headers.txt
+          grep -qi "frame-ancestors 'none'" /tmp/headers.txt
+          grep -qi "object-src 'none'" /tmp/headers.txt
+          echo 'CLOUDFLARE SECURITY HEADERS: PASS'
