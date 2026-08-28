@@ -35,7 +35,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlThemeStyles", "theme-light.css?v=6");
     ensureStylesheet("controlThemeRefineStyles", "theme-light-refine.css?v=2");
     ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=6");
-    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=6");
+    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=7");
   }
 
   function updateButton(button){
@@ -57,31 +57,13 @@ window.ETE_CONFIG = {
   function toggleTheme(){
     if (root.classList.contains("theme-transitioning")) return;
 
-    const targetLight = root.dataset.theme !== "light";
-    root.classList.add("theme-transitioning", targetLight ? "theme-target-light" : "theme-target-dark");
-
+    root.classList.add("theme-transitioning");
     requestAnimationFrame(() => {
-      root.classList.add("theme-transition-cover");
-    });
-
-    setTimeout(() => {
       applyThemeChange();
-    }, 90);
-
-    setTimeout(() => {
-      root.classList.remove("theme-transition-cover");
-      root.classList.add("theme-transition-reveal");
-    }, 150);
-
-    setTimeout(() => {
-      root.classList.remove(
-        "theme-transitioning",
-        "theme-transition-reveal",
-        "theme-transition-cover",
-        "theme-target-light",
-        "theme-target-dark"
-      );
-    }, 430);
+      setTimeout(() => {
+        root.classList.remove("theme-transitioning");
+      }, 280);
+    });
   }
 
   function makeButton(extraClass){
