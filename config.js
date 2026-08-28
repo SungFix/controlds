@@ -34,7 +34,7 @@ window.ETE_CONFIG = {
   function ensureThemeStyles(){
     ensureStylesheet("controlThemeStyles", "theme-light.css?v=6");
     ensureStylesheet("controlThemeRefineStyles", "theme-light-refine.css?v=2");
-    ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=7");
+    ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=8");
     ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=9");
   }
 
@@ -43,9 +43,9 @@ window.ETE_CONFIG = {
     button.innerHTML = '<span aria-hidden="true">' + (light ? '☾' : '☀') + '</span><span class="theme-label">' + (light ? 'Tema escuro' : 'Tema claro') + '</span>';
     button.setAttribute("aria-pressed", String(light));
     button.title = light ? "Mudar para tema escuro" : "Mudar para tema claro";
-    button.style.background = light ? "#c7d6dd" : "#171a1f";
+    button.style.background = light ? "#dce9ee" : "#171a1f";
     button.style.color = light ? "#20343d" : "#f3f5f7";
-    button.style.borderColor = light ? "#8faab5" : "#39414b";
+    button.style.borderColor = light ? "#aec3cc" : "#39414b";
   }
 
   function setTheme(theme){
