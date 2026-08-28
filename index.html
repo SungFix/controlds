@@ -5,19 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Control Ds</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-window.ETE_CONFIG = window.ETE_CONFIG || {
-  supabaseUrl: "https://fisgkrmporzovogpmfpg.supabase.co",
-  supabasePublishableKey: "sb_publishable_Wc3EyfhAQGbrf3n_NE0Clg_ermVC_Pq",
-  authEmails: {
-    klenio: "klenio@email.com",
-    miguel: "miguel@email.com",
-    ronaldo: "ronaldo@email.com",
-    monitor: "monitor@email.com"
-  }
-};
-</script>
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4"></script>
 
 <style>
 :root{
@@ -4911,7 +4900,7 @@ body.auth-locked .shell{
               </label>
 
               <label class="full">Senha do aluno para retirada
-                <input id="studentPin" type="password" autocomplete="new-password" inputmode="numeric" minlength="3" maxlength="8" required placeholder="Crie uma senha curta para o aluno">
+                <input id="studentPin" type="password" autocomplete="new-password" inputmode="numeric" minlength="4" maxlength="8" required placeholder="Crie uma senha curta para o aluno">
                 <div class="request-security-note">O monitor pedirá esta senha antes de liberar o notebook.</div>
               </label>
             </div>
@@ -5205,7 +5194,7 @@ body.auth-locked .shell{
     </div>
     <div class="simple-grid">
       <label class="full">Senha do aluno
-        <input id="pickupPin" type="password" autocomplete="new-password" inputmode="numeric" minlength="3" maxlength="8" required placeholder="Senha criada no pedido">
+        <input id="pickupPin" type="password" autocomplete="new-password" inputmode="numeric" minlength="4" maxlength="8" required placeholder="Senha criada no pedido">
       </label>
       <label class="full">Código do notebook
         <input id="computerCode" inputmode="numeric" pattern="\d{6}" maxlength="6" required placeholder="6 dígitos">
@@ -5644,7 +5633,7 @@ async function loadRemoteShared(){
   }catch(err){
     console.error("Falha ao carregar Supabase:",err);
     setSyncState("error");
-    applySharedState(loadLocalSharedState());
+    applySharedState({requests:[],history:[],students:[],permissions:[],deletedRequestIds:[],historyClearedAt:""});
   }
 }
 function subscribeRemote(){
@@ -7285,5 +7274,6 @@ setSyncState("login");
   }
 })();
 </script>
+<script src="v46-bridge.js"></script>
 </body>
 </html>
