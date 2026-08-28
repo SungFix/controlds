@@ -61,13 +61,14 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlMobileHeaderPolishStyles", "mobile-header-polish.css?v=2");
     ensureStylesheet("controlThemeParityStyles", "theme-light-parity.css?v=1");
     ensureStylesheet("controlVisualPrimeStyles", "visual-prime.css?v=2");
+    ensureStylesheet("controlAccessibilityPrimeStyles", "accessibility-prime.css?v=1");
 
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=2");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=1");
     ensureScript("controlPermissionDetailsScript", "permission-details-enhance.js?v=2");
     ensureScript("controlRoleLabelFixScript", "role-label-fix.js?v=1");
     ensureScript("controlProfessorDirectorParityScript", "professor-director-parity.js?v=1");
-    ensureScript("controlUxPrimeScript", "ux-prime.js?v=1");
+    ensureScript("controlUxPrimeScript", "ux-prime.js?v=2");
   }
 
   function updateButton(button){
