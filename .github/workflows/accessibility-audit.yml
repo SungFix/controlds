@@ -64,3 +64,5 @@ jobs:
           console.log('ACCESSIBILITY CRITICAL/SERIOUS: PASS');
           JS
           node a11y-audit.mjs
+
+# Reexecutado após o endurecimento final de segurança em 2026-08-28.
