@@ -1,0 +1,43 @@
+name: Apply accessibility labels
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/a11y-label-fix.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Patch accessible names
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('<select id="requestSort" class="request-sort">','<select id="requestSort" class="request-sort" aria-label="Ordenar pedidos">')
+          s=s.replace('<select id="historyFilter">','<select id="historyFilter" aria-label="Filtrar histórico">')
+          if 'aria-label="Ordenar pedidos"' not in s or 'aria-label="Filtrar histórico"' not in s:
+              raise SystemExit('accessible labels were not applied')
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Validate
+        run: |
+          grep -q 'aria-label="Ordenar pedidos"' index.html
+          grep -q 'aria-label="Filtrar histórico"' index.html
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Fix accessible names for filters"
+          git push origin HEAD:main
