@@ -1,0 +1,134 @@
+name: Authenticated UI interaction audit v2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/ui-interaction-audit-v2.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-save playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install chromium >/dev/null 2>&1
+      - name: Test authenticated UI with mocked RPC transport
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/control-ds-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          sleep 2
+          cat > ui-audit.mjs <<'JS'
+          import { chromium } from 'playwright';
+          const browser=await chromium.launch({headless:true});
+          const page=await browser.newPage({viewport:{width:1440,height:1000}});
+          const pageErrors=[];
+          page.on('pageerror',e=>pageErrors.push(e.message));
+          await page.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle'});
+          await page.evaluate(()=>{
+            window.__rpcCalls=[]; window.__pickupCalls=[];
+            v46Rpc=async(name,args={})=>{window.__rpcCalls.push({name,args});return {};};
+            v46PickupRpc=async(args={})=>{window.__pickupCalls.push(args);return {};};
+            clearHistoryWithPassword=async(password)=>{window.__clearPassword=password;return{removed:history.length,preview:true};};
+            v46AuthUser={id:'audit-adm'};
+            currentUser={username:'audit',displayName:'Auditor do Sistema',role:'adm',roleLabel:'Administrador',userId:'audit-adm'};
+            appReady=true;
+            data=[normalizeRequest({id:'rq-audit',student:'Aluno de Teste',studentName:'Aluno de Teste',studentClass:'1°A',studentCourse:'DS',studentId:'st-audit',room:'1°A DS',reason:'Teste automatizado',startTime:'10:20',endTime:'11:10',time:'10:20–11:10',dateKey:recifeDateKey(),status:'wait',requestedBy:'audit',requestedById:'audit-adm',requestedByLabel:'Auditor do Sistema',createdAt:new Date().toISOString()})];
+            students=[normalizeStudent({id:'st-audit',name:'Aluno de Teste',className:'1°A',course:'DS',useCount:1,lastUsed:new Date().toISOString()})];
+            permissions=[normalizePermission({id:'pm-audit',student:'Aluno de Teste',className:'1°A DS',interval:'morning',reason:'Teste automatizado',active:true,exitConfirmed:false,createdAt:new Date().toISOString()})];
+            history=[normalizeHistoryItem({id:'hs-audit',atISO:new Date().toISOString(),text:'Evento de teste',detail:'Teste automatizado',type:'system',responsible:'Auditor do Sistema'})];
+            setAuthLocked(false); setCurrentUser(currentUser); render();
+          });
+
+          for(const section of ['home','agenda','permissions','requests','students','computers','history']){
+            await page.click(`[data-page="${section}"]`);
+            if(!(await page.locator(`#page-${section}`).evaluate(el=>el.classList.contains('active')))) throw new Error(`Página ${section} não ativou`);
+          }
+
+          await page.click('[data-page="students"]');
+          await page.click('#newStudentBtn2');
+          if(!(await page.locator('#studentModal').evaluate(el=>el.open))) throw new Error('Modal de novo aluno não abriu');
+          await page.fill('#newStudentName','Aluno Novo de Teste');
+          await page.locator('#studentForm button[type="submit"]').click();
+          await page.waitForTimeout(80);
+          let calls=await page.evaluate(()=>window.__rpcCalls);
+          if(!calls.some(x=>x.name==='ete_upsert_student'&&x.args.p_name==='Aluno Novo de Teste')) throw new Error('Cadastro de aluno não chamou RPC correta');
+
+          await page.evaluate(()=>renderStudents());
+          await page.click('[data-edit-student="st-audit"]:visible');
+          if((await page.inputValue('#newStudentName'))!=='Aluno de Teste') throw new Error('Edição não carregou aluno');
+          await page.fill('#newStudentName','Aluno Editado de Teste');
+          await page.locator('#studentForm button[type="submit"]').click();
+          await page.waitForTimeout(80);
+          calls=await page.evaluate(()=>window.__rpcCalls);
+          if(!calls.some(x=>x.name==='ete_update_student'&&x.args.p_student_id==='st-audit')) throw new Error('Edição não chamou RPC correta');
+
+          await page.evaluate(()=>renderStudents());
+          page.once('dialog',d=>d.accept());
+          await page.click('[data-delete-student="st-audit"]:visible');
+          await page.waitForTimeout(80);
+          calls=await page.evaluate(()=>window.__rpcCalls);
+          if(!calls.some(x=>x.name==='ete_delete_student'&&x.args.p_student_id==='st-audit')) throw new Error('Exclusão não chamou RPC correta');
+
+          await page.click('[data-page="requests"]');
+          await page.evaluate(()=>renderRequests());
+          await page.click('[data-pickup="rq-audit"]:visible');
+          if(!(await page.locator('#pickupModal').evaluate(el=>el.open))) throw new Error('Modal de retirada não abriu');
+          await page.fill('#pickupPin','1234'); await page.fill('#computerCode','123456');
+          await page.locator('#pickupForm button[type="submit"]').click(); await page.waitForTimeout(80);
+          const pc=await page.evaluate(()=>window.__pickupCalls);
+          if(!pc.some(x=>x.p_request_id==='rq-audit'&&x.p_code==='123456')) throw new Error('Retirada não usou RPC V2');
+
+          await page.evaluate(()=>{data[0].status='use';data[0].code='123456';render();});
+          await page.click('[data-page="requests"]'); await page.evaluate(()=>renderRequests());
+          await page.click('[data-return="rq-audit"]:visible'); await page.waitForTimeout(80);
+          calls=await page.evaluate(()=>window.__rpcCalls);
+          if(!calls.some(x=>x.name==='ete_return_request'&&x.args.p_request_id==='rq-audit')) throw new Error('Devolução não chamou RPC correta');
+
+          await page.click('[data-page="permissions"]'); await page.click('#newPermissionBtn');
+          await page.fill('#permissionStudent','Aluno Permissão Teste'); await page.fill('#permissionClass','1°A DS'); await page.fill('#permissionReason','Teste automatizado');
+          await page.locator('#permissionForm button[type="submit"]').click(); await page.waitForTimeout(80);
+          calls=await page.evaluate(()=>window.__rpcCalls);
+          if(!calls.some(x=>x.name==='ete_create_permission')) throw new Error('Criação de permissão não chamou RPC correta');
+
+          await page.evaluate(()=>renderPermissions());
+          await page.click('[data-confirm-exit="pm-audit"]:visible');
+          if(!(await page.locator('#exitConfirmModal').evaluate(el=>el.open))) throw new Error('Modal saída não abriu');
+          if((await page.locator('#exitVerifierName').getAttribute('readonly'))===null) throw new Error('Identidade de saída editável');
+          if((await page.inputValue('#exitVerifierName'))!=='Auditor do Sistema') throw new Error('Identidade autenticada não preenchida');
+          await page.locator('#exitConfirmForm button[type="submit"]').click(); await page.waitForTimeout(80);
+          calls=await page.evaluate(()=>window.__rpcCalls);
+          const cc=calls.find(x=>x.name==='ete_confirm_exit');
+          if(!cc||cc.args.p_verifier_name!=='Auditor do Sistema') throw new Error('Saída não usa identidade autenticada');
+
+          await page.click('[data-page="history"]'); await page.click('#clearHistoryButton');
+          if(!(await page.locator('#clearHistoryModal').evaluate(el=>el.open))) throw new Error('Modal histórico não abriu');
+          await page.fill('#clearHistoryPassword','senha-de-teste'); await page.locator('#confirmClearHistory').click(); await page.waitForTimeout(80);
+          if((await page.evaluate(()=>window.__clearPassword))!=='senha-de-teste') throw new Error('Senha de limpeza não passou pelo fluxo correto');
+
+          await page.evaluate(()=>{
+            currentUser={username:'monitor',displayName:'Monitor de Teste',role:'monitor',roleLabel:'Monitor',userId:'audit-monitor'};v46AuthUser={id:'audit-monitor'};setCurrentUser(currentUser);
+            data=[normalizeRequest({id:'rq-mon',student:'Aluno Monitor',studentName:'Aluno Monitor',studentClass:'1°A',studentCourse:'DS',studentId:'st-mon',room:'1°A DS',reason:'Teste',startTime:'10:20',endTime:'11:10',time:'10:20–11:10',dateKey:recifeDateKey(),status:'wait',requestedBy:'audit',requestedById:'other-user',requestedByLabel:'Outro',createdAt:new Date().toISOString()})];render();
+          });
+          const hidden=async sel=>await page.locator(sel).evaluate(el=>el.classList.contains('role-hidden'));
+          if(!(await hidden('#newPermissionBtn'))) throw new Error('Monitor vê Nova permissão');
+          if(!(await hidden('#newStudentBtn2'))) throw new Error('Monitor vê Novo aluno');
+          if(!(await hidden('#clearHistoryButton'))) throw new Error('Monitor vê Apagar histórico');
+          await page.click('[data-page="requests"]'); await page.evaluate(()=>renderRequests());
+          if(!(await page.locator('[data-pickup="rq-mon"]:visible').isVisible())) throw new Error('Monitor não vê retirada');
+
+          if(pageErrors.length) throw new Error('Erros JS: '+pageErrors.join(' | '));
+          console.log('AUTHENTICATED UI INTERACTION AUDIT V2: PASS');
+          await browser.close();
+          JS
+          node ui-audit.mjs
