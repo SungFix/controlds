@@ -1,0 +1,61 @@
+name: Accessibility audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/accessibility-audit.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  axe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install audit tools
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-save playwright@1.55.0 axe-core@4.10.3 >/dev/null 2>&1
+          npx playwright install chromium >/dev/null 2>&1
+      - name: Run WCAG audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/control-ds-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          sleep 2
+          cat > a11y-audit.mjs <<'JS'
+          import { chromium } from 'playwright';
+          import fs from 'fs';
+          import path from 'path';
+          const axeSource=fs.readFileSync(path.resolve('node_modules/axe-core/axe.min.js'),'utf8');
+          const browser=await chromium.launch({headless:true});
+          const page=await browser.newPage({viewport:{width:1440,height:1000}});
+          await page.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle'});
+          async function axe(label){
+            await page.addScriptTag({content:axeSource});
+            const result=await page.evaluate(async()=>await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa']}}));
+            const bad=result.violations.filter(v=>['critical','serious'].includes(v.impact));
+            console.log(`=== ${label} ===`);
+            for(const v of result.violations) console.log(`${v.impact||'unknown'} ${v.id}: ${v.help} nodes=${v.nodes.length}`);
+            if(bad.length) throw new Error(`${label}: ${bad.map(v=>`${v.id}(${v.nodes.length})`).join(', ')}`);
+          }
+          await axe('login');
+          await page.evaluate(()=>{
+            v46AuthUser={id:'audit-adm'};
+            currentUser={username:'audit',displayName:'Auditor',role:'adm',roleLabel:'Administrador',userId:'audit-adm'};
+            appReady=true;data=[];students=[];permissions=[];history=[];
+            setAuthLocked(false);setCurrentUser(currentUser);render();
+          });
+          for(const section of ['home','agenda','permissions','requests','students','computers','history']){
+            await page.click(`[data-page="${section}"]`);
+            await axe(`page-${section}`);
+          }
+          console.log('ACCESSIBILITY CRITICAL/SERIOUS: PASS');
+          await browser.close();
+          JS
+          node a11y-audit.mjs
