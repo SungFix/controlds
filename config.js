@@ -34,7 +34,7 @@ window.ETE_CONFIG = {
   function ensureThemeStyles(){
     ensureStylesheet("controlThemeStyles", "theme-light.css?v=6");
     ensureStylesheet("controlThemeRefineStyles", "theme-light-refine.css?v=2");
-    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=3");
+    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=4");
   }
 
   function updateButton(button){
@@ -56,18 +56,33 @@ window.ETE_CONFIG = {
   function toggleTheme(){
     if (root.classList.contains("theme-transitioning")) return;
 
-    root.classList.add("theme-transitioning", "theme-transition-out");
-    root.classList.remove("theme-transition-in");
+    const targetLight = root.dataset.theme !== "light";
+    root.classList.add("theme-transitioning", targetLight ? "theme-target-light" : "theme-target-dark");
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        root.classList.add("theme-transition-cover");
+      });
+    });
 
     setTimeout(() => {
       applyThemeChange();
-      root.classList.remove("theme-transition-out");
-      root.classList.add("theme-transition-in");
-    }, 360);
+    }, 500);
 
     setTimeout(() => {
-      root.classList.remove("theme-transitioning", "theme-transition-in", "theme-transition-out");
-    }, 840);
+      root.classList.remove("theme-transition-cover");
+      root.classList.add("theme-transition-reveal");
+    }, 540);
+
+    setTimeout(() => {
+      root.classList.remove(
+        "theme-transitioning",
+        "theme-transition-reveal",
+        "theme-transition-cover",
+        "theme-target-light",
+        "theme-target-dark"
+      );
+    }, 1190);
   }
 
   function makeButton(extraClass){
