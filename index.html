@@ -4797,7 +4797,7 @@ body.auth-locked .shell{
 </div>
 
 <dialog id="requestModal">
-  <form class="modal" id="requestForm">
+  <form class="modal" id="requestForm" autocomplete="off">
     <div class="request-modal-head">
       <div class="request-modal-copy">
         <span class="request-modal-eyebrow">Criar pedido</span>
@@ -4902,7 +4902,7 @@ body.auth-locked .shell{
               </label>
 
               <label class="full">Senha do aluno para retirada
-                <input id="studentPin" type="password" inputmode="numeric" minlength="3" maxlength="8" required placeholder="Crie uma senha curta para o aluno">
+                <input id="studentPin" type="password" autocomplete="new-password" inputmode="numeric" minlength="3" maxlength="8" required placeholder="Crie uma senha curta para o aluno">
                 <div class="request-security-note">O monitor pedirá esta senha antes de liberar o notebook.</div>
               </label>
             </div>
@@ -5189,14 +5189,14 @@ body.auth-locked .shell{
 </dialog>
 
 <dialog id="pickupModal">
-  <form class="modal" id="pickupForm">
+  <form class="modal" id="pickupForm" autocomplete="off">
     <div class="modalhead">
       <div><h2>Confirmar retirada</h2><p id="pickupDesc"></p></div>
       <button type="button" class="close" data-close>×</button>
     </div>
     <div class="simple-grid">
       <label class="full">Senha do aluno
-        <input id="pickupPin" type="password" inputmode="numeric" minlength="3" maxlength="8" required placeholder="Senha criada no pedido">
+        <input id="pickupPin" type="password" autocomplete="new-password" inputmode="numeric" minlength="3" maxlength="8" required placeholder="Senha criada no pedido">
       </label>
       <label class="full">Código do notebook
         <input id="computerCode" inputmode="numeric" pattern="\d{6}" maxlength="6" required placeholder="6 dígitos">
