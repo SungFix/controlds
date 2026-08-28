@@ -1,0 +1,19 @@
+{
+  "name": "Control Ds — ETE Central Barreiros",
+  "short_name": "Control Ds",
+  "description": "Sistema escolar para controle de notebooks, pedidos, permissões, alunos e histórico.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#090b0e",
+  "theme_color": "#090b0e",
+  "icons": [
+    {
+      "src": "favicon.svg?v=1",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
