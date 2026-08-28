@@ -54,6 +54,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlMobilePolishStyles", "mobile-polish.css?v=1");
     ensureStylesheet("controlMobileHeaderPolishStyles", "mobile-header-polish.css?v=2");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=2");
+    ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=1");
   }
 
   function updateButton(button){
