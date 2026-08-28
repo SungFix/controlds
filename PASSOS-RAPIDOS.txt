@@ -1,16 +1,34 @@
-PASSOS RÁPIDOS
+PASSOS RÁPIDOS — CONTROL DS V46
 
-1. Crie um projeto em Supabase.
-2. Rode supabase-schema.sql no SQL Editor.
-3. Em Authentication > Users, crie:
-   klenio@ete.example.com
-   miguel@ete.example.com
-   ronaldo@ete.example.com
-   monitor@ete.example.com
-   Use as senhas iniciais combinadas internamente e troque-as no primeiro acesso.
-4. Copie Project URL e Publishable key para config.js.
-5. Envie estes arquivos ao GitHub.
-6. Ative GitHub Pages.
+ESTADO ATUAL
+- Produção usa a branch main.
+- Site publicado atualmente pelo GitHub Pages em:
+  https://sungfix.github.io/ete-controle-notebooks/
+- A interface usa config.js + Supabase JS fixado + v46-bridge.js.
+- O banco já está na arquitetura V46 normalizada.
 
-Quando estiver configurado, autenticado, com a tabela acessível e Realtime ativo, o topo do site mostrará "Sincronizado".
-Uma alteração feita em um computador será recebida pelos outros em tempo real.
+IMPORTANTE
+1. NÃO execute novamente supabase-schema-v46.sql sem antes verificar o estado do banco.
+2. NÃO volte a usar app_state como armazenamento operacional.
+3. NÃO coloque service_role, senha do banco, JWT secret ou outras chaves privadas no frontend.
+4. config.js deve conter somente a Project URL e a Publishable Key apropriada para uso público.
+
+TABELAS V46
+- ete_profiles
+- ete_students
+- ete_requests
+- ete_request_secrets
+- ete_permissions
+- ete_history
+
+OPERAÇÕES SENSÍVEIS
+Pedidos, retirada, devolução, permissões, confirmação de saída e histórico passam pelas RPCs V46 no Supabase. As permissões são validadas no banco de dados conforme o usuário autenticado.
+
+LOGIN
+Os usuários devem existir no Supabase Auth e possuir perfil correspondente em ete_profiles com a role correta: adm, diretor ou monitor.
+
+REALTIME
+Com autenticação válida e conexão ativa, pedidos, alunos, permissões e histórico são sincronizados pelas tabelas normalizadas. O topo da aplicação deve indicar o estado da conexão.
+
+PUBLICAÇÃO
+Ao atualizar a branch main, confirme se o workflow de Pages terminou com sucesso antes de considerar a nova versão publicada.
