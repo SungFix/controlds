@@ -1,77 +1,22 @@
-/* Control Ds — transição de tema protegida contra clarão */
+/* Control Ds — troca de tema sem animação */
 
-/*
-  Ao mudar do escuro para o claro, mantemos uma película escura sobre a tela
-  enquanto o tema claro é aplicado por baixo. Depois a película desaparece
-  devagar. Isso evita o salto brusco de luminância que causa o "flash".
-*/
-html.theme-transitioning::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:2147483646;
-  pointer-events:none;
-  opacity:0;
-  background:#090c0f;
-}
-
-/* Só usamos a película forte ao ENTRAR no tema claro. */
-html.theme-target-light.theme-transition-cover::after{
-  opacity:.82;
-  transition:opacity 110ms ease-out !important;
-}
-
-html.theme-target-light.theme-transition-reveal::after{
-  opacity:0;
-  transition:opacity 900ms cubic-bezier(.22,.61,.36,1) !important;
-}
-
-/* Indo para o escuro não precisamos iluminar nem cobrir a tela. */
-html.theme-target-dark::after{
+html.theme-transitioning::after,
+html.theme-target-light::after,
+html.theme-target-dark::after,
+html.theme-transition-cover::after,
+html.theme-transition-reveal::after{
   display:none !important;
   content:none !important;
+  opacity:0 !important;
+  transition:none !important;
 }
 
-/* Mudanças internas também são graduais. */
-html.theme-transitioning body,
-html.theme-transitioning .sidebar,
-html.theme-transitioning .topbar,
-html.theme-transitioning .panel,
-html.theme-transitioning .hero-stat,
-html.theme-transitioning .mini-stat,
-html.theme-transitioning .quick-card,
-html.theme-transitioning .request-card,
-html.theme-transitioning .computer-card,
-html.theme-transitioning .computer-item,
-html.theme-transitioning .student-item,
-html.theme-transitioning .permission-item,
-html.theme-transitioning .history-stat,
-html.theme-transitioning .request-stat,
-html.theme-transitioning .student-stat,
-html.theme-transitioning .permission-stat,
-html.theme-transitioning .computer-stat,
-html.theme-transitioning .panelhead,
-html.theme-transitioning .request-card-top,
-html.theme-transitioning .computer-item-head,
-html.theme-transitioning .nav button,
-html.theme-transitioning .navicon,
-html.theme-transitioning .btn,
-html.theme-transitioning input,
-html.theme-transitioning textarea,
-html.theme-transitioning select,
-html.theme-transitioning dialog,
-html.theme-transitioning .login-gate,
-html.theme-transitioning .login-card,
-html.theme-transitioning .control-theme-toggle{
-  transition:
-    background-color 700ms cubic-bezier(.22,.61,.36,1),
-    color 520ms ease,
-    border-color 620ms ease,
-    box-shadow 650ms ease !important;
-}
-
-@media (prefers-reduced-motion: reduce){
-  html.theme-transitioning::after{display:none !important;content:none !important}
-  html.theme-transitioning body,
-  html.theme-transitioning body *{transition-duration:0ms !important}
+html.theme-transitioning,
+html.theme-transitioning *,
+html[data-theme="light"],
+html[data-theme="light"] *,
+html[data-theme="dark"],
+html[data-theme="dark"] *{
+  transition:none !important;
+  animation-duration:0s !important;
 }
