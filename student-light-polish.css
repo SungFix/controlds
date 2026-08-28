@@ -1,0 +1,95 @@
+/* Control Ds — acabamento da aba Alunos no tema claro.
+   Mantém a mesma estrutura do tema escuro, com superfícies claras e contraste alto. */
+
+html[data-theme="light"] #page-students .student-card{
+  background:#ffffff !important;
+  border-color:#cfdce3 !important;
+  box-shadow:0 10px 26px rgba(34,57,70,.07) !important;
+}
+
+html[data-theme="light"] #page-students .student-card:hover{
+  background:#ffffff !important;
+  border-color:#b9ccd6 !important;
+  box-shadow:0 14px 34px rgba(34,57,70,.10) !important;
+}
+
+html[data-theme="light"] #page-students .student-card-head{
+  background:linear-gradient(180deg,#edf5f8 0%,#e5eff4 100%) !important;
+  border-bottom:1px solid #cddce4 !important;
+  color:#20343f !important;
+}
+
+html[data-theme="light"] #page-students .student-avatar{
+  background:#dbeaf1 !important;
+  border:1px solid #bdd1dc !important;
+  color:#294b5c !important;
+  box-shadow:none !important;
+}
+
+html[data-theme="light"] #page-students .student-card-title strong{
+  color:#1f343f !important;
+}
+
+html[data-theme="light"] #page-students .student-card-title small{
+  color:#617984 !important;
+}
+
+html[data-theme="light"] #page-students .student-card-body{
+  background:#ffffff !important;
+  border-color:#d8e3e8 !important;
+}
+
+html[data-theme="light"] #page-students .student-meta{
+  background:#f1f7fa !important;
+  border:1px solid #d1e0e7 !important;
+  color:#253a45 !important;
+}
+
+html[data-theme="light"] #page-students .student-meta span{
+  color:#5b7784 !important;
+}
+
+html[data-theme="light"] #page-students .student-meta strong{
+  color:#223944 !important;
+}
+
+html[data-theme="light"] #page-students .student-card-foot{
+  background:#fbfdfe !important;
+  border-top:1px solid #d8e3e8 !important;
+}
+
+html[data-theme="light"] #page-students .student-last-use{
+  color:#5f737d !important;
+}
+
+html[data-theme="light"] #page-students .student-card .btn:not(.danger){
+  background:#edf4f7 !important;
+  border-color:#c7d8e0 !important;
+  color:#294654 !important;
+}
+
+html[data-theme="light"] #page-students .student-card .btn:not(.danger):hover{
+  background:#e2edf2 !important;
+  border-color:#b5cbd5 !important;
+  color:#1f3b49 !important;
+}
+
+html[data-theme="light"] #page-students .student-card .btn.danger{
+  background:#f8ecee !important;
+  border-color:#e8cbd0 !important;
+  color:#94545d !important;
+}
+
+html[data-theme="light"] #page-students .student-card .btn.danger:hover{
+  background:#f3dfe3 !important;
+  border-color:#ddb8bf !important;
+}
+
+@media(max-width:720px){
+  html[data-theme="light"] #page-students .student-card-head{
+    background:#e9f3f7 !important;
+  }
+  html[data-theme="light"] #page-students .student-meta{
+    background:#f3f8fa !important;
+  }
+}
