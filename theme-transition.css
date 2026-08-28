@@ -1,18 +1,51 @@
-/* Control Ds — transição de tema garantida e perceptível */
+/* Control Ds — transição de tema mais suave, com troca mascarada */
+
+html.theme-transitioning{
+  --theme-transition-duration:820ms;
+}
+
 html.theme-transitioning body{
-  transition:opacity 260ms ease, filter 260ms ease !important;
+  will-change:opacity,filter,transform;
+  transition:
+    opacity 360ms cubic-bezier(.22,.61,.36,1),
+    filter 360ms cubic-bezier(.22,.61,.36,1),
+    transform 420ms cubic-bezier(.22,.61,.36,1) !important;
 }
 
 html.theme-transition-out body{
-  opacity:.42 !important;
-  filter:saturate(.75) brightness(.96) !important;
+  opacity:.82 !important;
+  filter:saturate(.88) brightness(.985) !important;
+  transform:scale(.9985) !important;
 }
 
 html.theme-transition-in body{
   opacity:1 !important;
   filter:saturate(1) brightness(1) !important;
+  transform:scale(1) !important;
 }
 
+/* Véu azul-cinza que cobre a troca brusca das cores no ponto central */
+html.theme-transitioning::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:2147483646;
+  pointer-events:none;
+  opacity:0;
+  background:linear-gradient(180deg,rgba(225,235,240,.92),rgba(205,220,228,.94));
+  backdrop-filter:blur(1.5px) saturate(.9);
+  -webkit-backdrop-filter:blur(1.5px) saturate(.9);
+  transition:opacity 360ms cubic-bezier(.22,.61,.36,1) !important;
+}
+
+html[data-theme="dark"].theme-transitioning::after{
+  background:linear-gradient(180deg,rgba(28,34,39,.94),rgba(18,22,26,.96));
+}
+
+html.theme-transition-out::after{opacity:.88}
+html.theme-transition-in::after{opacity:0}
+
+/* Transições locais continuam acontecendo por baixo do véu */
 html.theme-transitioning .sidebar,
 html.theme-transitioning .topbar,
 html.theme-transitioning .panel,
@@ -43,38 +76,25 @@ html.theme-transitioning .login-gate,
 html.theme-transitioning .login-card,
 html.theme-transitioning .control-theme-toggle{
   transition:
-    background-color 360ms ease,
-    color 320ms ease,
-    border-color 340ms ease,
-    box-shadow 360ms ease,
-    opacity 260ms ease,
-    filter 260ms ease !important;
+    background-color 560ms cubic-bezier(.22,.61,.36,1),
+    color 500ms cubic-bezier(.22,.61,.36,1),
+    border-color 540ms cubic-bezier(.22,.61,.36,1),
+    box-shadow 560ms cubic-bezier(.22,.61,.36,1),
+    opacity 420ms cubic-bezier(.22,.61,.36,1) !important;
 }
-
-/* Pequeno véu que reforça visualmente a troca de paleta */
-html.theme-transitioning::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:2147483646;
-  pointer-events:none;
-  opacity:0;
-  background:rgba(190,214,226,.16);
-  transition:opacity 260ms ease !important;
-}
-html.theme-transition-out::after{opacity:.34}
-html.theme-transition-in::after{opacity:0}
 
 @media (prefers-reduced-motion: reduce){
   html.theme-transitioning body,
   html.theme-transitioning::after,
   html.theme-transitioning body *{
     transition:none !important;
+    animation:none !important;
   }
   html.theme-transition-out body,
   html.theme-transition-in body{
     opacity:1 !important;
     filter:none !important;
+    transform:none !important;
   }
   html.theme-transitioning::after{display:none !important}
 }
