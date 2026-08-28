@@ -35,8 +35,8 @@ html[data-theme="light"] :is(.request-tab,.computer-tab):not(.active){
   color:#53656e !important;
 }
 
-/* Rótulos de turma/curso são bem pequenos e precisam de um tom mais forte. */
-html[data-theme="light"] .student-meta span{
+/* Rótulos de turma/curso são bem pequenos e a camada específica de Alunos usa ID. */
+html[data-theme="light"] #page-students .student-meta span{
   color:#506975 !important;
 }
 
