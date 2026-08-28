@@ -1,24 +1,18 @@
-/* Control Ds — transicao suave entre tema escuro e claro */
-
-::view-transition-old(root),
-::view-transition-new(root){
-  animation-duration:460ms;
-  animation-timing-function:cubic-bezier(.22,.61,.36,1);
+/* Control Ds — transição de tema garantida e perceptível */
+html.theme-transitioning body{
+  transition:opacity 260ms ease, filter 260ms ease !important;
 }
 
-::view-transition-old(root){animation-name:control-theme-fade-out}
-::view-transition-new(root){animation-name:control-theme-fade-in}
-
-@keyframes control-theme-fade-out{
-  from{opacity:1}
-  to{opacity:.72}
-}
-@keyframes control-theme-fade-in{
-  from{opacity:.35}
-  to{opacity:1}
+html.theme-transition-out body{
+  opacity:.42 !important;
+  filter:saturate(.75) brightness(.96) !important;
 }
 
-html.theme-transitioning body,
+html.theme-transition-in body{
+  opacity:1 !important;
+  filter:saturate(1) brightness(1) !important;
+}
+
 html.theme-transitioning .sidebar,
 html.theme-transitioning .topbar,
 html.theme-transitioning .panel,
@@ -49,22 +43,38 @@ html.theme-transitioning .login-gate,
 html.theme-transitioning .login-card,
 html.theme-transitioning .control-theme-toggle{
   transition:
-    background-color 440ms cubic-bezier(.22,.61,.36,1),
-    color 380ms ease,
-    border-color 420ms ease,
-    box-shadow 440ms ease !important;
+    background-color 360ms ease,
+    color 320ms ease,
+    border-color 340ms ease,
+    box-shadow 360ms ease,
+    opacity 260ms ease,
+    filter 260ms ease !important;
 }
 
-html.theme-transitioning body *::before,
-html.theme-transitioning body *::after{
-  transition:background-color 420ms ease,color 380ms ease,border-color 420ms ease !important;
+/* Pequeno véu que reforça visualmente a troca de paleta */
+html.theme-transitioning::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:2147483646;
+  pointer-events:none;
+  opacity:0;
+  background:rgba(190,214,226,.16);
+  transition:opacity 260ms ease !important;
 }
+html.theme-transition-out::after{opacity:.34}
+html.theme-transition-in::after{opacity:0}
 
 @media (prefers-reduced-motion: reduce){
-  ::view-transition-old(root),
-  ::view-transition-new(root){animation:none !important}
   html.theme-transitioning body,
+  html.theme-transitioning::after,
   html.theme-transitioning body *{
     transition:none !important;
   }
+  html.theme-transition-out body,
+  html.theme-transition-in body{
+    opacity:1 !important;
+    filter:none !important;
+  }
+  html.theme-transitioning::after{display:none !important}
 }
