@@ -28,7 +28,16 @@ window.ETE_CONFIG = {
       link.rel = "stylesheet";
       document.head.appendChild(link);
     }
-    link.href = "theme-light.css?v=5";
+    link.href = "theme-light.css?v=6";
+
+    let refine = document.getElementById("controlThemeRefineStyles");
+    if (!refine) {
+      refine = document.createElement("link");
+      refine.id = "controlThemeRefineStyles";
+      refine.rel = "stylesheet";
+      document.head.appendChild(refine);
+    }
+    refine.href = "theme-light-refine.css?v=1";
   }
 
   function updateButton(button){
@@ -36,8 +45,9 @@ window.ETE_CONFIG = {
     button.innerHTML = '<span aria-hidden="true">' + (light ? '☾' : '☀') + '</span><span class="theme-label">' + (light ? 'Tema escuro' : 'Tema claro') + '</span>';
     button.setAttribute("aria-pressed", String(light));
     button.title = light ? "Mudar para tema escuro" : "Mudar para tema claro";
-    button.style.background = light ? "#ffffff" : "#171a1f";
-    button.style.color = light ? "#24313e" : "#f3f5f7";
+    button.style.background = light ? "#dedfda" : "#171a1f";
+    button.style.color = light ? "#30363c" : "#f3f5f7";
+    button.style.borderColor = light ? "#b9bdb5" : "#39414b";
   }
 
   function toggleTheme(){
