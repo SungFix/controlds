@@ -86,9 +86,10 @@ window.ETE_CONFIG = {
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
     ensureScript("controlPermissionDetailsScript", "permission-details-enhance.js?v=3");
     ensureScript("controlRoleLabelFixScript", "role-label-fix.js?v=2");
-    ensureScript("controlProfessorDirectorParityScript", "professor-director-parity.js?v=2");
+    ensureScript("controlProfessorDirectorParityScript", "professor-director-parity.js?v=3");
     ensureScript("controlPermissionFormPickerScript", "permission-form-picker-enhance.js?v=1");
     ensureScript("controlPermissionDeleteScript", "permission-delete-enhance.js?v=1");
+    ensureScript("controlComputerDeleteScript", "computer-delete-enhance.js?v=1");
     ensureScript("controlUxPrimeScript", "ux-prime.js?v=3");
   }
 
