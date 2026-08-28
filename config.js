@@ -89,7 +89,7 @@ window.ETE_CONFIG = {
     ensureScript("controlProfessorDirectorParityScript", "professor-director-parity.js?v=3");
     ensureScript("controlPermissionFormPickerScript", "permission-form-picker-enhance.js?v=1");
     ensureScript("controlPermissionDeleteScript", "permission-delete-enhance.js?v=1");
-    ensureScript("controlComputerDeleteScript", "computer-delete-enhance.js?v=1");
+    ensureScript("controlComputerDeleteScript", "computer-delete-enhance.js?v=2");
     ensureScript("controlUxPrimeScript", "ux-prime.js?v=3");
   }
 
