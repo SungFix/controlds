@@ -1,0 +1,54 @@
+name: Apply V46 visual merge
+on:
+  push:
+    branches: [v46-visual-merge-chatgpt]
+permissions:
+  contents: write
+jobs:
+  merge:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch approved visual index for V46
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html')
+          text=p.read_text(encoding='utf-8')
+          pattern=r'<script src="https://cdn\.jsdelivr\.net/npm/@supabase/supabase-js@2"></script>\s*<script>\s*window\.ETE_CONFIG\s*=\s*window\.ETE_CONFIG\s*\|\|\s*\{.*?\};\s*</script>'
+          replacement='<script src="config.js"></script>\n<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4"></script>'
+          text,n=re.subn(pattern,replacement,text,count=1,flags=re.S)
+          if n!=1:
+              raise SystemExit(f'config block replacement count={n}')
+          text=text.replace('minlength="3" maxlength="8"','minlength="4" maxlength="8"')
+          old='applySharedState(loadLocalSharedState());'
+          if old not in text:
+              raise SystemExit('legacy startup state call not found')
+          text=text.replace(old,'applySharedState({requests:[],history:[],students:[],permissions:[],deletedRequestIds:[],historyClearedAt:""});',1)
+          bridge='<script src="v46-bridge.js"></script>'
+          if bridge not in text:
+              pos=text.rfind('</body>')
+              if pos<0: raise SystemExit('body closing tag not found')
+              text=text[:pos]+bridge+'\n'+text[pos:]
+          p.write_text(text,encoding='utf-8',newline='')
+          PY
+      - name: Static checks
+        shell: bash
+        run: |
+          node --check v46-bridge.js
+          grep -q '<script src="config.js"></script>' index.html
+          grep -q '@supabase/supabase-js@2.112.4' index.html
+          grep -q '<script src="v46-bridge.js"></script>' index.html
+          ! grep -q 'window.ETE_CONFIG = window.ETE_CONFIG' index.html
+      - name: Commit staged visual merge
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'Merge V46 backend into approved visual UI'
+          git push
