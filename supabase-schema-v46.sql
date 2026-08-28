@@ -643,7 +643,7 @@ begin
     select id into v_student_id from public.ete_students
       where lower(trim(name))=lower(trim(coalesce(item->>'student',item->>'studentName','Aluno')))
       and class_name=case when item->>'studentClass' in ('1°A','1°B','2°A','2°B') then item->>'studentClass' else '1°A' end
-      and course=case when upper(item->>'studentCourse') in ('DS','EDF') then upper(item->>'studentCourse' ) else 'DS' end
+      and course=case when upper(item->>'studentCourse') in ('DS','EDF') then upper(item->>'studentCourse') else 'DS' end
       limit 1;
 
     insert into public.ete_requests(
