@@ -20,4 +20,4 @@ jobs:
           SERVER_PID=$!
           trap 'kill $SERVER_PID || true' EXIT
           sleep 2
-          node .github/scripts/contrast-diagnostic.mjs
+          node .github/scripts/mobile-contrast-diagnostic.mjs
