@@ -1,0 +1,239 @@
+/* Control Ds — acabamento final de interface
+   Última camada visual: contraste, estados, hierarquia de ações e consistência. */
+
+/* ---------- Alunos: contraste real no tema escuro ---------- */
+html:not([data-theme="light"]) #page-students .student-stat span{
+  color:#b6c0c7 !important;
+}
+html:not([data-theme="light"]) #page-students .student-stat small{
+  color:#aeb9c1 !important;
+}
+html:not([data-theme="light"]) #page-students .student-card{
+  background:#12171d !important;
+  border-color:#303a44 !important;
+}
+html:not([data-theme="light"]) #page-students .student-card-head{
+  background:#171d23 !important;
+  border-bottom-color:#313a44 !important;
+}
+html:not([data-theme="light"]) #page-students .student-avatar{
+  background:#202932 !important;
+  border-color:#43505c !important;
+  color:#f8fafb !important;
+}
+html:not([data-theme="light"]) #page-students .student-card-title strong{
+  color:#f5f7f9 !important;
+}
+html:not([data-theme="light"]) #page-students .student-card-title small{
+  color:#b3bdc5 !important;
+}
+html:not([data-theme="light"]) #page-students .student-card-body{
+  background:#12171d !important;
+}
+html:not([data-theme="light"]) #page-students .student-meta{
+  background:#171e25 !important;
+  border-color:#35414c !important;
+}
+html:not([data-theme="light"]) #page-students .student-meta span{
+  color:#b4bec6 !important;
+}
+html:not([data-theme="light"]) #page-students .student-meta strong{
+  color:#f0f4f6 !important;
+}
+html:not([data-theme="light"]) #page-students .student-card-foot{
+  background:#11161b !important;
+  border-top-color:#303a44 !important;
+}
+html:not([data-theme="light"]) #page-students .student-last-use{
+  color:#b1bbc3 !important;
+}
+
+/* ---------- Pedidos, Permissões e Computadores ---------- */
+.request-card-top,.permission-card-top,.computer-item-head{
+  background:var(--ui-surface-2) !important;
+  border-color:var(--ui-border) !important;
+}
+.request-card-body,.permission-card-body,.computer-item-body{
+  background:var(--ui-surface) !important;
+}
+.request-info-box,.permission-info-box,.computer-meta{
+  background:var(--ui-surface-2) !important;
+  border-color:var(--ui-border) !important;
+}
+.request-info-box span,.permission-info-box span,.computer-meta span,
+.request-reason .label,.permission-note .label{
+  color:var(--ui-muted) !important;
+  font-weight:800 !important;
+}
+.request-info-box strong,.permission-info-box strong,.computer-meta strong,
+.request-student,.permission-student,.computer-student{
+  color:var(--ui-text) !important;
+}
+.request-reason,.permission-note{
+  background:var(--ui-surface-2) !important;
+  border-color:var(--ui-border) !important;
+}
+.request-reason p,.permission-note p,.computer-state-note{
+  color:var(--ui-text-2) !important;
+}
+.request-card-actions,.permission-actions,.computer-item-foot{
+  border-color:var(--ui-border) !important;
+}
+.request-results-label,.computer-results-label{
+  color:var(--ui-muted) !important;
+}
+
+/* ---------- Botões: hierarquia inequívoca ---------- */
+.btn{
+  min-height:42px !important;
+  border-radius:11px !important;
+  font-weight:800 !important;
+  box-shadow:none !important;
+}
+.btn.small{min-height:38px !important}
+.btn.primary{
+  background:var(--ui-primary) !important;
+  border-color:var(--ui-primary) !important;
+  color:var(--ui-primary-text) !important;
+}
+.btn.primary:hover:not(:disabled){
+  background:var(--ui-primary-hover) !important;
+  border-color:var(--ui-primary-hover) !important;
+}
+.btn.secondary{
+  background:var(--ui-surface-2) !important;
+  border-color:var(--ui-border) !important;
+  color:var(--ui-text-2) !important;
+}
+.btn.secondary:hover:not(:disabled){
+  background:var(--ui-surface-3) !important;
+  border-color:var(--ui-border-strong) !important;
+  color:var(--ui-text) !important;
+}
+.btn.danger,.btn.delete-request,[data-delete-student],[data-delete-request],
+[data-delete-permission],[data-delete-computer-record],#clearHistoryButton{
+  background:var(--ui-danger-bg) !important;
+  border-color:var(--ui-danger-border) !important;
+  color:var(--ui-danger) !important;
+}
+.btn.danger:hover:not(:disabled),.btn.delete-request:hover:not(:disabled),
+[data-delete-student]:hover:not(:disabled),[data-delete-request]:hover:not(:disabled),
+[data-delete-permission]:hover:not(:disabled),[data-delete-computer-record]:hover:not(:disabled),
+#clearHistoryButton:hover:not(:disabled){
+  filter:brightness(1.08) !important;
+}
+
+/* ---------- Estados vazios ---------- */
+.request-empty,.permission-empty,.student-empty,.computer-empty,.history-empty,.agenda-empty,
+.student-picker-empty{
+  min-height:150px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:7px !important;
+  padding:30px 22px !important;
+  border:1px dashed var(--ui-border-strong) !important;
+  border-radius:var(--ui-radius-lg) !important;
+  background:var(--ui-surface-2) !important;
+  color:var(--ui-muted) !important;
+  text-align:center !important;
+  font-size:10.5px !important;
+  line-height:1.55 !important;
+}
+.request-empty::before,.permission-empty::before,.student-empty::before,.computer-empty::before,.history-empty::before,.agenda-empty::before{
+  content:"";
+  width:36px;
+  height:36px;
+  border:1px solid var(--ui-border);
+  border-radius:11px;
+  background:var(--ui-surface);
+  box-shadow:inset 0 0 0 10px var(--ui-surface-2);
+}
+.request-empty strong,.permission-empty strong,.student-empty strong,.computer-empty strong,.history-empty strong,.agenda-empty strong{
+  color:var(--ui-text) !important;
+  font-size:13px !important;
+  line-height:1.3 !important;
+}
+
+/* ---------- Erros, avisos e feedback ---------- */
+.login-error,.form-error,[role="alert"]{
+  border-color:var(--ui-danger-border) !important;
+  background:var(--ui-danger-bg) !important;
+  color:var(--ui-danger) !important;
+}
+.toast{
+  border:1px solid var(--ui-border-strong) !important;
+  background:var(--ui-surface-3) !important;
+  color:var(--ui-text) !important;
+  box-shadow:var(--ui-shadow) !important;
+}
+.prime-network-banner{
+  border-bottom:1px solid var(--ui-warning-border) !important;
+  background:var(--ui-warning-bg) !important;
+  color:var(--ui-warning) !important;
+  font-weight:800 !important;
+}
+.sync-pill.error{
+  border-color:var(--ui-danger-border) !important;
+  background:var(--ui-danger-bg) !important;
+  color:var(--ui-danger) !important;
+}
+.sync-pill.online{
+  border-color:var(--ui-success-border) !important;
+  background:var(--ui-success-bg) !important;
+  color:var(--ui-success) !important;
+}
+
+/* ---------- Carregamento ---------- */
+.btn.is-loading,.btn[aria-busy="true"]{
+  position:relative !important;
+  pointer-events:none !important;
+}
+.btn.is-loading::before,.btn[aria-busy="true"]::before{
+  content:"";
+  width:12px;
+  height:12px;
+  margin-right:7px;
+  display:inline-block;
+  vertical-align:-2px;
+  border:2px solid currentColor;
+  border-right-color:transparent;
+  border-radius:50%;
+  animation:control-spin .7s linear infinite;
+}
+@keyframes control-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){
+  .btn.is-loading::before,.btn[aria-busy="true"]::before{animation:none;border-right-color:currentColor}
+}
+
+/* ---------- Campos e filtros ---------- */
+input,textarea,select,.request-sort,.filter-select,
+.group-picker-trigger,.interval-picker-trigger,.student-picker-trigger,.time-trigger{
+  border-color:var(--ui-border-strong) !important;
+  background:var(--ui-surface) !important;
+  color:var(--ui-text) !important;
+}
+input::placeholder,textarea::placeholder{color:var(--ui-faint) !important;opacity:1 !important}
+input:hover,textarea:hover,select:hover,.request-sort:hover,
+.group-picker-trigger:hover,.interval-picker-trigger:hover,.student-picker-trigger:hover,.time-trigger:hover{
+  border-color:var(--ui-accent) !important;
+}
+
+/* ---------- Modal de confirmação ---------- */
+#controlActionModal .control-action-message{font-size:13px !important}
+#controlActionModal .control-action-details{font-size:11px !important}
+#controlActionModal .control-action-confirm{min-width:150px !important}
+
+@media(max-width:820px){
+  .request-card-actions,.permission-actions,.computer-item-foot{
+    gap:8px !important;
+  }
+}
+@media(max-width:600px){
+  .btn{min-height:44px !important}
+  .btn.small{min-height:42px !important}
+  .request-card-actions .btn,.permission-actions .btn,.computer-item-foot .btn{
+    width:100% !important;
+  }
+}
