@@ -34,13 +34,18 @@
   }
 
   .mobile-menu{
-    display:inline-grid !important;
-    place-items:center !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
     width:44px !important;
     min-width:44px !important;
     height:44px !important;
     min-height:44px !important;
     padding:0 !important;
+    margin:0 !important;
+    line-height:0 !important;
+    font-size:0 !important;
+    text-align:center !important;
     border-radius:12px !important;
     border:1px solid #343d47 !important;
     background:#151a20 !important;
@@ -64,6 +69,10 @@
   .mobile-menu svg{
     width:22px !important;
     height:22px !important;
+    display:block !important;
+    flex:0 0 22px !important;
+    margin:0 auto !important;
+    transform:none !important;
     fill:none !important;
     stroke:currentColor !important;
     stroke-width:2 !important;
