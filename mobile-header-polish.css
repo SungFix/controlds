@@ -1,0 +1,238 @@
+/* Control Ds — cabeçalho mobile refinado */
+@media(max-width:820px){
+  .topbar{
+    padding:10px 12px !important;
+  }
+
+  .topbar-shell{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    gap:10px !important;
+    width:100% !important;
+  }
+
+  .topbar-left{
+    flex:1 1 auto !important;
+    min-width:0 !important;
+  }
+
+  .topbar-right,
+  .top-right{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-end !important;
+    gap:5px !important;
+    flex:0 0 auto !important;
+    padding:4px !important;
+    border:1px solid #28323b !important;
+    border-radius:15px !important;
+    background:#0f1419 !important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.025) !important;
+  }
+
+  .topbar-right .sync-pill,
+  .top-right .sync-pill{
+    display:none !important;
+  }
+
+  .control-theme-toggle-header,
+  .topbar-right .header-logout,
+  .top-right .header-logout{
+    width:40px !important;
+    min-width:40px !important;
+    height:40px !important;
+    min-height:40px !important;
+    padding:0 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    border-radius:11px !important;
+    border:1px solid #303b46 !important;
+    background:#151b21 !important;
+    color:#eef3f6 !important;
+    box-shadow:none !important;
+    line-height:1 !important;
+  }
+
+  .control-theme-toggle-header{
+    gap:0 !important;
+  }
+
+  .control-theme-toggle-header .theme-label{
+    display:none !important;
+  }
+
+  .control-theme-toggle-header > span:first-child{
+    width:auto !important;
+    height:auto !important;
+    display:block !important;
+    padding:0 !important;
+    margin:0 !important;
+    border:0 !important;
+    border-radius:0 !important;
+    background:transparent !important;
+    color:inherit !important;
+    font-size:18px !important;
+    line-height:1 !important;
+  }
+
+  .topbar-right .header-account,
+  .top-right .header-account{
+    width:auto !important;
+    min-width:108px !important;
+    max-width:132px !important;
+    height:40px !important;
+    min-height:40px !important;
+    padding:4px 9px 4px 5px !important;
+    gap:7px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    border:1px solid #303b46 !important;
+    border-radius:11px !important;
+    background:#151b21 !important;
+    box-shadow:none !important;
+    overflow:hidden !important;
+  }
+
+  .topbar-right .header-avatar,
+  .top-right .header-avatar{
+    width:30px !important;
+    min-width:30px !important;
+    height:30px !important;
+    flex:0 0 30px !important;
+    display:grid !important;
+    place-items:center !important;
+    border-radius:8px !important;
+    border:1px solid #3b4854 !important;
+    background:#202933 !important;
+    color:#ffffff !important;
+    font-size:10px !important;
+  }
+
+  .topbar-right .header-account-copy,
+  .top-right .header-account-copy{
+    display:block !important;
+    min-width:0 !important;
+    flex:1 1 auto !important;
+    padding:0 !important;
+    overflow:hidden !important;
+  }
+
+  .topbar-right .header-account-copy strong,
+  .top-right .header-account-copy strong{
+    display:block !important;
+    max-width:82px !important;
+    color:#f3f6f8 !important;
+    font-size:10px !important;
+    font-weight:850 !important;
+    line-height:1.05 !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+
+  .topbar-right .header-account-copy small,
+  .top-right .header-account-copy small,
+  .topbar-right .header-role,
+  .top-right .header-role{
+    display:none !important;
+  }
+
+  .topbar-right .header-logout,
+  .top-right .header-logout{
+    font-size:0 !important;
+    position:relative !important;
+  }
+
+  .topbar-right .header-logout::before,
+  .top-right .header-logout::before{
+    content:"⏻" !important;
+    display:block !important;
+    font-size:18px !important;
+    font-weight:500 !important;
+    line-height:1 !important;
+  }
+
+  .control-theme-toggle-header:active,
+  .topbar-right .header-logout:active,
+  .top-right .header-logout:active,
+  .topbar-right .header-account:active,
+  .top-right .header-account:active{
+    transform:scale(.97) !important;
+  }
+
+  html[data-theme="light"] .topbar-right,
+  html[data-theme="light"] .top-right{
+    background:#e8eff3 !important;
+    border-color:#ccd9df !important;
+    box-shadow:none !important;
+  }
+
+  html[data-theme="light"] .control-theme-toggle-header,
+  html[data-theme="light"] .topbar-right .header-account,
+  html[data-theme="light"] .top-right .header-account,
+  html[data-theme="light"] .topbar-right .header-logout,
+  html[data-theme="light"] .top-right .header-logout{
+    background:#ffffff !important;
+    border-color:#cad7de !important;
+    color:#2d4652 !important;
+  }
+
+  html[data-theme="light"] .topbar-right .header-avatar,
+  html[data-theme="light"] .top-right .header-avatar{
+    background:#e5eef2 !important;
+    border-color:#c8d7de !important;
+    color:#365866 !important;
+  }
+
+  html[data-theme="light"] .topbar-right .header-account-copy strong,
+  html[data-theme="light"] .top-right .header-account-copy strong{
+    color:#203640 !important;
+  }
+}
+
+@media(max-width:590px){
+  .topbar-right .header-account,
+  .top-right .header-account{
+    width:40px !important;
+    min-width:40px !important;
+    max-width:40px !important;
+    padding:4px !important;
+    justify-content:center !important;
+  }
+
+  .topbar-right .header-account-copy,
+  .top-right .header-account-copy{
+    display:none !important;
+  }
+}
+
+@media(max-width:420px){
+  .topbar-right,
+  .top-right{
+    gap:4px !important;
+    padding:3px !important;
+    border-radius:14px !important;
+  }
+
+  .control-theme-toggle-header,
+  .topbar-right .header-account,
+  .top-right .header-account,
+  .topbar-right .header-logout,
+  .top-right .header-logout{
+    width:38px !important;
+    min-width:38px !important;
+    height:38px !important;
+    min-height:38px !important;
+  }
+
+  .topbar-right .header-avatar,
+  .top-right .header-avatar{
+    width:28px !important;
+    min-width:28px !important;
+    height:28px !important;
+    flex-basis:28px !important;
+  }
+}
