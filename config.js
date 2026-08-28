@@ -16,12 +16,28 @@ window.ETE_CONFIG = {
   const root = document.documentElement;
   let observerQueued = false;
 
-  let savedTheme = "dark";
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === "light" || stored === "dark") savedTheme = stored;
-  } catch (_) {}
-  root.dataset.theme = savedTheme;
+  function normalizeTheme(value){
+    return value === "light" ? "light" : "dark";
+  }
+
+  function readStoredTheme(){
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored === "light" || stored === "dark") return stored;
+    } catch (_) {}
+    return "dark";
+  }
+
+  function applyRootTheme(theme){
+    const next = normalizeTheme(theme);
+    if (root.dataset.theme !== next) root.dataset.theme = next;
+    root.classList.toggle("theme-light", next === "light");
+    root.classList.toggle("theme-dark", next === "dark");
+    root.style.colorScheme = next;
+    return next;
+  }
+
+  applyRootTheme(readStoredTheme());
 
   function ensureStylesheet(id, href){
     let link = document.getElementById(id);
@@ -49,41 +65,60 @@ window.ETE_CONFIG = {
   }
 
   function ensureThemeStyles(){
-    ensureStylesheet("controlThemeStyles", "theme-light.css?v=6");
-    ensureStylesheet("controlThemeRefineStyles", "theme-light-refine.css?v=2");
-    ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=11");
-    ensureStylesheet("controlLightPermissionsStyles", "theme-light-permissions.css?v=2");
-    ensureStylesheet("controlPermissionCardsStyles", "permission-cards.css?v=1");
-    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=9");
-    ensureStylesheet("controlHeaderPolishStyles", "header-polish.css?v=2");
-    ensureStylesheet("controlMobileMenuStyles", "mobile-menu-enhance.css?v=2");
-    ensureStylesheet("controlMobilePolishStyles", "mobile-polish.css?v=1");
-    ensureStylesheet("controlMobileHeaderPolishStyles", "mobile-header-polish.css?v=2");
-    ensureStylesheet("controlThemeParityStyles", "theme-light-parity.css?v=1");
-    ensureStylesheet("controlVisualPrimeStyles", "visual-prime.css?v=2");
-    ensureStylesheet("controlAccessibilityPrimeStyles", "accessibility-prime.css?v=1");
+    /* Versões incrementadas para impedir que o navegador do PC mantenha CSS antigo. */
+    ensureStylesheet("controlThemeStyles", "theme-light.css?v=7");
+    ensureStylesheet("controlThemeRefineStyles", "theme-light-refine.css?v=3");
+    ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=12");
+    ensureStylesheet("controlLightPermissionsStyles", "theme-light-permissions.css?v=3");
+    ensureStylesheet("controlPermissionCardsStyles", "permission-cards.css?v=2");
+    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=10");
+    ensureStylesheet("controlHeaderPolishStyles", "header-polish.css?v=3");
+    ensureStylesheet("controlMobileMenuStyles", "mobile-menu-enhance.css?v=3");
+    ensureStylesheet("controlMobilePolishStyles", "mobile-polish.css?v=2");
+    ensureStylesheet("controlMobileHeaderPolishStyles", "mobile-header-polish.css?v=3");
+    ensureStylesheet("controlThemeParityStyles", "theme-light-parity.css?v=2");
+    ensureStylesheet("controlVisualPrimeStyles", "visual-prime.css?v=3");
+    ensureStylesheet("controlAccessibilityPrimeStyles", "accessibility-prime.css?v=2");
 
-    ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=2");
-    ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=1");
-    ensureScript("controlPermissionDetailsScript", "permission-details-enhance.js?v=2");
-    ensureScript("controlRoleLabelFixScript", "role-label-fix.js?v=1");
-    ensureScript("controlProfessorDirectorParityScript", "professor-director-parity.js?v=1");
-    ensureScript("controlUxPrimeScript", "ux-prime.js?v=2");
+    ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
+    ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
+    ensureScript("controlPermissionDetailsScript", "permission-details-enhance.js?v=3");
+    ensureScript("controlRoleLabelFixScript", "role-label-fix.js?v=2");
+    ensureScript("controlProfessorDirectorParityScript", "professor-director-parity.js?v=2");
+    ensureScript("controlUxPrimeScript", "ux-prime.js?v=3");
   }
 
   function updateButton(button){
     const light = root.dataset.theme === "light";
-    button.innerHTML = '<span aria-hidden="true">' + (light ? '☾' : '☀') + '</span><span class="theme-label">' + (light ? 'Tema escuro' : 'Tema claro') + '</span>';
+    const state = light ? "light" : "dark";
+
+    /* Não recria o conteúdo a cada MutationObserver. Isso elimina um loop de
+       renderização que podia deixar o botão instável em navegadores desktop. */
+    if (button.dataset.themeState !== state) {
+      button.innerHTML = '<span aria-hidden="true">' + (light ? '☾' : '☀') + '</span><span class="theme-label">' + (light ? 'Tema escuro' : 'Tema claro') + '</span>';
+      button.dataset.themeState = state;
+    }
+
     button.setAttribute("aria-pressed", String(light));
     button.setAttribute("aria-label", light ? "Mudar para tema escuro" : "Mudar para tema claro");
     button.title = light ? "Mudar para tema escuro" : "Mudar para tema claro";
   }
 
-  function setTheme(theme){
-    const next = theme === "light" ? "light" : "dark";
-    root.dataset.theme = next;
-    try { localStorage.setItem(STORAGE_KEY, next); } catch (_) {}
+  function setTheme(theme, options){
+    const next = applyRootTheme(theme);
+    const persist = !options || options.persist !== false;
+
+    if (persist) {
+      try { localStorage.setItem(STORAGE_KEY, next); } catch (_) {}
+    }
+
     document.querySelectorAll(".control-theme-toggle").forEach(updateButton);
+
+    try {
+      window.dispatchEvent(new CustomEvent("control-theme-change", { detail: { theme: next } }));
+    } catch (_) {}
+
+    return next;
   }
 
   function toggleTheme(){
@@ -107,7 +142,11 @@ window.ETE_CONFIG = {
     button.style.visibility = "visible";
     button.style.opacity = "1";
     button.style.pointerEvents = "auto";
-    button.addEventListener("click", toggleTheme);
+    button.addEventListener("click", function(event){
+      event.preventDefault();
+      event.stopPropagation();
+      toggleTheme();
+    });
     updateButton(button);
     return button;
   }
@@ -140,6 +179,7 @@ window.ETE_CONFIG = {
   function mountThemeControls(){
     observerQueued = false;
     ensureThemeStyles();
+    applyRootTheme(readStoredTheme());
     mountHeaderButton();
     mountFloatingButton();
     document.querySelectorAll(".control-theme-toggle").forEach(updateButton);
@@ -169,5 +209,25 @@ window.ETE_CONFIG = {
     }
   }
 
+  /* Corrige troca entre abas/janelas e restauração pelo cache de navegação. */
+  window.addEventListener("storage", function(event){
+    if (event.key !== STORAGE_KEY) return;
+    if (event.newValue === "light" || event.newValue === "dark") {
+      setTheme(event.newValue, { persist:false });
+    }
+  });
+
+  window.addEventListener("pageshow", function(){
+    setTheme(readStoredTheme(), { persist:false });
+    mountThemeControls();
+  });
+
   window.addEventListener("load", mountThemeControls, { once:true });
+
+  /* API pequena para testes e recuperação sem depender do clique do botão. */
+  window.ControlTheme = Object.freeze({
+    get: function(){ return root.dataset.theme === "light" ? "light" : "dark"; },
+    set: function(theme){ return setTheme(theme); },
+    toggle: toggleTheme
+  });
 })();
