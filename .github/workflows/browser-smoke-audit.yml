@@ -84,3 +84,5 @@ jobs:
           await browser.close();
           JS
           node control-ds-smoke.mjs
+
+# Reexecutado após as correções finais de 2026-08-28.
