@@ -65,7 +65,6 @@ window.ETE_CONFIG = {
   }
 
   function ensureThemeStyles(){
-    /* Versões incrementadas para impedir que o navegador do PC mantenha CSS antigo. */
     ensureStylesheet("controlThemeStyles", "theme-light.css?v=7");
     ensureStylesheet("controlThemeRefineStyles", "theme-light-refine.css?v=3");
     ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=12");
@@ -90,22 +89,18 @@ window.ETE_CONFIG = {
     ensureScript("controlProfessorDirectorParityScript", "professor-director-parity.js?v=3");
     ensureScript("controlPermissionFormPickerScript", "permission-form-picker-enhance.js?v=1");
     ensureScript("controlActionModalScript", "action-modal.js?v=1");
-    ensureScript("controlPermissionDeleteScript", "permission-delete-enhance.js?v=1");
-    ensureScript("controlComputerDeleteScript", "computer-delete-enhance.js?v=3");
+    ensureScript("controlPermissionDeleteScript", "permission-delete-enhance.js?v=2");
+    ensureScript("controlComputerDeleteScript", "computer-delete-enhance.js?v=4");
     ensureScript("controlUxPrimeScript", "ux-prime.js?v=3");
   }
 
   function updateButton(button){
     const light = root.dataset.theme === "light";
     const state = light ? "light" : "dark";
-
-    /* Não recria o conteúdo a cada MutationObserver. Isso elimina um loop de
-       renderização que podia deixar o botão instável em navegadores desktop. */
     if (button.dataset.themeState !== state) {
       button.innerHTML = '<span aria-hidden="true">' + (light ? '☾' : '☀') + '</span><span class="theme-label">' + (light ? 'Tema escuro' : 'Tema claro') + '</span>';
       button.dataset.themeState = state;
     }
-
     button.setAttribute("aria-pressed", String(light));
     button.setAttribute("aria-label", light ? "Mudar para tema escuro" : "Mudar para tema claro");
     button.title = light ? "Mudar para tema escuro" : "Mudar para tema claro";
@@ -114,23 +109,15 @@ window.ETE_CONFIG = {
   function setTheme(theme, options){
     const next = applyRootTheme(theme);
     const persist = !options || options.persist !== false;
-
     if (persist) {
       try { localStorage.setItem(STORAGE_KEY, next); } catch (_) {}
     }
-
     document.querySelectorAll(".control-theme-toggle").forEach(updateButton);
-
-    try {
-      window.dispatchEvent(new CustomEvent("control-theme-change", { detail: { theme: next } }));
-    } catch (_) {}
-
+    try { window.dispatchEvent(new CustomEvent("control-theme-change", { detail: { theme: next } })); } catch (_) {}
     return next;
   }
 
-  function toggleTheme(){
-    setTheme(root.dataset.theme === "light" ? "dark" : "light");
-  }
+  function toggleTheme(){ setTheme(root.dataset.theme === "light" ? "dark" : "light"); }
 
   function makeButton(extraClass){
     const button = document.createElement("button");
@@ -149,11 +136,7 @@ window.ETE_CONFIG = {
     button.style.visibility = "visible";
     button.style.opacity = "1";
     button.style.pointerEvents = "auto";
-    button.addEventListener("click", function(event){
-      event.preventDefault();
-      event.stopPropagation();
-      toggleTheme();
-    });
+    button.addEventListener("click", function(event){ event.preventDefault(); event.stopPropagation(); toggleTheme(); });
     updateButton(button);
     return button;
   }
@@ -162,10 +145,7 @@ window.ETE_CONFIG = {
     const header = document.querySelector(".topbar-right, .top-right");
     if (!header) return;
     let button = header.querySelector(".control-theme-toggle-header");
-    if (!button) {
-      button = makeButton("control-theme-toggle-header");
-      header.insertBefore(button, header.firstChild);
-    }
+    if (!button) { button = makeButton("control-theme-toggle-header"); header.insertBefore(button, header.firstChild); }
     updateButton(button);
   }
 
@@ -216,22 +196,14 @@ window.ETE_CONFIG = {
     }
   }
 
-  /* Corrige troca entre abas/janelas e restauração pelo cache de navegação. */
   window.addEventListener("storage", function(event){
     if (event.key !== STORAGE_KEY) return;
-    if (event.newValue === "light" || event.newValue === "dark") {
-      setTheme(event.newValue, { persist:false });
-    }
+    if (event.newValue === "light" || event.newValue === "dark") setTheme(event.newValue, { persist:false });
   });
 
-  window.addEventListener("pageshow", function(){
-    setTheme(readStoredTheme(), { persist:false });
-    mountThemeControls();
-  });
-
+  window.addEventListener("pageshow", function(){ setTheme(readStoredTheme(), { persist:false }); mountThemeControls(); });
   window.addEventListener("load", mountThemeControls, { once:true });
 
-  /* API pequena para testes e recuperação sem depender do clique do botão. */
   window.ControlTheme = Object.freeze({
     get: function(){ return root.dataset.theme === "light" ? "light" : "dark"; },
     set: function(theme){ return setTheme(theme); },
