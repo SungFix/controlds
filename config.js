@@ -81,6 +81,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlStudentLightPolishStyles", "student-light-polish.css?v=1");
     ensureStylesheet("controlPermissionFormPickerStyles", "permission-form-picker-enhance.css?v=1");
     ensureStylesheet("controlActionModalStyles", "action-modal.css?v=1");
+    ensureStylesheet("controlFinalPolishStyles", "final-polish.css?v=1");
 
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
@@ -92,6 +93,7 @@ window.ETE_CONFIG = {
     ensureScript("controlPermissionDeleteScript", "permission-delete-enhance.js?v=2");
     ensureScript("controlComputerDeleteScript", "computer-delete-enhance.js?v=4");
     ensureScript("controlUxPrimeScript", "ux-prime.js?v=3");
+    ensureScript("controlFinalPolishScript", "final-polish.js?v=1");
   }
 
   function updateButton(button){
