@@ -1,4 +1,4 @@
-/* Control Ds — transição suave entre claro e escuro */
+/* Control Ds — transição suave sem clarão de tela inteira */
 
 html.theme-transitioning::after{
   content:"";
@@ -7,27 +7,23 @@ html.theme-transitioning::after{
   z-index:2147483646;
   pointer-events:none;
   opacity:0;
-  background:#edf2f5;
-  transition:opacity 520ms cubic-bezier(.22,.61,.36,1) !important;
+  background:#667983;
+  transition:opacity 140ms ease-out !important;
 }
 
-/* Ao entrar no tema claro, a cobertura é branca/clara — nunca preta */
-html.theme-target-light::after{
-  background:linear-gradient(180deg,#ffffff 0%,#f7fafb 48%,#edf2f5 100%) !important;
-}
-
-/* Ao entrar no tema escuro, a cobertura acompanha o tema escuro */
+/* A cobertura é neutra e translúcida nos dois sentidos para evitar clarão */
+html.theme-target-light::after,
 html.theme-target-dark::after{
-  background:linear-gradient(180deg,#111418 0%,#0d1013 52%,#090b0e 100%) !important;
+  background:#667983 !important;
 }
 
 html.theme-transition-cover::after{
-  opacity:.985;
+  opacity:.14;
 }
 
 html.theme-transition-reveal::after{
   opacity:0;
-  transition-duration:620ms !important;
+  transition-duration:180ms !important;
 }
 
 html.theme-transitioning body,
@@ -61,14 +57,14 @@ html.theme-transitioning .login-gate,
 html.theme-transitioning .login-card,
 html.theme-transitioning .control-theme-toggle{
   transition:
-    background-color 700ms cubic-bezier(.22,.61,.36,1),
-    color 620ms cubic-bezier(.22,.61,.36,1),
-    border-color 680ms cubic-bezier(.22,.61,.36,1),
-    box-shadow 700ms cubic-bezier(.22,.61,.36,1) !important;
+    background-color 320ms cubic-bezier(.22,.61,.36,1),
+    color 260ms cubic-bezier(.22,.61,.36,1),
+    border-color 300ms cubic-bezier(.22,.61,.36,1),
+    box-shadow 320ms cubic-bezier(.22,.61,.36,1) !important;
 }
 
 @media (prefers-reduced-motion: reduce){
-  html.theme-transitioning::after{transition-duration:180ms !important}
+  html.theme-transitioning::after{display:none !important}
   html.theme-transitioning body,
-  html.theme-transitioning body *{transition-duration:180ms !important}
+  html.theme-transitioning body *{transition-duration:0ms !important}
 }
