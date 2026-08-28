@@ -52,8 +52,7 @@ jobs:
 
           class Parser(HTMLParser):
               def __init__(self):
-                  super().__init__(convert_charrefs=True)
-                  self.ids=[]; self.labels=[]; self.assets=[]
+                  super().__init__(convert_charrefs=True); self.ids=[]; self.labels=[]; self.assets=[]
               def handle_starttag(self,tag,attrs):
                   a=dict(attrs)
                   if a.get('id'): self.ids.append(a['id'])
@@ -74,15 +73,12 @@ jobs:
               path=asset.split('?',1)[0].split('#',1)[0]
               if path and not (root/path).exists(): errors.append('Asset local ausente: '+path)
 
-          required=['loginGate','loginForm','loginUsername','loginPassword','loginSubmit','studentRows','requestRows','permissionRows','historyRows']
-          for rid in required:
+          for rid in ['loginGate','loginForm','loginUsername','loginPassword','loginSubmit','studentRows','requestRows','permissionRows','historyRows']:
               if rid not in ids: errors.append('Elemento crítico ausente: '+rid)
 
           for css in root.glob('*.css'):
-              text=css.read_text(encoding='utf-8')
-              clean=re.sub(r'/\*.*?\*/','',text,flags=re.S)
-              if clean.count('{') != clean.count('}'):
-                  errors.append('CSS desbalanceado: '+css.name)
+              clean=re.sub(r'/\*.*?\*/','',css.read_text(encoding='utf-8'),flags=re.S)
+              if clean.count('{') != clean.count('}'): errors.append('CSS desbalanceado: '+css.name)
 
           try:
               manifest=json.loads((root/'manifest.webmanifest').read_text(encoding='utf-8'))
@@ -91,14 +87,8 @@ jobs:
           except Exception as exc:
               errors.append('Manifest inválido: '+str(exc))
 
-          joined='\n'.join([html,config]+[p.read_text(encoding='utf-8') for p in root.glob('*.js')])
-          secret_patterns=[
-              r'SUPABASE_SERVICE_ROLE_KEY',
-              r'DATABASE_PASSWORD',
-              r'jwt[_-]?secret',
-              r'postgres(?:ql)?://[^\s"\']+:[^\s"\']+@'
-          ]
-          for pattern in secret_patterns:
+          joined='\n'.join([html,config]+[f.read_text(encoding='utf-8') for f in root.glob('*.js')])
+          for pattern in [r'SUPABASE_SERVICE_ROLE_KEY',r'DATABASE_PASSWORD',r'jwt[_-]?secret',r'postgres(?:ql)?://[^\s"\']+:[^\s"\']+@']:
               if re.search(pattern,joined,re.I): errors.append('Possível segredo privado no frontend: '+pattern)
 
           if errors:
@@ -110,20 +100,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for file in ./*.js; do
-            [ -e "$file" ] && node --check "$file"
-          done
+          for file in ./*.js; do [ -e "$file" ] && node --check "$file"; done
           python3 - <<'PY'
           from pathlib import Path
           import re
           h=Path('index.html').read_text(encoding='utf-8')
-          blocks=re.findall(r'<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>',h,flags=re.I|re.S)
-          for i,b in enumerate(blocks): Path(f'/tmp/control-inline-{i}.js').write_text(b,encoding='utf-8')
-          print(len(blocks))
+          for i,b in enumerate(re.findall(r'<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>',h,flags=re.I|re.S)):
+              Path(f'/tmp/control-inline-{i}.js').write_text(b,encoding='utf-8')
           PY
-          for file in /tmp/control-inline-*.js; do
-            [ -e "$file" ] && node --check "$file"
-          done
+          for file in /tmp/control-inline-*.js; do [ -e "$file" ] && node --check "$file"; done
           echo 'JAVASCRIPT PRIME AUDIT: PASS'
 
       - name: Install browser and accessibility tools
@@ -140,7 +125,7 @@ jobs:
           SERVER_PID=$!
           trap 'kill $SERVER_PID || true' EXIT
           sleep 2
-          cat > /tmp/prime-audit.mjs <<'JS'
+          cat > prime-audit.mjs <<'JS'
           import { chromium } from 'playwright';
           import fs from 'fs';
           import path from 'path';
@@ -149,21 +134,15 @@ jobs:
           const browser=await chromium.launch({headless:true});
 
           async function noOverflow(page,label){
-            const overflow=await page.evaluate(()=>({
-              sw:document.documentElement.scrollWidth,
-              cw:document.documentElement.clientWidth
-            }));
-            if(overflow.sw>overflow.cw+2) throw new Error(`${label}: overflow horizontal ${overflow.sw}/${overflow.cw}`);
+            const {sw,cw}=await page.evaluate(()=>({sw:document.documentElement.scrollWidth,cw:document.documentElement.clientWidth}));
+            if(sw>cw+2) throw new Error(`${label}: overflow horizontal ${sw}/${cw}`);
           }
 
           async function auditA11y(page,label){
             await page.addScriptTag({content:axeSource});
             const result=await page.evaluate(async()=>await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa']}}));
             const bad=result.violations.filter(v=>['critical','serious'].includes(v.impact));
-            if(bad.length){
-              const detail=bad.map(v=>`${v.id} (${v.nodes.length})`).join(', ');
-              throw new Error(`${label}: acessibilidade séria/crítica: ${detail}`);
-            }
+            if(bad.length) throw new Error(`${label}: ${bad.map(v=>`${v.id} (${v.nodes.length})`).join(', ')}`);
           }
 
           for(const vp of [
@@ -198,14 +177,13 @@ jobs:
             await page.evaluate(()=>{
               v46AuthUser={id:'prime-audit-adm'};
               currentUser={username:'audit',displayName:'Auditor',role:'adm',roleLabel:'Administrador',userId:'prime-audit-adm'};
-              appReady=true;
-              data=[];students=[];permissions=[];history=[];
+              appReady=true;data=[];students=[];permissions=[];history=[];
               setAuthLocked(false);setCurrentUser(currentUser);render();
             });
 
             for(const section of ['home','agenda','permissions','requests','students','computers','history']){
               await page.click(`[data-page="${section}"]`);
-              await page.waitForTimeout(20);
+              await page.waitForTimeout(30);
               const active=await page.locator(`#page-${section}`).evaluate(el=>el.classList.contains('active'));
               if(!active) throw new Error(`${vp.label}: ${section} não ativou`);
               await noOverflow(page,`${vp.label}-${section}`);
@@ -220,4 +198,5 @@ jobs:
           await browser.close();
           console.log('PRIME BROWSER/A11Y AUDIT: PASS');
           JS
-          node /tmp/prime-audit.mjs
+          node prime-audit.mjs
+          rm -f prime-audit.mjs
