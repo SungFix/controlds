@@ -1,33 +1,34 @@
-/* Control Ds — reforço das cores secundárias do tema claro */
+/* Control Ds — tema claro azul-cinza com contraste maior e sem branco forte */
 html[data-theme="light"]{
-  --surface-primary:#f8fafb;
-  --surface-secondary:#e8f0f4;
-  --surface-tertiary:#dfe9ee;
-  --surface-muted:#eef4f6;
-  --surface-accent:#d8e6ed;
+  --surface-primary:#eef2f4;
+  --surface-secondary:#dfe8ed;
+  --surface-tertiary:#d3e0e6;
+  --surface-muted:#e7edf0;
+  --surface-accent:#c9dbe4;
+  --surface-soft:#e9eef1;
+  --surface-card:#f2f5f6;
+  --border-strong:#b9cbd4;
+  --border-soft:#c9d6dc;
 }
 
-/* Áreas estruturais */
-html[data-theme="light"] .sidebar{background:#f4f8fa !important}
-html[data-theme="light"] .topbar{background:rgba(239,245,248,.97) !important}
+/* Fundo geral mais cinza-azulado, sem branco forte */
+html[data-theme="light"] body{
+  background:linear-gradient(180deg,#e9eef1 0%,#e2e9ed 52%,#dde5e9 100%) !important;
+}
 html[data-theme="light"] .content{background:transparent !important}
 
-/* Cabeçalhos e blocos secundários */
-html[data-theme="light"] .panelhead,
-html[data-theme="light"] .request-card-top,
-html[data-theme="light"] .computer-item-head,
-html[data-theme="light"] .header-account,
-html[data-theme="light"] .account-card,
-html[data-theme="light"] .quick-card,
-html[data-theme="light"] .summary-card,
-html[data-theme="light"] .request-info-box,
-html[data-theme="light"] .computer-meta-box,
-html[data-theme="light"] .permission-help{
-  background:var(--surface-secondary) !important;
-  border-color:#c9d9e1 !important;
+/* Estrutura principal */
+html[data-theme="light"] .sidebar{
+  background:#edf2f4 !important;
+  border-color:#c4d1d8 !important;
+}
+html[data-theme="light"] .topbar{
+  background:rgba(229,236,240,.98) !important;
+  border-color:#c2d0d7 !important;
+  box-shadow:0 4px 18px rgba(52,72,81,.06) !important;
 }
 
-/* Cards principais continuam quase brancos */
+/* Cards principais: claros, mas não brancos */
 html[data-theme="light"] .panel,
 html[data-theme="light"] .hero-stat,
 html[data-theme="light"] .mini-stat,
@@ -39,11 +40,42 @@ html[data-theme="light"] .history-stat,
 html[data-theme="light"] .request-stat,
 html[data-theme="light"] .student-stat,
 html[data-theme="light"] .permission-stat,
-html[data-theme="light"] .computer-stat{
-  background:var(--surface-primary) !important;
+html[data-theme="light"] .computer-stat,
+html[data-theme="light"] dialog,
+html[data-theme="light"] .login-card{
+  background:var(--surface-card) !important;
+  border-color:var(--border-soft) !important;
+  box-shadow:0 8px 24px rgba(52,72,81,.07) !important;
 }
 
-/* Elementos de apoio ganham o ciano-cinza visível */
+/* Cabeçalhos e áreas secundárias com diferença visível */
+html[data-theme="light"] .panelhead,
+html[data-theme="light"] .request-card-top,
+html[data-theme="light"] .computer-item-head,
+html[data-theme="light"] .header-account,
+html[data-theme="light"] .account-card,
+html[data-theme="light"] .quick-card,
+html[data-theme="light"] .summary-card,
+html[data-theme="light"] .request-info-box,
+html[data-theme="light"] .computer-meta-box,
+html[data-theme="light"] .permission-help,
+html[data-theme="light"] .request-main,
+html[data-theme="light"] .request-side,
+html[data-theme="light"] .time-card{
+  background:var(--surface-secondary) !important;
+  border-color:var(--border-strong) !important;
+}
+
+/* Ações rápidas ficam mais destacadas do card externo */
+html[data-theme="light"] .quick-card{
+  background:#dbe6eb !important;
+}
+html[data-theme="light"] .quick-card:hover{
+  background:#d1dfe6 !important;
+  border-color:#aac2ce !important;
+}
+
+/* Elementos de apoio em ciano/cinza */
 html[data-theme="light"] .page-symbol,
 html[data-theme="light"] .navicon,
 html[data-theme="light"] .header-avatar,
@@ -56,33 +88,41 @@ html[data-theme="light"] .group-picker-badge,
 html[data-theme="light"] .group-picker-chevron,
 html[data-theme="light"] .interval-picker-chevron{
   background:var(--surface-tertiary) !important;
-  border-color:#c4d5de !important;
+  border-color:#b5c8d1 !important;
 }
 
-/* Seleções e estados ativos */
-html[data-theme="light"] .nav button.active,
+/* Menu */
+html[data-theme="light"] .nav button:hover{
+  background:#dde7ec !important;
+}
+html[data-theme="light"] .nav button.active{
+  background:var(--surface-accent) !important;
+  border-color:#a9c1cd !important;
+  box-shadow:inset 3px 0 0 #65879b !important;
+}
+html[data-theme="light"] .nav button.active .navicon{
+  background:#e8eef1 !important;
+  border-color:#adc2cc !important;
+}
+
+/* Abas, seleções e estados ativos */
 html[data-theme="light"] .request-tab.active,
 html[data-theme="light"] .computer-tab.active,
 html[data-theme="light"] .group-option.active,
 html[data-theme="light"] .interval-option.active,
 html[data-theme="light"] .time-option.active{
   background:var(--surface-accent) !important;
-  border-color:#b8cfdb !important;
+  border-color:#aac2ce !important;
 }
-
-/* Hover discreto mas perceptível */
-html[data-theme="light"] .nav button:hover,
 html[data-theme="light"] .request-tab:hover,
 html[data-theme="light"] .computer-tab:hover,
-html[data-theme="light"] .row:hover,
-html[data-theme="light"] .request-card:hover,
-html[data-theme="light"] .computer-item:hover,
-html[data-theme="light"] .student-item:hover,
-html[data-theme="light"] .permission-item:hover{
-  background:var(--surface-muted) !important;
+html[data-theme="light"] .group-option:hover,
+html[data-theme="light"] .interval-option:hover,
+html[data-theme="light"] .time-option:hover{
+  background:#d9e5ea !important;
 }
 
-/* Campos não ficam branco puro */
+/* Campos: cinza-azulado perceptível */
 html[data-theme="light"] input,
 html[data-theme="light"] textarea,
 html[data-theme="light"] select,
@@ -91,22 +131,73 @@ html[data-theme="light"] .request-sort,
 html[data-theme="light"] .group-picker-trigger,
 html[data-theme="light"] .interval-picker-trigger,
 html[data-theme="light"] .time-trigger{
-  background:#f2f7f9 !important;
-  border-color:#c6d6de !important;
+  background:#e5ecef !important;
+  border-color:#b7c9d2 !important;
+  color:#26363e !important;
+}
+html[data-theme="light"] input:focus,
+html[data-theme="light"] textarea:focus,
+html[data-theme="light"] select:focus,
+html[data-theme="light"] .group-picker-trigger.open,
+html[data-theme="light"] .interval-picker-trigger.open{
+  background:#edf2f4 !important;
+  border-color:#718fa1 !important;
+  box-shadow:0 0 0 3px rgba(95,127,150,.14) !important;
 }
 
-html[data-theme="light"] .request-main,
-html[data-theme="light"] .request-side,
-html[data-theme="light"] .time-card,
-html[data-theme="light"] .login-card,
-html[data-theme="light"] dialog{
-  background:#f6f9fa !important;
+/* Popups */
+html[data-theme="light"] .group-picker-popup,
+html[data-theme="light"] .interval-picker-popup,
+html[data-theme="light"] .time-popup{
+  background:#edf2f4 !important;
+  border-color:#b9cbd4 !important;
 }
 
-html[data-theme="light"] .login-card .login-brand,
-html[data-theme="light"] .login-grid input,
-html[data-theme="light"] .btn.secondary,
+/* Botões */
+html[data-theme="light"] .btn,
+html[data-theme="light"] .close,
 html[data-theme="light"] .control-theme-toggle,
 html[data-theme="light"] .theme-toggle{
-  background:var(--surface-secondary) !important;
+  background:#dce6eb !important;
+  border-color:#b6c8d1 !important;
+  color:#2f4651 !important;
+}
+html[data-theme="light"] .btn:hover,
+html[data-theme="light"] .close:hover,
+html[data-theme="light"] .control-theme-toggle:hover,
+html[data-theme="light"] .theme-toggle:hover{
+  background:#d1dfe5 !important;
+  border-color:#a8bfca !important;
+}
+html[data-theme="light"] .btn.secondary{
+  background:#d7e2e7 !important;
+}
+html[data-theme="light"] .btn.primary{
+  background:#587b90 !important;
+  border-color:#587b90 !important;
+  color:#fff !important;
+}
+html[data-theme="light"] .btn.primary:hover{
+  background:#4c6b7d !important;
+  border-color:#4c6b7d !important;
+}
+
+/* Login */
+html[data-theme="light"] .login-gate{
+  background:linear-gradient(180deg,#e7edf0,#dce5e9) !important;
+}
+html[data-theme="light"] .login-card .login-brand,
+html[data-theme="light"] .login-grid input{
+  background:#e0e8ec !important;
+  border-color:#bacbd3 !important;
+}
+
+/* Hover geral */
+html[data-theme="light"] .row:hover,
+html[data-theme="light"] .request-card:hover,
+html[data-theme="light"] .computer-item:hover,
+html[data-theme="light"] .student-item:hover,
+html[data-theme="light"] .permission-item:hover{
+  background:#e3eaee !important;
+  border-color:#b8cbd4 !important;
 }
