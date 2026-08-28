@@ -71,7 +71,6 @@ jobs:
           if bad: errors.append('Personal-name placeholders remain: '+repr(bad))
           else: report.append(f'Placeholders generic: {len(placeholders)} checked')
 
-          # Public config must not contain server secrets.
           all_text='\n'.join([html,bridge,config]+[f.read_text(encoding='utf-8',errors='ignore') for f in root.glob('*.js')])
           secret_patterns=[
               r'service[_-]?role', r'jwt[_-]?secret', r'postgres(?:ql)?://[^\s"\']+:[^\s"\']+@',
@@ -98,13 +97,11 @@ jobs:
           report.append(f'Legacy/local storage references found for manual review: {len(legacy_refs)}')
           for x in legacy_refs[:30]: warnings.append('reference: %s %s line %s'%x)
 
-          # Important elements expected in production UI.
           required_ids=['loginGate','loginForm','loginUsername','loginPassword','loginSubmit','studentRows','requestRows','permissionRows','historyRows']
           missing=[x for x in required_ids if x not in idset]
           if missing: errors.append('Missing critical UI ids: '+', '.join(missing))
           else: report.append('Critical UI containers present')
 
-          # Simple CSS brace sanity.
           for css_name in ['login-simple-v2.css','ete-ui-v2.css']:
               css=(root/css_name).read_text(encoding='utf-8')
               if css.count('{')!=css.count('}'):
@@ -207,3 +204,5 @@ jobs:
           test ! -e .github/workflows/bump-login-v6.yml
           test ! -e .github/workflows/add-student-delete.yml
           echo 'Known temporary workflows absent: PASS'
+
+# Reexecutado após o endurecimento final de segurança em 2026-08-28.
