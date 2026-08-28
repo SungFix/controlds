@@ -18,99 +18,61 @@ window.ETE_CONFIG = {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored === "light" || stored === "dark") savedTheme = stored;
   } catch (_) {}
-
   root.dataset.theme = savedTheme;
 
   function ensureThemeStyles(){
     if (!document.getElementById("controlThemeStyles")) {
-      const themeStyles = document.createElement("link");
-      themeStyles.id = "controlThemeStyles";
-      themeStyles.rel = "stylesheet";
-      themeStyles.href = "theme-light.css?v=3";
-      document.head.appendChild(themeStyles);
+      const link = document.createElement("link");
+      link.id = "controlThemeStyles";
+      link.rel = "stylesheet";
+      link.href = "theme-light.css?v=4";
+      document.head.appendChild(link);
     }
   }
 
-  function applyEmergencyButtonStyle(button, floating){
+  function updateButton(button){
+    const light = root.dataset.theme === "light";
+    button.innerHTML = '<span aria-hidden="true">' + (light ? '☾' : '☀') + '</span><span class="theme-label">' + (light ? 'Tema escuro' : 'Tema claro') + '</span>';
+    button.setAttribute("aria-pressed", String(light));
+    button.title = light ? "Mudar para tema escuro" : "Mudar para tema claro";
+  }
+
+  function toggleTheme(){
+    root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
+    try { localStorage.setItem(STORAGE_KEY, root.dataset.theme); } catch (_) {}
+    document.querySelectorAll(".control-theme-toggle").forEach(updateButton);
+  }
+
+  function makeButton(){
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "control-theme-toggle btn secondary small";
+    button.setAttribute("aria-label", "Alternar tema claro e escuro");
     button.style.display = "inline-flex";
     button.style.alignItems = "center";
     button.style.justifyContent = "center";
     button.style.gap = "7px";
-    button.style.minHeight = "40px";
-    button.style.padding = "8px 12px";
-    button.style.borderRadius = "10px";
-    button.style.border = "1px solid #59616b";
-    button.style.background = root.dataset.theme === "light" ? "#ffffff" : "#171a1f";
-    button.style.color = root.dataset.theme === "light" ? "#24313e" : "#f3f5f7";
-    button.style.font = "inherit";
-    button.style.fontSize = "10px";
-    button.style.fontWeight = "800";
-    button.style.cursor = "pointer";
-    button.style.whiteSpace = "nowrap";
-    button.style.boxShadow = floating ? "0 10px 30px rgba(0,0,0,.22)" : "none";
-    if (floating) {
-      button.style.position = "fixed";
-      button.style.top = "16px";
-      button.style.right = "16px";
-      button.style.zIndex = "2147483647";
-    }
-  }
-
-  function themeButton(extraClass, floating){
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "theme-toggle" + (extraClass ? " " + extraClass : "");
-    button.setAttribute("aria-label", "Alternar entre tema claro e escuro");
-    button.setAttribute("title", "Alternar tema");
-    button.innerHTML = '<span class="theme-icon" aria-hidden="true"></span><span class="theme-label"></span>';
-    applyEmergencyButtonStyle(button, floating);
+    button.style.minWidth = "112px";
+    button.style.minHeight = "44px";
+    button.style.visibility = "visible";
+    button.style.opacity = "1";
     button.addEventListener("click", toggleTheme);
+    updateButton(button);
     return button;
-  }
-
-  function refreshButtons(){
-    const isLight = root.dataset.theme === "light";
-    document.querySelectorAll(".theme-toggle").forEach((button) => {
-      const icon = button.querySelector(".theme-icon");
-      const label = button.querySelector(".theme-label");
-      if (icon) icon.textContent = isLight ? "☾" : "☀";
-      if (label) label.textContent = isLight ? "Tema escuro" : "Tema claro";
-      button.setAttribute("aria-pressed", String(isLight));
-      applyEmergencyButtonStyle(button, button.classList.contains("theme-toggle-floating"));
-    });
-  }
-
-  function toggleTheme(){
-    const nextTheme = root.dataset.theme === "light" ? "dark" : "light";
-    root.dataset.theme = nextTheme;
-    try { localStorage.setItem(STORAGE_KEY, nextTheme); } catch (_) {}
-    refreshButtons();
   }
 
   function mountThemeControls(){
     ensureThemeStyles();
-
-    const topRight = document.querySelector(".top-right");
-    if (topRight && !topRight.querySelector(".theme-toggle-top")) {
-      topRight.insertBefore(themeButton("theme-toggle-top", false), topRight.firstChild);
+    const header = document.querySelector(".topbar-right");
+    if (header && !header.querySelector(".control-theme-toggle")) {
+      header.insertBefore(makeButton(), header.firstChild);
     }
-
-    if (!document.querySelector(".theme-toggle-floating")) {
-      document.body.appendChild(themeButton("theme-toggle-floating", true));
-    }
-
-    refreshButtons();
   }
 
   ensureThemeStyles();
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", mountThemeControls, { once:true });
-  } else {
-    mountThemeControls();
-  }
-
-  window.addEventListener("load", mountThemeControls, { once:true });
-  setTimeout(mountThemeControls, 300);
-  setTimeout(mountThemeControls, 1200);
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mountThemeControls);
+  else mountThemeControls();
+  window.addEventListener("load", mountThemeControls);
+  setTimeout(mountThemeControls, 250);
+  setTimeout(mountThemeControls, 1000);
 })();
