@@ -34,7 +34,7 @@ window.ETE_CONFIG = {
   function ensureThemeStyles(){
     ensureStylesheet("controlThemeStyles", "theme-light.css?v=6");
     ensureStylesheet("controlThemeRefineStyles", "theme-light-refine.css?v=2");
-    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=2");
+    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=3");
   }
 
   function updateButton(button){
@@ -63,11 +63,11 @@ window.ETE_CONFIG = {
       applyThemeChange();
       root.classList.remove("theme-transition-out");
       root.classList.add("theme-transition-in");
-    }, 260);
+    }, 360);
 
     setTimeout(() => {
       root.classList.remove("theme-transitioning", "theme-transition-in", "theme-transition-out");
-    }, 560);
+    }, 840);
   }
 
   function makeButton(extraClass){
