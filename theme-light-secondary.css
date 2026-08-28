@@ -1,16 +1,16 @@
-/* Control Ds — apenas cores secundárias mais escuras no tema claro */
+/* Control Ds — contraste reforçado nas cores secundárias do tema claro */
 html[data-theme="light"]{
   --surface-primary:#f8fafb;
-  --surface-secondary:#d9e4e9;
-  --surface-tertiary:#cbdbe2;
-  --surface-muted:#e7eef2;
-  --surface-accent:#bfd3dd;
+  --surface-secondary:#c8d8df;
+  --surface-tertiary:#b7cbd4;
+  --surface-muted:#dbe6eb;
+  --surface-accent:#a7c2cf;
   --surface-card:#f8fafb;
-  --border-strong:#afc3cd;
-  --border-soft:#d3dde2;
+  --border-strong:#93adb9;
+  --border-soft:#d1dce1;
 }
 
-/* Mantém fundo, sidebar, topbar e cards principais claros */
+/* Fundo, sidebar, topbar e cards principais continuam claros */
 html[data-theme="light"] body{
   background:linear-gradient(180deg,#f3f6f8 0%,#edf2f5 52%,#e9eef2 100%) !important;
 }
@@ -43,7 +43,7 @@ html[data-theme="light"] .login-card{
   border-color:var(--border-soft) !important;
 }
 
-/* Somente superfícies secundárias ficam mais escuras */
+/* Superfícies secundárias: diferença forte o bastante para monitor com brilho alto */
 html[data-theme="light"] .panelhead,
 html[data-theme="light"] .request-card-top,
 html[data-theme="light"] .computer-item-head,
@@ -62,11 +62,11 @@ html[data-theme="light"] .time-card{
 }
 
 html[data-theme="light"] .quick-card:hover{
-  background:#cfdee5 !important;
-  border-color:#9fb9c5 !important;
+  background:#bacdd6 !important;
+  border-color:#819fac !important;
 }
 
-/* Apoio e ícones um nível mais escuro */
+/* Ícones, badges e áreas de apoio mais marcadas */
 html[data-theme="light"] .page-symbol,
 html[data-theme="light"] .navicon,
 html[data-theme="light"] .header-avatar,
@@ -79,10 +79,10 @@ html[data-theme="light"] .group-picker-badge,
 html[data-theme="light"] .group-picker-chevron,
 html[data-theme="light"] .interval-picker-chevron{
   background:var(--surface-tertiary) !important;
-  border-color:#abc0ca !important;
+  border-color:#8fa9b5 !important;
 }
 
-/* Seleções e estados ativos mais visíveis */
+/* Seleções e estados ativos claramente distintos */
 html[data-theme="light"] .nav button.active,
 html[data-theme="light"] .request-tab.active,
 html[data-theme="light"] .computer-tab.active,
@@ -90,14 +90,14 @@ html[data-theme="light"] .group-option.active,
 html[data-theme="light"] .interval-option.active,
 html[data-theme="light"] .time-option.active{
   background:var(--surface-accent) !important;
-  border-color:#9eb8c4 !important;
+  border-color:#7f9eac !important;
 }
 html[data-theme="light"] .nav button.active{
-  box-shadow:inset 3px 0 0 #65879b !important;
+  box-shadow:inset 4px 0 0 #4f7488 !important;
 }
 html[data-theme="light"] .nav button.active .navicon{
-  background:#dbe6eb !important;
-  border-color:#a7bdc7 !important;
+  background:#c5d6de !important;
+  border-color:#8da8b4 !important;
 }
 
 /* Hover secundário */
@@ -107,10 +107,10 @@ html[data-theme="light"] .computer-tab:hover,
 html[data-theme="light"] .group-option:hover,
 html[data-theme="light"] .interval-option:hover,
 html[data-theme="light"] .time-option:hover{
-  background:#d7e3e8 !important;
+  background:#ccdce3 !important;
 }
 
-/* Campos continuam claros, mas secundários */
+/* Campos claros, porém visualmente separados dos cards */
 html[data-theme="light"] input,
 html[data-theme="light"] textarea,
 html[data-theme="light"] select,
@@ -119,8 +119,8 @@ html[data-theme="light"] .request-sort,
 html[data-theme="light"] .group-picker-trigger,
 html[data-theme="light"] .interval-picker-trigger,
 html[data-theme="light"] .time-trigger{
-  background:#edf3f5 !important;
-  border-color:#bfd0d8 !important;
+  background:#e3ecef !important;
+  border-color:#a8bec8 !important;
   color:#26363e !important;
 }
 html[data-theme="light"] input:focus,
@@ -128,29 +128,29 @@ html[data-theme="light"] textarea:focus,
 html[data-theme="light"] select:focus,
 html[data-theme="light"] .group-picker-trigger.open,
 html[data-theme="light"] .interval-picker-trigger.open{
-  background:#f5f8f9 !important;
-  border-color:#718fa1 !important;
-  box-shadow:0 0 0 3px rgba(95,127,150,.14) !important;
+  background:#f2f6f8 !important;
+  border-color:#5f8295 !important;
+  box-shadow:0 0 0 3px rgba(79,116,136,.18) !important;
 }
 
-/* Botões secundários mais escuros; primário preservado */
+/* Botões secundários mais visíveis */
 html[data-theme="light"] .btn,
 html[data-theme="light"] .close,
 html[data-theme="light"] .control-theme-toggle,
 html[data-theme="light"] .theme-toggle{
-  background:#d9e4e9 !important;
-  border-color:#afc3cd !important;
-  color:#2f4651 !important;
+  background:#c7d8df !important;
+  border-color:#91aeb9 !important;
+  color:#263f4a !important;
 }
 html[data-theme="light"] .btn:hover,
 html[data-theme="light"] .close:hover,
 html[data-theme="light"] .control-theme-toggle:hover,
 html[data-theme="light"] .theme-toggle:hover{
-  background:#cedde4 !important;
-  border-color:#9fb8c4 !important;
+  background:#b8ccd5 !important;
+  border-color:#7f9faa !important;
 }
 html[data-theme="light"] .btn.secondary{
-  background:#d4e1e7 !important;
+  background:#c0d2da !important;
 }
 html[data-theme="light"] .btn.primary{
   background:#506f83 !important;
@@ -164,8 +164,8 @@ html[data-theme="light"] .btn.primary:hover{
 
 html[data-theme="light"] .login-card .login-brand,
 html[data-theme="light"] .login-grid input{
-  background:#dce7eb !important;
-  border-color:#b8cbd4 !important;
+  background:#cbdbe2 !important;
+  border-color:#9eb5c0 !important;
 }
 
 html[data-theme="light"] .row:hover,
@@ -173,6 +173,6 @@ html[data-theme="light"] .request-card:hover,
 html[data-theme="light"] .computer-item:hover,
 html[data-theme="light"] .student-item:hover,
 html[data-theme="light"] .permission-item:hover{
-  background:#eef4f6 !important;
-  border-color:#c2d2da !important;
+  background:#e8eff2 !important;
+  border-color:#adc0c9 !important;
 }
