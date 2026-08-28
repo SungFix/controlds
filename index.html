@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="auth-locked">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -4255,8 +4255,10 @@ dialog > .modal::-webkit-scrollbar-track{
 /* =========================================================
    V43 — INTEGRAÇÃO / LOGIN / SINCRIZAÇÃO
    ========================================================= */
+html.auth-locked,
 body.auth-locked{
   overflow:hidden;
+  height:100%;
 }
 body.auth-locked .shell{
   filter:blur(4px);
@@ -4294,18 +4296,18 @@ body.auth-locked .shell{
   font-size:12px;font-weight:900;letter-spacing:.06em;
 }
 .login-card .login-brand strong{display:block;font-size:15px}
-.login-card .login-brand small{display:block;margin-top:4px;color:#78818b;font-size:8.5px}
+.login-card .login-brand small{display:block;margin-top:4px;color:#78818b;font-size:11px}
 .login-card h1{margin:0;font-size:27px;letter-spacing:-.04em}
-.login-card>p{margin:8px 0 20px;color:#7d8690;font-size:10px;line-height:1.6}
+.login-card>p{margin:8px 0 20px;color:#7d8690;font-size:13px;line-height:1.6}
 .login-grid{display:grid;gap:12px}
 .login-error{
   display:none;margin-top:12px;padding:11px 12px;border-radius:11px;
-  border:1px solid #4c3135;background:#211719;color:#d99198;font-size:9px
+  border:1px solid #4c3135;background:#211719;color:#d99198;font-size:12px
 }
 .login-error.show{display:block}
 .login-note{
   margin-top:15px;padding-top:13px;border-top:1px solid #282e35;
-  color:#6e7781;font-size:8px;line-height:1.55
+  color:#8b949e;font-size:11px;line-height:1.55
 }
 .sync-pill{
   display:inline-flex;align-items:center;gap:7px;
@@ -4348,13 +4350,13 @@ body.auth-locked .shell{
 </head>
 <body class="auth-locked">
 
-<div class="login-gate" id="loginGate">
+<div class="login-gate" id="loginGate" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
   <form class="login-card" id="loginForm" autocomplete="off">
     <div class="login-brand">
       <div class="login-mark">ETE</div>
       <div><strong>Controle de Notebooks</strong><small>ETE Central Barreiros</small></div>
     </div>
-    <h1>Entrar no sistema</h1>
+    <h1 id="loginTitle">Entrar no sistema</h1>
     <p>Use sua conta da escola para acessar os dados compartilhados.</p>
     <div class="login-grid">
       <label>Usuário
@@ -4365,12 +4367,12 @@ body.auth-locked .shell{
       </label>
       <button class="btn primary" id="loginSubmit" type="submit">Entrar</button>
     </div>
-    <div class="login-error" id="loginError"></div>
+    <div class="login-error" id="loginError" role="alert" aria-live="polite"></div>
     <div class="login-note">Por segurança, o acesso não fica salvo neste computador. Ao atualizar, fechar ou abrir o sistema novamente, será necessário entrar de novo.</div>
   </form>
 </div>
 
-<div class="shell">
+<div class="shell" inert aria-hidden="true">
   <aside class="sidebar" id="sidebar">
     <div class="brand"><div class="brandmark"></div><div><strong>ETE</strong><small>Controle de Notebooks</small></div></div>
     <div class="section-label">Operação</div>
@@ -4796,12 +4798,12 @@ body.auth-locked .shell{
   </main>
 </div>
 
-<dialog id="requestModal">
+<dialog id="requestModal" aria-labelledby="requestModalTitle">
   <form class="modal" id="requestForm" autocomplete="off">
     <div class="request-modal-head">
       <div class="request-modal-copy">
         <span class="request-modal-eyebrow">Criar pedido</span>
-        <h2>Novo pedido de notebook</h2>
+        <h2 id="requestModalTitle">Novo pedido de notebook</h2>
         <p>Organizei melhor essa tela para ficar mais fácil de entender: primeiro o aluno, depois o horário e por fim o motivo do pedido.</p>
       </div>
       <button type="button" class="close" data-close>×</button>
@@ -4999,11 +5001,11 @@ body.auth-locked .shell{
 
 
 
-<dialog id="studentModal">
+<dialog id="studentModal" aria-labelledby="studentModalTitle">
   <form class="modal" id="studentForm">
     <div class="modalhead">
       <div>
-        <h2>Cadastrar aluno</h2>
+        <h2 id="studentModalTitle">Cadastrar aluno</h2>
         <p>Esses dados poderão ser reutilizados nos próximos pedidos.</p>
       </div>
       <button type="button" class="close" data-close>×</button>
@@ -5062,11 +5064,11 @@ body.auth-locked .shell{
   </form>
 </dialog>
 
-<dialog id="permissionModal">
+<dialog id="permissionModal" aria-labelledby="permissionModalTitle">
   <form class="modal" id="permissionForm">
     <div class="modalhead">
       <div>
-        <h2>Nova permissão de entrada</h2>
+        <h2 id="permissionModalTitle">Nova permissão de entrada</h2>
         <p>Autorize um estudante a entrar durante um dos intervalos.</p>
       </div>
       <button type="button" class="close" data-close>×</button>
@@ -5146,11 +5148,11 @@ body.auth-locked .shell{
 
 
 
-<dialog id="exitConfirmModal">
+<dialog id="exitConfirmModal" aria-labelledby="exitConfirmModalTitle">
   <form class="modal" id="exitConfirmForm">
     <div class="modalhead">
       <div>
-        <h2>Confirmar saída da sala</h2>
+        <h2 id="exitConfirmModalTitle">Confirmar saída da sala</h2>
         <p class="exit-modal-subtitle">Registre quem autorizou e conferiu a saída do estudante.</p>
       </div>
       <button type="button" class="close" data-close>×</button>
@@ -5188,10 +5190,10 @@ body.auth-locked .shell{
   </form>
 </dialog>
 
-<dialog id="pickupModal">
+<dialog id="pickupModal" aria-labelledby="pickupModalTitle">
   <form class="modal" id="pickupForm" autocomplete="off">
     <div class="modalhead">
-      <div><h2>Confirmar retirada</h2><p id="pickupDesc"></p></div>
+      <div><h2 id="pickupModalTitle">Confirmar retirada</h2><p id="pickupDesc"></p></div>
       <button type="button" class="close" data-close>×</button>
     </div>
     <div class="simple-grid">
@@ -5650,9 +5652,20 @@ function setCurrentUser(user){
   $("#headerUserRole").textContent=currentUser.roleLabel;
   applyRoleUI();
 }
+function setAuthLocked(locked){
+  document.documentElement.classList.toggle("auth-locked",locked);
+  document.body.classList.toggle("auth-locked",locked);
+  $("#loginGate").classList.toggle("hidden",!locked);
+  const shell=$(".shell");
+  if(shell){
+    shell.toggleAttribute("inert",locked);
+    if(locked) shell.setAttribute("aria-hidden","true");
+    else shell.removeAttribute("aria-hidden");
+  }
+  window.scrollTo({top:0,left:0,behavior:"auto"});
+}
 function unlockApp(){
-  document.body.classList.remove("auth-locked");
-  $("#loginGate").classList.add("hidden");
+  setAuthLocked(false);
   appReady=true;
 }
 function showLoginError(msg){
@@ -5690,8 +5703,7 @@ async function forceFreshLogin(){
 
   currentUser=null;
   appReady=false;
-  document.body.classList.add("auth-locked");
-  $("#loginGate").classList.remove("hidden");
+  setAuthLocked(true);
   $("#loginUsername").value="";
   $("#loginPassword").value="";
   setSyncState("login");
@@ -5702,8 +5714,7 @@ async function logoutApp(){
   remoteChannel=null;
   currentUser=null;
   appReady=false;
-  document.body.classList.add("auth-locked");
-  $("#loginGate").classList.remove("hidden");
+  setAuthLocked(true);
   $("#loginPassword").value="";
   setSyncState("login");
 }
@@ -7143,8 +7154,7 @@ setSyncState("login");
     await forceFreshLogin();
   }catch(err){
     console.error(err);
-    document.body.classList.add("auth-locked");
-    $("#loginGate").classList.remove("hidden");
+    setAuthLocked(true);
     setSyncState("error");
   }
 })();
