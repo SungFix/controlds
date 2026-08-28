@@ -1,0 +1,34 @@
+/* Leitura consistente para textos pequenos em todas as páginas. */
+html:not([data-theme="light"]) :is(
+  .hero-stat .eyebrow,.hero-stat small,.mini-stat .label,.mini-stat .hint,
+  .request-stat .label,.request-stat small,.permission-stat .label,.permission-stat small,
+  .student-stat span,.student-stat small,.computer-stat .label,.computer-stat small,
+  .history-stat .label,.history-stat small,.panelhead small,.quick-card .left small,
+  .request-subid,.request-info-box span,.request-results-label,.request-reason .label,
+  .permission-info-box span,.permission-note .label,.permission-note p,.restore-window,
+  .student-card-title small,.student-meta span,.student-last-use,
+  .computer-code-wrap span,.computer-owner span,.computer-meta-box span,.computer-state-note,.computer-results-label,
+  .history-time,.history-main small,.history-line time,.history-line small,.meta,.who small
+){color:#b4bec6 !important}
+
+html[data-theme="light"] :is(
+  .hero-stat .eyebrow,.hero-stat small,.mini-stat .label,.mini-stat .hint,
+  .request-stat .label,.request-stat small,.permission-stat .label,.permission-stat small,
+  .student-stat span,.student-stat small,.computer-stat .label,.computer-stat small,
+  .history-stat .label,.history-stat small,.panelhead small,.quick-card .left small,
+  .request-subid,.request-info-box span,.request-results-label,.request-reason .label,
+  .permission-info-box span,.permission-note .label,.permission-note p,.restore-window,
+  .student-card-title small,.student-meta span,.student-last-use,
+  .computer-code-wrap span,.computer-owner span,.computer-meta-box span,.computer-state-note,.computer-results-label,
+  .history-time,.history-main small,.history-line time,.history-line small,.meta,.who small
+){color:#4c5d67 !important}
+
+html:not([data-theme="light"]) :is(
+  .request-info-box strong,.permission-info-box strong,.student-meta strong,.computer-meta-box strong,
+  .request-student,.permission-student,.student-card-title strong,.computer-owner strong,.computer-code-wrap strong
+){color:#f2f5f7 !important}
+
+html[data-theme="light"] :is(
+  .request-info-box strong,.permission-info-box strong,.student-meta strong,.computer-meta-box strong,
+  .request-student,.permission-student,.student-card-title strong,.computer-owner strong,.computer-code-wrap strong
+){color:#1d303a !important}
