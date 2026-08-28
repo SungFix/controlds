@@ -1,12 +1,12 @@
-/* Control Ds — contraste secundário reforçado no tema claro */
+/* Control Ds — secundárias bem mais escuras no tema claro */
 html[data-theme="light"]{
   --surface-primary:#f8fafb;
-  --surface-secondary:#b5c9d2;
-  --surface-tertiary:#9fb8c3;
-  --surface-muted:#cbd9df;
-  --surface-accent:#8faeba;
+  --surface-secondary:#819aa6;
+  --surface-tertiary:#708a96;
+  --surface-muted:#9fb2bb;
+  --surface-accent:#5f7f8d;
   --surface-card:#f8fafb;
-  --border-strong:#7896a3;
+  --border-strong:#58717c;
   --border-soft:#d1dce1;
 }
 
@@ -43,7 +43,7 @@ html[data-theme="light"] .login-card{
   border-color:var(--border-soft) !important;
 }
 
-/* Superfícies secundárias mais escuras e claramente separadas */
+/* Superfícies secundárias agora têm contraste forte contra os cards claros */
 html[data-theme="light"] .panelhead,
 html[data-theme="light"] .request-card-top,
 html[data-theme="light"] .computer-item-head,
@@ -62,11 +62,11 @@ html[data-theme="light"] .time-card{
 }
 
 html[data-theme="light"] .quick-card:hover{
-  background:#a7bec9 !important;
-  border-color:#6d8e9b !important;
+  background:#718b97 !important;
+  border-color:#4f6873 !important;
 }
 
-/* Ícones, badges e áreas de apoio mais escuras */
+/* Ícones, badges e áreas de apoio */
 html[data-theme="light"] .page-symbol,
 html[data-theme="light"] .navicon,
 html[data-theme="light"] .header-avatar,
@@ -79,10 +79,10 @@ html[data-theme="light"] .group-picker-badge,
 html[data-theme="light"] .group-picker-chevron,
 html[data-theme="light"] .interval-picker-chevron{
   background:var(--surface-tertiary) !important;
-  border-color:#708e9b !important;
+  border-color:#506a76 !important;
 }
 
-/* Seleções e estados ativos claramente destacados */
+/* Seleções e estados ativos mais profundos */
 html[data-theme="light"] .nav button.active,
 html[data-theme="light"] .request-tab.active,
 html[data-theme="light"] .computer-tab.active,
@@ -90,14 +90,14 @@ html[data-theme="light"] .group-option.active,
 html[data-theme="light"] .interval-option.active,
 html[data-theme="light"] .time-option.active{
   background:var(--surface-accent) !important;
-  border-color:#648694 !important;
+  border-color:#496570 !important;
 }
 html[data-theme="light"] .nav button.active{
-  box-shadow:inset 4px 0 0 #3f6579 !important;
+  box-shadow:inset 4px 0 0 #2f5669 !important;
 }
 html[data-theme="light"] .nav button.active .navicon{
-  background:#adC2cc !important;
-  border-color:#6f8f9c !important;
+  background:#78939f !important;
+  border-color:#526d79 !important;
 }
 
 /* Hover secundário */
@@ -107,10 +107,10 @@ html[data-theme="light"] .computer-tab:hover,
 html[data-theme="light"] .group-option:hover,
 html[data-theme="light"] .interval-option:hover,
 html[data-theme="light"] .time-option:hover{
-  background:#b8cbd3 !important;
+  background:#91a8b2 !important;
 }
 
-/* Campos secundários mais escuros */
+/* Campos secundários também ficam visivelmente separados */
 html[data-theme="light"] input,
 html[data-theme="light"] textarea,
 html[data-theme="light"] select,
@@ -119,38 +119,38 @@ html[data-theme="light"] .request-sort,
 html[data-theme="light"] .group-picker-trigger,
 html[data-theme="light"] .interval-picker-trigger,
 html[data-theme="light"] .time-trigger{
-  background:#d5e0e5 !important;
-  border-color:#8ea8b3 !important;
-  color:#26363e !important;
+  background:#aebfc6 !important;
+  border-color:#6e8994 !important;
+  color:#1f3038 !important;
 }
 html[data-theme="light"] input:focus,
 html[data-theme="light"] textarea:focus,
 html[data-theme="light"] select:focus,
 html[data-theme="light"] .group-picker-trigger.open,
 html[data-theme="light"] .interval-picker-trigger.open{
-  background:#eef3f5 !important;
-  border-color:#4f7488 !important;
-  box-shadow:0 0 0 3px rgba(63,101,121,.2) !important;
+  background:#dfe8ec !important;
+  border-color:#3f6578 !important;
+  box-shadow:0 0 0 3px rgba(47,86,105,.22) !important;
 }
 
-/* Botões secundários mais escuros; primário preservado */
+/* Botões secundários bem mais escuros; primário preservado */
 html[data-theme="light"] .btn,
 html[data-theme="light"] .close,
 html[data-theme="light"] .control-theme-toggle,
 html[data-theme="light"] .theme-toggle{
-  background:#b4c9d2 !important;
-  border-color:#7695a2 !important;
-  color:#203942 !important;
+  background:#819aa6 !important;
+  border-color:#58717c !important;
+  color:#152a33 !important;
 }
 html[data-theme="light"] .btn:hover,
 html[data-theme="light"] .close:hover,
 html[data-theme="light"] .control-theme-toggle:hover,
 html[data-theme="light"] .theme-toggle:hover{
-  background:#a4bdc7 !important;
-  border-color:#648794 !important;
+  background:#708a96 !important;
+  border-color:#49636f !important;
 }
 html[data-theme="light"] .btn.secondary{
-  background:#adc2cb !important;
+  background:#78939e !important;
 }
 html[data-theme="light"] .btn.primary{
   background:#506f83 !important;
@@ -164,8 +164,8 @@ html[data-theme="light"] .btn.primary:hover{
 
 html[data-theme="light"] .login-card .login-brand,
 html[data-theme="light"] .login-grid input{
-  background:#b9ccd4 !important;
-  border-color:#829eaa !important;
+  background:#8fa6b0 !important;
+  border-color:#627d88 !important;
 }
 
 html[data-theme="light"] .row:hover,
