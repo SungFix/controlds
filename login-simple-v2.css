@@ -193,3 +193,19 @@ body .login-gate .login-card .login-mark{
   .login-grid input,.login-card #loginSubmit{min-height:51px}
   .login-note{max-width:320px}
 }
+
+/* Force true horizontal centering over the legacy inline login rules. */
+body.auth-locked .login-gate .login-card #loginTitle{
+  width:100% !important;
+  max-width:none !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+  text-align:center !important;
+}
+body.auth-locked .login-gate .login-card #loginTitle + p{
+  width:100% !important;
+  max-width:330px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+  text-align:center !important;
+}
