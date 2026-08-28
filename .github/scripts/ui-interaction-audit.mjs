@@ -73,6 +73,18 @@ await page.waitForTimeout(100);
 calls=await page.evaluate(()=>window.__rpcCalls);
 if(!calls.some(x=>x.name==='ete_return_request'&&x.args.p_request_id==='rq-audit')) throw new Error('Devolução não chamou RPC correta');
 
+// O botão Apagar da aba Computadores precisa sobreviver aos rerenders e chamar a RPC.
+await page.evaluate(()=>{data[0].status='done';data[0].code='123456';render();});
+await page.click('[data-page="computers"]');
+await page.waitForTimeout(150);
+const computerDelete=page.locator('[data-delete-computer-record="rq-audit"]:visible');
+if(!(await computerDelete.count())) throw new Error('Botão Apagar do computador devolvido não apareceu');
+page.once('dialog',d=>d.accept());
+await computerDelete.click();
+await page.waitForTimeout(150);
+calls=await page.evaluate(()=>window.__rpcCalls);
+if(!calls.some(x=>x.name==='ete_delete_request'&&x.args.p_request_id==='rq-audit')) throw new Error('Botão Apagar do computador não chamou ete_delete_request');
+
 await page.click('[data-page="permissions"]');
 await page.click('#newPermissionBtn');
 await page.fill('#permissionStudent','Aluno Permissão Teste');
