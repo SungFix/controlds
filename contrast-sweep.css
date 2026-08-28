@@ -48,6 +48,16 @@ html[data-theme="light"] .exit-status{
   color:#6b5725 !important;
 }
 
+/* Estados vazios: textos auxiliares podem trazer cores antigas muito claras. */
+html[data-theme="light"] :is(.request-empty,.permission-empty,.student-empty,.computer-empty,.history-empty,.agenda-empty,.student-picker-empty),
+html[data-theme="light"] :is(.request-empty,.permission-empty,.student-empty,.computer-empty,.history-empty,.agenda-empty,.student-picker-empty) :is(span,small,p){
+  color:#445761 !important;
+}
+html:not([data-theme="light"]) :is(.request-empty,.permission-empty,.student-empty,.computer-empty,.history-empty,.agenda-empty,.student-picker-empty),
+html:not([data-theme="light"]) :is(.request-empty,.permission-empty,.student-empty,.computer-empty,.history-empty,.agenda-empty,.student-picker-empty) :is(span,small,p){
+  color:#b4bec6 !important;
+}
+
 html:not([data-theme="light"]) :is(
   .request-info-box strong,.permission-info-box strong,.student-meta strong,.computer-meta-box strong,
   .request-student,.permission-student,.student-card-title strong,.computer-owner strong,.computer-code-wrap strong
