@@ -37,7 +37,7 @@ window.ETE_CONFIG = {
       refine.rel = "stylesheet";
       document.head.appendChild(refine);
     }
-    refine.href = "theme-light-refine.css?v=1";
+    refine.href = "theme-light-refine.css?v=2";
   }
 
   function updateButton(button){
@@ -45,15 +45,22 @@ window.ETE_CONFIG = {
     button.innerHTML = '<span aria-hidden="true">' + (light ? '☾' : '☀') + '</span><span class="theme-label">' + (light ? 'Tema escuro' : 'Tema claro') + '</span>';
     button.setAttribute("aria-pressed", String(light));
     button.title = light ? "Mudar para tema escuro" : "Mudar para tema claro";
-    button.style.background = light ? "#dedfda" : "#171a1f";
-    button.style.color = light ? "#30363c" : "#f3f5f7";
-    button.style.borderColor = light ? "#b9bdb5" : "#39414b";
+    button.style.background = light ? "#eef3f5" : "#171a1f";
+    button.style.color = light ? "#344851" : "#f3f5f7";
+    button.style.borderColor = light ? "#c9d7de" : "#39414b";
   }
 
   function toggleTheme(){
-    root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
-    try { localStorage.setItem(STORAGE_KEY, root.dataset.theme); } catch (_) {}
-    document.querySelectorAll(".control-theme-toggle").forEach(updateButton);
+    root.classList.add("theme-transitioning");
+    requestAnimationFrame(() => {
+      root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
+      try { localStorage.setItem(STORAGE_KEY, root.dataset.theme); } catch (_) {}
+      document.querySelectorAll(".control-theme-toggle").forEach(updateButton);
+    });
+    clearTimeout(window.__controlThemeTransitionTimer);
+    window.__controlThemeTransitionTimer = setTimeout(() => {
+      root.classList.remove("theme-transitioning");
+    }, 520);
   }
 
   function makeButton(extraClass){
