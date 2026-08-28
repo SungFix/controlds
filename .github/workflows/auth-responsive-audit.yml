@@ -1,0 +1,77 @@
+name: Authenticated responsive audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/auth-responsive-audit.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  responsive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-save playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install chromium >/dev/null 2>&1
+      - name: Audit authenticated pages and modals
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/control-ds-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          sleep 2
+          cat > responsive-audit.mjs <<'JS'
+          import { chromium } from 'playwright';
+          const browser=await chromium.launch({headless:true});
+          const sizes=[[320,568],[390,844],[768,1024],[1024,768],[1366,768],[1920,1080]];
+          for(const [w,h] of sizes){
+            const page=await browser.newPage({viewport:{width:w,height:h}});
+            const errs=[]; page.on('pageerror',e=>errs.push(e.message));
+            await page.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle'});
+            await page.evaluate(()=>{
+              v46Rpc=async()=>({}); v46PickupRpc=async()=>({});
+              v46AuthUser={id:'responsive-adm'};
+              currentUser={username:'audit',displayName:'Auditor',role:'adm',roleLabel:'Administrador',userId:'responsive-adm'};
+              appReady=true;
+              data=[normalizeRequest({id:'rq-responsive',student:'Aluno Responsivo',studentName:'Aluno Responsivo',studentClass:'1°A',studentCourse:'DS',studentId:'st-responsive',room:'1°A DS',reason:'Teste de responsividade com texto maior para validar quebra e layout',startTime:'10:20',endTime:'11:10',time:'10:20–11:10',dateKey:recifeDateKey(),status:'wait',requestedBy:'audit',requestedById:'responsive-adm',requestedByLabel:'Auditor',createdAt:new Date().toISOString()})];
+              students=[normalizeStudent({id:'st-responsive',name:'Aluno Responsivo com Nome Comprido',className:'1°A',course:'DS',useCount:9,lastUsed:new Date().toISOString()})];
+              permissions=[normalizePermission({id:'pm-responsive',student:'Aluno Responsivo com Nome Comprido',className:'1°A DS',interval:'morning',reason:'Teste de responsividade de permissão',active:true,exitConfirmed:false,createdAt:new Date().toISOString()})];
+              history=[normalizeHistoryItem({id:'h-responsive',atISO:new Date().toISOString(),text:'Evento responsivo de teste',detail:'Detalhe maior para verificar a quebra do conteúdo no histórico',type:'system',responsible:'Auditor'})];
+              setAuthLocked(false);setCurrentUser(currentUser);render();
+            });
+            for(const section of ['home','agenda','permissions','requests','students','computers','history']){
+              const nav=page.locator(`[data-page="${section}"]`);
+              if(!(await nav.isVisible())){
+                const menu=page.locator('#mobileMenu'); if(await menu.isVisible()) await menu.click();
+              }
+              const visibleNav=page.locator(`[data-page="${section}"]:visible`);
+              await visibleNav.first().click();
+              const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+3);
+              if(overflow) throw new Error(`${w}x${h} ${section}: horizontal page overflow ${await page.evaluate(()=>document.documentElement.scrollWidth)}>${w}`);
+            }
+            // Important modals must fit viewport without creating body horizontal overflow.
+            for(const opener of ['#newStudentBtn2','#newRequestBtn','#newPermissionBtn']){
+              const b=page.locator(opener); if(!(await b.isVisible())) continue;
+              await b.click();
+              const dlg=page.locator('dialog[open]').last();
+              const box=await dlg.boundingBox();
+              if(!box) throw new Error(`${w}x${h}: dialog did not open for ${opener}`);
+              if(box.x < -1 || box.x+box.width>w+1) throw new Error(`${w}x${h}: dialog exceeds horizontal viewport for ${opener}`);
+              await page.keyboard.press('Escape');
+            }
+            if(errs.length) throw new Error(`${w}x${h}: JS errors ${errs.join(' | ')}`);
+            console.log(`${w}x${h}: PASS`);
+            await page.close();
+          }
+          await browser.close();
+          console.log('AUTHENTICATED RESPONSIVE AUDIT: PASS');
+          JS
+          node responsive-audit.mjs
