@@ -1,0 +1,37 @@
+name: Bump login V4 cache
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/bump-login-v4.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Update login stylesheet version
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('login-simple-v2.css?v=3','login-simple-v2.css?v=4',1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Validate
+        run: grep -q 'login-simple-v2.css?v=4' index.html
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Refresh login UI V4 cache"
+          git push origin HEAD:main
