@@ -11,7 +11,7 @@
     padding:10px 12px !important;
     gap:10px !important;
   }
-  .topbar-shell{gap:10px !important}
+  .topbar-shell{gap:8px !important}
   .topbar-left{gap:10px !important;min-width:0 !important;flex:1 1 auto !important}
   .page-symbol{width:40px !important;height:40px !important;flex:0 0 40px !important}
   .topbar-copy{min-width:0 !important}
@@ -31,9 +31,31 @@
   }
   .topbar-right{gap:6px !important;flex:0 0 auto !important}
   .sync-pill{display:none !important}
-  .header-account{min-width:42px !important;width:42px !important;min-height:42px !important;height:42px !important;padding:3px !important;justify-content:center !important}
-  .header-avatar{width:34px !important;height:34px !important;flex:0 0 34px !important}
-  .header-account-copy,.header-role{display:none !important}
+
+  .header-account{
+    width:auto !important;
+    min-width:104px !important;
+    max-width:132px !important;
+    min-height:42px !important;
+    height:42px !important;
+    padding:4px 9px 4px 5px !important;
+    gap:8px !important;
+    justify-content:flex-start !important;
+    border-radius:12px !important;
+  }
+  .header-avatar{width:32px !important;height:32px !important;flex:0 0 32px !important;border-radius:9px !important}
+  .header-account-copy{display:block !important;min-width:0 !important;overflow:hidden !important}
+  .header-account-copy strong{
+    display:block !important;
+    max-width:78px !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    font-size:10px !important;
+    line-height:1.1 !important;
+  }
+  .header-account-copy small,.header-role{display:none !important}
+
   .header-logout{min-width:42px !important;width:42px !important;min-height:42px !important;padding:0 !important;font-size:0 !important;position:relative !important}
   .header-logout::before{content:"↪";font-size:18px !important;line-height:1 !important}
   .control-theme-toggle-header{min-width:42px !important;width:42px !important;min-height:42px !important;height:42px !important;padding:0 !important;border-radius:12px !important}
@@ -155,6 +177,11 @@
     border-radius:14px !important;
   }
   .control-theme-toggle-floating .theme-label{display:none !important}
+}
+
+@media(max-width:560px){
+  .header-account{min-width:42px !important;width:42px !important;max-width:42px !important;padding:4px !important;justify-content:center !important}
+  .header-account-copy{display:none !important}
 }
 
 @media(max-width:430px){
