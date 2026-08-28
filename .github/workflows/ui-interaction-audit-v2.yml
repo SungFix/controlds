@@ -4,10 +4,24 @@ on:
   push:
     branches: [main]
     paths:
+      - "index.html"
+      - "*.js"
+      - "*.css"
+      - ".github/workflows/ui-interaction-audit-v2.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "*.js"
+      - "*.css"
       - ".github/workflows/ui-interaction-audit-v2.yml"
 
 permissions:
   contents: read
+
+concurrency:
+  group: ui-interaction-v2-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   ui:
@@ -116,6 +130,19 @@ jobs:
           await page.fill('#clearHistoryPassword','senha-de-teste'); await page.locator('#confirmClearHistory').click(); await page.waitForTimeout(80);
           if((await page.evaluate(()=>window.__clearPassword))!=='senha-de-teste') throw new Error('Senha de limpeza não passou pelo fluxo correto');
 
+          // Professor deve ter exatamente as permissões visuais de Diretor/ADM nas ações de gestão.
+          await page.evaluate(()=>{
+            currentUser={username:'ronaldo',displayName:'Ronaldo',role:'professor',roleLabel:'Professor',userId:'audit-prof'};
+            v46AuthUser={id:'audit-prof'};setCurrentUser(currentUser);render();
+          });
+          const roleHidden=async sel=>await page.locator(sel).evaluate(el=>el.classList.contains('role-hidden'));
+          if(await roleHidden('#newPermissionBtn')) throw new Error('Professor não vê Nova permissão');
+          if(await roleHidden('#newStudentBtn2')) throw new Error('Professor não vê Novo aluno');
+          if(await roleHidden('#clearHistoryButton')) throw new Error('Professor não vê Apagar histórico');
+          const professorFns=await page.evaluate(()=>({create:canCreateRequest(),students:canManageStudents(),permission:canCreatePermission(),history:canClearHistory()}));
+          if(!Object.values(professorFns).every(Boolean)) throw new Error('Professor não herdou permissões de Diretor');
+
+          // Monitor continua restrito às operações de monitoria.
           await page.evaluate(()=>{
             currentUser={username:'monitor',displayName:'Monitor de Teste',role:'monitor',roleLabel:'Monitor',userId:'audit-monitor'};v46AuthUser={id:'audit-monitor'};setCurrentUser(currentUser);
             data=[normalizeRequest({id:'rq-mon',student:'Aluno Monitor',studentName:'Aluno Monitor',studentClass:'1°A',studentCourse:'DS',studentId:'st-mon',room:'1°A DS',reason:'Teste',startTime:'10:20',endTime:'11:10',time:'10:20–11:10',dateKey:recifeDateKey(),status:'wait',requestedBy:'audit',requestedById:'other-user',requestedByLabel:'Outro',createdAt:new Date().toISOString()})];render();
