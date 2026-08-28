@@ -60,6 +60,7 @@ window.ETE_CONFIG = {
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=1");
     ensureScript("controlPermissionDetailsScript", "permission-details-enhance.js?v=2");
     ensureScript("controlRoleLabelFixScript", "role-label-fix.js?v=1");
+    ensureScript("controlProfessorDirectorParityScript", "professor-director-parity.js?v=1");
   }
 
   function updateButton(button){
