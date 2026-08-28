@@ -35,7 +35,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlThemeStyles", "theme-light.css?v=6");
     ensureStylesheet("controlThemeRefineStyles", "theme-light-refine.css?v=2");
     ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=6");
-    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=7");
+    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=8");
   }
 
   function updateButton(button){
@@ -48,22 +48,54 @@ window.ETE_CONFIG = {
     button.style.borderColor = light ? "#58717c" : "#39414b";
   }
 
-  function applyThemeChange(){
-    root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
-    try { localStorage.setItem(STORAGE_KEY, root.dataset.theme); } catch (_) {}
+  function setTheme(theme){
+    root.dataset.theme = theme;
+    try { localStorage.setItem(STORAGE_KEY, theme); } catch (_) {}
     document.querySelectorAll(".control-theme-toggle").forEach(updateButton);
+  }
+
+  function cleanupTransition(){
+    root.classList.remove(
+      "theme-transitioning",
+      "theme-target-light",
+      "theme-target-dark",
+      "theme-transition-cover",
+      "theme-transition-reveal"
+    );
   }
 
   function toggleTheme(){
     if (root.classList.contains("theme-transitioning")) return;
 
-    root.classList.add("theme-transitioning");
-    requestAnimationFrame(() => {
-      applyThemeChange();
+    const goingLight = root.dataset.theme !== "light";
+    root.classList.add("theme-transitioning", goingLight ? "theme-target-light" : "theme-target-dark");
+
+    if (goingLight) {
+      /* Primeiro escurece levemente a visão atual, sem alterar o tema. */
+      requestAnimationFrame(() => {
+        root.classList.add("theme-transition-cover");
+      });
+
+      /* O tema claro entra escondido pela película escura. */
       setTimeout(() => {
-        root.classList.remove("theme-transitioning");
-      }, 280);
+        setTheme("light");
+      }, 130);
+
+      /* Depois revelamos o claro lentamente, evitando salto de luminância. */
+      setTimeout(() => {
+        root.classList.remove("theme-transition-cover");
+        root.classList.add("theme-transition-reveal");
+      }, 180);
+
+      setTimeout(cleanupTransition, 1120);
+      return;
+    }
+
+    /* Claro -> escuro pode ser direto e suave, sem qualquer clarão. */
+    requestAnimationFrame(() => {
+      setTheme("dark");
     });
+    setTimeout(cleanupTransition, 760);
   }
 
   function makeButton(extraClass){
@@ -93,7 +125,7 @@ window.ETE_CONFIG = {
   }
 
   function mountHeaderButton(){
-    const header = document.querySelector(".topbar-right");
+    const header = document.querySelector(".top-right, .topbar-right");
     if (header && !header.querySelector(".control-theme-toggle-header")) {
       const button = makeButton("control-theme-toggle-header");
       header.insertBefore(button, header.firstChild);
