@@ -54,8 +54,89 @@ html[data-theme="light"] .exit-proof strong{
   color:#263b45 !important;
 }
 
-html[data-theme="light"] .permission-note p{
+html[data-theme="light"] .permission-note{
+  padding:15px 16px !important;
+  border-radius:14px !important;
+}
+
+html[data-theme="light"] .permission-note .label{
+  display:block !important;
+  margin:0 0 7px !important;
+  font-size:9px !important;
+  font-weight:850 !important;
+  letter-spacing:.09em !important;
+  text-transform:uppercase !important;
+}
+
+html[data-theme="light"] .permission-note > p{
+  margin:0 !important;
+  color:#253a44 !important;
+  font-size:12px !important;
+  font-weight:650 !important;
+  line-height:1.5 !important;
+}
+
+html[data-theme="light"] .exit-proof{
+  position:relative !important;
+  margin-top:12px !important;
+  min-height:58px !important;
+  padding:11px 14px 11px 44px !important;
+  border-radius:12px !important;
+  background:#f7f4ea !important;
+  border-color:#e5d8b8 !important;
+  box-shadow:none !important;
+}
+
+html[data-theme="light"] .exit-proof::before{
+  content:"…" !important;
+  position:absolute !important;
+  left:13px !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  width:22px !important;
+  height:22px !important;
+  display:grid !important;
+  place-items:center !important;
+  border-radius:50% !important;
+  background:#eee2c5 !important;
+  color:#856d36 !important;
+  font-size:12px !important;
+  font-weight:900 !important;
+}
+
+html[data-theme="light"] .exit-proof.enhanced-exit-proof{
+  background:#eef7f2 !important;
+  border-color:#cfe2d6 !important;
+}
+
+html[data-theme="light"] .exit-proof.enhanced-exit-proof::before{
+  content:"✓" !important;
+  background:#d8ebdf !important;
+  color:#4e735d !important;
+}
+
+html[data-theme="light"] .exit-proof > span{
+  display:block !important;
+  margin:0 0 3px !important;
+  color:#70848d !important;
+  font-size:8px !important;
+  font-weight:850 !important;
+  letter-spacing:.08em !important;
+  text-transform:uppercase !important;
+}
+
+html[data-theme="light"] .exit-proof > strong{
+  display:block !important;
+  margin:0 !important;
+  color:#263b45 !important;
+  font-size:10.5px !important;
+  font-weight:750 !important;
   line-height:1.55 !important;
+  white-space:pre-line !important;
+}
+
+html[data-theme="light"] .exit-proof.enhanced-exit-proof > strong{
+  color:#365b46 !important;
 }
 
 html[data-theme="light"] .permission-status{
@@ -110,5 +191,9 @@ html[data-theme="light"] .permission-card:hover{
   html[data-theme="light"] .permission-note,
   html[data-theme="light"] .exit-proof{
     border-radius:12px !important;
+  }
+
+  html[data-theme="light"] .exit-proof{
+    padding:11px 12px 11px 42px !important;
   }
 }
