@@ -10,43 +10,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Patch approved visual index for V46
-        shell: bash
+      - name: Finalize V46 frontend runtime
         run: |
           python - <<'PY'
           from pathlib import Path
           import re
           p=Path('index.html')
-          text=p.read_text(encoding='utf-8')
-          if '@supabase/supabase-js@2.112.4' not in text:
-              pattern=r'<script src="https://cdn\.jsdelivr\.net/npm/@supabase/supabase-js@2"></script>\s*<script>\s*window\.ETE_CONFIG\s*=\s*window\.ETE_CONFIG\s*\|\|\s*\{.*?\};\s*</script>'
-              replacement='<script src="config.js"></script>\n<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4"></script>'
-              text,n=re.subn(pattern,replacement,text,count=1,flags=re.S)
-              if n!=1: raise SystemExit(f'config replacement count={n}')
-          text=text.replace('minlength="3" maxlength="8"','minlength="4" maxlength="8"')
-          text=text.replace('applySharedState(loadLocalSharedState());','applySharedState({requests:[],history:[],students:[],permissions:[],deletedRequestIds:[],historyClearedAt:""});')
-          bridge='<script src="v46-bridge.js"></script>'
-          if bridge not in text:
-              pos=text.rfind('</body>')
-              if pos<0: raise SystemExit('body closing tag not found')
-              text=text[:pos]+bridge+'\n'+text[pos:]
-          p.write_text(text,encoding='utf-8',newline='')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('const today=recifeDateKey();','let today=recifeDateKey();',1)
+          s=re.sub(r'function loadStudents\(\)\{.*?\n\}\nlet students=loadStudents\(\);','function loadStudents(){ return DEFAULT_STUDENTS; }\nlet students=loadStudents();',s,count=1,flags=re.S)
+          s=re.sub(r'^.*localStorage\.setItem\(.*\);.*\n','',s,flags=re.M)
+          s=re.sub(r'function loadLocalSharedState\(\)\{.*?\n\}\nfunction persistLocalShared\(\)\{.*?\n\}\nfunction scheduleSharedPersist\(\)\{.*?\n\}','function loadLocalSharedState(){ return normalizeSharedState({requests:[],history:[],students:[],permissions:[]}); }\nfunction persistLocalShared(){ return; }\nfunction scheduleSharedPersist(){ return; }',s,count=1,flags=re.S)
+          s=re.sub(r'async function pushRemoteState\(\)\{.*?\nfunction setSyncState\(state\)\{','async function pushRemoteState(){ return false; }\nasync function loadRemoteShared(){ return; }\nfunction subscribeRemote(){ return; }\nfunction setSyncState(state){',s,count=1,flags=re.S)
+          s=s.replace('const APP_STATE_ROW_ID="main";\n','',1)
+          p.write_text(s,encoding='utf-8',newline='')
+
+          b=Path('v46-bridge.js')
+          js=b.read_text(encoding='utf-8')
+          js=js.replace('p_verifier_role:currentUser?.roleLabel||"Usuário"','p_verifier_role:currentUser?.role==="monitor"?"Monitor":"Professor"')
+          if 'V46_DYNAMIC_DATE_RESET' not in js:
+              js += '\n// V46_DYNAMIC_DATE_RESET\nresetRequestForm=function(){const day=recifeDateKey();$("#requestForm").reset();$("#date").value=day;$("#date").min=day;$("#studentPin").value="";formState={start:"07:30",end:"08:20"};selectedSavedStudentId="";populateSavedStudentSelect("");setGroupPickerValue("studentGroup","1°A DS");updateRequestSummary();};\nsetInterval(()=>{const nextDay=recifeDateKey();if(nextDay!==today){today=nextDay;render();}},30000);\n'
+          b.write_text(js,encoding='utf-8',newline='')
           PY
-      - name: Static checks
-        shell: bash
+      - name: Validate
         run: |
           node --check v46-bridge.js
-          grep -q '<script src="config.js"></script>' index.html
-          grep -q '@supabase/supabase-js@2.112.4' index.html
-          grep -q '<script src="v46-bridge.js"></script>' index.html
-          ! grep -q 'window.ETE_CONFIG = window.ETE_CONFIG' index.html
-          ! grep -q 'applySharedState(loadLocalSharedState())' index.html
-      - name: Commit staged visual merge
-        shell: bash
+          grep -q 'let today=recifeDateKey()' index.html
+          grep -q 'V46_DYNAMIC_DATE_RESET' v46-bridge.js
+          grep -q 'p_verifier_role:currentUser?.role==="monitor"?"Monitor":"Professor"' v46-bridge.js
+          ! grep -q 'localStorage.setItem' index.html
+          ! grep -q 'localStorage.getItem' index.html
+          ! grep -q 'app_state' index.html
+      - name: Commit
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html
+          git add index.html v46-bridge.js
           git diff --cached --quiet && exit 0
-          git commit -m 'Finalize V46 visual integration safeguards'
+          git commit -m 'Finalize V46 visual runtime'
           git push
