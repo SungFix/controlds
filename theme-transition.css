@@ -1,4 +1,4 @@
-/* Control Ds — transição realmente suave entre claro e escuro */
+/* Control Ds — transição suave entre claro e escuro */
 
 html.theme-transitioning::after{
   content:"";
@@ -11,12 +11,14 @@ html.theme-transitioning::after{
   transition:opacity 520ms cubic-bezier(.22,.61,.36,1) !important;
 }
 
+/* Ao entrar no tema claro, a cobertura é branca/clara — nunca preta */
 html.theme-target-light::after{
-  background:linear-gradient(180deg,#f3f6f8 0%,#edf2f5 52%,#e9eef2 100%);
+  background:linear-gradient(180deg,#ffffff 0%,#f7fafb 48%,#edf2f5 100%) !important;
 }
 
+/* Ao entrar no tema escuro, a cobertura acompanha o tema escuro */
 html.theme-target-dark::after{
-  background:linear-gradient(180deg,#111418 0%,#0d1013 52%,#090b0e 100%);
+  background:linear-gradient(180deg,#111418 0%,#0d1013 52%,#090b0e 100%) !important;
 }
 
 html.theme-transition-cover::after{
@@ -28,7 +30,6 @@ html.theme-transition-reveal::after{
   transition-duration:620ms !important;
 }
 
-/* Suaviza os elementos por baixo da cobertura, sem provocar piscada */
 html.theme-transitioning body,
 html.theme-transitioning .sidebar,
 html.theme-transitioning .topbar,
