@@ -1,6 +1,8 @@
 (function(){
   "use strict";
 
+  const deletingIds=new Set();
+
   function currentList(){
     try{
       const all=(typeof data!=="undefined" && Array.isArray(data)) ? data.filter(r=>r && r.code) : [];
@@ -23,6 +25,16 @@
     }
   }
 
+  function findRequest(id){
+    try{
+      return (typeof data!=="undefined" && Array.isArray(data))
+        ? data.find(r=>String(r?.id)===String(id)) || null
+        : null;
+    }catch(_){
+      return null;
+    }
+  }
+
   function canDelete(request){
     if(!request || request.status!=="done") return false;
     try{
@@ -35,12 +47,16 @@
   function notify(message){
     try{
       if(typeof toast==="function") toast(message);
-      else alert(message);
+      else window.alert(message);
     }catch(_){ }
   }
 
-  async function deleteComputerRecord(request,button){
-    if(!request) return;
+  async function deleteComputerRecord(id,button){
+    const request=findRequest(id);
+    if(!request){
+      notify("Este registro já não existe mais.");
+      return;
+    }
     if(request.status!=="done"){
       notify("Confirme a devolução antes de apagar este computador.");
       return;
@@ -49,21 +65,22 @@
       notify("Sua conta não tem permissão para apagar este registro.");
       return;
     }
+    if(deletingIds.has(String(id))) return;
 
     const code=String(request.code||"");
     const student=String(request.student||"aluno");
     const confirmed=window.confirm(`Apagar o registro do notebook ${code}?\n\nAluno: ${student}\n\nIsso remove o pedido concluído da lista de computadores, pedidos e agenda. Esta ação não pode ser desfeita.`);
     if(!confirmed) return;
 
+    deletingIds.add(String(id));
     const oldText=button.textContent;
     button.disabled=true;
     button.textContent="Apagando...";
 
     try{
       if(typeof v46Rpc!=="function") throw new Error("backend_unavailable");
-      await v46Rpc("ete_delete_request",{p_request_id:String(request.id)});
+      await v46Rpc("ete_delete_request",{p_request_id:String(id)});
       notify("Registro do computador apagado.");
-      setTimeout(enhance,0);
     }catch(err){
       console.error("Falha ao apagar computador:",err);
       const message=String(err?.message||err||"");
@@ -71,8 +88,12 @@
       else if(message.includes("forbidden")) notify("Sua conta não tem permissão para apagar este registro.");
       else if(message.includes("request_not_found")) notify("Este registro já não existe mais.");
       else notify("Não foi possível apagar o computador. Tente novamente.");
-      button.disabled=false;
-      button.textContent=oldText;
+      if(button.isConnected){
+        button.disabled=false;
+        button.textContent=oldText;
+      }
+    }finally{
+      deletingIds.delete(String(id));
     }
   }
 
@@ -88,24 +109,27 @@
       const foot=card.querySelector(".computer-item-foot");
       if(!request||!foot) return;
 
-      const old=foot.querySelector("[data-computer-delete-enhanced]");
-      if(old) old.remove();
+      let button=foot.querySelector("[data-delete-computer-record]");
 
-      if(!canDelete(request)) return;
+      if(!canDelete(request)){
+        if(button) button.remove();
+        return;
+      }
 
-      const button=document.createElement("button");
+      const id=String(request.id);
+      if(button && button.dataset.deleteComputerRecord===id){
+        button.disabled=deletingIds.has(id);
+        return;
+      }
+
+      if(button) button.remove();
+      button=document.createElement("button");
       button.type="button";
       button.className="btn danger small delete-request computer-delete-request";
-      button.dataset.computerDeleteEnhanced="1";
-      button.dataset.deleteComputerRecord=String(request.id);
+      button.dataset.deleteComputerRecord=id;
       button.textContent="Apagar";
       button.title="Apagar este registro de computador devolvido";
       button.setAttribute("aria-label",`Apagar registro do notebook ${request.code||"devolvido"}`);
-      button.addEventListener("click",event=>{
-        event.preventDefault();
-        event.stopPropagation();
-        deleteComputerRecord(request,button);
-      });
       foot.appendChild(button);
     });
   }
@@ -118,6 +142,7 @@
     }
 
     enhance();
+
     let queued=false;
     const observer=new MutationObserver(()=>{
       if(queued) return;
@@ -128,6 +153,15 @@
       });
     });
     observer.observe(grid,{childList:true,subtree:true});
+
+    grid.addEventListener("click",event=>{
+      const button=event.target.closest?.("[data-delete-computer-record]");
+      if(!button || !grid.contains(button)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const id=String(button.dataset.deleteComputerRecord||"");
+      if(id) deleteComputerRecord(id,button);
+    },true);
 
     document.querySelector("#computerSearch")?.addEventListener("input",()=>setTimeout(enhance,0));
     document.querySelectorAll("[data-computer-filter]").forEach(button=>button.addEventListener("click",()=>setTimeout(enhance,0)));
