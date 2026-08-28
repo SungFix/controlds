@@ -81,7 +81,8 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlStudentLightPolishStyles", "student-light-polish.css?v=1");
     ensureStylesheet("controlPermissionFormPickerStyles", "permission-form-picker-enhance.css?v=1");
     ensureStylesheet("controlActionModalStyles", "action-modal.css?v=1");
-    ensureStylesheet("controlFinalPolishStyles", "final-polish.css?v=1");
+    ensureStylesheet("controlFinalPolishStyles", "final-polish.css?v=2");
+    ensureStylesheet("controlContrastSweepStyles", "contrast-sweep.css?v=1");
 
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
