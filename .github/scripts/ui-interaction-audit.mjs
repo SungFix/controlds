@@ -3,7 +3,9 @@ import { chromium } from 'playwright';
 const browser=await chromium.launch({headless:true});
 const page=await browser.newPage({viewport:{width:1440,height:1000}});
 const pageErrors=[];
+const nativeDialogs=[];
 page.on('pageerror',e=>pageErrors.push(e.message));
+page.on('dialog',async d=>{nativeDialogs.push(`${d.type()}: ${d.message()}`);await d.dismiss();});
 await page.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle'});
 
 await page.evaluate(()=>{
@@ -26,6 +28,18 @@ for(const section of ['home','agenda','permissions','requests','students','compu
   if(!(await page.locator(`#page-${section}`).evaluate(el=>el.classList.contains('active')))) throw new Error(`Página ${section} não ativou`);
 }
 
+if(!(await page.evaluate(()=>!!window.ControlActionModal))) throw new Error('Sistema global de confirmação personalizada não carregou');
+
+async function confirmCustomAction(expectedTitle){
+  const modal=page.locator('#controlActionModal');
+  await modal.waitFor({state:'visible'});
+  if(!(await modal.evaluate(el=>el.open))) throw new Error(`Modal personalizado não abriu: ${expectedTitle}`);
+  const title=(await modal.locator('#controlActionTitle').textContent()||'').trim();
+  if(expectedTitle&&!title.includes(expectedTitle)) throw new Error(`Título inesperado no modal: ${title}`);
+  await modal.locator('#controlActionConfirm').click();
+  await page.waitForTimeout(120);
+}
+
 await page.click('[data-page="students"]');
 await page.click('#newStudentBtn2');
 if(!(await page.locator('#studentModal').evaluate(el=>el.open))) throw new Error('Modal de novo aluno não abriu');
@@ -45,19 +59,25 @@ calls=await page.evaluate(()=>window.__rpcCalls);
 if(!calls.some(x=>x.name==='ete_update_student'&&x.args.p_student_id==='st-audit')) throw new Error('Edição não chamou RPC correta');
 
 await page.evaluate(()=>renderStudents());
-page.once('dialog',d=>d.accept());
 await page.click('[data-delete-student="st-audit"]:visible');
-await page.waitForTimeout(100);
+await confirmCustomAction('Remover aluno');
 calls=await page.evaluate(()=>window.__rpcCalls);
-if(!calls.some(x=>x.name==='ete_delete_student'&&x.args.p_student_id==='st-audit')) throw new Error('Exclusão não chamou RPC correta');
+if(!calls.some(x=>x.name==='ete_delete_student'&&x.args.p_student_id==='st-audit')) throw new Error('Exclusão de aluno não chamou RPC correta');
 
 await page.click('[data-page="requests"]');
+await page.evaluate(()=>renderRequests());
+const requestDelete=page.locator('[data-delete-request="rq-audit"]:visible');
+if(!(await requestDelete.count())) throw new Error('Botão Apagar do pedido não apareceu');
+await requestDelete.click();
+await confirmCustomAction('Apagar pedido');
+calls=await page.evaluate(()=>window.__rpcCalls);
+if(!calls.some(x=>x.name==='ete_delete_request'&&x.args.p_request_id==='rq-audit')) throw new Error('Exclusão de pedido não chamou RPC correta');
+
 await page.evaluate(()=>renderRequests());
 await page.click('[data-pickup="rq-audit"]:visible');
 if(!(await page.locator('#pickupModal').evaluate(el=>el.open))) throw new Error('Modal de retirada não abriu');
 await page.fill('#pickupPin','1234');
 await page.fill('#computerCode','123456');
-// computer-id-enhance transforma o antigo submit em type=button para bloquear o fluxo legado.
 const pickupConfirm=page.locator('#pickupForm button').filter({hasText:/Confirmar|Retirada|Confirmando/i}).last();
 if(!(await pickupConfirm.count())) throw new Error('Botão de confirmação da retirada não encontrado');
 await pickupConfirm.click();
@@ -73,15 +93,13 @@ await page.waitForTimeout(100);
 calls=await page.evaluate(()=>window.__rpcCalls);
 if(!calls.some(x=>x.name==='ete_return_request'&&x.args.p_request_id==='rq-audit')) throw new Error('Devolução não chamou RPC correta');
 
-// O botão Apagar da aba Computadores precisa sobreviver aos rerenders e chamar a RPC.
 await page.evaluate(()=>{data[0].status='done';data[0].code='123456';render();});
 await page.click('[data-page="computers"]');
 await page.waitForTimeout(150);
 const computerDelete=page.locator('[data-delete-computer-record="rq-audit"]:visible');
 if(!(await computerDelete.count())) throw new Error('Botão Apagar do computador devolvido não apareceu');
-page.once('dialog',d=>d.accept());
 await computerDelete.click();
-await page.waitForTimeout(150);
+await confirmCustomAction('Apagar computador');
 calls=await page.evaluate(()=>window.__rpcCalls);
 if(!calls.some(x=>x.name==='ete_delete_request'&&x.args.p_request_id==='rq-audit')) throw new Error('Botão Apagar do computador não chamou ete_delete_request');
 
@@ -106,6 +124,15 @@ calls=await page.evaluate(()=>window.__rpcCalls);
 const cc=calls.find(x=>x.name==='ete_confirm_exit');
 if(!cc||cc.args.p_verifier_name!=='Auditor do Sistema') throw new Error('Saída não usa identidade autenticada');
 
+await page.evaluate(()=>{permissions[0].active=false;renderPermissions();});
+await page.waitForTimeout(150);
+const permissionDelete=page.locator('[data-delete-permission="pm-audit"]:visible');
+if(!(await permissionDelete.count())) throw new Error('Botão Apagar da permissão cancelada não apareceu');
+await permissionDelete.click();
+await confirmCustomAction('Apagar permissão');
+calls=await page.evaluate(()=>window.__rpcCalls);
+if(!calls.some(x=>x.name==='ete_delete_permission'&&x.args.p_permission_id==='pm-audit')) throw new Error('Exclusão de permissão não chamou RPC correta');
+
 await page.click('[data-page="history"]');
 await page.click('#clearHistoryButton');
 if(!(await page.locator('#clearHistoryModal').evaluate(el=>el.open))) throw new Error('Modal histórico não abriu');
@@ -114,7 +141,6 @@ await page.locator('#confirmClearHistory').click();
 await page.waitForTimeout(100);
 if((await page.evaluate(()=>window.__clearPassword))!=='senha-de-teste') throw new Error('Senha de limpeza não passou pelo fluxo correto');
 
-// Professor deve ter as permissões visuais de Diretor nas ações de gestão.
 await page.evaluate(()=>{
   currentUser={username:'ronaldo',displayName:'Ronaldo',role:'professor',roleLabel:'Professor',userId:'audit-prof'};
   v46AuthUser={id:'audit-prof'};
@@ -124,13 +150,10 @@ const roleHidden=async sel=>await page.locator(sel).evaluate(el=>el.classList.co
 if(await roleHidden('#newPermissionBtn')) throw new Error('Professor não vê Nova permissão');
 if(await roleHidden('#newStudentBtn2')) throw new Error('Professor não vê Novo aluno');
 if(await roleHidden('#clearHistoryButton')) throw new Error('Professor não vê Apagar histórico');
-const professorFns=await page.evaluate(()=>({
-  create:canCreateRequest(),students:canManageStudents(),permission:canCreatePermission(),history:canClearHistory()
-}));
-if(!Object.values(professorFns).every(Boolean)) throw new Error('Professor não herdou permissões de Diretor');
+const professorFns=await page.evaluate(()=>({create:canCreateRequest(),students:canManageStudents(),permission:canCreatePermission(),history:canClearHistory()}));
+if(!Object.values(professorFns).every(Boolean)) throw new Error('Professor não herdou permissões de gestão');
 if((await page.locator('.header-account-copy small').first().textContent()).trim()!=='Professor') throw new Error('Professor não aparece com o cargo correto');
 
-// Monitor continua restrito às operações de monitoria.
 await page.evaluate(()=>{
   currentUser={username:'monitor',displayName:'Monitor de Teste',role:'monitor',roleLabel:'Monitor',userId:'audit-monitor'};
   v46AuthUser={id:'audit-monitor'};
@@ -146,6 +169,7 @@ await page.click('[data-page="requests"]');
 await page.evaluate(()=>renderRequests());
 if(!(await page.locator('[data-pickup="rq-mon"]:visible').isVisible())) throw new Error('Monitor não vê retirada');
 
+if(nativeDialogs.length) throw new Error('Diálogo nativo do navegador apareceu: '+nativeDialogs.join(' | '));
 if(pageErrors.length) throw new Error('Erros JS: '+pageErrors.join(' | '));
 console.log('AUTHENTICATED UI INTERACTION AUDIT V2: PASS');
 await browser.close();
