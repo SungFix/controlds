@@ -19,15 +19,33 @@ html[data-theme="light"] :is(
   .history-stat .label,.history-stat small,.panelhead small,.quick-card .left small,
   .request-subid,.request-info-box span,.request-results-label,.request-reason .label,
   .permission-info-box span,.permission-note .label,.permission-note p,.restore-window,
-  .student-card-title small,.student-meta span,.student-last-use,
+  .student-card-title small,.student-last-use,
   .computer-code-wrap span,.computer-owner span,.computer-meta-box span,.computer-state-note,.computer-results-label,
   .history-time,.history-main small,.history-line time,.history-line small,.meta,.who small,
-  #headerUserRole
+  #headerUserRole,.permission-help,#permissionFilterSubtitle,.exit-proof > span
 ){color:#445761 !important}
 
 /* Itens da agenda usam fundos de estado claros; precisam de texto mais escuro que o muted geral. */
 html[data-theme="light"] .agenda-person small span{
   color:#3f535d !important;
+}
+
+/* Abas inativas precisam manter contraste mesmo sobre o fundo azul-cinza claro. */
+html[data-theme="light"] :is(.request-tab,.computer-tab):not(.active){
+  color:#53656e !important;
+}
+
+/* Rótulos de turma/curso são bem pequenos e precisam de um tom mais forte. */
+html[data-theme="light"] .student-meta span{
+  color:#506975 !important;
+}
+
+/* Comprovação de saída e estados de permissão. */
+html[data-theme="light"] .enhanced-exit-proof > span{
+  color:#445761 !important;
+}
+html[data-theme="light"] .exit-status{
+  color:#6b5725 !important;
 }
 
 html:not([data-theme="light"]) :is(
