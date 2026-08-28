@@ -1,12 +1,12 @@
-/* Control Ds — contraste reforçado nas cores secundárias do tema claro */
+/* Control Ds — contraste secundário reforçado no tema claro */
 html[data-theme="light"]{
   --surface-primary:#f8fafb;
-  --surface-secondary:#c8d8df;
-  --surface-tertiary:#b7cbd4;
-  --surface-muted:#dbe6eb;
-  --surface-accent:#a7c2cf;
+  --surface-secondary:#b5c9d2;
+  --surface-tertiary:#9fb8c3;
+  --surface-muted:#cbd9df;
+  --surface-accent:#8faeba;
   --surface-card:#f8fafb;
-  --border-strong:#93adb9;
+  --border-strong:#7896a3;
   --border-soft:#d1dce1;
 }
 
@@ -43,7 +43,7 @@ html[data-theme="light"] .login-card{
   border-color:var(--border-soft) !important;
 }
 
-/* Superfícies secundárias: diferença forte o bastante para monitor com brilho alto */
+/* Superfícies secundárias mais escuras e claramente separadas */
 html[data-theme="light"] .panelhead,
 html[data-theme="light"] .request-card-top,
 html[data-theme="light"] .computer-item-head,
@@ -62,11 +62,11 @@ html[data-theme="light"] .time-card{
 }
 
 html[data-theme="light"] .quick-card:hover{
-  background:#bacdd6 !important;
-  border-color:#819fac !important;
+  background:#a7bec9 !important;
+  border-color:#6d8e9b !important;
 }
 
-/* Ícones, badges e áreas de apoio mais marcadas */
+/* Ícones, badges e áreas de apoio mais escuras */
 html[data-theme="light"] .page-symbol,
 html[data-theme="light"] .navicon,
 html[data-theme="light"] .header-avatar,
@@ -79,10 +79,10 @@ html[data-theme="light"] .group-picker-badge,
 html[data-theme="light"] .group-picker-chevron,
 html[data-theme="light"] .interval-picker-chevron{
   background:var(--surface-tertiary) !important;
-  border-color:#8fa9b5 !important;
+  border-color:#708e9b !important;
 }
 
-/* Seleções e estados ativos claramente distintos */
+/* Seleções e estados ativos claramente destacados */
 html[data-theme="light"] .nav button.active,
 html[data-theme="light"] .request-tab.active,
 html[data-theme="light"] .computer-tab.active,
@@ -90,14 +90,14 @@ html[data-theme="light"] .group-option.active,
 html[data-theme="light"] .interval-option.active,
 html[data-theme="light"] .time-option.active{
   background:var(--surface-accent) !important;
-  border-color:#7f9eac !important;
+  border-color:#648694 !important;
 }
 html[data-theme="light"] .nav button.active{
-  box-shadow:inset 4px 0 0 #4f7488 !important;
+  box-shadow:inset 4px 0 0 #3f6579 !important;
 }
 html[data-theme="light"] .nav button.active .navicon{
-  background:#c5d6de !important;
-  border-color:#8da8b4 !important;
+  background:#adC2cc !important;
+  border-color:#6f8f9c !important;
 }
 
 /* Hover secundário */
@@ -107,10 +107,10 @@ html[data-theme="light"] .computer-tab:hover,
 html[data-theme="light"] .group-option:hover,
 html[data-theme="light"] .interval-option:hover,
 html[data-theme="light"] .time-option:hover{
-  background:#ccdce3 !important;
+  background:#b8cbd3 !important;
 }
 
-/* Campos claros, porém visualmente separados dos cards */
+/* Campos secundários mais escuros */
 html[data-theme="light"] input,
 html[data-theme="light"] textarea,
 html[data-theme="light"] select,
@@ -119,8 +119,8 @@ html[data-theme="light"] .request-sort,
 html[data-theme="light"] .group-picker-trigger,
 html[data-theme="light"] .interval-picker-trigger,
 html[data-theme="light"] .time-trigger{
-  background:#e3ecef !important;
-  border-color:#a8bec8 !important;
+  background:#d5e0e5 !important;
+  border-color:#8ea8b3 !important;
   color:#26363e !important;
 }
 html[data-theme="light"] input:focus,
@@ -128,29 +128,29 @@ html[data-theme="light"] textarea:focus,
 html[data-theme="light"] select:focus,
 html[data-theme="light"] .group-picker-trigger.open,
 html[data-theme="light"] .interval-picker-trigger.open{
-  background:#f2f6f8 !important;
-  border-color:#5f8295 !important;
-  box-shadow:0 0 0 3px rgba(79,116,136,.18) !important;
+  background:#eef3f5 !important;
+  border-color:#4f7488 !important;
+  box-shadow:0 0 0 3px rgba(63,101,121,.2) !important;
 }
 
-/* Botões secundários mais visíveis */
+/* Botões secundários mais escuros; primário preservado */
 html[data-theme="light"] .btn,
 html[data-theme="light"] .close,
 html[data-theme="light"] .control-theme-toggle,
 html[data-theme="light"] .theme-toggle{
-  background:#c7d8df !important;
-  border-color:#91aeb9 !important;
-  color:#263f4a !important;
+  background:#b4c9d2 !important;
+  border-color:#7695a2 !important;
+  color:#203942 !important;
 }
 html[data-theme="light"] .btn:hover,
 html[data-theme="light"] .close:hover,
 html[data-theme="light"] .control-theme-toggle:hover,
 html[data-theme="light"] .theme-toggle:hover{
-  background:#b8ccd5 !important;
-  border-color:#7f9faa !important;
+  background:#a4bdc7 !important;
+  border-color:#648794 !important;
 }
 html[data-theme="light"] .btn.secondary{
-  background:#c0d2da !important;
+  background:#adc2cb !important;
 }
 html[data-theme="light"] .btn.primary{
   background:#506f83 !important;
@@ -164,8 +164,8 @@ html[data-theme="light"] .btn.primary:hover{
 
 html[data-theme="light"] .login-card .login-brand,
 html[data-theme="light"] .login-grid input{
-  background:#cbdbe2 !important;
-  border-color:#9eb5c0 !important;
+  background:#b9ccd4 !important;
+  border-color:#829eaa !important;
 }
 
 html[data-theme="light"] .row:hover,
@@ -173,6 +173,6 @@ html[data-theme="light"] .request-card:hover,
 html[data-theme="light"] .computer-item:hover,
 html[data-theme="light"] .student-item:hover,
 html[data-theme="light"] .permission-item:hover{
-  background:#e8eff2 !important;
-  border-color:#adc0c9 !important;
+  background:#e3ebef !important;
+  border-color:#9fb4bd !important;
 }
