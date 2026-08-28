@@ -4349,7 +4349,7 @@ body.auth-locked .shell{
 <body class="auth-locked">
 
 <div class="login-gate" id="loginGate">
-  <form class="login-card" id="loginForm">
+  <form class="login-card" id="loginForm" autocomplete="off">
     <div class="login-brand">
       <div class="login-mark">ETE</div>
       <div><strong>Controle de Notebooks</strong><small>ETE Central Barreiros</small></div>
@@ -4361,7 +4361,7 @@ body.auth-locked .shell{
         <input id="loginUsername" autocomplete="username" required placeholder="Ex.: klenio">
       </label>
       <label>Senha
-        <input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Sua senha">
+        <input id="loginPassword" type="password" autocomplete="new-password" required placeholder="Sua senha">
       </label>
       <button class="btn primary" id="loginSubmit" type="submit">Entrar</button>
     </div>
