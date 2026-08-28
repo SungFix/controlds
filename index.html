@@ -273,6 +273,12 @@ label input,label textarea{margin-top:6px}
   gap:9px;
   margin-bottom:13px;
 }
+.btn.danger{
+  border-color:#5b3036;
+  background:#2a171a;
+  color:#efb1b7;
+}
+.btn.danger:hover{background:#351b1f;border-color:#754048}
 .history-tools input,
 .history-tools select{
   min-height:42px;
@@ -4744,6 +4750,7 @@ body.auth-locked .shell{
           </div>
           <div class="actions">
             <button class="btn secondary" id="clearHistoryFilters">Limpar filtros</button>
+            <button class="btn danger role-hidden" id="clearHistoryButton">Apagar histórico</button>
           </div>
         </div>
 
@@ -5211,6 +5218,29 @@ body.auth-locked .shell{
   </form>
 </dialog>
 
+<dialog id="clearHistoryModal" aria-labelledby="clearHistoryModalTitle">
+  <form class="modal" id="clearHistoryForm" autocomplete="off">
+    <div class="modalhead">
+      <div>
+        <h2 id="clearHistoryModalTitle">Apagar histórico completo</h2>
+        <p>Somente os eventos da página Histórico serão removidos. Pedidos, alunos, permissões, usuários e configurações serão preservados.</p>
+      </div>
+      <button type="button" class="close" data-close>×</button>
+    </div>
+    <div class="simple-grid">
+      <label class="full">Confirme sua senha atual
+        <input id="clearHistoryPassword" type="password" autocomplete="new-password" required placeholder="Senha da sua conta">
+      </label>
+    </div>
+    <div class="exit-confirm-note clean" id="clearHistorySummary"></div>
+    <div class="login-error" id="clearHistoryError" role="alert" aria-live="polite"></div>
+    <div class="modalactions">
+      <button type="button" class="btn secondary" data-close>Cancelar</button>
+      <button class="btn danger" id="confirmClearHistory" type="submit">Apagar somente o histórico</button>
+    </div>
+  </form>
+</dialog>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -5252,6 +5282,7 @@ const today=recifeDateKey();
 let formState={start:"07:30", end:"08:20"};
 let data=[];
 let history=[];
+let historyClearedAt="";
 let historyNewestFirst=true;
 let currentRequestFilter="all";
 let currentComputerFilter="all";
@@ -5280,6 +5311,7 @@ let permissions=[];
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 
 const APP_STATE_ROW_ID="main";
+const IS_TEST_PREVIEW=location.hostname.startsWith("teste-acessibilidade.");
 const V43_LOCAL_KEY="ete_v43_shared_state"; // mantido para migração local
 const ROLE_MAP={
   klenio:{username:"klenio",displayName:"Klenio",role:"adm",roleLabel:"Administrador"},
@@ -5340,6 +5372,7 @@ function initSupabase(){
 function canCreateRequest(){ return !!currentUser && ["adm","diretor"].includes(currentUser.role); }
 function canManageStudents(){ return !!currentUser && ["adm","diretor"].includes(currentUser.role); }
 function canCreatePermission(){ return !!currentUser && ["adm","diretor"].includes(currentUser.role); }
+function canClearHistory(){ return !!currentUser && ["adm","diretor"].includes(currentUser.role); }
 function canPickup(){ return !!currentUser && ["adm","monitor"].includes(currentUser.role); }
 function canReturn(){ return !!currentUser; }
 function canConfirmExit(){ return !!currentUser; }
@@ -5457,6 +5490,7 @@ function makeSharedState(){
     updatedAt:nowISO(),
     requests:data.map(normalizeRequest),
     history:history.map(normalizeHistoryItem),
+    historyClearedAt,
     students:students.map(normalizeStudent),
     permissions:permissions.map(normalizePermission),
     deletedRequestIds:[...new Set(deletedRequestIds.map(String))]
@@ -5469,7 +5503,10 @@ function normalizeSharedState(s){
     ? raw.students.map(normalizeStudent)
     : uniqueStudentsFromRequests(reqs);
   const perms=Array.isArray(raw.permissions)?raw.permissions.map(normalizePermission):[];
-  const hist=Array.isArray(raw.history)?raw.history.map(normalizeHistoryItem):[];
+  const clearStamp=Date.parse(raw.historyClearedAt||"");
+  const historyClearedAt=Number.isFinite(clearStamp)?new Date(clearStamp).toISOString():"";
+  const hist=(Array.isArray(raw.history)?raw.history.map(normalizeHistoryItem):[])
+    .filter(item=>!historyClearedAt || recordStamp(item)>clearStamp);
   const deleted=Array.isArray(raw.deletedRequestIds)?[...new Set(raw.deletedRequestIds.map(String))]:[];
   const deletedSet=new Set(deleted);
   return {
@@ -5477,6 +5514,7 @@ function normalizeSharedState(s){
     updatedAt:raw.updatedAt||nowISO(),
     requests:reqs.filter(r=>!deletedSet.has(String(r.id))),
     history:hist,
+    historyClearedAt,
     students:sts,
     permissions:perms,
     deletedRequestIds:deleted
@@ -5498,6 +5536,7 @@ function applySharedState(s){
   applyingRemote=true;
   data=n.requests;
   history=n.history;
+  historyClearedAt=n.historyClearedAt||"";
   students=n.students;
   permissions=n.permissions;
   deletedRequestIds=n.deletedRequestIds||[];
@@ -5548,11 +5587,17 @@ function mergeSharedSnapshots(remoteRaw,localRaw){
   const local=normalizeSharedState(localRaw||{});
   const deleted=[...new Set([...(remote.deletedRequestIds||[]),...(local.deletedRequestIds||[])].map(String))];
   const deletedSet=new Set(deleted);
+  const clearCandidates=[remote.historyClearedAt,local.historyClearedAt]
+    .map(value=>Date.parse(value||""))
+    .filter(Number.isFinite);
+  const clearStamp=clearCandidates.length?Math.max(...clearCandidates):NaN;
+  const historyClearedAt=Number.isFinite(clearStamp)?new Date(clearStamp).toISOString():"";
   return normalizeSharedState({
     version:45,
     updatedAt:nowISO(),
     requests:mergeById(remote.requests,local.requests).filter(r=>!deletedSet.has(String(r.id))),
-    history:mergeById(remote.history,local.history),
+    history:mergeById(remote.history,local.history).filter(item=>!historyClearedAt || recordStamp(item)>clearStamp),
+    historyClearedAt,
     students:mergeById(remote.students,local.students),
     permissions:mergeById(remote.permissions,local.permissions),
     deletedRequestIds:deleted
@@ -5572,9 +5617,11 @@ async function pushRemoteState(){
     const {error}=await sb.from("app_state").update({data:next}).eq("id",APP_STATE_ROW_ID);
     if(error) throw error;
     setSyncState("online");
+    return true;
   }catch(err){
     console.error("Falha ao salvar no Supabase:",err);
     setSyncState("error");
+    return false;
   }
 }
 async function loadRemoteShared(){
@@ -5642,6 +5689,7 @@ function applyRoleUI(){
   $("#newStudentBtn")?.classList.toggle("role-hidden",!canManageStudents());
   $("#newStudentBtn2")?.classList.toggle("role-hidden",!canManageStudents());
   $("#newStudentFromRequest")?.classList.toggle("role-hidden",!canManageStudents());
+  $("#clearHistoryButton")?.classList.toggle("role-hidden",!canClearHistory());
   render();
 }
 function setCurrentUser(user){
@@ -5717,6 +5765,51 @@ async function logoutApp(){
   setAuthLocked(true);
   $("#loginPassword").value="";
   setSyncState("login");
+}
+function downloadHistoryBackup(items){
+  const payload={
+    exportedAt:nowISO(),
+    exportedBy:currentUser?.displayName||"",
+    history:items.map(normalizeHistoryItem)
+  };
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);
+  const link=document.createElement("a");
+  link.href=url;
+  link.download=`historico-ete-backup-${recifeDateKey()}.json`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+async function clearHistoryWithPassword(password){
+  if(!canClearHistory()) throw new Error("Seu perfil não pode apagar o histórico.");
+  const client=initSupabase();
+  const email=authEmailForUsername(currentUser?.username);
+  if(!client || !email) throw new Error("Não foi possível validar sua conta.");
+
+  const {error:authError}=await client.auth.signInWithPassword({email,password});
+  if(authError) throw new Error("Senha incorreta.");
+
+  if(IS_TEST_PREVIEW) return {removed:history.length,preview:true};
+
+  const previousHistory=history.map(normalizeHistoryItem);
+  const previousClearedAt=historyClearedAt;
+  downloadHistoryBackup(previousHistory);
+  history=[];
+  historyClearedAt=nowISO();
+  persistLocalShared();
+  renderHistory();
+
+  const saved=await pushRemoteState();
+  if(!saved){
+    history=previousHistory;
+    historyClearedAt=previousClearedAt;
+    persistLocalShared();
+    renderHistory();
+    throw new Error("Não foi possível sincronizar a exclusão. O histórico foi restaurado.");
+  }
+  return {removed:previousHistory.length,preview:false};
 }
 async function hashPin(pin){
   const text=String(pin||"");
@@ -6940,6 +7033,39 @@ $("#historyNewest").addEventListener("click",()=>{
   historyNewestFirst=!historyNewestFirst;
   $("#historyNewest").textContent=historyNewestFirst ? "Mais recentes primeiro" : "Mais antigos primeiro";
   renderHistory();
+});
+$("#clearHistoryButton")?.addEventListener("click",()=>{
+  if(!canClearHistory()){toast("Seu perfil não pode apagar o histórico.");return;}
+  if(!history.length){toast("O histórico já está vazio.");return;}
+  $("#clearHistoryForm").reset();
+  $("#clearHistoryError").classList.remove("show");
+  $("#clearHistorySummary").textContent=IS_TEST_PREVIEW
+    ? `Modo de teste: a senha será validada, mas os ${history.length} eventos não serão apagados.`
+    : `${history.length} evento${history.length===1?" será":"s serão"} removido${history.length===1?"":"s"}. Um backup JSON será baixado antes da exclusão.`;
+  $("#clearHistoryModal").showModal();
+  $("#clearHistoryPassword").focus();
+});
+$("#clearHistoryForm")?.addEventListener("submit",async e=>{
+  e.preventDefault();
+  const errorBox=$("#clearHistoryError");
+  const button=$("#confirmClearHistory");
+  errorBox.classList.remove("show");
+  button.disabled=true;
+  button.textContent="Validando e apagando...";
+  try{
+    const result=await clearHistoryWithPassword($("#clearHistoryPassword").value);
+    $("#clearHistoryModal").close();
+    toast(result.preview
+      ? "Teste concluído: senha válida e nenhum dado foi apagado."
+      : `${result.removed} evento${result.removed===1?" removido":"s removidos"} do histórico.`);
+  }catch(err){
+    errorBox.textContent=err?.message||"Não foi possível apagar o histórico.";
+    errorBox.classList.add("show");
+  }finally{
+    button.disabled=false;
+    button.textContent="Apagar somente o histórico";
+    $("#clearHistoryPassword").value="";
+  }
 });
 
 document.addEventListener("click",e=>{
