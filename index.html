@@ -5267,7 +5267,7 @@ function recifeTimeLabel(d=new Date()){
   const t=recifeClockParts(d);
   return String(t.hour).padStart(2,"0")+":"+String(t.minute).padStart(2,"0");
 }
-const today=recifeDateKey();
+let today=recifeDateKey();
 let formState={start:"07:30", end:"08:20"};
 let data=[];
 let history=[];
@@ -5280,17 +5280,9 @@ let pendingExitVerifierRole="Monitor";
 
 const STUDENTS_STORAGE_KEY="ete_students_cache_v43";
 const DEFAULT_STUDENTS=[];
-function loadStudents(){
-  try{
-    const saved=JSON.parse(localStorage.getItem(STUDENTS_STORAGE_KEY)||"null");
-    return Array.isArray(saved) ? saved : DEFAULT_STUDENTS;
-  }catch{
-    return DEFAULT_STUDENTS;
-  }
-}
+function loadStudents(){ return DEFAULT_STUDENTS; }
 let students=loadStudents();
 function saveStudents(){
-  try{ localStorage.setItem(STUDENTS_STORAGE_KEY,JSON.stringify(students)); }catch{}
   if(appReady) scheduleSharedPersist();
 }
 
@@ -5299,7 +5291,6 @@ let permissions=[];
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 
-const APP_STATE_ROW_ID="main";
 const IS_TEST_PREVIEW=location.hostname.startsWith("teste-acessibilidade.");
 const V43_LOCAL_KEY="ete_v43_shared_state"; // mantido para migração local
 const ROLE_MAP={
@@ -5529,31 +5520,14 @@ function applySharedState(s){
   students=n.students;
   permissions=n.permissions;
   deletedRequestIds=n.deletedRequestIds||[];
-  try{localStorage.setItem(V43_LOCAL_KEY,JSON.stringify(n));}catch{}
-  try{localStorage.setItem(STUDENTS_STORAGE_KEY,JSON.stringify(students));}catch{}
   applyingRemote=false;
   populateSavedStudentSelect();
   refreshLateStatuses(false);
   render();
 }
-function loadLocalSharedState(){
-  try{
-    const saved=JSON.parse(localStorage.getItem(V43_LOCAL_KEY)||"null");
-    if(saved) return normalizeSharedState(saved);
-  }catch{}
-  return normalizeSharedState({requests:data,history,students,permissions});
-}
-function persistLocalShared(){
-  if(applyingRemote) return;
-  const snapshot=makeSharedState();
-  try{localStorage.setItem(V43_LOCAL_KEY,JSON.stringify(snapshot));}catch{}
-}
-function scheduleSharedPersist(){
-  if(applyingRemote) return;
-  persistLocalShared();
-  clearTimeout(remoteWriteTimer);
-  remoteWriteTimer=setTimeout(pushRemoteState,350);
-}
+function loadLocalSharedState(){ return normalizeSharedState({requests:[],history:[],students:[],permissions:[]}); }
+function persistLocalShared(){ return; }
+function scheduleSharedPersist(){ return; }
 
 function recordStamp(r){
   const t=Date.parse(r?.updatedAt||r?.atISO||r?.createdAt||"");
@@ -5593,66 +5567,9 @@ function mergeSharedSnapshots(remoteRaw,localRaw){
   });
 }
 
-async function pushRemoteState(){
-  if(!sb || !currentUser || applyingRemote) return;
-  setSyncState("saving");
-  try{
-    const {data:row,error:readErr}=await sb.from("app_state").select("data").eq("id",APP_STATE_ROW_ID).single();
-    if(readErr) throw readErr;
-    const base=row?.data&&typeof row.data==="object"?row.data:{};
-    remoteBaseState=base;
-    const merged=mergeSharedSnapshots(base.v43||{},makeSharedState());
-    const next={...base,v43:merged};
-    const {error}=await sb.from("app_state").update({data:next}).eq("id",APP_STATE_ROW_ID);
-    if(error) throw error;
-    setSyncState("online");
-    return true;
-  }catch(err){
-    console.error("Falha ao salvar no Supabase:",err);
-    setSyncState("error");
-    return false;
-  }
-}
-async function loadRemoteShared(){
-  if(!sb || !currentUser) return;
-  setSyncState("loading");
-  try{
-    const {data:row,error}=await sb.from("app_state").select("data").eq("id",APP_STATE_ROW_ID).single();
-    if(error) throw error;
-    const base=row?.data&&typeof row.data==="object"?row.data:{};
-    remoteBaseState=base;
-    if(base.v43){
-      applySharedState(base.v43);
-    }else{
-      const seed=stateFromLegacyTopLevel(base);
-      applySharedState(seed);
-      await pushRemoteState();
-    }
-    subscribeRemote();
-    setSyncState("online");
-  }catch(err){
-    console.error("Falha ao carregar Supabase:",err);
-    setSyncState("error");
-    applySharedState({requests:[],history:[],students:[],permissions:[],deletedRequestIds:[],historyClearedAt:""});
-  }
-}
-function subscribeRemote(){
-  if(!sb) return;
-  if(remoteChannel){ try{sb.removeChannel(remoteChannel)}catch{} }
-  remoteChannel=sb.channel("ete-v43-main")
-    .on("postgres_changes",{event:"UPDATE",schema:"public",table:"app_state",filter:`id=eq.${APP_STATE_ROW_ID}`},payload=>{
-      const next=payload?.new?.data?.v43;
-      if(next){
-        remoteBaseState=payload.new.data;
-        applySharedState(next);
-        setSyncState("online");
-      }
-    })
-    .subscribe(status=>{
-      if(status==="SUBSCRIBED") setSyncState("online");
-      else if(["CHANNEL_ERROR","TIMED_OUT","CLOSED"].includes(status)) setSyncState("error");
-    });
-}
+async function pushRemoteState(){ return false; }
+async function loadRemoteShared(){ return; }
+function subscribeRemote(){ return; }
 function setSyncState(state){
   const pill=$("#syncPill"), side=$("#sideSyncText"), label=$("#sideSyncLabel");
   if(!pill) return;
