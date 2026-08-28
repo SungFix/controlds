@@ -1,0 +1,77 @@
+/* Control Ds — contraste PRIME
+   Mantém a paleta atual, mas garante leitura confortável em textos pequenos. */
+
+html:not([data-theme="light"]){
+  --ui-faint:#89949d;
+}
+
+html[data-theme="light"]{
+  --ui-muted:#566771;
+  --ui-faint:#5d6d76;
+  --ui-success:#486e58;
+}
+
+/* Textos pequenos nunca devem depender de cinzas de baixo contraste das camadas antigas. */
+html:not([data-theme="light"]) .brand small,
+html:not([data-theme="light"]) .section-label,
+html:not([data-theme="light"]) .side-status p,
+html:not([data-theme="light"]) .topbar-copy p,
+html:not([data-theme="light"]) .topbar-eyebrow,
+html:not([data-theme="light"]) .top-title small,
+html:not([data-theme="light"]) .panelhead small,
+html:not([data-theme="light"]) .hero-stat .eyebrow,
+html:not([data-theme="light"]) .hero-stat small,
+html:not([data-theme="light"]) .mini-stat .hint,
+html:not([data-theme="light"]) .quick-card .left small,
+html:not([data-theme="light"]) .who small,
+html:not([data-theme="light"]) .meta,
+html:not([data-theme="light"]) .history-time,
+html:not([data-theme="light"]) .history-main small,
+html:not([data-theme="light"]) .history-line time,
+html:not([data-theme="light"]) .history-line small,
+html:not([data-theme="light"]) .request-subid,
+html:not([data-theme="light"]) .permission-card small,
+html:not([data-theme="light"]) .permission-note p,
+html:not([data-theme="light"]) .computer-card .desc{
+  color:var(--ui-faint) !important;
+}
+
+html[data-theme="light"] .brand small,
+html[data-theme="light"] .section-label,
+html[data-theme="light"] .side-status p,
+html[data-theme="light"] .topbar-copy p,
+html[data-theme="light"] .topbar-eyebrow,
+html[data-theme="light"] .top-title small,
+html[data-theme="light"] .panelhead small,
+html[data-theme="light"] .hero-stat .eyebrow,
+html[data-theme="light"] .hero-stat small,
+html[data-theme="light"] .mini-stat .hint,
+html[data-theme="light"] .quick-card .left small,
+html[data-theme="light"] .who small,
+html[data-theme="light"] .meta,
+html[data-theme="light"] .history-time,
+html[data-theme="light"] .history-main small,
+html[data-theme="light"] .history-line time,
+html[data-theme="light"] .history-line small,
+html[data-theme="light"] .request-subid,
+html[data-theme="light"] .permission-card small,
+html[data-theme="light"] .permission-note p,
+html[data-theme="light"] .computer-card .desc{
+  color:var(--ui-muted) !important;
+}
+
+/* Foco de teclado visível em qualquer superfície. */
+html:not([data-theme="light"]) button:focus-visible,
+html:not([data-theme="light"]) a:focus-visible,
+html:not([data-theme="light"]) input:focus-visible,
+html:not([data-theme="light"]) textarea:focus-visible,
+html:not([data-theme="light"]) select:focus-visible{
+  outline-color:#9eb5c4 !important;
+}
+html[data-theme="light"] button:focus-visible,
+html[data-theme="light"] a:focus-visible,
+html[data-theme="light"] input:focus-visible,
+html[data-theme="light"] textarea:focus-visible,
+html[data-theme="light"] select:focus-visible{
+  outline-color:#456b80 !important;
+}
