@@ -1,34 +1,30 @@
-/* Control Ds — tema claro azul-cinza com contraste maior e sem branco forte */
+/* Control Ds — apenas cores secundárias mais escuras no tema claro */
 html[data-theme="light"]{
-  --surface-primary:#eef2f4;
-  --surface-secondary:#dfe8ed;
-  --surface-tertiary:#d3e0e6;
-  --surface-muted:#e7edf0;
-  --surface-accent:#c9dbe4;
-  --surface-soft:#e9eef1;
-  --surface-card:#f2f5f6;
-  --border-strong:#b9cbd4;
-  --border-soft:#c9d6dc;
+  --surface-primary:#f8fafb;
+  --surface-secondary:#d9e4e9;
+  --surface-tertiary:#cbdbe2;
+  --surface-muted:#e7eef2;
+  --surface-accent:#bfd3dd;
+  --surface-card:#f8fafb;
+  --border-strong:#afc3cd;
+  --border-soft:#d3dde2;
 }
 
-/* Fundo geral mais cinza-azulado, sem branco forte */
+/* Mantém fundo, sidebar, topbar e cards principais claros */
 html[data-theme="light"] body{
-  background:linear-gradient(180deg,#e9eef1 0%,#e2e9ed 52%,#dde5e9 100%) !important;
+  background:linear-gradient(180deg,#f3f6f8 0%,#edf2f5 52%,#e9eef2 100%) !important;
 }
 html[data-theme="light"] .content{background:transparent !important}
-
-/* Estrutura principal */
 html[data-theme="light"] .sidebar{
-  background:#edf2f4 !important;
-  border-color:#c4d1d8 !important;
+  background:#f8fafb !important;
+  border-color:#d8e1e6 !important;
 }
 html[data-theme="light"] .topbar{
-  background:rgba(229,236,240,.98) !important;
-  border-color:#c2d0d7 !important;
-  box-shadow:0 4px 18px rgba(52,72,81,.06) !important;
+  background:rgba(246,249,250,.97) !important;
+  border-color:#d5dfe4 !important;
+  box-shadow:0 3px 14px rgba(55,71,79,.035) !important;
 }
 
-/* Cards principais: claros, mas não brancos */
 html[data-theme="light"] .panel,
 html[data-theme="light"] .hero-stat,
 html[data-theme="light"] .mini-stat,
@@ -43,12 +39,11 @@ html[data-theme="light"] .permission-stat,
 html[data-theme="light"] .computer-stat,
 html[data-theme="light"] dialog,
 html[data-theme="light"] .login-card{
-  background:var(--surface-card) !important;
+  background:var(--surface-primary) !important;
   border-color:var(--border-soft) !important;
-  box-shadow:0 8px 24px rgba(52,72,81,.07) !important;
 }
 
-/* Cabeçalhos e áreas secundárias com diferença visível */
+/* Somente superfícies secundárias ficam mais escuras */
 html[data-theme="light"] .panelhead,
 html[data-theme="light"] .request-card-top,
 html[data-theme="light"] .computer-item-head,
@@ -66,16 +61,12 @@ html[data-theme="light"] .time-card{
   border-color:var(--border-strong) !important;
 }
 
-/* Ações rápidas ficam mais destacadas do card externo */
-html[data-theme="light"] .quick-card{
-  background:#dbe6eb !important;
-}
 html[data-theme="light"] .quick-card:hover{
-  background:#d1dfe6 !important;
-  border-color:#aac2ce !important;
+  background:#cfdee5 !important;
+  border-color:#9fb9c5 !important;
 }
 
-/* Elementos de apoio em ciano/cinza */
+/* Apoio e ícones um nível mais escuro */
 html[data-theme="light"] .page-symbol,
 html[data-theme="light"] .navicon,
 html[data-theme="light"] .header-avatar,
@@ -88,41 +79,38 @@ html[data-theme="light"] .group-picker-badge,
 html[data-theme="light"] .group-picker-chevron,
 html[data-theme="light"] .interval-picker-chevron{
   background:var(--surface-tertiary) !important;
-  border-color:#b5c8d1 !important;
+  border-color:#abc0ca !important;
 }
 
-/* Menu */
-html[data-theme="light"] .nav button:hover{
-  background:#dde7ec !important;
-}
-html[data-theme="light"] .nav button.active{
-  background:var(--surface-accent) !important;
-  border-color:#a9c1cd !important;
-  box-shadow:inset 3px 0 0 #65879b !important;
-}
-html[data-theme="light"] .nav button.active .navicon{
-  background:#e8eef1 !important;
-  border-color:#adc2cc !important;
-}
-
-/* Abas, seleções e estados ativos */
+/* Seleções e estados ativos mais visíveis */
+html[data-theme="light"] .nav button.active,
 html[data-theme="light"] .request-tab.active,
 html[data-theme="light"] .computer-tab.active,
 html[data-theme="light"] .group-option.active,
 html[data-theme="light"] .interval-option.active,
 html[data-theme="light"] .time-option.active{
   background:var(--surface-accent) !important;
-  border-color:#aac2ce !important;
+  border-color:#9eb8c4 !important;
 }
+html[data-theme="light"] .nav button.active{
+  box-shadow:inset 3px 0 0 #65879b !important;
+}
+html[data-theme="light"] .nav button.active .navicon{
+  background:#dbe6eb !important;
+  border-color:#a7bdc7 !important;
+}
+
+/* Hover secundário */
+html[data-theme="light"] .nav button:hover,
 html[data-theme="light"] .request-tab:hover,
 html[data-theme="light"] .computer-tab:hover,
 html[data-theme="light"] .group-option:hover,
 html[data-theme="light"] .interval-option:hover,
 html[data-theme="light"] .time-option:hover{
-  background:#d9e5ea !important;
+  background:#d7e3e8 !important;
 }
 
-/* Campos: cinza-azulado perceptível */
+/* Campos continuam claros, mas secundários */
 html[data-theme="light"] input,
 html[data-theme="light"] textarea,
 html[data-theme="light"] select,
@@ -131,8 +119,8 @@ html[data-theme="light"] .request-sort,
 html[data-theme="light"] .group-picker-trigger,
 html[data-theme="light"] .interval-picker-trigger,
 html[data-theme="light"] .time-trigger{
-  background:#e5ecef !important;
-  border-color:#b7c9d2 !important;
+  background:#edf3f5 !important;
+  border-color:#bfd0d8 !important;
   color:#26363e !important;
 }
 html[data-theme="light"] input:focus,
@@ -140,64 +128,51 @@ html[data-theme="light"] textarea:focus,
 html[data-theme="light"] select:focus,
 html[data-theme="light"] .group-picker-trigger.open,
 html[data-theme="light"] .interval-picker-trigger.open{
-  background:#edf2f4 !important;
+  background:#f5f8f9 !important;
   border-color:#718fa1 !important;
   box-shadow:0 0 0 3px rgba(95,127,150,.14) !important;
 }
 
-/* Popups */
-html[data-theme="light"] .group-picker-popup,
-html[data-theme="light"] .interval-picker-popup,
-html[data-theme="light"] .time-popup{
-  background:#edf2f4 !important;
-  border-color:#b9cbd4 !important;
-}
-
-/* Botões */
+/* Botões secundários mais escuros; primário preservado */
 html[data-theme="light"] .btn,
 html[data-theme="light"] .close,
 html[data-theme="light"] .control-theme-toggle,
 html[data-theme="light"] .theme-toggle{
-  background:#dce6eb !important;
-  border-color:#b6c8d1 !important;
+  background:#d9e4e9 !important;
+  border-color:#afc3cd !important;
   color:#2f4651 !important;
 }
 html[data-theme="light"] .btn:hover,
 html[data-theme="light"] .close:hover,
 html[data-theme="light"] .control-theme-toggle:hover,
 html[data-theme="light"] .theme-toggle:hover{
-  background:#d1dfe5 !important;
-  border-color:#a8bfca !important;
+  background:#cedde4 !important;
+  border-color:#9fb8c4 !important;
 }
 html[data-theme="light"] .btn.secondary{
-  background:#d7e2e7 !important;
+  background:#d4e1e7 !important;
 }
 html[data-theme="light"] .btn.primary{
-  background:#587b90 !important;
-  border-color:#587b90 !important;
+  background:#506f83 !important;
+  border-color:#506f83 !important;
   color:#fff !important;
 }
 html[data-theme="light"] .btn.primary:hover{
-  background:#4c6b7d !important;
-  border-color:#4c6b7d !important;
+  background:#435f70 !important;
+  border-color:#435f70 !important;
 }
 
-/* Login */
-html[data-theme="light"] .login-gate{
-  background:linear-gradient(180deg,#e7edf0,#dce5e9) !important;
-}
 html[data-theme="light"] .login-card .login-brand,
 html[data-theme="light"] .login-grid input{
-  background:#e0e8ec !important;
-  border-color:#bacbd3 !important;
+  background:#dce7eb !important;
+  border-color:#b8cbd4 !important;
 }
 
-/* Hover geral */
 html[data-theme="light"] .row:hover,
 html[data-theme="light"] .request-card:hover,
 html[data-theme="light"] .computer-item:hover,
 html[data-theme="light"] .student-item:hover,
 html[data-theme="light"] .permission-item:hover{
-  background:#e3eaee !important;
-  border-color:#b8cbd4 !important;
+  background:#eef4f6 !important;
+  border-color:#c2d2da !important;
 }
