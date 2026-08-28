@@ -20,24 +20,21 @@ window.ETE_CONFIG = {
   } catch (_) {}
   root.dataset.theme = savedTheme;
 
-  function ensureThemeStyles(){
-    let link = document.getElementById("controlThemeStyles");
+  function ensureStylesheet(id, href){
+    let link = document.getElementById(id);
     if (!link) {
       link = document.createElement("link");
-      link.id = "controlThemeStyles";
+      link.id = id;
       link.rel = "stylesheet";
       document.head.appendChild(link);
     }
-    link.href = "theme-light.css?v=6";
+    link.href = href;
+  }
 
-    let refine = document.getElementById("controlThemeRefineStyles");
-    if (!refine) {
-      refine = document.createElement("link");
-      refine.id = "controlThemeRefineStyles";
-      refine.rel = "stylesheet";
-      document.head.appendChild(refine);
-    }
-    refine.href = "theme-light-refine.css?v=2";
+  function ensureThemeStyles(){
+    ensureStylesheet("controlThemeStyles", "theme-light.css?v=6");
+    ensureStylesheet("controlThemeRefineStyles", "theme-light-refine.css?v=2");
+    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=1");
   }
 
   function updateButton(button){
@@ -50,17 +47,25 @@ window.ETE_CONFIG = {
     button.style.borderColor = light ? "#c9d7de" : "#39414b";
   }
 
+  function applyThemeChange(){
+    root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
+    try { localStorage.setItem(STORAGE_KEY, root.dataset.theme); } catch (_) {}
+    document.querySelectorAll(".control-theme-toggle").forEach(updateButton);
+  }
+
   function toggleTheme(){
     root.classList.add("theme-transitioning");
-    requestAnimationFrame(() => {
-      root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
-      try { localStorage.setItem(STORAGE_KEY, root.dataset.theme); } catch (_) {}
-      document.querySelectorAll(".control-theme-toggle").forEach(updateButton);
-    });
     clearTimeout(window.__controlThemeTransitionTimer);
+
+    if (document.startViewTransition) {
+      document.startViewTransition(() => applyThemeChange());
+    } else {
+      requestAnimationFrame(applyThemeChange);
+    }
+
     window.__controlThemeTransitionTimer = setTimeout(() => {
       root.classList.remove("theme-transitioning");
-    }, 520);
+    }, 560);
   }
 
   function makeButton(extraClass){
