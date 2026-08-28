@@ -1,0 +1,323 @@
+/* Control Ds — visual profissional, simples e consistente nos dois temas */
+
+:root{
+  --ui-radius-sm:10px;
+  --ui-radius-md:14px;
+  --ui-radius-lg:18px;
+  --ui-gap:14px;
+  --ui-focus:0 0 0 3px rgba(95,127,150,.16);
+}
+
+html:not([data-theme="light"]){
+  --ui-bg:#090a0c;
+  --ui-surface:#121418;
+  --ui-surface-2:#171b20;
+  --ui-surface-3:#1d2228;
+  --ui-border:#2b3138;
+  --ui-border-strong:#3a424b;
+  --ui-text:#f3f5f7;
+  --ui-muted:#9099a3;
+  --ui-primary:#e9ecef;
+  --ui-primary-text:#111317;
+  --ui-danger-bg:#24191b;
+  --ui-danger-border:#51343a;
+  --ui-danger-text:#d99aa2;
+  --ui-shadow:0 14px 36px rgba(0,0,0,.20);
+}
+html[data-theme="light"]{
+  --ui-bg:#eef2f5;
+  --ui-surface:#ffffff;
+  --ui-surface-2:#f2f5f7;
+  --ui-surface-3:#e7edf1;
+  --ui-border:#d5dfe4;
+  --ui-border-strong:#c2d0d8;
+  --ui-text:#17242c;
+  --ui-muted:#687983;
+  --ui-primary:#52778c;
+  --ui-primary-text:#ffffff;
+  --ui-danger-bg:#f8eeee;
+  --ui-danger-border:#e4c9ce;
+  --ui-danger-text:#8d535b;
+  --ui-shadow:0 12px 28px rgba(28,45,55,.07);
+}
+
+body{
+  color:var(--ui-text) !important;
+}
+
+/* Estrutura */
+.sidebar{
+  border-right:1px solid var(--ui-border) !important;
+}
+.topbar{
+  min-height:76px !important;
+  border-bottom:1px solid var(--ui-border) !important;
+}
+.content{
+  max-width:1480px !important;
+  padding:30px 34px 58px !important;
+}
+.pagehead{
+  align-items:center !important;
+  margin-bottom:22px !important;
+}
+.pagehead h1{
+  font-size:30px !important;
+  line-height:1.05 !important;
+  letter-spacing:-.035em !important;
+}
+.pagehead p{
+  max-width:720px !important;
+  font-size:11px !important;
+  line-height:1.6 !important;
+  color:var(--ui-muted) !important;
+}
+
+/* Navegação: simples de entender */
+.nav{gap:6px !important}
+.nav button{
+  min-height:48px !important;
+  border-radius:12px !important;
+  font-size:11px !important;
+  font-weight:760 !important;
+}
+.navicon{
+  width:30px !important;
+  height:30px !important;
+  border-radius:9px !important;
+}
+
+/* Cards e painéis */
+.panel,
+.hero-stat,
+.mini-stat,
+.request-card,
+.student-card,
+.student-item,
+.computer-card,
+.computer-item,
+.permission-card,
+.permission-item,
+.history-stat,
+.request-stat,
+.student-stat,
+.permission-stat,
+.computer-stat{
+  border-radius:var(--ui-radius-lg) !important;
+  border:1px solid var(--ui-border) !important;
+  box-shadow:var(--ui-shadow) !important;
+}
+.panel,
+.hero-stat,
+.mini-stat,
+.request-card,
+.student-card,
+.student-item,
+.computer-card,
+.computer-item,
+.permission-card,
+.permission-item{
+  background:var(--ui-surface) !important;
+}
+.panelhead,
+.request-card-top,
+.permission-card-top,
+.computer-item-head{
+  background:var(--ui-surface-2) !important;
+  border-color:var(--ui-border) !important;
+}
+
+/* Informações internas */
+.quick-card,
+.request-info-box,
+.permission-info-box,
+.permission-note,
+.computer-meta-box,
+.summary-card,
+.request-main,
+.request-side,
+.time-card,
+.header-account,
+.account-card{
+  background:var(--ui-surface-2) !important;
+  border-color:var(--ui-border) !important;
+  border-radius:var(--ui-radius-md) !important;
+}
+
+/* Tipografia */
+h1,h2,h3,strong{color:var(--ui-text)}
+.meta,
+.who small,
+.request-subid,
+.permission-card small,
+.permission-note p,
+.computer-card .desc,
+.history-main small,
+.history-time,
+.history-line time,
+.history-line small{
+  color:var(--ui-muted) !important;
+}
+
+/* Botões: ação principal sempre evidente */
+.btn,
+.close,
+.header-logout,
+.control-theme-toggle{
+  border-radius:11px !important;
+  border:1px solid var(--ui-border-strong) !important;
+  font-weight:800 !important;
+  box-shadow:none !important;
+}
+.btn{
+  min-height:44px !important;
+  padding:10px 15px !important;
+  background:var(--ui-surface-2) !important;
+  color:var(--ui-text) !important;
+}
+.btn:hover{
+  background:var(--ui-surface-3) !important;
+}
+.btn.primary{
+  background:var(--ui-primary) !important;
+  border-color:var(--ui-primary) !important;
+  color:var(--ui-primary-text) !important;
+}
+.btn.danger{
+  background:var(--ui-danger-bg) !important;
+  border-color:var(--ui-danger-border) !important;
+  color:var(--ui-danger-text) !important;
+}
+.btn.small{min-height:36px !important;padding:8px 11px !important}
+
+/* Campos */
+input,
+textarea,
+select,
+.filter-select,
+.request-sort,
+.group-picker-trigger,
+.interval-picker-trigger,
+.time-trigger{
+  min-height:48px !important;
+  border-radius:12px !important;
+  border:1px solid var(--ui-border-strong) !important;
+  background:var(--ui-surface) !important;
+  color:var(--ui-text) !important;
+  box-shadow:none !important;
+}
+input:focus,
+textarea:focus,
+select:focus,
+.filter-select:focus,
+.request-sort:focus,
+.group-picker-trigger.open,
+.interval-picker-trigger.open,
+.time-trigger:focus{
+  outline:none !important;
+  box-shadow:var(--ui-focus) !important;
+}
+
+/* Toolbars e filtros */
+.toolbar,
+.history-tools,
+.permission-toolbar{
+  gap:10px !important;
+}
+.request-tabs,
+.computer-tabs{
+  border-radius:12px !important;
+  background:var(--ui-surface-2) !important;
+  border-color:var(--ui-border) !important;
+}
+.request-tab,
+.computer-tab{
+  min-height:40px !important;
+  border-radius:9px !important;
+}
+
+/* Estados */
+.status,
+.chip,
+.permission-status,
+.exit-status,
+.history-kind{
+  border-radius:999px !important;
+  font-weight:800 !important;
+}
+
+/* Modais */
+dialog{
+  border-radius:20px !important;
+  border:1px solid var(--ui-border-strong) !important;
+  background:var(--ui-surface) !important;
+  color:var(--ui-text) !important;
+  box-shadow:0 30px 80px rgba(0,0,0,.28) !important;
+}
+.modal{padding:26px !important}
+.modalhead{margin-bottom:18px !important}
+.modalhead h2{font-size:25px !important}
+
+/* Cabeçalho: visual limpo, sem parecer outro sistema */
+.topbar-right,
+.top-right{
+  border-radius:15px !important;
+  border-color:var(--ui-border) !important;
+  background:var(--ui-surface-2) !important;
+  box-shadow:none !important;
+}
+.topbar-right .header-account,
+.top-right .header-account,
+.topbar-right .sync-pill,
+.top-right .sync-pill,
+.control-theme-toggle-header,
+.topbar-right .header-logout,
+.top-right .header-logout{
+  background:var(--ui-surface) !important;
+  border-color:var(--ui-border) !important;
+  color:var(--ui-text) !important;
+}
+
+/* Login */
+.login-card{
+  border-radius:22px !important;
+  border-color:var(--ui-border) !important;
+  background:var(--ui-surface) !important;
+  box-shadow:0 24px 70px rgba(0,0,0,.20) !important;
+}
+.login-card .login-brand{
+  background:var(--ui-surface-2) !important;
+  border-color:var(--ui-border) !important;
+}
+
+/* Evita aparência exagerada */
+*,*::before,*::after{
+  transition-property:none !important;
+}
+
+@media(max-width:900px){
+  .content{padding:22px 18px 44px !important}
+  .pagehead{align-items:flex-start !important}
+  .pagehead h1{font-size:26px !important}
+}
+
+@media(max-width:600px){
+  .content{padding:18px 14px 36px !important}
+  .pagehead{display:grid !important;gap:12px !important}
+  .pagehead h1{font-size:24px !important}
+  .actions{width:100% !important}
+  .actions .btn{flex:1 1 auto !important}
+  .toolbar,
+  .history-tools,
+  .permission-toolbar{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    width:100% !important;
+  }
+  .toolbar > *,
+  .history-tools > *,
+  .permission-toolbar > *{
+    width:100% !important;
+    min-width:0 !important;
+  }
+}
