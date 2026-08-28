@@ -8,7 +8,8 @@ html:not([data-theme="light"]) :is(
   .permission-info-box span,.permission-note .label,.permission-note p,.restore-window,
   .student-card-title small,.student-meta span,.student-last-use,
   .computer-code-wrap span,.computer-owner span,.computer-meta-box span,.computer-state-note,.computer-results-label,
-  .history-time,.history-main small,.history-line time,.history-line small,.meta,.who small
+  .history-time,.history-main small,.history-line time,.history-line small,.meta,.who small,
+  #headerUserRole,.agenda-person small span
 ){color:#b4bec6 !important}
 
 html[data-theme="light"] :is(
@@ -20,8 +21,14 @@ html[data-theme="light"] :is(
   .permission-info-box span,.permission-note .label,.permission-note p,.restore-window,
   .student-card-title small,.student-meta span,.student-last-use,
   .computer-code-wrap span,.computer-owner span,.computer-meta-box span,.computer-state-note,.computer-results-label,
-  .history-time,.history-main small,.history-line time,.history-line small,.meta,.who small
-){color:#4c5d67 !important}
+  .history-time,.history-main small,.history-line time,.history-line small,.meta,.who small,
+  #headerUserRole
+){color:#445761 !important}
+
+/* Itens da agenda usam fundos de estado claros; precisam de texto mais escuro que o muted geral. */
+html[data-theme="light"] .agenda-person small span{
+  color:#3f535d !important;
+}
 
 html:not([data-theme="light"]) :is(
   .request-info-box strong,.permission-info-box strong,.student-meta strong,.computer-meta-box strong,
