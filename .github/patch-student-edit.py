@@ -72,15 +72,11 @@ if new_guard not in s:
     assert old_guard in s
     s=s.replace(old_guard,new_guard,1)
 
-old_branch='''}else if(delStudent){
-  if(!canManageStudents())throw new Error("forbidden");
-  const s=students.find(x=>String(x.id)===String(delStudent.dataset.deleteStudent));
-  if(!s)return;
-  if(!confirm(`Remover ${s.name} da lista de alunos?\n\nPedidos e histórico antigos não serão apagados.`))return;
-  await v46Rpc("ete_delete_student",{p_student_id:String(s.id)});
-  toast("Aluno removido da lista.");
-}else if(delReq){'''
-new_branch='''}else if(editStudent){
+if '}else if(editStudent){' not in s:
+    start=s.find('}else if(delStudent){')
+    end=s.find('}else if(delReq){',start)
+    assert start >= 0 and end > start
+    new_branch='''}else if(editStudent){
   if(!canManageStudents())throw new Error("forbidden");
   const s=students.find(x=>String(x.id)===String(editStudent.dataset.editStudent));
   if(!s)return;
@@ -97,12 +93,10 @@ new_branch='''}else if(editStudent){
   if(!canManageStudents())throw new Error("forbidden");
   const s=students.find(x=>String(x.id)===String(delStudent.dataset.deleteStudent));
   if(!s)return;
-  if(!confirm(`Remover ${s.name} e TODOS os dados ligados a esse aluno?\n\nSerão apagados pedidos, PINs de pedidos, permissões e histórico relacionados. Essa ação não pode ser desfeita.`))return;
+  if(!confirm(`Remover ${s.name} e TODOS os dados ligados a esse aluno?\\n\\nSerão apagados pedidos, PINs de pedidos, permissões e histórico relacionados. Essa ação não pode ser desfeita.`))return;
   await v46Rpc("ete_delete_student",{p_student_id:String(s.id)});
   toast("Aluno e dados ligados removidos.");
-}else if(delReq){'''
-if '}else if(editStudent){' not in s:
-    assert old_branch in s
-    s=s.replace(old_branch,new_branch,1)
+'''
+    s=s[:start]+new_branch+s[end:]
 
 p.write_text(s,encoding='utf-8')
