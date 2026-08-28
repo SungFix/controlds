@@ -1,0 +1,114 @@
+/* Control Ds — cartões de permissões legíveis no tema claro */
+html[data-theme="light"] .permission-card{
+  background:#ffffff !important;
+  color:#20343d !important;
+  border:1px solid #cfdbe1 !important;
+  border-radius:16px !important;
+  box-shadow:0 8px 22px rgba(36,55,66,.06) !important;
+  overflow:hidden !important;
+}
+
+html[data-theme="light"] .permission-card + .permission-card{
+  margin-top:12px !important;
+}
+
+html[data-theme="light"] .permission-card-top{
+  background:linear-gradient(180deg,#fbfdfe 0%,#f4f8fa 100%) !important;
+  border-bottom:1px solid #dde6ea !important;
+}
+
+html[data-theme="light"] .permission-student,
+html[data-theme="light"] .permission-card-top strong{
+  color:#1a2d36 !important;
+  font-weight:850 !important;
+}
+
+html[data-theme="light"] .permission-card-body{
+  background:#f7fafc !important;
+  color:#334a55 !important;
+}
+
+html[data-theme="light"] .permission-info,
+html[data-theme="light"] .permission-note,
+html[data-theme="light"] .permission-actions{
+  color:#334a55 !important;
+}
+
+html[data-theme="light"] .permission-info-box,
+html[data-theme="light"] .permission-note,
+html[data-theme="light"] .exit-proof{
+  background:#ffffff !important;
+  border:1px solid #d5e0e5 !important;
+  box-shadow:0 2px 8px rgba(36,55,66,.025) !important;
+}
+
+html[data-theme="light"] .permission-info-box span,
+html[data-theme="light"] .permission-note .label,
+html[data-theme="light"] .exit-proof span{
+  color:#74858e !important;
+}
+
+html[data-theme="light"] .permission-info-box strong,
+html[data-theme="light"] .permission-note p,
+html[data-theme="light"] .exit-proof strong{
+  color:#263b45 !important;
+}
+
+html[data-theme="light"] .permission-note p{
+  line-height:1.55 !important;
+}
+
+html[data-theme="light"] .permission-status{
+  background:#edf5f1 !important;
+  color:#4f775f !important;
+  border-color:#c9dfd1 !important;
+}
+
+html[data-theme="light"] .permission-status.cancelled{
+  background:#faeeee !important;
+  color:#9a5d65 !important;
+  border-color:#e7cbd0 !important;
+}
+
+html[data-theme="light"] .exit-status{
+  background:#f7f1e4 !important;
+  color:#826c38 !important;
+  border-color:#e8d7ae !important;
+}
+
+html[data-theme="light"] .exit-status.confirmed{
+  background:#edf5f1 !important;
+  color:#4f775f !important;
+  border-color:#c9dfd1 !important;
+}
+
+html[data-theme="light"] .restore-window{
+  color:#7b6970 !important;
+}
+
+html[data-theme="light"] .permission-empty{
+  background:#f7fafb !important;
+  color:#697b84 !important;
+  border:1px dashed #cbd9df !important;
+}
+
+html[data-theme="light"] .permission-empty strong{
+  color:#2a414c !important;
+}
+
+html[data-theme="light"] .permission-card:hover{
+  border-color:#b8ccd5 !important;
+  box-shadow:0 10px 26px rgba(36,55,66,.08) !important;
+}
+
+@media(max-width:820px){
+  html[data-theme="light"] .permission-card-body{
+    background:#f7fafc !important;
+  }
+
+  html[data-theme="light"] .permission-info-box,
+  html[data-theme="light"] .permission-note,
+  html[data-theme="light"] .exit-proof{
+    border-radius:12px !important;
+  }
+}
