@@ -34,7 +34,7 @@ window.ETE_CONFIG = {
   function ensureThemeStyles(){
     ensureStylesheet("controlThemeStyles", "theme-light.css?v=6");
     ensureStylesheet("controlThemeRefineStyles", "theme-light-refine.css?v=2");
-    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=1");
+    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=2");
   }
 
   function updateButton(button){
@@ -54,17 +54,19 @@ window.ETE_CONFIG = {
   }
 
   function toggleTheme(){
-    root.classList.add("theme-transitioning");
-    clearTimeout(window.__controlThemeTransitionTimer);
+    if (root.classList.contains("theme-transitioning")) return;
 
-    if (document.startViewTransition) {
-      document.startViewTransition(() => applyThemeChange());
-    } else {
-      requestAnimationFrame(applyThemeChange);
-    }
+    root.classList.add("theme-transitioning", "theme-transition-out");
+    root.classList.remove("theme-transition-in");
 
-    window.__controlThemeTransitionTimer = setTimeout(() => {
-      root.classList.remove("theme-transitioning");
+    setTimeout(() => {
+      applyThemeChange();
+      root.classList.remove("theme-transition-out");
+      root.classList.add("theme-transition-in");
+    }, 260);
+
+    setTimeout(() => {
+      root.classList.remove("theme-transitioning", "theme-transition-in", "theme-transition-out");
     }, 560);
   }
 
