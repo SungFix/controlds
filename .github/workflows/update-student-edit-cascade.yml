@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/update-student-edit-cascade.yml"
+      - ".github/patch-student-edit.py"
 
 permissions:
   contents: write
