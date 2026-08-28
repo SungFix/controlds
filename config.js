@@ -56,6 +56,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlMobilePolishStyles", "mobile-polish.css?v=1");
     ensureStylesheet("controlMobileHeaderPolishStyles", "mobile-header-polish.css?v=2");
     ensureStylesheet("controlThemeParityStyles", "theme-light-parity.css?v=1");
+    ensureStylesheet("controlVisualPrimeStyles", "visual-prime.css?v=1");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=2");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=1");
     ensureScript("controlPermissionDetailsScript", "permission-details-enhance.js?v=2");
