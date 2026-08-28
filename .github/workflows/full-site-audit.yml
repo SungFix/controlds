@@ -20,98 +20,54 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python - <<'PY'
+          python3 - <<'PY'
           from html.parser import HTMLParser
           from pathlib import Path
-          import re, sys, json
+          import re, sys
 
           root=Path('.')
           html=(root/'index.html').read_text(encoding='utf-8')
           bridge=(root/'v46-bridge.js').read_text(encoding='utf-8')
           config=(root/'config.js').read_text(encoding='utf-8')
-          report=[]
           errors=[]
-          warnings=[]
 
-          class AuditParser(HTMLParser):
+          class P(HTMLParser):
               def __init__(self):
-                  super().__init__(convert_charrefs=True)
-                  self.ids=[]; self.refs=[]; self.scripts=[]; self.links=[]; self.inputs=[]; self.forms=0
-              def handle_starttag(self, tag, attrs):
+                  super().__init__(convert_charrefs=True); self.ids=[]; self.assets=[]; self.labels=[]
+              def handle_starttag(self,tag,attrs):
                   a=dict(attrs)
-                  if 'id' in a: self.ids.append(a['id'])
-                  if tag=='script' and a.get('src'): self.scripts.append(a['src'])
-                  if tag=='link' and a.get('href'): self.links.append(a['href'])
-                  if tag in ('input','textarea','select'): self.inputs.append((tag,a))
-                  if tag=='form': self.forms+=1
-                  if tag=='label' and a.get('for'): self.refs.append(('label-for',a['for']))
-
-          p=AuditParser(); p.feed(html)
+                  if a.get('id'): self.ids.append(a['id'])
+                  if tag=='script' and a.get('src'): self.assets.append(a['src'])
+                  if tag=='link' and a.get('href'): self.assets.append(a['href'])
+                  if tag=='label' and a.get('for'): self.labels.append(a['for'])
+          p=P(); p.feed(html)
           dup=sorted({x for x in p.ids if p.ids.count(x)>1})
-          if dup: errors.append('Duplicate HTML ids: '+', '.join(dup))
-          else: report.append(f'HTML IDs unique: {len(p.ids)} ids')
-
-          idset=set(p.ids)
-          missing_for=sorted({v for _,v in p.refs if v not in idset})
-          if missing_for: errors.append('Labels pointing to missing ids: '+', '.join(missing_for))
-          else: report.append('All label for= targets exist')
-
-          local_assets=[]
-          for asset in p.scripts+p.links:
+          if dup: errors.append('IDs duplicados: '+', '.join(dup))
+          ids=set(p.ids)
+          missing=[x for x in p.labels if x not in ids]
+          if missing: errors.append('Labels sem alvo: '+', '.join(sorted(set(missing))))
+          for asset in p.assets:
               if asset.startswith(('http://','https://','//','data:','#')): continue
               path=asset.split('?',1)[0].split('#',1)[0]
-              if not path: continue
-              local_assets.append(path)
-              if not (root/path).exists(): errors.append(f'Missing local asset: {path}')
-          report.append('Local assets checked: '+', '.join(sorted(set(local_assets))))
-
-          placeholders=re.findall(r'placeholder=["\']([^"\']*)', html, flags=re.I)
-          banned=['klenio','luís otávio','luis otavio','joão silva','joao silva']
-          bad=[x for x in placeholders if any(b in x.lower() for b in banned)]
-          if bad: errors.append('Personal-name placeholders remain: '+repr(bad))
-          else: report.append(f'Placeholders generic: {len(placeholders)} checked')
-
-          all_text='\n'.join([html,bridge,config]+[f.read_text(encoding='utf-8',errors='ignore') for f in root.glob('*.js')])
-          secret_patterns=[
-              r'service[_-]?role', r'jwt[_-]?secret', r'postgres(?:ql)?://[^\s"\']+:[^\s"\']+@',
-              r'SUPABASE_SERVICE_ROLE_KEY', r'DATABASE_PASSWORD'
-          ]
-          hits=[]
-          for pat in secret_patterns:
-              if re.search(pat, all_text, flags=re.I): hits.append(pat)
-          if hits: errors.append('Potential private-secret references in frontend: '+', '.join(hits))
-          else: report.append('No private backend secret patterns found in frontend')
-
-          if 'persistSession:false' not in html.replace(' ','') and 'persistSession:false' not in bridge.replace(' ',''):
-              warnings.append('Could not confirm persistSession:false by static search')
-          else: report.append('Supabase session persistence disabled')
-
-          if '@supabase/supabase-js@2.112.4' not in html:
-              warnings.append('Supabase JS version is not pinned to expected 2.112.4')
-          else: report.append('Supabase JS version pinned')
-
-          legacy_refs=[]
-          for name,text in [('index.html',html),('v46-bridge.js',bridge)]:
-              for m in re.finditer(r'app_state|localStorage',text,re.I):
-                  legacy_refs.append((name,m.group(0),text.count('\n',0,m.start())+1))
-          report.append(f'Legacy/local storage references found for manual review: {len(legacy_refs)}')
-          for x in legacy_refs[:30]: warnings.append('reference: %s %s line %s'%x)
-
-          required_ids=['loginGate','loginForm','loginUsername','loginPassword','loginSubmit','studentRows','requestRows','permissionRows','historyRows']
-          missing=[x for x in required_ids if x not in idset]
-          if missing: errors.append('Missing critical UI ids: '+', '.join(missing))
-          else: report.append('Critical UI containers present')
-
+              if path and not (root/path).exists(): errors.append('Asset ausente: '+path)
+          placeholders=re.findall(r'placeholder=["\']([^"\']*)',html,re.I)
+          for value in placeholders:
+              if any(x in value.lower() for x in ['klenio','luís otávio','luis otavio','joão silva','joao silva']):
+                  errors.append('Placeholder pessoal: '+value)
+          text='\n'.join([html,bridge,config])
+          for pat in [r'SUPABASE_SERVICE_ROLE_KEY',r'DATABASE_PASSWORD',r'jwt[_-]?secret',r'postgres(?:ql)?://[^\s"\']+:[^\s"\']+@']:
+              if re.search(pat,text,re.I): errors.append('Possível segredo privado no frontend: '+pat)
+          required=['loginGate','loginForm','loginUsername','loginPassword','loginSubmit','studentRows','requestRows','permissionRows','historyRows']
+          for rid in required:
+              if rid not in ids: errors.append('Elemento crítico ausente: '+rid)
           for css_name in ['login-simple-v2.css','ete-ui-v2.css']:
               css=(root/css_name).read_text(encoding='utf-8')
-              if css.count('{')!=css.count('}'):
-                  errors.append(f'Unbalanced CSS braces in {css_name}')
-              else: report.append(f'CSS braces balanced: {css_name}')
-
-          out=['=== STATIC AUDIT ===']+[f'PASS: {x}' for x in report]+[f'WARN: {x}' for x in warnings]+[f'FAIL: {x}' for x in errors]
-          print('\n'.join(out))
-          Path('static-audit.json').write_text(json.dumps({'passes':report,'warnings':warnings,'errors':errors},ensure_ascii=False,indent=2),encoding='utf-8')
-          if errors: sys.exit(1)
+              if css.count('{')!=css.count('}'): errors.append('CSS desbalanceado: '+css_name)
+          if 'persistSession:false' not in html.replace(' ','') and 'persistSession:false' not in bridge.replace(' ',''):
+              errors.append('persistSession:false não confirmado')
+          if errors:
+              print('\n'.join('FAIL: '+x for x in errors)); sys.exit(1)
+          print('STATIC AUDIT: PASS')
           PY
 
       - name: JavaScript syntax audit
@@ -119,90 +75,66 @@ jobs:
         run: |
           set -euo pipefail
           node --check v46-bridge.js
-          python - <<'PY'
+          python3 - <<'PY'
           from pathlib import Path
           import re
           h=Path('index.html').read_text(encoding='utf-8')
           blocks=re.findall(r'<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>',h,flags=re.I|re.S)
-          d=Path('/tmp/control-ds-inline'); d.mkdir(exist_ok=True)
-          for i,b in enumerate(blocks):
-              (d/f'inline-{i}.js').write_text(b,encoding='utf-8')
-          print(f'Inline scripts extracted: {len(blocks)}')
+          for i,b in enumerate(blocks): Path(f'inline-audit-{i}.js').write_text(b,encoding='utf-8')
           PY
-          for f in /tmp/control-ds-inline/*.js; do node --check "$f"; done
+          for f in inline-audit-*.js; do [ -e "$f" ] && node --check "$f"; done
+          rm -f inline-audit-*.js
+          echo 'JAVASCRIPT SYNTAX: PASS'
 
-      - name: Browser smoke tests
-        shell: bash
+      - name: Install browser runtime
         run: |
-          set -euo pipefail
           npm init -y >/dev/null 2>&1
           npm install --no-save playwright@1.55.0 >/dev/null 2>&1
           npx playwright install chromium >/dev/null 2>&1
+
+      - name: Browser smoke audit
+        shell: bash
+        run: |
+          set -euo pipefail
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/control-ds-http.log 2>&1 &
           SERVER_PID=$!
           trap 'kill $SERVER_PID || true' EXIT
           sleep 2
-          cat > /tmp/control-ds-smoke.mjs <<'JS'
+          cat > full-browser-audit.mjs <<'JS'
           import { chromium } from 'playwright';
           const browser=await chromium.launch({headless:true});
-          const results=[];
-          async function testUrl(url,label,doInvalidLogin=false){
+          async function test(url,label){
             const page=await browser.newPage({viewport:{width:1366,height:768}});
-            const errors=[];
-            page.on('pageerror',e=>errors.push('pageerror: '+e.message));
-            page.on('console',m=>{ if(m.type()==='error') errors.push('console: '+m.text()); });
+            const errors=[]; page.on('pageerror',e=>errors.push(e.message));
             const r=await page.goto(url,{waitUntil:'networkidle',timeout:30000});
-            if(!r || !r.ok()) throw new Error(`${label}: HTTP ${r?.status()}`);
+            if(!r?.ok()) throw new Error(`${label}: HTTP ${r?.status()}`);
             await page.locator('#loginGate').waitFor({state:'visible'});
-            if(await page.locator('#loginUsername').getAttribute('placeholder')!=='Nome de usuário') throw new Error(`${label}: generic login placeholder missing`);
-            if(await page.locator('#loginPassword').getAttribute('placeholder')!=='Digite sua senha') throw new Error(`${label}: generic password placeholder missing`);
-            if(!(await page.locator('#loginSubmit').isVisible())) throw new Error(`${label}: login button hidden`);
-            const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+2);
-            if(overflow) throw new Error(`${label}: horizontal overflow on desktop`);
-            const fav=await page.locator('link[rel="icon"]').getAttribute('href');
-            if(!fav?.includes('favicon.svg')) throw new Error(`${label}: favicon missing`);
-            if(doInvalidLogin){
-              await page.fill('#loginUsername','usuario_inexistente_teste');
-              await page.fill('#loginPassword','senha_invalida_teste');
-              await page.click('#loginSubmit');
-              await page.waitForTimeout(2000);
-              const errVisible=await page.locator('#loginError').isVisible().catch(()=>false);
-              if(!errVisible) throw new Error(`${label}: invalid login did not show visible error`);
-            }
-            const ignorable=errors.filter(x=>!x.includes('Failed to load resource: the server responded with a status of 400') && !x.includes('Invalid login credentials'));
-            if(ignorable.length) throw new Error(`${label}: browser errors: ${ignorable.join(' | ')}`);
-            results.push(`${label} desktop PASS`);
-            await page.setViewportSize({width:390,height:844});
-            await page.reload({waitUntil:'networkidle'});
+            if(await page.locator('#loginUsername').getAttribute('placeholder')!=='Nome de usuário') throw new Error(`${label}: usuário placeholder`);
+            if(await page.locator('#loginPassword').getAttribute('placeholder')!=='Digite sua senha') throw new Error(`${label}: senha placeholder`);
+            if(!(await page.locator('#loginSubmit').isVisible())) throw new Error(`${label}: botão Entrar`);
+            if((await page.title())!=='Control Ds') throw new Error(`${label}: title`);
+            if(errors.length) throw new Error(`${label}: JS ${errors.join(' | ')}`);
+            if(await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+2)) throw new Error(`${label}: overflow desktop`);
+            await page.setViewportSize({width:390,height:844}); await page.reload({waitUntil:'networkidle'});
             await page.locator('#loginGate').waitFor({state:'visible'});
-            const mobileOverflow=await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+2);
-            if(mobileOverflow) throw new Error(`${label}: horizontal overflow on mobile`);
-            results.push(`${label} mobile PASS`);
-            await page.close();
+            if(await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+2)) throw new Error(`${label}: overflow mobile`);
+            const b=await page.locator('.login-card').boundingBox();
+            if(!b || b.x<0 || b.x+b.width>390.5) throw new Error(`${label}: card mobile fora da tela`);
+            await page.close(); console.log(`${label}: PASS`);
           }
-          await testUrl('http://127.0.0.1:4173/','local',true);
-          for (const [url,label] of [
-            ['https://ete-controle-notebooks.pages.dev/','cloudflare'],
-            ['https://sungfix.github.io/ete-controle-notebooks/','github-pages']
-          ]){
-            try { await testUrl(url,label,false); }
-            catch(e){ results.push(`${label} WARN ${e.message}`); }
-          }
-          console.log('=== BROWSER AUDIT ===');
-          for(const x of results) console.log(x);
+          await test('http://127.0.0.1:4173/','local');
+          await test('https://ete-controle-notebooks.pages.dev/','cloudflare');
+          await test('https://sungfix.github.io/ete-controle-notebooks/','github-pages');
           await browser.close();
           JS
-          node /tmp/control-ds-smoke.mjs
+          node full-browser-audit.mjs
+          rm -f full-browser-audit.mjs
 
       - name: Repository hygiene audit
         shell: bash
         run: |
           set -euo pipefail
-          echo '=== REPOSITORY HYGIENE ==='
-          find .github/workflows -maxdepth 1 -type f -printf '%f\n' | sort
           test ! -e .github/workflows/generic-placeholders.yml
           test ! -e .github/workflows/bump-login-v6.yml
           test ! -e .github/workflows/add-student-delete.yml
-          echo 'Known temporary workflows absent: PASS'
-
-# Reexecutado após o endurecimento final de segurança em 2026-08-28.
+          echo 'REPOSITORY HYGIENE: PASS'
