@@ -36,15 +36,19 @@ jobs:
           const browser=await chromium.launch({headless:true});
           const page=await browser.newPage({viewport:{width:1440,height:1000}});
           await page.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle'});
-          async function axe(label){
+          let totalBad=0;
+          async function audit(label){
             await page.addScriptTag({content:axeSource});
             const result=await page.evaluate(async()=>await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa']}}));
             const bad=result.violations.filter(v=>['critical','serious'].includes(v.impact));
             console.log(`=== ${label} ===`);
-            for(const v of result.violations) console.log(`${v.impact||'unknown'} ${v.id}: ${v.help} nodes=${v.nodes.length}`);
-            if(bad.length) throw new Error(`${label}: ${bad.map(v=>`${v.id}(${v.nodes.length})`).join(', ')}`);
+            for(const v of result.violations){
+              console.log(`${v.impact||'unknown'} ${v.id}: ${v.help} nodes=${v.nodes.length}`);
+              for(const n of v.nodes) console.log(`  TARGET ${JSON.stringify(n.target)} :: ${String(n.failureSummary||'').replace(/\n/g,' | ')}`);
+            }
+            totalBad+=bad.length;
           }
-          await axe('login');
+          await audit('login');
           await page.evaluate(()=>{
             v46AuthUser={id:'audit-adm'};
             currentUser={username:'audit',displayName:'Auditor',role:'adm',roleLabel:'Administrador',userId:'audit-adm'};
@@ -53,9 +57,10 @@ jobs:
           });
           for(const section of ['home','agenda','permissions','requests','students','computers','history']){
             await page.click(`[data-page="${section}"]`);
-            await axe(`page-${section}`);
+            await audit(`page-${section}`);
           }
-          console.log('ACCESSIBILITY CRITICAL/SERIOUS: PASS');
           await browser.close();
+          if(totalBad) throw new Error(`Accessibility serious/critical groups: ${totalBad}`);
+          console.log('ACCESSIBILITY CRITICAL/SERIOUS: PASS');
           JS
           node a11y-audit.mjs
