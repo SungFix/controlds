@@ -88,6 +88,7 @@ window.ETE_CONFIG = {
     ensureScript("controlRoleLabelFixScript", "role-label-fix.js?v=2");
     ensureScript("controlProfessorDirectorParityScript", "professor-director-parity.js?v=2");
     ensureScript("controlPermissionFormPickerScript", "permission-form-picker-enhance.js?v=1");
+    ensureScript("controlPermissionDeleteScript", "permission-delete-enhance.js?v=1");
     ensureScript("controlUxPrimeScript", "ux-prime.js?v=3");
   }
 
