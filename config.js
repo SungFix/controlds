@@ -81,6 +81,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlAccessibilityPrimeStyles", "accessibility-prime.css?v=2");
     ensureStylesheet("controlStudentLightPolishStyles", "student-light-polish.css?v=1");
     ensureStylesheet("controlPermissionFormPickerStyles", "permission-form-picker-enhance.css?v=1");
+    ensureStylesheet("controlActionModalStyles", "action-modal.css?v=1");
 
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
@@ -88,6 +89,7 @@ window.ETE_CONFIG = {
     ensureScript("controlRoleLabelFixScript", "role-label-fix.js?v=2");
     ensureScript("controlProfessorDirectorParityScript", "professor-director-parity.js?v=3");
     ensureScript("controlPermissionFormPickerScript", "permission-form-picker-enhance.js?v=1");
+    ensureScript("controlActionModalScript", "action-modal.js?v=1");
     ensureScript("controlPermissionDeleteScript", "permission-delete-enhance.js?v=1");
     ensureScript("controlComputerDeleteScript", "computer-delete-enhance.js?v=3");
     ensureScript("controlUxPrimeScript", "ux-prime.js?v=3");
