@@ -22,11 +22,9 @@
     function isMobile(){return window.matchMedia('(max-width:820px)').matches;}
     function isOpen(){return root.classList.contains('mobile-menu-open');}
     function clearTapVisual(){
-      try{ menuButton.blur(); }catch(_){}
-      if(window.getSelection){
-        const sel=window.getSelection();
-        if(sel&&typeof sel.removeAllRanges==='function') sel.removeAllRanges();
-      }
+      requestAnimationFrame(function(){
+        try{ menuButton.blur(); }catch(_){}
+      });
     }
     function syncButton(){
       const open=isOpen();
@@ -52,16 +50,11 @@
       ev.preventDefault();
       ev.stopPropagation();
       isOpen()?closeMenu():openMenu();
-      requestAnimationFrame(clearTapVisual);
-      setTimeout(clearTapVisual,0);
+      clearTapVisual();
     }
 
-    menuButton.addEventListener('pointerdown',function(ev){
-      if(isMobile() && ev.pointerType!=='mouse') ev.preventDefault();
-    },{passive:false});
-    menuButton.addEventListener('touchstart',function(ev){
-      if(isMobile()) ev.preventDefault();
-    },{passive:false});
+    /* Não bloquear pointerdown/touchstart: isso impedia o click real em alguns celulares. */
+    menuButton.style.webkitTapHighlightColor='transparent';
     menuButton.addEventListener('click',toggleMenu,true);
     menuButton.addEventListener('pointerup',clearTapVisual);
     menuButton.addEventListener('touchend',clearTapVisual,{passive:true});
