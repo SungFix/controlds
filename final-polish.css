@@ -1,6 +1,29 @@
 /* Control Ds — acabamento final de interface
    Última camada visual: contraste, estados, hierarquia de ações e consistência. */
 
+/* ---------- Contraste global do tema claro ---------- */
+html[data-theme="light"]{
+  --ui-muted:#4f606a;
+  --ui-faint:#586972;
+}
+html[data-theme="light"] .hero-stat .eyebrow,
+html[data-theme="light"] .hero-stat small,
+html[data-theme="light"] .mini-stat .label,
+html[data-theme="light"] .mini-stat .hint,
+html[data-theme="light"] .quick-card .left small,
+html[data-theme="light"] .panelhead small,
+html[data-theme="light"] .who small,
+html[data-theme="light"] .meta,
+html[data-theme="light"] .request-subid,
+html[data-theme="light"] .request-results-label,
+html[data-theme="light"] .computer-results-label,
+html[data-theme="light"] .history-time,
+html[data-theme="light"] .history-main small,
+html[data-theme="light"] .history-line time,
+html[data-theme="light"] .history-line small{
+  color:var(--ui-muted) !important;
+}
+
 /* ---------- Alunos: contraste real no tema escuro ---------- */
 html:not([data-theme="light"]) #page-students .student-stat span{
   color:#b6c0c7 !important;
