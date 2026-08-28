@@ -46,6 +46,19 @@
     background:#151a20 !important;
     color:#edf2f5 !important;
     box-shadow:none !important;
+    outline:none !important;
+    -webkit-tap-highlight-color:transparent !important;
+    -webkit-touch-callout:none !important;
+    user-select:none !important;
+    -webkit-user-select:none !important;
+  }
+
+  .mobile-menu:focus,
+  .mobile-menu:focus-visible,
+  .mobile-menu:active{
+    outline:none !important;
+    box-shadow:none !important;
+    -webkit-tap-highlight-color:transparent !important;
   }
 
   .mobile-menu svg{
