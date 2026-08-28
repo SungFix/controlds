@@ -52,7 +52,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlHeaderPolishStyles", "header-polish.css?v=2");
     ensureStylesheet("controlMobileMenuStyles", "mobile-menu-enhance.css?v=2");
     ensureStylesheet("controlMobilePolishStyles", "mobile-polish.css?v=1");
-    ensureStylesheet("controlMobileHeaderPolishStyles", "mobile-header-polish.css?v=1");
+    ensureStylesheet("controlMobileHeaderPolishStyles", "mobile-header-polish.css?v=2");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=2");
   }
 
