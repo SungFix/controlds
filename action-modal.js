@@ -122,6 +122,12 @@
     return v46Rpc(name,args);
   }
 
+  function continueOriginalClick(button){
+    if(!button?.isConnected) return;
+    button.dataset.criticalConfirmed="1";
+    button.click();
+  }
+
   async function handleStudent(button,id){
     const student=getStudent(id);
     if(!student){notify("Aluno não encontrado. Atualize a página e tente novamente.");return;}
@@ -174,6 +180,25 @@
     await execute(button,"permission:"+id,async()=>{await runRpc("ete_delete_permission",{p_permission_id:String(id)});notify("Permissão apagada definitivamente.");});
   }
 
+  async function handleRevokePermission(button,id){
+    const permission=getPermission(id);
+    if(!permission){notify("Permissão não encontrada. Atualize a página e tente novamente.");return;}
+    if(!permission.active){notify("Esta permissão já está cancelada.");return;}
+    if(!mayManagePermissions()){notify("Sua conta não tem permissão para cancelar permissões.");return;}
+    const ok=await confirmAction({
+      title:"Cancelar permissão",
+      subtitle:"A autorização de entrada deixará de valer imediatamente.",
+      message:`Deseja cancelar a permissão de ${permission.student}?`,
+      details:[String(permission.className||"Turma não informada"),String(permission.interval||"Intervalo não informado")],
+      warning:"Após confirmar, a permissão ficará cancelada. O sistema manterá a opção de restauração pelo período já previsto.",
+      variant:"warning",
+      confirmText:"Cancelar permissão",
+      cancelText:"Manter permissão"
+    });
+    if(!ok)return;
+    continueOriginalClick(button);
+  }
+
   async function execute(button,key,operation){
     if(busy.has(key))return;
     busy.add(key);
@@ -195,7 +220,12 @@
 
   function interceptedButton(target){
     if(!(target instanceof Element))return null;
-    return target.closest("[data-delete-student],[data-delete-request],[data-delete-permission],[data-delete-computer-record]");
+    const button=target.closest("[data-delete-student],[data-delete-request],[data-delete-permission],[data-delete-computer-record],[data-revoke-permission]");
+    if(button?.dataset.criticalConfirmed==="1"){
+      delete button.dataset.criticalConfirmed;
+      return null;
+    }
+    return button;
   }
 
   window.addEventListener("click",event=>{
@@ -208,6 +238,7 @@
     else if(button.dataset.deleteComputerRecord)handleRequest(button,String(button.dataset.deleteComputerRecord),true);
     else if(button.dataset.deletePermission)handlePermission(button,String(button.dataset.deletePermission));
     else if(button.dataset.deleteRequest)handleRequest(button,String(button.dataset.deleteRequest),false);
+    else if(button.dataset.revokePermission)handleRevokePermission(button,String(button.dataset.revokePermission));
   },true);
 
   window.ControlActionModal=Object.freeze({confirm:confirmAction,notice});
