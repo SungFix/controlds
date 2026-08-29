@@ -96,6 +96,7 @@ window.ETE_CONFIG = {
     ensureScript("controlUxPrimeScript", "ux-prime.js?v=3");
     ensureScript("controlFinalPolishScript", "final-polish.js?v=1");
     ensureScript("controlNavigationSimplifyScript", "navigation-simplify.js?v=1");
+    ensureScript("controlStudentUseChoiceScript", "student-use-choice.js?v=1");
   }
 
   function updateButton(button){
