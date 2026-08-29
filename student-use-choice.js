@@ -22,11 +22,11 @@
           <button type="button" class="close" data-student-use-close aria-label="Fechar">×</button>
         </div>
         <div class="student-use-choice-options">
-          <button type="button" class="btn primary student-use-choice-option" data-student-use-target="requests">
+          <button type="button" class="student-use-choice-option" data-student-use-target="requests">
             <strong>Pedido de notebook</strong>
             <span>Abrir solicitação de uso de notebook</span>
           </button>
-          <button type="button" class="btn secondary student-use-choice-option" data-student-use-target="permissions">
+          <button type="button" class="student-use-choice-option" data-student-use-target="permissions">
             <strong>Autorização / Permissão</strong>
             <span>Abrir autorização de entrada com o aluno preenchido</span>
           </button>
@@ -36,13 +36,60 @@
     const style=document.createElement("style");
     style.id="studentUseChoiceStyles";
     style.textContent=`
-      #studentUseChoiceModal{width:min(620px,calc(100% - 28px))}
-      .student-use-choice-modal{padding:26px}
-      .student-use-choice-options{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-      .student-use-choice-option{min-height:112px!important;height:auto!important;padding:18px!important;display:flex!important;flex-direction:column;align-items:flex-start!important;justify-content:center!important;text-align:left!important;gap:7px!important}
-      .student-use-choice-option strong{font-size:14px;line-height:1.25}
-      .student-use-choice-option span{font-size:12px;line-height:1.45;font-weight:650;opacity:.8}
-      @media(max-width:600px){.student-use-choice-options{grid-template-columns:1fr}.student-use-choice-option{min-height:94px!important}}
+      #studentUseChoiceModal{
+        width:min(520px,calc(100% - 28px));
+        border-color:var(--ui-border-strong,#373d45);
+        background:var(--ui-surface,#101216);
+      }
+      .student-use-choice-modal{padding:22px}
+      .student-use-choice-modal .modalhead{margin-bottom:14px}
+      .student-use-choice-modal .modalhead h2{font-size:24px}
+      .student-use-choice-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+      .student-use-choice-option{
+        min-height:94px;
+        padding:15px;
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+        justify-content:center;
+        gap:6px;
+        text-align:left;
+        border:1px solid var(--ui-border,#2d333a);
+        border-radius:12px;
+        background:var(--ui-surface-2,#15181d);
+        color:var(--ui-text,#eef1f4);
+        box-shadow:none;
+        transition:background .14s ease,border-color .14s ease,transform .14s ease,box-shadow .14s ease;
+      }
+      .student-use-choice-option strong{font-size:14px;line-height:1.25;color:inherit}
+      .student-use-choice-option span{font-size:12px;line-height:1.4;font-weight:650;color:var(--ui-muted,#9da5ae)}
+      .student-use-choice-option:hover,
+      .student-use-choice-option:focus-visible{
+        background:var(--ui-surface-3,#1c2026);
+        border-color:var(--ui-accent,#59636f);
+        transform:translateY(-1px);
+        box-shadow:0 8px 22px rgba(0,0,0,.16);
+        outline:none;
+      }
+      .student-use-choice-option:active{
+        transform:translateY(0);
+        border-color:var(--ui-border-strong,#49515b);
+        background:var(--ui-surface-3,#1c2026);
+      }
+      html[data-theme="light"] .student-use-choice-option{
+        background:var(--ui-surface-2,#f3f6f8);
+        color:var(--ui-text,#1d303a);
+      }
+      html[data-theme="light"] .student-use-choice-option:hover,
+      html[data-theme="light"] .student-use-choice-option:focus-visible{
+        background:var(--ui-surface-3,#e8eef2);
+      }
+      @media(max-width:600px){
+        #studentUseChoiceModal{width:min(440px,calc(100% - 20px))}
+        .student-use-choice-modal{padding:18px}
+        .student-use-choice-options{grid-template-columns:1fr}
+        .student-use-choice-option{min-height:82px;padding:14px}
+      }
     `;
     document.head.appendChild(style);
     document.body.appendChild(dialog);
