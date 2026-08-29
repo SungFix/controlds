@@ -70,3 +70,83 @@ html[data-theme="light"] :is(
   .request-info-box strong,.permission-info-box strong,.student-meta strong,.computer-meta-box strong,
   .request-student,.permission-student,.student-card-title strong,.computer-owner strong,.computer-code-wrap strong
 ){color:#1d303a !important}
+
+/* ---------- Readability pass 2026-08-29 ---------- */
+:root{
+  --control-text-secondary:12px;
+  --control-text-body:13px;
+}
+
+/* Textos secundários: piso visual de 12px. */
+:is(
+  .brand small,.section-label,.local-pill,.side-status p,.top-title small,.sync,.user,
+  .pagehead p,.hero-stat .eyebrow,.hero-stat small,.mini-stat .label,.mini-stat .hint,
+  .panelhead small,.who small,.meta,.chip,.status,.quick-title,.quick-card .left small,
+  .computer-card .desc,.history-line time,.history-line small,.modalhead p,.form-section p,
+  label,.time-card .title,.request-subid,.request-results-label,.computer-results-label,
+  .request-info-box span,.permission-info-box span,.computer-meta span,.student-meta span,
+  .student-card-title small,.student-last-use,.computer-code-wrap span,.computer-owner span,
+  .computer-meta-box span,.computer-state-note,.history-time,.history-main small,
+  .permission-help,#permissionFilterSubtitle,#headerUserRole,.agenda-person small span,
+  .restore-window,.request-reason .label,.permission-note .label,.permission-note p
+){font-size:var(--control-text-secondary) !important;line-height:1.45 !important}
+
+/* Texto normal e controles: 13px–14px. */
+:is(
+  .nav button,.btn,input,textarea,select,.filter-select,.request-sort,
+  .group-picker-trigger,.interval-picker-trigger,.student-picker-trigger,
+  .request-card-body,.permission-card-body,.computer-item-body,.history-main,
+  .request-reason p,.computer-state-note
+){font-size:var(--control-text-body) !important}
+
+.btn.primary{font-size:14px !important;font-weight:850 !important}
+.btn.secondary{font-size:13px !important;font-weight:760 !important}
+.btn.danger,.btn.delete-request,[data-delete-student],[data-delete-request],
+[data-delete-permission],[data-delete-computer-record],#clearHistoryButton{
+  font-size:13px !important;font-weight:820 !important;
+}
+.btn.small{font-size:12px !important}
+
+/* Melhor proporção entre números grandes e legendas. */
+.hero-stat strong{font-size:38px !important;margin-top:11px !important}
+.mini-stat .value{font-size:30px !important}
+.request-stat strong,.permission-stat strong,.student-stat strong,.computer-stat strong,.history-stat strong{
+  font-size:30px !important;
+}
+
+/* Sidebar ligeiramente mais compacta, preservando conforto. */
+@media(min-width:821px){
+  .shell{grid-template-columns:232px minmax(0,1fr) !important}
+  .sidebar{padding-left:12px !important;padding-right:12px !important}
+  .nav button{padding-left:11px !important;padding-right:11px !important;gap:10px !important}
+}
+
+/* Menos caixas dentro de caixas: hierarquia por fundo e espaço. */
+:is(.request-info-box,.permission-info-box,.computer-meta,.student-meta,.computer-meta-box){
+  border-color:transparent !important;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ui-border) 55%,transparent) !important;
+}
+:is(.request-reason,.permission-note){
+  border-color:transparent !important;
+  box-shadow:none !important;
+}
+:is(.quick-card,.time-card){
+  border-color:color-mix(in srgb,var(--ui-border) 65%,transparent) !important;
+}
+
+/* Mobile: cabeçalho legível e estatísticas mais compactas. */
+@media(max-width:820px){
+  .top-title strong{font-size:17px !important}
+  .top-title small,#headerUserRole,.sync,.user{font-size:12px !important}
+  .overview-strip{gap:9px !important}
+  .hero-stat,.mini-stat{min-height:132px !important;padding:17px !important}
+  .hero-stat strong{font-size:34px !important}
+  .mini-stat .value{font-size:27px !important}
+}
+
+@media(max-width:600px){
+  .hero-stat,.mini-stat{min-height:116px !important;padding:14px !important}
+  .hero-stat strong{font-size:31px !important}
+  .mini-stat .value{font-size:25px !important}
+  .pagehead p{font-size:12px !important}
+}
