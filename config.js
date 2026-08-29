@@ -95,6 +95,7 @@ window.ETE_CONFIG = {
     ensureScript("controlComputerDeleteScript", "computer-delete-enhance.js?v=4");
     ensureScript("controlUxPrimeScript", "ux-prime.js?v=3");
     ensureScript("controlFinalPolishScript", "final-polish.js?v=1");
+    ensureScript("controlNavigationSimplifyScript", "navigation-simplify.js?v=1");
   }
 
   function updateButton(button){
