@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
     paths:
+      - "index.html"
+      - "**/*.js"
+      - "**/*.css"
       - ".github/workflows/browser-smoke-audit.yml"
 
 permissions:
