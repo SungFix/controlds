@@ -2,32 +2,23 @@
 .header-account{cursor:pointer}
 .header-account:focus-visible{outline:2px solid var(--ui-border-strong,#59616b);outline-offset:2px}
 
-.user-profile-dialog{
-  width:min(360px,calc(100% - 28px));
-  max-height:none;
-  padding:0;
+.user-profile-popover{
+  position:fixed;
+  z-index:2147483000;
+  padding:10px;
   border:1px solid var(--ui-border,#2d333a);
-  border-radius:16px;
+  border-radius:13px;
   background:var(--ui-surface-1,#111317);
   color:var(--ui-text-1,#eef1f4);
-  box-shadow:0 24px 70px rgba(0,0,0,.36);
+  box-shadow:0 16px 36px rgba(0,0,0,.28);
 }
-.user-profile-dialog::backdrop{background:rgba(0,0,0,.58);backdrop-filter:blur(2px)}
-.user-profile-card{padding:20px}
-.user-profile-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}
-.user-profile-head strong{font-size:14px;letter-spacing:-.01em}
-.user-profile-close{
-  width:34px;height:34px;padding:0;display:grid;place-items:center;
-  border:1px solid var(--ui-border,#2d333a);border-radius:10px;
-  background:var(--ui-surface-2,#171a1f);color:var(--ui-text-2,#aeb4bb);
-  font-size:18px;line-height:1;cursor:pointer;
-}
-.user-profile-info{display:grid;gap:10px}
-.user-profile-row{padding:13px 14px;border:1px solid var(--ui-border,#2d333a);border-radius:12px;background:var(--ui-surface-2,#15181d)}
-.user-profile-row span{display:block;margin-bottom:5px;color:var(--ui-text-3,#777f88);font-size:8px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-.user-profile-row strong{display:block;color:var(--ui-text-1,#eef1f4);font-size:12px;font-weight:800}
+.user-profile-popover[hidden]{display:none !important}
+.user-profile-info{display:grid;gap:8px}
+.user-profile-row{padding:11px 12px;border:1px solid var(--ui-border,#2d333a);border-radius:10px;background:var(--ui-surface-2,#15181d)}
+.user-profile-row span{display:block;margin-bottom:4px;color:var(--ui-text-3,#777f88);font-size:8px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.user-profile-row strong{display:block;color:var(--ui-text-1,#eef1f4);font-size:11px;font-weight:800;overflow-wrap:anywhere}
 
 @media(max-width:820px){
-  .user-profile-dialog{width:min(340px,calc(100% - 22px));border-radius:14px}
-  .user-profile-card{padding:17px}
+  .user-profile-popover{padding:9px;border-radius:12px}
+  .user-profile-row{padding:10px 11px}
 }
