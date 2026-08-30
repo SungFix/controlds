@@ -15,8 +15,8 @@
     let type="";
 
     if(button.matches("[data-use-student]")) type="use";
-    else if(label==="editar" || label.startsWith("editar ")) type="edit";
-    else if(label==="remover" || label.startsWith("remover ")) type="delete";
+    else if(button.matches("[data-edit-student]") || label==="editar" || label.startsWith("editar ")) type="edit";
+    else if(button.matches("[data-delete-student]") || label==="remover" || label.startsWith("remover ")) type="delete";
     else return;
 
     button.dataset.studentActionStyled="1";
@@ -31,7 +31,9 @@
 
   function apply(){
     queued=false;
-    document.querySelectorAll(".student-card button").forEach(decorateButton);
+    document.querySelectorAll(".student-card button,[data-use-student],[data-edit-student],[data-delete-student]").forEach(button=>{
+      if(button.closest(".student-card")) decorateButton(button);
+    });
   }
 
   function queueApply(){
