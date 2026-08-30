@@ -130,4 +130,13 @@
   #permissionModal .student-picker-search::placeholder{
     font-size:13.5px !important;
   }
+
+  /* Mantém o botão de fechar sempre preso à tela do pedido durante a rolagem. */
+  #requestModal .close{
+    position:fixed !important;
+    top:calc(12px + env(safe-area-inset-top)) !important;
+    right:12px !important;
+    z-index:100 !important;
+    margin:0 !important;
+  }
 }
