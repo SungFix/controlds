@@ -11,12 +11,14 @@
     top:auto !important;
     z-index:auto !important;
     width:100% !important;
-    max-height:260px !important;
+    max-height:220px !important;
     margin-top:8px !important;
+    padding:10px !important;
     overflow-y:auto !important;
     overflow-x:hidden !important;
     overscroll-behavior:contain;
     -webkit-overflow-scrolling:touch;
+    border-radius:13px !important;
     box-shadow:none !important;
   }
 
@@ -24,12 +26,45 @@
     display:block !important;
   }
 
+  .group-course + .group-course{
+    margin-top:12px !important;
+    padding-top:10px !important;
+    border-top:1px solid var(--ui-border,#2b333b) !important;
+  }
+
+  .group-course-title{
+    margin:0 0 7px !important;
+    font-size:9px !important;
+    line-height:1.25 !important;
+    letter-spacing:.04em !important;
+  }
+
   .group-options-grid{
+    display:grid !important;
     grid-template-columns:1fr 1fr !important;
+    gap:7px !important;
+  }
+
+  .group-option{
+    min-height:42px !important;
+    padding:8px 10px !important;
+    border-radius:10px !important;
+    justify-content:center !important;
+    text-align:center !important;
+  }
+
+  .group-option span{
+    font-size:11px !important;
+    line-height:1.15 !important;
+  }
+
+  /* No mobile o texto auxiliar repete a informação da turma e só aumenta a poluição visual. */
+  .group-option small{
+    display:none !important;
   }
 }
 
-@media(max-width:420px){
+@media(max-width:340px){
   .group-options-grid{
     grid-template-columns:1fr !important;
   }
