@@ -101,7 +101,7 @@ window.ETE_CONFIG = {
     ensureScript("controlNavigationSimplifyScript", "navigation-simplify.js?v=1");
     ensureScript("controlStudentUseChoiceScript", "student-use-choice.js?v=2");
     ensureScript("controlUserProfileScript", "user-profile.js?v=1");
-    ensureScript("controlStudentCardActionsScript", "student-card-actions.js?v=1");
+    ensureScript("controlStudentCardActionsScript", "student-card-actions.js?v=2");
   }
 
   function updateButton(button){
