@@ -71,7 +71,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=12");
     ensureStylesheet("controlLightPermissionsStyles", "theme-light-permissions.css?v=3");
     ensureStylesheet("controlPermissionCardsStyles", "permission-cards.css?v=2");
-    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=12");
+    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=13");
     ensureStylesheet("controlHeaderPolishStyles", "header-polish.css?v=4");
     ensureStylesheet("controlMobileMenuStyles", "mobile-menu-enhance.css?v=3");
     ensureStylesheet("controlMobilePolishStyles", "mobile-polish.css?v=4");
@@ -139,7 +139,7 @@ window.ETE_CONFIG = {
     if (shouldAnimate) {
       themeTransitionTimer = setTimeout(function(){
         root.classList.remove("theme-transitioning");
-      }, 300);
+      }, 360);
     }
     const persist = !options || options.persist !== false;
     if (persist) {
