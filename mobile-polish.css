@@ -2,6 +2,17 @@
 @media(max-width:820px){
   html,body{overflow-x:hidden !important}
   body{font-size:15px !important}
+
+  /* Remove o realce azul temporário de toque do navegador no mobile.
+     O foco por teclado continua sendo tratado pelas regras de :focus-visible. */
+  html,
+  body,
+  body *,
+  body *::before,
+  body *::after{
+    -webkit-tap-highlight-color:transparent !important;
+  }
+
   .shell{display:block !important;min-height:100vh !important}
   .main{width:100% !important;min-width:0 !important}
 
