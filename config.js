@@ -92,7 +92,6 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlMobileFormReadabilityStyles", "mobile-form-readability.css?v=6");
     ensureStylesheet("controlMobileGroupPickerFlowStyles", "mobile-group-picker-flow.css?v=4");
     ensureStylesheet("controlMobileTextareaExpandStyles", "mobile-textarea-expand.css?v=2");
-    ensureStylesheet("controlVisualLayoutTestStyles", "visual-layout-test.css?v=2");
 
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
