@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sungfix.github.io/ete-controle-notebooks/sitemap.xml
