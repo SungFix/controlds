@@ -1,0 +1,57 @@
+/* Control Ds — override final do cabeçalho superior */
+
+/* Usuário com exatamente a mesma superfície visual do botão Sair. */
+.topbar-right .header-account,
+.top-right .header-account{
+  background:var(--ui-surface-2) !important;
+  border-color:var(--ui-border) !important;
+  color:var(--ui-text-2) !important;
+  overflow:visible !important;
+  position:relative !important;
+}
+
+/* Divisor real entre Sincronizado e Usuário. */
+.topbar-right .header-account::after,
+.top-right .header-account::after{
+  content:"" !important;
+  position:absolute !important;
+  left:-7px !important;
+  top:9px !important;
+  bottom:9px !important;
+  width:1px !important;
+  background:var(--ui-border-strong) !important;
+  opacity:.72 !important;
+  pointer-events:none !important;
+}
+
+/* Desativa a tentativa anterior, que ficava cortada pelo overflow. */
+.topbar-right .header-account::before,
+.top-right .header-account::before{
+  content:none !important;
+  display:none !important;
+}
+
+/* Mantém o ícone perfeitamente centralizado. */
+.topbar-right .header-avatar,
+.top-right .header-avatar{
+  display:block !important;
+  position:relative !important;
+}
+.topbar-right .header-avatar::before,
+.top-right .header-avatar::before{
+  position:absolute !important;
+  left:50% !important;
+  top:50% !important;
+  right:auto !important;
+  bottom:auto !important;
+  transform:translate(-50%,-50%) !important;
+}
+
+@media(max-width:820px){
+  .topbar-right .header-account::after,
+  .top-right .header-account::after{
+    left:-6px !important;
+    top:8px !important;
+    bottom:8px !important;
+  }
+}
