@@ -223,4 +223,90 @@
     border-color:#d5e0e5 !important;
     box-shadow:none !important;
   }
+
+  /* Nova permissão: cabeçalho e rodapé mais limpos e equilibrados no mobile. */
+  #permissionModal .modalhead{
+    position:relative !important;
+    top:auto !important;
+    z-index:auto !important;
+    display:flex !important;
+    align-items:flex-start !important;
+    gap:12px !important;
+    margin:0 -14px 16px !important;
+    padding:18px 14px 16px !important;
+    border-bottom:1px solid var(--ui-border,#2b333b) !important;
+    background:transparent !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+  }
+
+  #permissionModal .modalhead > div{
+    flex:1 1 auto !important;
+    min-width:0 !important;
+    padding-right:0 !important;
+  }
+
+  #permissionModal .modalhead h2{
+    margin:0 !important;
+    font-size:22px !important;
+    line-height:1.12 !important;
+    letter-spacing:-.025em !important;
+  }
+
+  #permissionModal .modalhead p{
+    margin:7px 0 0 !important;
+    max-width:34rem !important;
+    color:var(--ui-text-2,#929ba5) !important;
+    font-size:10.5px !important;
+    line-height:1.48 !important;
+  }
+
+  #permissionModal .close{
+    position:static !important;
+    top:auto !important;
+    right:auto !important;
+    z-index:auto !important;
+    flex:0 0 38px !important;
+    width:38px !important;
+    height:38px !important;
+    margin:0 !important;
+    border-radius:12px !important;
+    align-self:flex-start !important;
+  }
+
+  #permissionModal .modalactions{
+    position:relative !important;
+    bottom:auto !important;
+    z-index:auto !important;
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:8px !important;
+    margin:18px -14px -16px !important;
+    padding:13px 14px calc(13px + env(safe-area-inset-bottom)) !important;
+    border-top:1px solid var(--ui-border,#2b333b) !important;
+    background:rgba(14,17,21,.97) !important;
+    box-shadow:none !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+  }
+
+  #permissionModal .modalactions .btn{
+    width:100% !important;
+    min-height:50px !important;
+    border-radius:14px !important;
+    font-size:11px !important;
+  }
+
+  #permissionModal .modalactions .btn.primary{
+    min-height:52px !important;
+  }
+
+  html[data-theme="light"] #permissionModal .modalhead{
+    border-color:#d5e0e5 !important;
+  }
+
+  html[data-theme="light"] #permissionModal .modalactions{
+    background:rgba(250,252,253,.97) !important;
+    border-color:#d5e0e5 !important;
+  }
 }
