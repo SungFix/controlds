@@ -2,6 +2,7 @@
   "use strict";
 
   const SELECTOR="#reason, #permissionReason";
+  const MOBILE_QUERY="(max-width:720px)";
 
   function icon(expanded){
     if(expanded){
@@ -49,6 +50,7 @@
   }
 
   function mount(){
+    if(!window.matchMedia(MOBILE_QUERY).matches) return;
     document.querySelectorAll(SELECTOR).forEach(enhance);
   }
 
