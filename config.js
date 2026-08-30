@@ -90,7 +90,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlRequestSortSizeStyles", "request-sort-size.css?v=1");
     ensureStylesheet("controlHistoryFilterSizeStyles", "history-filter-size.css?v=3");
     ensureStylesheet("controlMobileFormReadabilityStyles", "mobile-form-readability.css?v=6");
-    ensureStylesheet("controlMobileGroupPickerFlowStyles", "mobile-group-picker-flow.css?v=2");
+    ensureStylesheet("controlMobileGroupPickerFlowStyles", "mobile-group-picker-flow.css?v=3");
 
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
