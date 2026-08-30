@@ -28,10 +28,19 @@ html[data-theme="light"] #logoutBtn{
   color:#4a5055 !important;
 }
 
+html[data-theme="light"] .control-theme-toggle-header,
+html[data-theme="light"] .control-theme-toggle-header .theme-label,
+html[data-theme="light"] .quick-title{
+  color:#172027 !important;
+}
+
 /* Evita contraste intermediário insuficiente durante a troca de tema. */
 html.theme-transitioning #sideSyncLabel,
 html.theme-transitioning #syncPill,
-html.theme-transitioning #logoutBtn{
+html.theme-transitioning #logoutBtn,
+html.theme-transitioning .control-theme-toggle-header,
+html.theme-transitioning .control-theme-toggle-header .theme-label,
+html.theme-transitioning .quick-title{
   transition-property:none !important;
   transition-duration:0s !important;
 }
