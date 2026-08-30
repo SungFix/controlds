@@ -85,6 +85,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlContrastSweepStyles", "contrast-sweep.css?v=5");
     ensureStylesheet("controlTopbarFinalOverrideStyles", "topbar-final-override.css?v=6");
     ensureStylesheet("controlUserProfileStyles", "user-profile.css?v=2");
+    ensureStylesheet("controlStudentCardActionsStyles", "student-card-actions.css?v=1");
 
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
@@ -100,6 +101,7 @@ window.ETE_CONFIG = {
     ensureScript("controlNavigationSimplifyScript", "navigation-simplify.js?v=1");
     ensureScript("controlStudentUseChoiceScript", "student-use-choice.js?v=2");
     ensureScript("controlUserProfileScript", "user-profile.js?v=1");
+    ensureScript("controlStudentCardActionsScript", "student-card-actions.js?v=1");
   }
 
   function updateButton(button){
