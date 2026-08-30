@@ -1,0 +1,17 @@
+/* Control Ds — mantém o filtro nativo do histórico, apenas maior */
+#historyFilter{
+  min-width:190px !important;
+  min-height:52px !important;
+  padding:0 14px !important;
+  border-radius:12px !important;
+  font-size:11.5px !important;
+}
+
+@media(max-width:820px){
+  #historyFilter{
+    width:100% !important;
+    min-width:0 !important;
+    min-height:54px !important;
+    font-size:12px !important;
+  }
+}
