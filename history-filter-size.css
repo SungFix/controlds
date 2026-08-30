@@ -1,7 +1,13 @@
 /* Control Ds — filtro do histórico com visual consistente */
 .history-filter-shell{
   position:relative;
-  min-width:200px;
+  width:100%;
+  min-width:0;
+}
+
+.history-tools > .history-filter-shell{
+  width:100%;
+  min-width:0;
 }
 
 .history-filter-shell #historyFilter{
