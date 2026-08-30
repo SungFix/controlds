@@ -111,7 +111,7 @@ window.ETE_CONFIG = {
     ensureScript("controlPermissionFilterLabelFixScript", "permission-filter-label-fix.js?v=1");
     ensureScript("controlHistoryFilterPolishScript", "history-filter-polish.js?v=1");
     ensureScript("controlMobileLogoutIconScript", "mobile-logout-icon.js?v=2");
-    ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=2");
+    ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=3");
   }
 
   function updateButton(button){
