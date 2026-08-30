@@ -131,11 +131,55 @@
     font-size:13.5px !important;
   }
 
-  /* O cabeçalho do pedido pertence ao início do formulário e deve rolar junto com ele. */
+  /* Cabeçalho do pedido: compacto, alinhado e integrado ao formulário. */
   #requestModal .request-modal-head{
     position:relative !important;
     top:auto !important;
     z-index:auto !important;
+    display:flex !important;
+    align-items:flex-start !important;
+    gap:12px !important;
+    margin:0 -14px 16px !important;
+    padding:18px 14px 16px !important;
+    border-bottom:1px solid var(--ui-border,#2b333b) !important;
+    background:transparent !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+  }
+
+  #requestModal .request-modal-copy{
+    flex:1 1 auto !important;
+    min-width:0 !important;
+    padding-right:0 !important;
+  }
+
+  #requestModal .request-modal-eyebrow{
+    display:inline-flex !important;
+    width:auto !important;
+    min-height:24px !important;
+    margin:0 0 9px !important;
+    padding:0 9px !important;
+    border:1px solid var(--ui-border,#303842) !important;
+    border-radius:999px !important;
+    background:var(--ui-surface,#151a20) !important;
+    font-size:8px !important;
+    line-height:1 !important;
+    letter-spacing:.11em !important;
+  }
+
+  #requestModal .request-modal-head h2{
+    margin:0 !important;
+    max-width:100% !important;
+    font-size:22px !important;
+    line-height:1.12 !important;
+    letter-spacing:-.025em !important;
+  }
+
+  #requestModal .request-modal-head p{
+    max-width:34rem !important;
+    margin:7px 0 0 !important;
+    font-size:10.5px !important;
+    line-height:1.48 !important;
   }
 
   #requestModal .close{
@@ -143,7 +187,21 @@
     top:auto !important;
     right:auto !important;
     z-index:auto !important;
+    flex:0 0 38px !important;
+    width:38px !important;
+    height:38px !important;
     margin:0 !important;
+    border-radius:12px !important;
+    align-self:flex-start !important;
+  }
+
+  html[data-theme="light"] #requestModal .request-modal-head{
+    border-color:#d5e0e5 !important;
+  }
+
+  html[data-theme="light"] #requestModal .request-modal-eyebrow{
+    background:#f2f6f8 !important;
+    border-color:#d7e1e6 !important;
   }
 
   /* As ações pertencem ao final do formulário e não acompanham a rolagem. */
