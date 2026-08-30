@@ -15,6 +15,7 @@ window.ETE_CONFIG = {
   const STORAGE_KEY = "control-ds-theme";
   const root = document.documentElement;
   let observerQueued = false;
+  let themeTransitionTimer = 0;
 
   function normalizeTheme(value){
     return value === "light" ? "light" : "dark";
@@ -122,7 +123,19 @@ window.ETE_CONFIG = {
   }
 
   function setTheme(theme, options){
-    const next = applyRootTheme(theme);
+    const target = normalizeTheme(theme);
+    const shouldAnimate = root.dataset.theme !== target;
+    if (shouldAnimate) {
+      clearTimeout(themeTransitionTimer);
+      root.classList.add("theme-transitioning");
+      void root.offsetWidth;
+    }
+    const next = applyRootTheme(target);
+    if (shouldAnimate) {
+      themeTransitionTimer = setTimeout(function(){
+        root.classList.remove("theme-transitioning");
+      }, 280);
+    }
     const persist = !options || options.persist !== false;
     if (persist) {
       try { localStorage.setItem(STORAGE_KEY, next); } catch (_) {}
