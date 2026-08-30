@@ -3,8 +3,11 @@
 
   const SELECTOR="#reason, #permissionReason";
 
-  function icon(){
-    return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5"/><path d="M3 3l6 6"/><path d="M16 21h5v-5"/><path d="m21 21-6-6"/></svg>';
+  function icon(expanded){
+    if(expanded){
+      return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v6"/><path d="m8 7 4 4 4-4"/><path d="M12 21v-6"/><path d="m8 17 4-4 4 4"/></svg>';
+    }
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 11V3"/><path d="m8 7 4-4 4 4"/><path d="M12 13v8"/><path d="m8 17 4 4 4-4"/></svg>';
   }
 
   function enhance(textarea){
@@ -19,27 +22,29 @@
     const button=document.createElement("button");
     button.type="button";
     button.className="mobile-textarea-expand-btn";
-    button.innerHTML=icon();
-    button.setAttribute("aria-label","Aumentar campo de texto");
+    button.innerHTML=icon(false);
+    button.setAttribute("aria-label","Aumentar altura do campo de texto");
     button.setAttribute("aria-expanded","false");
-    button.title="Aumentar campo";
+    button.title="Aumentar altura";
     wrap.appendChild(button);
 
     button.addEventListener("click",function(event){
       event.preventDefault();
       const expanded=wrap.classList.toggle("is-expanded");
+      button.innerHTML=icon(expanded);
       button.setAttribute("aria-expanded",String(expanded));
-      button.setAttribute("aria-label",expanded?"Diminuir campo de texto":"Aumentar campo de texto");
-      button.title=expanded?"Diminuir campo":"Aumentar campo";
+      button.setAttribute("aria-label",expanded?"Diminuir altura do campo de texto":"Aumentar altura do campo de texto");
+      button.title=expanded?"Diminuir altura":"Aumentar altura";
       if(expanded) textarea.focus({preventScroll:true});
     });
 
     const form=textarea.closest("form");
     form?.addEventListener("reset",function(){
       wrap.classList.remove("is-expanded");
+      button.innerHTML=icon(false);
       button.setAttribute("aria-expanded","false");
-      button.setAttribute("aria-label","Aumentar campo de texto");
-      button.title="Aumentar campo";
+      button.setAttribute("aria-label","Aumentar altura do campo de texto");
+      button.title="Aumentar altura";
     });
   }
 
