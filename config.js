@@ -152,27 +152,7 @@ window.ETE_CONFIG = {
 
   function toggleTheme(){
     const target = root.dataset.theme === "light" ? "dark" : "light";
-    const reducedMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-    if (typeof document.startViewTransition !== "function" || reducedMotion) {
-      setTheme(target);
-      return;
-    }
-
-    root.classList.add("theme-view-transitioning");
-    let transition;
-    try {
-      transition = document.startViewTransition(function(){
-        setTheme(target, { skipTransition:true });
-      });
-    } catch (_) {
-      root.classList.remove("theme-view-transitioning");
-      setTheme(target);
-      return;
-    }
-
-    Promise.resolve(transition.finished).catch(function(){}).then(function(){
-      root.classList.remove("theme-view-transitioning");
-    });
+    setTheme(target);
   }
 
   function makeButton(extraClass){
