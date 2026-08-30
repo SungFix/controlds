@@ -84,4 +84,17 @@ html[data-theme="light"] #syncPill{
     min-height:32px !important;
     flex:0 0 32px !important;
   }
+
+  /* Em celular, mantém apenas o ícone de sair para economizar espaço. */
+  .topbar-right .header-logout,
+  .top-right .header-logout{
+    width:38px !important;
+    min-width:38px !important;
+    max-width:38px !important;
+    padding:0 !important;
+    gap:0 !important;
+    font-size:0 !important;
+    text-indent:0 !important;
+    overflow:hidden !important;
+  }
 }
