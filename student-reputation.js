@@ -42,14 +42,14 @@
     const late=returns.filter(wasLate).length;
     const onTime=returns.length-late;
     const score=returns.length ? Math.round((onTime/returns.length)*100) : null;
-    let level="Sem histórico",tone="neutral",mark="—";
+    let level="Sem histórico",tone="neutral";
     if(score!==null){
-      if(score>=90){ level="Excelente"; tone="excellent"; mark="A"; }
-      else if(score>=75){ level="Boa"; tone="good"; mark="B"; }
-      else if(score>=50){ level="Regular"; tone="regular"; mark="C"; }
-      else { level="Atenção"; tone="attention"; mark="!"; }
+      if(score>=90){ level="Excelente"; tone="excellent"; }
+      else if(score>=75){ level="Boa"; tone="good"; }
+      else if(score>=50){ level="Regular"; tone="regular"; }
+      else { level="Atenção"; tone="attention"; }
     }
-    return {total:returns.length,onTime,late,score,level,tone,mark};
+    return {total:returns.length,onTime,late,score,level,tone};
   }
 
   function visibleStudents(){
@@ -73,7 +73,7 @@
       badge.className="student-reputation is-"+stat.tone;
       badge.setAttribute("aria-label",stat.total?`Reputação ${stat.level}. ${stat.onTime} devoluções no prazo e ${stat.late} atrasadas.`:"Reputação sem histórico de devoluções.");
       badge.title=stat.total?`${stat.onTime} no prazo · ${stat.late} atrasada${stat.late===1?"":"s"}`:"Ainda não há devoluções registradas";
-      badge.innerHTML=`<span class="student-reputation-mark" aria-hidden="true">${stat.mark}</span><span class="student-reputation-copy"><span class="student-reputation-label"><strong>${stat.level}</strong>${stat.score!==null?`<span class="student-reputation-score">${stat.score}%</span>`:""}</span><small>${stat.total?`${stat.onTime} no prazo · ${stat.late} atrasada${stat.late===1?"":"s"}`:"Sem devoluções registradas"}</small></span>`;
+      badge.innerHTML=`<span class="student-reputation-dot" aria-hidden="true"></span><span class="student-reputation-copy"><span class="student-reputation-title">Reputação: <strong>${stat.level}</strong></span><small>${stat.total?`${stat.score}% no prazo · ${stat.total} devolução${stat.total===1?"":"ões"}`:"Sem devoluções registradas"}</small></span>`;
       head.appendChild(badge);
     });
   }
