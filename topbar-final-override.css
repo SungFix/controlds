@@ -13,11 +13,27 @@
   justify-content:center !important;
 }
 
-/* Contraste suficiente do status sincronizado no tema claro. */
+/* Contraste reforçado no tema claro para os controles apontados pela auditoria. */
 html[data-theme="light"] .topbar-right .sync-pill,
 html[data-theme="light"] .top-right .sync-pill,
 html[data-theme="light"] #syncPill{
-  color:#277744 !important;
+  color:#1f633f !important;
+}
+
+html[data-theme="light"] #sideSyncLabel{
+  color:#356044 !important;
+}
+
+html[data-theme="light"] #logoutBtn{
+  color:#4a5055 !important;
+}
+
+/* Evita contraste intermediário insuficiente durante a troca de tema. */
+html.theme-transitioning #sideSyncLabel,
+html.theme-transitioning #syncPill,
+html.theme-transitioning #logoutBtn{
+  transition-property:none !important;
+  transition-duration:0s !important;
 }
 
 /* Divisor centralizado no espaço real entre Sincronizado e Usuário. */
