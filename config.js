@@ -102,6 +102,7 @@ window.ETE_CONFIG = {
     ensureScript("controlStudentUseChoiceScript", "student-use-choice.js?v=2");
     ensureScript("controlUserProfileScript", "user-profile.js?v=1");
     ensureScript("controlStudentCardActionsScript", "student-card-actions.js?v=2");
+    ensureScript("controlPermissionFilterLabelFixScript", "permission-filter-label-fix.js?v=1");
   }
 
   function updateButton(button){
