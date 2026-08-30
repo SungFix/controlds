@@ -131,12 +131,18 @@
     font-size:13.5px !important;
   }
 
-  /* Mantém o botão de fechar sempre preso à tela do pedido durante a rolagem. */
+  /* O cabeçalho do pedido pertence ao início do formulário e deve rolar junto com ele. */
+  #requestModal .request-modal-head{
+    position:relative !important;
+    top:auto !important;
+    z-index:auto !important;
+  }
+
   #requestModal .close{
-    position:fixed !important;
-    top:calc(12px + env(safe-area-inset-top)) !important;
-    right:12px !important;
-    z-index:100 !important;
+    position:static !important;
+    top:auto !important;
+    right:auto !important;
+    z-index:auto !important;
     margin:0 !important;
   }
 }
