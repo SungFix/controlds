@@ -1,22 +1,21 @@
-/* Control Ds — troca de tema sem animação */
-
-html.theme-transitioning::after,
-html.theme-target-light::after,
-html.theme-target-dark::after,
-html.theme-transition-cover::after,
-html.theme-transition-reveal::after{
-  display:none !important;
-  content:none !important;
-  opacity:0 !important;
-  transition:none !important;
-}
+/* Control Ds — transição suave entre tema claro e escuro */
 
 html.theme-transitioning,
-html.theme-transitioning *,
-html[data-theme="light"],
-html[data-theme="light"] *,
-html[data-theme="dark"],
-html[data-theme="dark"] *{
-  transition:none !important;
-  animation-duration:0s !important;
+html.theme-transitioning body,
+html.theme-transitioning body *,
+html.theme-transitioning body *::before,
+html.theme-transitioning body *::after{
+  transition-property:background-color,color,border-color,box-shadow,fill,stroke !important;
+  transition-duration:240ms !important;
+  transition-timing-function:ease !important;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html.theme-transitioning,
+  html.theme-transitioning body,
+  html.theme-transitioning body *,
+  html.theme-transitioning body *::before,
+  html.theme-transitioning body *::after{
+    transition-duration:0s !important;
+  }
 }
