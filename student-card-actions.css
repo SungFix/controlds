@@ -1,7 +1,7 @@
 /* Control Ds — ações compactas dos cards de aluno */
 .student-card .student-card-action{
-  min-height:38px !important;
-  height:38px;
+  min-height:40px !important;
+  height:40px;
   padding:0 13px !important;
   display:inline-flex;
   align-items:center;
@@ -12,7 +12,7 @@
   background:var(--ui-surface-2,#15181d) !important;
   color:var(--ui-text-2,#cfd4d9) !important;
   box-shadow:none !important;
-  font-size:9px !important;
+  font-size:10.5px !important;
   font-weight:800 !important;
   line-height:1 !important;
   transition:background .14s ease,border-color .14s ease,color .14s ease,transform .14s ease !important;
@@ -96,20 +96,21 @@ html[data-theme="light"] .student-card .student-card-action-delete{
 
 @media(max-width:820px){
   .student-card .student-card-action{
-    min-height:38px !important;
-    height:38px;
-    padding-inline:12px !important;
+    min-height:42px !important;
+    height:42px;
+    padding-inline:13px !important;
+    font-size:10.5px !important;
   }
-  .student-card .student-card-action-use{padding-inline:13px !important}
-  .student-card .student-card-action-edit{padding-inline:12px !important}
+  .student-card .student-card-action-use{padding-inline:14px !important}
+  .student-card .student-card-action-edit{padding-inline:13px !important}
   .student-card .student-card-action-delete{
-    width:40px;
-    min-width:40px;
+    width:42px;
+    min-width:42px;
     padding:0 !important;
   }
   .student-card .student-card-action-delete svg{
-    width:18px;
-    height:18px;
-    flex-basis:18px;
+    width:19px;
+    height:19px;
+    flex-basis:19px;
   }
 }
