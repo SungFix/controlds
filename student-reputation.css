@@ -1,150 +1,72 @@
-/* Control Ds — reputação automática dos alunos */
+/* Control Ds — reputação dos alunos, visual discreto */
 #page-students .student-card-head{
   flex-wrap:wrap;
 }
 
 #page-students .student-reputation{
   margin-left:auto;
-  min-width:154px;
-  min-height:46px;
-  padding:8px 11px;
-  display:grid;
-  grid-template-columns:28px minmax(0,1fr);
-  align-items:center;
-  gap:10px;
-  border:1px solid var(--ui-border,#303740);
-  border-radius:12px;
-  background:linear-gradient(180deg,color-mix(in srgb,var(--ui-surface-2,#121519) 94%,#fff 6%),var(--ui-surface-2,#121519));
-  color:var(--ui-text-1,#eef1f4);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
+  min-width:148px;
+  padding:4px 0 4px 10px;
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  border-left:1px solid var(--ui-border,#303740);
+  color:var(--ui-text-2,#cfd4d9);
 }
 
-#page-students .student-reputation-mark{
-  width:28px;
-  height:28px;
-  display:grid;
-  place-items:center;
-  border-radius:9px;
-  background:rgba(122,132,142,.12);
-  color:#98a2ac;
-  font-size:13px;
-  font-weight:900;
+#page-students .student-reputation-dot{
+  width:7px;
+  height:7px;
+  flex:0 0 7px;
+  margin-top:4px;
+  border-radius:50%;
+  background:#7b858e;
 }
 
 #page-students .student-reputation-copy{
   min-width:0;
-  line-height:1.1;
 }
 
-#page-students .student-reputation-label{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  min-width:0;
-}
-
-#page-students .student-reputation strong{
+#page-students .student-reputation-title{
   display:block;
-  min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  font-size:10px;
-  font-weight:900;
-  color:inherit;
+  color:var(--ui-text-3,#8d969f);
+  font-size:8.5px;
+  line-height:1.2;
+}
+
+#page-students .student-reputation-title strong{
+  color:var(--ui-text-1,#eef1f4);
+  font-size:9.5px;
+  font-weight:800;
 }
 
 #page-students .student-reputation small{
   display:block;
-  margin-top:4px;
+  margin-top:3px;
   color:var(--ui-text-3,#7f8993);
-  font-size:7.9px;
-  font-weight:700;
+  font-size:7.6px;
+  font-weight:650;
+  line-height:1.25;
   white-space:nowrap;
 }
 
-#page-students .student-reputation-score{
-  margin-left:auto;
-  padding:3px 6px;
-  border-radius:999px;
-  background:rgba(255,255,255,.055);
-  color:inherit;
-  font-size:7px;
-  font-weight:900;
-  line-height:1;
-}
-
-#page-students .student-reputation.is-excellent{
-  border-color:#31533d;
-  background:linear-gradient(180deg,#17231b,#142019);
-  color:#b7dfc2;
-}
-#page-students .student-reputation.is-excellent .student-reputation-mark{
-  background:rgba(121,184,140,.14);
-  color:#86c297;
-}
-
-#page-students .student-reputation.is-good{
-  border-color:#344d5d;
-  background:linear-gradient(180deg,#172128,#141d23);
-  color:#b5d2e2;
-}
-#page-students .student-reputation.is-good .student-reputation-mark{
-  background:rgba(126,168,191,.14);
-  color:#86afc5;
-}
-
-#page-students .student-reputation.is-regular{
-  border-color:#554b31;
-  background:linear-gradient(180deg,#242018,#201c14);
-  color:#dcc78f;
-}
-#page-students .student-reputation.is-regular .student-reputation-mark{
-  background:rgba(184,157,95,.14);
-  color:#c3a968;
-}
-
-#page-students .student-reputation.is-attention{
-  border-color:#5a3438;
-  background:linear-gradient(180deg,#251a1c,#211719);
-  color:#dfa9ae;
-}
-#page-students .student-reputation.is-attention .student-reputation-mark{
-  background:rgba(185,111,119,.14);
-  color:#c87d85;
-}
+#page-students .student-reputation.is-excellent .student-reputation-dot{background:#6f9d7b}
+#page-students .student-reputation.is-good .student-reputation-dot{background:#718d9f}
+#page-students .student-reputation.is-regular .student-reputation-dot{background:#a08d60}
+#page-students .student-reputation.is-attention .student-reputation-dot{background:#a76b72}
 
 html[data-theme="light"] #page-students .student-reputation{
-  background:linear-gradient(180deg,#fbfdfe,#f4f8fa);
-  border-color:#d2dde2;
-  color:#304751;
-  box-shadow:inset 0 1px 0 #fff;
+  border-left-color:#cfdbe1;
+  color:#40545e;
+}
+html[data-theme="light"] #page-students .student-reputation-title{
+  color:#6c7d85;
+}
+html[data-theme="light"] #page-students .student-reputation-title strong{
+  color:#253c47;
 }
 html[data-theme="light"] #page-students .student-reputation small{
-  color:#617781;
-}
-html[data-theme="light"] #page-students .student-reputation-score{
-  background:rgba(45,70,82,.07);
-}
-html[data-theme="light"] #page-students .student-reputation.is-excellent{
-  background:linear-gradient(180deg,#f4fbf6,#eaf5ed);
-  border-color:#bdd9c5;
-  color:#2f6641;
-}
-html[data-theme="light"] #page-students .student-reputation.is-good{
-  background:linear-gradient(180deg,#f5fafc,#eaf3f7);
-  border-color:#c1d5df;
-  color:#365e72;
-}
-html[data-theme="light"] #page-students .student-reputation.is-regular{
-  background:linear-gradient(180deg,#fcf8ee,#f5efdf);
-  border-color:#ded0a8;
-  color:#755f25;
-}
-html[data-theme="light"] #page-students .student-reputation.is-attention{
-  background:linear-gradient(180deg,#fcf4f5,#f6e9eb);
-  border-color:#e2c0c5;
-  color:#81434a;
+  color:#657881;
 }
 
 @media(max-width:720px){
@@ -153,17 +75,15 @@ html[data-theme="light"] #page-students .student-reputation.is-attention{
   }
   #page-students .student-reputation{
     width:100%;
-    margin-left:0;
     min-width:0;
-    min-height:44px;
-    grid-template-columns:26px minmax(0,1fr);
-    padding:8px 10px;
+    margin-left:0;
+    margin-top:4px;
+    padding:8px 0 0;
+    border-left:0;
+    border-top:1px solid var(--ui-border,#303740);
   }
-  #page-students .student-reputation-mark{
-    width:26px;
-    height:26px;
-    border-radius:8px;
-    font-size:12px;
+  html[data-theme="light"] #page-students .student-reputation{
+    border-top-color:#cfdbe1;
   }
   #page-students .student-reputation small{
     white-space:normal;
