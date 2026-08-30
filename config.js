@@ -71,7 +71,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=12");
     ensureStylesheet("controlLightPermissionsStyles", "theme-light-permissions.css?v=3");
     ensureStylesheet("controlPermissionCardsStyles", "permission-cards.css?v=2");
-    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=11");
+    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=12");
     ensureStylesheet("controlHeaderPolishStyles", "header-polish.css?v=4");
     ensureStylesheet("controlMobileMenuStyles", "mobile-menu-enhance.css?v=3");
     ensureStylesheet("controlMobilePolishStyles", "mobile-polish.css?v=2");
@@ -124,7 +124,8 @@ window.ETE_CONFIG = {
 
   function setTheme(theme, options){
     const target = normalizeTheme(theme);
-    const shouldAnimate = root.dataset.theme !== target;
+    const skipTransition = !!(options && options.skipTransition);
+    const shouldAnimate = !skipTransition && root.dataset.theme !== target;
     if (shouldAnimate) {
       clearTimeout(themeTransitionTimer);
       root.classList.add("theme-transitioning");
@@ -134,7 +135,7 @@ window.ETE_CONFIG = {
     if (shouldAnimate) {
       themeTransitionTimer = setTimeout(function(){
         root.classList.remove("theme-transitioning");
-      }, 280);
+      }, 300);
     }
     const persist = !options || options.persist !== false;
     if (persist) {
@@ -145,7 +146,30 @@ window.ETE_CONFIG = {
     return next;
   }
 
-  function toggleTheme(){ setTheme(root.dataset.theme === "light" ? "dark" : "light"); }
+  function toggleTheme(){
+    const target = root.dataset.theme === "light" ? "dark" : "light";
+    const reducedMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    if (typeof document.startViewTransition !== "function" || reducedMotion) {
+      setTheme(target);
+      return;
+    }
+
+    root.classList.add("theme-view-transitioning");
+    let transition;
+    try {
+      transition = document.startViewTransition(function(){
+        setTheme(target, { skipTransition:true });
+      });
+    } catch (_) {
+      root.classList.remove("theme-view-transitioning");
+      setTheme(target);
+      return;
+    }
+
+    Promise.resolve(transition.finished).catch(function(){}).then(function(){
+      root.classList.remove("theme-view-transitioning");
+    });
+  }
 
   function makeButton(extraClass){
     const button = document.createElement("button");
