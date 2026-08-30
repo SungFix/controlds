@@ -83,9 +83,9 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlActionModalStyles", "action-modal.css?v=1");
     ensureStylesheet("controlFinalPolishStyles", "final-polish.css?v=2");
     ensureStylesheet("controlContrastSweepStyles", "contrast-sweep.css?v=5");
-    ensureStylesheet("controlTopbarFinalOverrideStyles", "topbar-final-override.css?v=6");
-    ensureStylesheet("controlUserProfileStyles", "user-profile.css?v=2");
-    ensureStylesheet("controlStudentCardActionsStyles", "student-card-actions.css?v=2");
+    ensureStylesheet("controlTopbarFinalOverrideStyles", "topbar-final-override.css?v=7");
+    ensureStylesheet("controlUserProfileStyles", "user-profile.css?v=3");
+    ensureStylesheet("controlStudentCardActionsStyles", "student-card-actions.css?v=3");
 
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
