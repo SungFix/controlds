@@ -13,6 +13,13 @@
   justify-content:center !important;
 }
 
+/* Contraste suficiente do status sincronizado no tema claro. */
+html[data-theme="light"] .topbar-right .sync-pill,
+html[data-theme="light"] .top-right .sync-pill,
+html[data-theme="light"] #syncPill{
+  color:#277744 !important;
+}
+
 /* Divisor centralizado no espaço real entre Sincronizado e Usuário. */
 .topbar-right .header-account::after,
 .top-right .header-account::after{
