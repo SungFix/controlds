@@ -1,0 +1,67 @@
+/* Control Ds — controle de expansão de textarea no mobile */
+@media(max-width:720px){
+  .mobile-textarea-expand-wrap{
+    position:relative;
+    width:100%;
+    margin-top:6px;
+  }
+
+  .mobile-textarea-expand-wrap textarea{
+    margin-top:0 !important;
+    padding-right:54px !important;
+    padding-bottom:46px !important;
+    resize:none !important;
+    min-height:118px !important;
+    transition:min-height .18s ease,height .18s ease,border-color .18s ease,box-shadow .18s ease !important;
+  }
+
+  .mobile-textarea-expand-wrap.is-expanded textarea{
+    min-height:230px !important;
+    height:230px !important;
+  }
+
+  .mobile-textarea-expand-btn{
+    position:absolute;
+    right:8px;
+    bottom:8px;
+    width:40px;
+    height:40px;
+    display:grid;
+    place-items:center;
+    padding:0;
+    border:1px solid #39424b;
+    border-radius:12px;
+    background:#181d22;
+    color:#b7c0c8;
+    box-shadow:0 5px 14px rgba(0,0,0,.18);
+    z-index:2;
+    -webkit-tap-highlight-color:transparent;
+  }
+
+  .mobile-textarea-expand-btn:active{
+    transform:scale(.96);
+    background:#20262c;
+  }
+
+  .mobile-textarea-expand-btn svg{
+    width:19px;
+    height:19px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.9;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    pointer-events:none;
+  }
+
+  .mobile-textarea-expand-wrap.is-expanded .mobile-textarea-expand-btn svg{
+    transform:rotate(180deg);
+  }
+
+  html[data-theme="light"] .mobile-textarea-expand-btn{
+    background:#f4f7f9;
+    border-color:#cfd9df;
+    color:#56636c;
+    box-shadow:0 4px 12px rgba(45,60,70,.10);
+  }
+}
