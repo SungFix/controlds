@@ -19,7 +19,10 @@ async function auditA11y(page,label){
   }));
   const bad=result.violations.filter(v=>['critical','serious'].includes(v.impact));
   if(bad.length){
-    const detail=bad.map(v=>`${v.id} (${v.nodes.length})`).join(', ');
+    const detail=bad.map(v=>{
+      const nodes=v.nodes.slice(0,4).map(n=>`${(n.target||[]).join(' ')} :: ${String(n.failureSummary||'').replace(/\s+/g,' ').trim()}`).join(' || ');
+      return `${v.id} (${v.nodes.length})${nodes?` [${nodes}]`:''}`;
+    }).join(', ');
     throw new Error(`${label}: acessibilidade séria/crítica: ${detail}`);
   }
 }
