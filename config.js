@@ -106,7 +106,7 @@ window.ETE_CONFIG = {
     ensureScript("controlStudentCardActionsScript", "student-card-actions.js?v=2");
     ensureScript("controlPermissionFilterLabelFixScript", "permission-filter-label-fix.js?v=1");
     ensureScript("controlHistoryFilterPolishScript", "history-filter-polish.js?v=1");
-    ensureScript("controlMobileLogoutIconScript", "mobile-logout-icon.js?v=1");
+    ensureScript("controlMobileLogoutIconScript", "mobile-logout-icon.js?v=2");
   }
 
   function updateButton(button){
