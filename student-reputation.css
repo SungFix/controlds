@@ -1,0 +1,132 @@
+/* Control Ds — reputação automática dos alunos */
+#page-students .student-card-head{
+  flex-wrap:wrap;
+}
+
+#page-students .student-reputation{
+  margin-left:auto;
+  min-width:142px;
+  min-height:42px;
+  padding:7px 10px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  border:1px solid var(--ui-border,#303740);
+  border-radius:11px;
+  background:var(--ui-surface-2,#121519);
+  color:var(--ui-text-1,#eef1f4);
+}
+
+#page-students .student-reputation-dot{
+  width:9px;
+  height:9px;
+  flex:0 0 9px;
+  border-radius:50%;
+  background:#7a848e;
+  box-shadow:0 0 0 3px rgba(122,132,142,.12);
+}
+
+#page-students .student-reputation-copy{
+  min-width:0;
+  line-height:1.1;
+}
+
+#page-students .student-reputation strong{
+  display:block;
+  font-size:9.5px;
+  font-weight:850;
+  color:inherit;
+}
+
+#page-students .student-reputation small{
+  display:block;
+  margin-top:4px;
+  color:var(--ui-text-3,#7f8993);
+  font-size:7.7px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+#page-students .student-reputation.is-excellent{
+  border-color:#31533d;
+  background:#142019;
+  color:#a8d4b5;
+}
+#page-students .student-reputation.is-excellent .student-reputation-dot{
+  background:#79b88c;
+  box-shadow:0 0 0 3px rgba(121,184,140,.12);
+}
+
+#page-students .student-reputation.is-good{
+  border-color:#344d5d;
+  background:#141d23;
+  color:#a9c8da;
+}
+#page-students .student-reputation.is-good .student-reputation-dot{
+  background:#7ea8bf;
+  box-shadow:0 0 0 3px rgba(126,168,191,.12);
+}
+
+#page-students .student-reputation.is-regular{
+  border-color:#554b31;
+  background:#201c14;
+  color:#d3bd7f;
+}
+#page-students .student-reputation.is-regular .student-reputation-dot{
+  background:#b89d5f;
+  box-shadow:0 0 0 3px rgba(184,157,95,.12);
+}
+
+#page-students .student-reputation.is-attention{
+  border-color:#5a3438;
+  background:#211719;
+  color:#d49aa0;
+}
+#page-students .student-reputation.is-attention .student-reputation-dot{
+  background:#b96f77;
+  box-shadow:0 0 0 3px rgba(185,111,119,.12);
+}
+
+html[data-theme="light"] #page-students .student-reputation{
+  background:#f6f9fa;
+  border-color:#d2dde2;
+  color:#304751;
+}
+html[data-theme="light"] #page-students .student-reputation small{
+  color:#617781;
+}
+html[data-theme="light"] #page-students .student-reputation.is-excellent{
+  background:#edf7f0;
+  border-color:#bdd9c5;
+  color:#2f6641;
+}
+html[data-theme="light"] #page-students .student-reputation.is-good{
+  background:#eef5f8;
+  border-color:#c1d5df;
+  color:#365e72;
+}
+html[data-theme="light"] #page-students .student-reputation.is-regular{
+  background:#f8f4e9;
+  border-color:#ded0a8;
+  color:#755f25;
+}
+html[data-theme="light"] #page-students .student-reputation.is-attention{
+  background:#f9eef0;
+  border-color:#e2c0c5;
+  color:#81434a;
+}
+
+@media(max-width:720px){
+  #page-students .student-card-head{
+    align-items:flex-start;
+  }
+  #page-students .student-reputation{
+    width:100%;
+    margin-left:0;
+    min-width:0;
+    min-height:40px;
+  }
+  #page-students .student-reputation small{
+    white-space:normal;
+  }
+}
