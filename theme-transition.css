@@ -1,8 +1,8 @@
 /* Control Ds — transição uniforme entre tema claro e escuro */
 
 :root{
-  --control-theme-transition-duration:260ms;
-  --control-theme-transition-easing:linear;
+  --control-theme-transition-duration:320ms;
+  --control-theme-transition-easing:ease-in-out;
 }
 
 html.theme-transitioning,
@@ -10,14 +10,14 @@ html.theme-transitioning body,
 html.theme-transitioning body *,
 html.theme-transitioning body *::before,
 html.theme-transitioning body *::after{
-  transition-property:background-color,color,border-color,box-shadow,fill,stroke !important;
+  transition-property:background,color,border-color,box-shadow,fill,stroke,outline-color,text-decoration-color,caret-color,opacity,filter !important;
   transition-duration:var(--control-theme-transition-duration) !important;
   transition-delay:0ms !important;
   transition-timing-function:var(--control-theme-transition-easing) !important;
+  transition-behavior:allow-discrete !important;
 }
 
-/* Quando disponível, faz um crossfade da página inteira.
-   Isso mantém fundos, gradientes, textos e cartões no mesmo ritmo. */
+/* Evita uma segunda animação nativa com velocidade diferente. */
 html.theme-view-transitioning,
 html.theme-view-transitioning body,
 html.theme-view-transitioning body *,
@@ -26,27 +26,10 @@ html.theme-view-transitioning body *::after{
   transition:none !important;
 }
 
-::view-transition-group(root){
-  animation-duration:var(--control-theme-transition-duration);
-  animation-timing-function:var(--control-theme-transition-easing);
-}
-
-::view-transition-old(root){
-  animation:control-theme-fade-out var(--control-theme-transition-duration) var(--control-theme-transition-easing) both;
-}
-
+::view-transition-group(root),
+::view-transition-old(root),
 ::view-transition-new(root){
-  animation:control-theme-fade-in var(--control-theme-transition-duration) var(--control-theme-transition-easing) both;
-}
-
-@keyframes control-theme-fade-out{
-  from{opacity:1}
-  to{opacity:0}
-}
-
-@keyframes control-theme-fade-in{
-  from{opacity:0}
-  to{opacity:1}
+  animation:none !important;
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -56,11 +39,5 @@ html.theme-view-transitioning body *::after{
   html.theme-transitioning body *::before,
   html.theme-transitioning body *::after{
     transition-duration:0s !important;
-  }
-
-  ::view-transition-group(root),
-  ::view-transition-old(root),
-  ::view-transition-new(root){
-    animation-duration:0s !important;
   }
 }
