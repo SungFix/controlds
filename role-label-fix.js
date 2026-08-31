@@ -1,7 +1,27 @@
 (function(){
   "use strict";
 
+  const employeeUsers=new Set(["paulo","carlinhos"]);
+
+  function applyEmployeeLabel(){
+    try{
+      if(typeof currentUser==="undefined" || !currentUser) return;
+      const username=String(currentUser.username||"").toLowerCase();
+      if(!employeeUsers.has(username)) return;
+      currentUser.roleLabel="Funcionário";
+      const headerRole=document.querySelector("#headerUserRole");
+      if(headerRole) headerRole.textContent="Funcionário";
+    }catch(_){}
+  }
+
   function applyRoleFixes(){
+    try{
+      if(window.ETE_CONFIG?.authEmails){
+        window.ETE_CONFIG.authEmails.paulo="paulo@email.com";
+        window.ETE_CONFIG.authEmails.carlinhos="carlinhos@email.com";
+      }
+    }catch(_){}
+
     try{
       if(typeof ROLE_MAP!=="undefined" && ROLE_MAP.ronaldo){
         ROLE_MAP.ronaldo.role="professor";
@@ -23,11 +43,15 @@
         };
       }
     }catch(_){}
+
+    applyEmployeeLabel();
   }
 
   applyRoleFixes();
   document.addEventListener("DOMContentLoaded",applyRoleFixes,{once:true});
   window.addEventListener("load",applyRoleFixes,{once:true});
+  document.addEventListener("click",function(){setTimeout(applyEmployeeLabel,0);},true);
+  setInterval(applyEmployeeLabel,600);
   setTimeout(applyRoleFixes,100);
   setTimeout(applyRoleFixes,500);
   setTimeout(applyRoleFixes,1200);
