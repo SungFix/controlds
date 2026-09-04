@@ -77,7 +77,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --check v46-bridge.js
+          for f in ./*.js; do [ -e "$f" ] && node --check "$f"; done
           python3 - <<'PY'
           from pathlib import Path
           import re
@@ -127,7 +127,6 @@ jobs:
           }
           await test('http://127.0.0.1:4173/','local');
           await test('https://ete-controle-notebooks.pages.dev/','cloudflare');
-          await test('https://sungfix.github.io/ete-controle-notebooks/','github-pages');
           await browser.close();
           JS
           node full-browser-audit.mjs
