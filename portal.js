@@ -27,7 +27,7 @@
 
   function ensureAtestadosAssets(callback){
     let css=document.getElementById("eteAtestadosStyles");
-    if(!css){css=document.createElement("link");css.id="eteAtestadosStyles";css.rel="stylesheet";css.href="atestados.css?v=1";document.head.appendChild(css);}
+    if(!css){css=document.createElement("link");css.id="eteAtestadosStyles";css.rel="stylesheet";css.href="atestados.css?v=2";document.head.appendChild(css);}else if(css.getAttribute("href")!=="atestados.css?v=2")css.href="atestados.css?v=2";
     if(window.ETEAtestados){callback?.();return;}
     let script=document.getElementById("eteAtestadosScript");
     if(!script){script=document.createElement("script");script.id="eteAtestadosScript";script.src="atestados.js?v=1";script.defer=true;script.addEventListener("load",function(){callback?.();},{once:true});document.head.appendChild(script);return;}
