@@ -20,8 +20,9 @@
   ];
 
   let portal=null;
-  let observer=null;
+  let authObserver=null;
   let lastAuthenticated=false;
+  let syncQueued=false;
 
   function getUser(){
     try{
@@ -31,9 +32,7 @@
   }
 
   function isAuthenticated(){
-    const user=getUser();
-    if(!user) return false;
-    return !document.documentElement.classList.contains("auth-locked");
+    return !!getUser() && !document.documentElement.classList.contains("auth-locked");
   }
 
   function userLabel(){
@@ -53,12 +52,6 @@
       if(value) sessionStorage.setItem(SESSION_KEY,value);
       else sessionStorage.removeItem(SESSION_KEY);
     }catch(_){}
-  }
-
-  function escapeHtml(value){
-    return String(value||"").replace(/[&<>'"]/g,function(char){
-      return {"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[char];
-    });
   }
 
   function buildPortal(){
@@ -95,8 +88,7 @@
 
     portal.addEventListener("click",function(event){
       const card=event.target.closest("[data-system]");
-      if(!card) return;
-      openSystem(card.dataset.system);
+      if(card) openSystem(card.dataset.system);
     });
 
     portal.querySelector("#etePortalBack")?.addEventListener("click",showPortalHome);
@@ -161,6 +153,7 @@
   }
 
   function syncState(){
+    syncQueued=false;
     const authenticated=isAuthenticated();
     if(!authenticated){
       if(lastAuthenticated) setSelectedSystem("");
@@ -182,16 +175,23 @@
     lastAuthenticated=true;
   }
 
+  function queueSync(){
+    if(syncQueued) return;
+    syncQueued=true;
+    requestAnimationFrame(syncState);
+  }
+
   function start(){
     syncState();
-    observer=new MutationObserver(function(){syncState();});
-    observer.observe(document.documentElement,{attributes:true,attributeFilter:["class"]});
-    if(document.body) observer.observe(document.body,{childList:true,subtree:true});
-    window.addEventListener("pageshow",syncState);
+    authObserver=new MutationObserver(queueSync);
+    authObserver.observe(document.documentElement,{attributes:true,attributeFilter:["class"]});
+    window.addEventListener("pageshow",queueSync);
     window.addEventListener("control-theme-change",refreshUser);
-    setTimeout(syncState,120);
-    setTimeout(syncState,500);
-    setTimeout(syncState,1200);
+
+    // Pequenas tentativas cobrem a conclusão assíncrona do login sem observar toda a página.
+    setTimeout(queueSync,80);
+    setTimeout(queueSync,240);
+    setTimeout(queueSync,700);
   }
 
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",start,{once:true});
