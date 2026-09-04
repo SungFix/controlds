@@ -59,12 +59,21 @@
 
   function ensureLayoutStyles(){
     let link=document.getElementById("eteAtestadosControlLayoutStyles");
-    if(link)return;
-    link=document.createElement("link");
-    link.id="eteAtestadosControlLayoutStyles";
-    link.rel="stylesheet";
-    link.href="atestados-control-layout.css?v=1";
-    document.head.appendChild(link);
+    if(!link){
+      link=document.createElement("link");
+      link.id="eteAtestadosControlLayoutStyles";
+      link.rel="stylesheet";
+      link.href="atestados-control-layout.css?v=1";
+      document.head.appendChild(link);
+    }
+    let size=document.getElementById("eteAtestadosSizeParityStyles");
+    if(!size){
+      size=document.createElement("link");
+      size.id="eteAtestadosSizeParityStyles";
+      size.rel="stylesheet";
+      size.href="atestados-size-parity.css?v=1";
+      document.head.appendChild(size);
+    }
   }
 
   function scan(){
