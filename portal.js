@@ -15,9 +15,9 @@
     asset("link","eteAtestadosRoomStyles",{rel:"stylesheet",href:"atestados-room-picker.css?v=5"});
     asset("link","eteAtestadosControlLayoutStyles",{rel:"stylesheet",href:"atestados-control-layout.css?v=3"});
     asset("link","eteAtestadosMinimalStyles",{rel:"stylesheet",href:"atestados-minimal.css?v=2"});
-    asset("link","eteAtestadosFigmaStyles",{rel:"stylesheet",href:"atestados-figma-features.css?v=1"});
+    asset("link","eteAtestadosFigmaStyles",{rel:"stylesheet",href:"atestados-figma-features.css?v=2"});
     asset("script","eteAtestadosRoomScript",{src:"atestados-room-picker.js?v=6",defer:true});
-    asset("script","eteAtestadosFigmaScript",{src:"atestados-figma-features.js?v=1",defer:true});
+    asset("script","eteAtestadosFigmaScript",{src:"atestados-figma-features.js?v=2",defer:true});
     if(window.ETEAtestados){callback?.();return;}
     let script=document.getElementById("eteAtestadosScript");if(!script){script=document.createElement("script");script.id="eteAtestadosScript";script.src="atestados.js?v=6";script.defer=true;script.addEventListener("load",function(){callback?.();},{once:true});document.head.appendChild(script);return;}script.addEventListener("load",function(){callback?.();},{once:true});
   }
