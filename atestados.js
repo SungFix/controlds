@@ -33,22 +33,27 @@
   function renderOverview(){
     const total=rows.length,classList=classes(),today=new Date().toISOString().slice(0,10),todayCount=rows.filter(r=>r.absence_date===today).length,overall=avg(rows);
     const byClass=classList.map(c=>{const list=rows.filter(r=>r.class_name===c);return{c,value:avg(list),count:list.length};}).sort((a,b)=>b.value-a.value);
-    const recent=[...rows].sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at))).slice(0,5);
+    const recent=[...rows].sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at))).slice(0,6);
     const biggest=byClass[0];
     root.querySelector("#atView").innerHTML=''
-      +'<section class="at-summary">'
-      +'<div class="at-summary-main"><span class="at-summary-label">Faltas justificadas</span><div class="at-summary-value">'+total+'</div><p>'+(total?'registros disponíveis para consulta pelos professores':'Nenhum registro cadastrado ainda')+'</p></div>'
-      +'<div class="at-summary-stats"><div><span>Turmas</span><strong>'+classList.length+'</strong></div><div><span>Taxa média</span><strong>'+overall.toFixed(1).replace(".",",")+'%</strong></div><div><span>Hoje</span><strong>'+todayCount+'</strong></div></div>'
+      +'<section class="at-metrics">'
+      +'<article class="at-metric-card"><span class="at-metric-label">Faltas justificadas</span><strong>'+total+'</strong><small>Total registrado</small></article>'
+      +'<article class="at-metric-card"><span class="at-metric-label">Turmas</span><strong>'+classList.length+'</strong><small>Com registros</small></article>'
+      +'<article class="at-metric-card"><span class="at-metric-label">Taxa média</span><strong>'+overall.toFixed(1).replace(".",",")+'%</strong><small>Média geral</small></article>'
+      +'<article class="at-metric-card"><span class="at-metric-label">Hoje</span><strong>'+todayCount+'</strong><small>Justificativas</small></article>'
       +'</section>'
-      +'<div class="at-dashboard-grid">'
-      +'<section class="at-card at-chart-card"><div class="at-card-head"><div><span class="at-card-kicker">Comparativo</span><strong>Taxa justificada por turma</strong></div><small>'+classList.length+' turma'+(classList.length===1?'':'s')+'</small></div><div class="at-chart-body">'
+      +'<section class="at-main-grid">'
+      +'<article class="at-card at-chart-card"><div class="at-card-head"><div><span class="at-card-kicker">Comparativo</span><strong>Taxa justificada por turma</strong></div><small>'+classList.length+' turma'+(classList.length===1?'':'s')+'</small></div><div class="at-chart-body">'
       +(byClass.length?'<div class="at-bars">'+byClass.map(item=>'<div class="at-bar-row"><div class="at-bar-meta"><strong>'+esc(item.c)+'</strong><small>'+item.count+' registro'+(item.count===1?'':'s')+'</small></div><div class="at-bar-track"><div class="at-bar-fill" style="width:'+Math.max(3,Math.min(100,item.value))+'%"></div></div><span class="at-bar-value">'+item.value.toFixed(1).replace(".",",")+'%</span></div>').join("")+'</div>':'<div class="at-empty-state"><span class="at-empty-icon">▤</span><strong>O gráfico aparecerá aqui</strong><p>Cadastre a primeira falta justificada para começar o acompanhamento por turma.</p>'+(canManage()?'<button class="at-btn primary" type="button" data-at-new>Adicionar primeiro registro</button>':'')+'</div>')
-      +'</div></section>'
-      +'<aside class="at-side-stack">'
-      +'<section class="at-card at-insight"><span class="at-card-kicker">Destaque</span><strong>'+(biggest?esc(biggest.c):'Sem dados')+'</strong><p>'+(biggest?'Maior taxa média cadastrada: '+biggest.value.toFixed(1).replace(".",",")+'%.':'O resumo da turma com maior taxa aparecerá aqui.')+'</p></section>'
-      +'<section class="at-card at-recent-card"><div class="at-card-head"><div><span class="at-card-kicker">Atividade</span><strong>Últimos registros</strong></div><button type="button" data-at-tab="records">Ver todos</button></div><div class="at-recent">'
-      +(recent.length?recent.map(r=>'<article class="at-recent-item"><div class="at-recent-avatar">'+esc(String(r.student_name||"?").charAt(0).toUpperCase())+'</div><div><strong>'+esc(r.student_name)+'</strong><span>'+esc(r.class_name)+' · '+esc(r.reason)+'</span><small>'+fmtDate(r.absence_date)+(r.project_name?' · '+esc(r.project_name):'')+'</small></div></article>').join(""):'<div class="at-empty-mini">Nenhum registro recente.</div>')
-      +'</div></section></aside></div>';
+      +'</div></article>'
+      +'<article class="at-card at-activity-card"><div class="at-card-head"><div><span class="at-card-kicker">Atividade</span><strong>Registros recentes</strong></div><button type="button" data-at-tab="records">Ver todos</button></div><div class="at-recent">'
+      +(recent.length?recent.map(r=>'<article class="at-recent-item"><div class="at-recent-avatar">'+esc(String(r.student_name||"?").charAt(0).toUpperCase())+'</div><div><strong>'+esc(r.student_name)+'</strong><span>'+esc(r.class_name)+' · '+esc(r.reason)+'</span><small>'+fmtDate(r.absence_date)+(r.project_name?' · '+esc(r.project_name):'')+'</small></div></article>').join(""):'<div class="at-empty-state"><span class="at-empty-icon">○</span><strong>Nenhum registro recente</strong><p>Os últimos alunos com falta justificada aparecerão aqui.</p></div>')
+      +'</div></article>'
+      +'</section>'
+      +'<section class="at-secondary-grid">'
+      +'<article class="at-card at-highlight-card"><span class="at-card-kicker">Turma em destaque</span><strong>'+(biggest?esc(biggest.c):'Sem dados')+'</strong><p>'+(biggest?'Maior taxa média registrada no momento: '+biggest.value.toFixed(1).replace(".",",")+'%.':'A turma com maior taxa média aparecerá aqui quando houver registros.')+'</p></article>'
+      +'<article class="at-card at-action-card"><span class="at-card-kicker">Acesso rápido</span><strong>Consultar ou registrar</strong><p>Use a lista para conferir justificativas antes de marcar uma falta não justificada.</p><div class="at-action-row"><button class="at-btn" type="button" data-at-tab="records">Abrir registros</button>'+(canManage()?'<button class="at-btn primary" type="button" data-at-new>Novo registro</button>':'')+'</div></article>'
+      +'</section>';
   }
 
   function renderRecords(){
