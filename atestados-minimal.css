@@ -1,0 +1,65 @@
+/* Atestados — visão enxuta e funcional */
+.at-app-content{max-width:1460px!important;padding:30px 34px 44px!important}
+.at-app-content .at-page-head{margin-bottom:16px!important;align-items:center!important}
+.at-app-content .at-page-head p{max-width:620px!important;margin-top:6px!important;color:#8e98a1!important}
+
+/* Indicadores: compactos, sem esticar conteúdo */
+.at-app-content .at-metrics{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important;margin-bottom:14px!important}
+.at-app-content .at-metric{min-height:118px!important;padding:17px 18px!important}
+.at-app-content .at-metric>div{min-height:82px!important}
+.at-app-content .at-metric strong{margin-top:17px!important;font-size:30px!important}
+.at-app-content .at-metric small{margin-top:7px!important}
+
+/* Conteúdo principal ocupa a tela; sem coluna lateral esticada */
+.at-app-content .at-dashboard-grid{display:block!important}
+.at-app-content .at-main-records{width:100%!important}
+.at-app-content .at-side-stack{display:none!important}
+.at-app-content .at-bottom-grid{display:none!important}
+
+/* Cabeçalho e filtros mais diretos */
+.at-app-content .at-card-head{min-height:58px!important;padding:0 18px!important}
+.at-app-content .at-main-head small{display:none!important}
+.at-app-content .at-overview-toolbar{padding:9px 14px!important}
+.at-app-content .at-filter-tabs button{min-height:34px!important;padding:0 10px!important}
+.at-app-content .at-filter-tabs [data-at-filter="project"],
+.at-app-content .at-filter-tabs [data-at-filter="recent"]{display:none!important}
+.at-app-content .at-inline-search{grid-template-columns:minmax(280px,1fr) 220px!important;padding:11px 14px!important}
+.at-app-content .at-input,.at-app-content .at-select{min-height:46px!important}
+
+/* Estado vazio não deve virar um painel enorme */
+.at-app-content .at-empty-state{min-height:150px!important;padding:22px!important}
+.at-app-content .at-empty-state.compact{min-height:110px!important}
+
+/* Registros completos: sem resumo repetitivo */
+.at-app-content .at-records-summary{display:none!important}
+.at-app-content .at-records-top{padding:18px 20px!important}
+.at-app-content .at-records-top p{margin-top:5px!important}
+.at-app-content .at-records-card .at-toolbar{padding:11px 14px!important}
+
+/* Cadastro: remover painel introdutório redundante e usar formulário direto */
+.at-app-content .at-form-layout{display:block!important}
+.at-app-content .at-form-intro{display:none!important}
+.at-app-content .at-form-card{max-width:900px!important;margin:0!important;padding:20px!important}
+.at-app-content .at-form{gap:14px 12px!important}
+.at-app-content .at-form-actions{margin-top:2px!important;padding-top:14px!important}
+
+/* Sidebar: somente navegação e conexão */
+.at-control-section-label{display:none!important}
+.at-control-nav-slot{margin-top:14px!important}
+.at-control-side-card small{display:none!important}
+.at-control-side-card{padding-top:13px!important}
+
+@media(max-width:1000px){
+  .at-app-content .at-metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:760px){
+  .at-app-content{padding:20px 14px 30px!important}
+  .at-app-content .at-page-head{align-items:flex-start!important}
+  .at-app-content .at-inline-search{grid-template-columns:1fr!important}
+  .at-control-nav-slot{margin-top:8px!important}
+}
+@media(max-width:480px){
+  .at-app-content .at-metrics{grid-template-columns:1fr 1fr!important;gap:8px!important}
+  .at-app-content .at-metric{min-height:104px!important;padding:14px!important}
+  .at-app-content .at-metric strong{font-size:26px!important;margin-top:13px!important}
+}
