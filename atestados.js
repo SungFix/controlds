@@ -6,7 +6,6 @@
   let rows=[];
   let activeTab="overview";
   let channel=null;
-  let mounted=false;
 
   function user(){try{return typeof currentUser!=="undefined"?currentUser:null;}catch(_){return null;}}
   function role(){return String(user()?.role||"").toLowerCase();}
@@ -148,11 +147,11 @@
     root=typeof target==="string"?document.querySelector(target):target;
     if(!root)return;
     root.innerHTML=shell();
-    if(!mounted){bind();mounted=true;}
+    if(root.dataset.atestadosBound!=="1"){bind();root.dataset.atestadosBound="1";}
     await load();subscribe();
   }
 
-  function unmount(){const c=client();if(channel&&c){try{c.removeChannel(channel);}catch(_){}}channel=null;root=null;mounted=false;}
+  function unmount(){const c=client();if(channel&&c){try{c.removeChannel(channel);}catch(_){}}channel=null;root=null;}
 
   window.ETEAtestados=Object.freeze({mount,unmount,refresh:load});
 })();
