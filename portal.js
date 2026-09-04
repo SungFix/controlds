@@ -21,7 +21,7 @@
     link=document.createElement("link");
     link.id="etePortalExitDropdownStyles";
     link.rel="stylesheet";
-    link.href="portal-exit-dropdown.css?v=1";
+    link.href="portal-exit-dropdown.css?v=2";
     document.head.appendChild(link);
   }
 
@@ -63,19 +63,19 @@
     const card=exitLayer.querySelector(".ete-exit-card");
     if(!card)return;
     const rect=anchor.getBoundingClientRect();
-    const margin=10;
+    const margin=8;
     const viewportW=document.documentElement.clientWidth;
     const viewportH=document.documentElement.clientHeight;
-    const cardW=Math.min(390,viewportW-24);
+    const cardW=Math.min(320,viewportW-20);
     card.style.width=cardW+"px";
-    const left=Math.min(viewportW-cardW-12,Math.max(12,rect.right-cardW));
+    const left=Math.min(viewportW-cardW-10,Math.max(10,rect.right-cardW));
     card.style.left=left+"px";
     card.style.right="auto";
     card.style.top="auto";
     card.style.bottom="auto";
-    const cardH=card.offsetHeight||260;
+    const cardH=card.offsetHeight||210;
     let top=rect.bottom+margin;
-    if(top+cardH>viewportH-12)top=Math.max(12,rect.top-cardH-margin);
+    if(top+cardH>viewportH-10)top=Math.max(10,rect.top-cardH-margin);
     card.style.top=top+"px";
   }
 
