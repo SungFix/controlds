@@ -29,9 +29,11 @@
     let css=document.getElementById("eteAtestadosStyles");
     if(!css){css=document.createElement("link");css.id="eteAtestadosStyles";css.rel="stylesheet";css.href="atestados.css?v=6";document.head.appendChild(css);}else if(css.getAttribute("href")!=="atestados.css?v=6")css.href="atestados.css?v=6";
     let roomCss=document.getElementById("eteAtestadosRoomStyles");
-    if(!roomCss){roomCss=document.createElement("link");roomCss.id="eteAtestadosRoomStyles";roomCss.rel="stylesheet";roomCss.href="atestados-room-picker.css?v=4";document.head.appendChild(roomCss);}else if(roomCss.getAttribute("href")!=="atestados-room-picker.css?v=4")roomCss.href="atestados-room-picker.css?v=4";
+    if(!roomCss){roomCss=document.createElement("link");roomCss.id="eteAtestadosRoomStyles";roomCss.rel="stylesheet";roomCss.href="atestados-room-picker.css?v=5";document.head.appendChild(roomCss);}else if(roomCss.getAttribute("href")!=="atestados-room-picker.css?v=5")roomCss.href="atestados-room-picker.css?v=5";
+    let controlCss=document.getElementById("eteAtestadosControlLayoutStyles");
+    if(!controlCss){controlCss=document.createElement("link");controlCss.id="eteAtestadosControlLayoutStyles";controlCss.rel="stylesheet";controlCss.href="atestados-control-layout.css?v=1";document.head.appendChild(controlCss);}else if(controlCss.getAttribute("href")!=="atestados-control-layout.css?v=1")controlCss.href="atestados-control-layout.css?v=1";
     let roomScript=document.getElementById("eteAtestadosRoomScript");
-    if(!roomScript){roomScript=document.createElement("script");roomScript.id="eteAtestadosRoomScript";roomScript.src="atestados-room-picker.js?v=2";roomScript.defer=true;document.head.appendChild(roomScript);}
+    if(!roomScript){roomScript=document.createElement("script");roomScript.id="eteAtestadosRoomScript";roomScript.src="atestados-room-picker.js?v=3";roomScript.defer=true;document.head.appendChild(roomScript);}else if(roomScript.getAttribute("src")!=="atestados-room-picker.js?v=3")roomScript.src="atestados-room-picker.js?v=3";
     if(window.ETEAtestados){callback?.();return;}
     let script=document.getElementById("eteAtestadosScript");
     if(!script){script=document.createElement("script");script.id="eteAtestadosScript";script.src="atestados.js?v=5";script.defer=true;script.addEventListener("load",function(){callback?.();},{once:true});document.head.appendChild(script);return;}
