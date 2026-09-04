@@ -55,8 +55,9 @@ async function simulateAdmin(page){
     setAuthLocked(false);
     setCurrentUser(currentUser);
     render();
+    window.ETEPortal?.openSystem('control-ds');
   });
-  await page.waitForTimeout(120);
+  await page.waitForTimeout(160);
 }
 
 async function clickSection(page,section,isMobile){
@@ -129,7 +130,7 @@ async function auditLoadingState(page,label){
 }
 
 async function auditEmptyStates(page,label,isMobile){
-  await page.evaluate(()=>{data=[];students=[];permissions=[];history=[];render();});
+  await page.evaluate(()=>{data=[];students=[];permissions=[];history=[];render();window.ETEPortal?.openSystem('control-ds');});
   await page.waitForTimeout(100);
   const checks=[
     ['requests','.request-empty'],
