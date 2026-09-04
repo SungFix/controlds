@@ -1,0 +1,23 @@
+/* Seletor de turmas — Atestados */
+.at-room-picker{grid-column:1/-1;display:grid;gap:10px}
+.at-room-picker>label{color:#9ba6af;font-size:9px;font-weight:850}
+.at-room-groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.at-room-group{padding:12px;border:1px solid #29343d;border-radius:12px;background:#0f1419}
+.at-room-group-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px;color:#cdd5db;font-size:10px;font-weight:900}
+.at-room-group-title small{color:#66747f;font-size:8px;font-weight:750}
+.at-room-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.at-room-group.gtu .at-room-options{grid-template-columns:1fr}
+.at-room-option{position:relative;min-width:0}
+.at-room-option input{position:absolute;opacity:0;pointer-events:none}
+.at-room-option span{display:flex;align-items:center;justify-content:center;min-height:38px;padding:0 9px;border:1px solid #303b44;border-radius:9px;background:#141a20;color:#8e9aa4;font-size:9.5px;font-weight:850;cursor:pointer;transition:.14s ease;white-space:nowrap}
+.at-room-option span:hover{border-color:#485865;background:#192128;color:#dce3e8}
+.at-room-option input:checked+span{border-color:#7391ad;background:#1a2732;color:#dcecff;box-shadow:0 0 0 3px rgba(115,145,173,.10)}
+.at-room-option input:focus-visible+span{outline:2px solid #7391ad;outline-offset:2px}
+.at-room-help{color:#5f6c76;font-size:8.5px;line-height:1.4}
+html[data-theme="light"] .at-room-group{background:#f7fafb;border-color:#d4dfe5}
+html[data-theme="light"] .at-room-group-title{color:#30424c}
+html[data-theme="light"] .at-room-option span{background:#fff;border-color:#cbd8df;color:#5e717c}
+html[data-theme="light"] .at-room-option span:hover{background:#f3f7f9;border-color:#aebfc8;color:#273841}
+html[data-theme="light"] .at-room-option input:checked+span{background:#eaf2f7;border-color:#7894a8;color:#294253;box-shadow:0 0 0 3px rgba(120,148,168,.10)}
+@media(max-width:760px){.at-room-groups{grid-template-columns:1fr}.at-room-options{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:420px){.at-room-options{grid-template-columns:1fr 1fr}.at-room-option span{font-size:9px;padding:0 6px}}
