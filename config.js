@@ -9,6 +9,42 @@ window.ETE_CONFIG = {
   }
 };
 
+(function initFirstPaintGuard(){
+  "use strict";
+
+  const root = document.documentElement;
+  let released = false;
+  root.classList.add("ete-first-paint");
+
+  const guardStyle = document.createElement("style");
+  guardStyle.id = "eteFirstPaintGuard";
+  guardStyle.textContent = "html.ete-first-paint{visibility:hidden!important;background:#080a0d!important}";
+  document.head.appendChild(guardStyle);
+
+  function release(){
+    if (released) return;
+    released = true;
+    root.classList.remove("ete-first-paint");
+    guardStyle.remove();
+  }
+
+  function finalizeLoginStyles(){
+    const loginStyle = document.querySelector('link[href^="login-simple-v2.css"]');
+    if (loginStyle && loginStyle.parentNode === document.head) {
+      document.head.appendChild(loginStyle);
+    }
+    requestAnimationFrame(release);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", finalizeLoginStyles, { once:true });
+  } else {
+    finalizeLoginStyles();
+  }
+
+  setTimeout(release, 1500);
+})();
+
 (function initControlTheme(){
   "use strict";
 
