@@ -15,6 +15,16 @@
   let syncQueued=false;
   let exitHookInstalled=false;
 
+  function ensureExitDropdownStyles(){
+    let link=document.getElementById("etePortalExitDropdownStyles");
+    if(link)return;
+    link=document.createElement("link");
+    link.id="etePortalExitDropdownStyles";
+    link.rel="stylesheet";
+    link.href="portal-exit-dropdown.css?v=1";
+    document.head.appendChild(link);
+  }
+
   function getUser(){try{if(typeof currentUser!=="undefined"&&currentUser)return currentUser;}catch(_){}return null;}
   function isAuthenticated(){return !!getUser()&&!document.documentElement.classList.contains("auth-locked");}
   function userLabel(){const user=getUser();if(!user)return"Usuário";const name=String(user.displayName||user.username||"Usuário");const role=String(user.roleLabel||user.role||"");return role?name+" · "+role:name;}
@@ -58,7 +68,7 @@
     const viewportH=document.documentElement.clientHeight;
     const cardW=Math.min(390,viewportW-24);
     card.style.width=cardW+"px";
-    let left=Math.min(viewportW-cardW-12,Math.max(12,rect.right-cardW));
+    const left=Math.min(viewportW-cardW-12,Math.max(12,rect.right-cardW));
     card.style.left=left+"px";
     card.style.right="auto";
     card.style.top="auto";
@@ -71,6 +81,7 @@
 
   function openExitMenu(anchor){
     if(!isAuthenticated())return;
+    ensureExitDropdownStyles();
     buildExitLayer();
     exitAnchor=anchor||document.querySelector("#etePortalExit")||document.querySelector("#logoutBtn");
     exitLayer.hidden=false;
@@ -136,7 +147,7 @@
 
   function syncState(){syncQueued=false;const authenticated=isAuthenticated();removeOldPortalButton();if(!authenticated){if(lastAuthenticated)setSelectedSystem("");hidePortal();closeExitMenu();lastAuthenticated=false;return;}buildPortal();refreshUser();if(!lastAuthenticated){const selected=selectedSystem();if(selected==="control-ds")hidePortal();else if(selected==="atestados")openSystem("atestados");else showPortalHome();}lastAuthenticated=true;}
   function queueSync(){if(syncQueued)return;syncQueued=true;requestAnimationFrame(syncState);}
-  function start(){installExitHook();syncState();authObserver=new MutationObserver(queueSync);authObserver.observe(document.documentElement,{attributes:true,attributeFilter:["class"]});window.addEventListener("pageshow",queueSync);window.addEventListener("control-theme-change",refreshUser);setTimeout(queueSync,80);setTimeout(queueSync,240);setTimeout(queueSync,700);}
+  function start(){ensureExitDropdownStyles();installExitHook();syncState();authObserver=new MutationObserver(queueSync);authObserver.observe(document.documentElement,{attributes:true,attributeFilter:["class"]});window.addEventListener("pageshow",queueSync);window.addEventListener("control-theme-change",refreshUser);setTimeout(queueSync,80);setTimeout(queueSync,240);setTimeout(queueSync,700);}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
   window.ETEPortal=Object.freeze({open:showPortalHome,openSystem:openSystem,openExitMenu:openExitMenu,systems:systems.map(function(system){return Object.freeze({id:system.id,name:system.name});})});
 })();
