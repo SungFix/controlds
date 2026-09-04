@@ -23,7 +23,6 @@
   let authObserver=null;
   let lastAuthenticated=false;
   let syncQueued=false;
-  let fastLoginInstalled=false;
 
   function getUser(){
     try{
@@ -182,67 +181,17 @@
     requestAnimationFrame(syncState);
   }
 
-  function installFastLogin(){
-    if(fastLoginInstalled) return true;
-    if(typeof loginWithCredentials!=="function" || typeof v46LoadData!=="function" || typeof v46Subscribe!=="function") return false;
-
-    loginWithCredentials=async function(username,password){
-      const client=initSupabase();
-      username=String(username||"").trim().toLowerCase();
-      const email=authEmailForUsername(username);
-      if(!client||!email) throw new Error("Invalid login credentials");
-
-      const {data:authData,error}=await client.auth.signInWithPassword({email,password});
-      if(error) throw error;
-      v46AuthUser=authData.user;
-
-      const {data:profile,error:profileError}=await client
-        .from("ete_profiles")
-        .select("user_id,username,display_name,role")
-        .eq("user_id",authData.user.id)
-        .single();
-
-      if(profileError||!profile){
-        try{await client.auth.signOut({scope:"local"});}catch(_){}
-        throw new Error("Conta sem perfil autorizado.");
-      }
-
-      setCurrentUser({
-        username:profile.username,
-        displayName:profile.display_name,
-        role:profile.role,
-        roleLabel:v46RoleLabel(profile.role),
-        userId:profile.user_id
-      });
-
-      setSyncState("loading");
-      unlockApp();
-      queueSync();
-      v46Subscribe();
-
-      // Os dados do Control Ds carregam em segundo plano. O portal aparece assim que a autenticação termina.
-      Promise.resolve().then(function(){
-        return v46LoadData(true);
-      }).catch(function(err){
-        console.error("Falha ao carregar dados após login:",err);
-      });
-
-      return authData;
-    };
-
-    fastLoginInstalled=true;
-    return true;
-  }
-
   function start(){
     syncState();
-    if(!installFastLogin()) setTimeout(installFastLogin,0);
     authObserver=new MutationObserver(queueSync);
     authObserver.observe(document.documentElement,{attributes:true,attributeFilter:["class"]});
     window.addEventListener("pageshow",queueSync);
     window.addEventListener("control-theme-change",refreshUser);
+
+    // Pequenas tentativas cobrem a conclusão assíncrona do login sem observar toda a página.
     setTimeout(queueSync,80);
     setTimeout(queueSync,240);
+    setTimeout(queueSync,700);
   }
 
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",start,{once:true});
