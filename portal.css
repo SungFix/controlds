@@ -1,0 +1,85 @@
+/* Portal central — camada visual isolada do Control Ds */
+body.portal-open{overflow:hidden}
+body.portal-open .control-theme-toggle-floating{display:none!important}
+
+.ete-portal{
+  position:fixed;
+  inset:0;
+  z-index:2147483600;
+  overflow:auto;
+  background:
+    radial-gradient(circle at 16% 0%,rgba(95,127,174,.10),transparent 32%),
+    radial-gradient(circle at 86% 8%,rgba(94,155,117,.07),transparent 28%),
+    var(--bg,#090a0c);
+  color:var(--text,#f3f5f7);
+  font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+}
+.ete-portal[hidden]{display:none!important}
+.ete-portal-shell{width:min(1180px,calc(100% - 40px));margin:0 auto;padding:28px 0 48px}
+.ete-portal-topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:64px}
+.ete-portal-brand{display:flex;align-items:center;gap:12px}
+.ete-portal-mark{width:42px;height:42px;border:1px solid var(--line,#272c33);border-radius:12px;display:grid;place-items:center;background:var(--panel,#121418);font-size:12px;font-weight:900;letter-spacing:.06em}
+.ete-portal-brand strong{display:block;font-size:15px}
+.ete-portal-brand small{display:block;margin-top:3px;color:var(--muted,#9da5ae);font-size:9px}
+.ete-portal-actions{display:flex;align-items:center;gap:8px}
+.ete-portal-user{padding:9px 11px;border:1px solid var(--line,#272c33);border-radius:10px;background:var(--panel,#121418);color:var(--muted,#9da5ae);font-size:9px;font-weight:750}
+.ete-portal-theme,.portal-home-button,.ete-portal-back{
+  min-height:40px;padding:0 12px;border:1px solid var(--line,#272c33);border-radius:10px;background:var(--panel,#121418);color:var(--text,#f3f5f7);font:inherit;font-size:9px;font-weight:800;cursor:pointer
+}
+.ete-portal-theme:hover,.portal-home-button:hover,.ete-portal-back:hover{background:var(--panel-2,#16191e)}
+.ete-portal-hero{max-width:760px;margin-bottom:30px}
+.ete-portal-kicker{display:inline-block;margin-bottom:10px;color:var(--muted,#9da5ae);font-size:9px;font-weight:850;letter-spacing:.12em;text-transform:uppercase}
+.ete-portal-hero h1{margin:0;font-size:clamp(32px,5vw,54px);line-height:1.02;letter-spacing:-.045em}
+.ete-portal-hero p{margin:14px 0 0;max-width:630px;color:var(--muted,#9da5ae);font-size:12px;line-height:1.65}
+.ete-portal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.ete-system-card{
+  min-height:230px;padding:22px;border:1px solid var(--line,#272c33);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.015),transparent),var(--panel,#121418);color:inherit;text-align:left;display:flex;flex-direction:column;justify-content:space-between;gap:28px;cursor:pointer;transition:transform .15s ease,border-color .15s ease,background .15s ease
+}
+.ete-system-card:hover{transform:translateY(-2px);border-color:#3a424c;background:var(--panel-2,#16191e)}
+.ete-system-card:focus-visible{outline:2px solid #7f8ea3;outline-offset:3px}
+.ete-system-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.ete-system-icon{width:48px;height:48px;border:1px solid var(--line,#272c33);border-radius:14px;display:grid;place-items:center;background:rgba(255,255,255,.025);font-size:20px}
+.ete-system-status{padding:6px 8px;border:1px solid var(--line,#272c33);border-radius:999px;color:var(--muted,#9da5ae);font-size:8px;font-weight:850}
+.ete-system-card strong{display:block;font-size:22px;letter-spacing:-.025em}
+.ete-system-card p{margin:8px 0 0;color:var(--muted,#9da5ae);font-size:10px;line-height:1.55}
+.ete-system-open{display:flex;align-items:center;justify-content:space-between;color:var(--muted,#9da5ae);font-size:9px;font-weight:800}
+.ete-system-open span:last-child{font-size:16px;color:var(--text,#f3f5f7)}
+.ete-portal-module{display:none}
+.ete-portal.module-open .ete-portal-home{display:none}
+.ete-portal.module-open .ete-portal-module{display:block}
+.ete-module-panel{max-width:780px;padding:30px;border:1px solid var(--line,#272c33);border-radius:18px;background:var(--panel,#121418)}
+.ete-module-panel h1{margin:16px 0 8px;font-size:34px;letter-spacing:-.035em}
+.ete-module-panel p{margin:0;color:var(--muted,#9da5ae);font-size:11px;line-height:1.65}
+.ete-module-note{margin-top:24px;padding:16px;border:1px dashed var(--line,#272c33);border-radius:12px;color:var(--muted,#9da5ae);font-size:10px;line-height:1.55}
+.portal-home-button{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+
+html[data-theme="light"] .ete-portal{background:linear-gradient(180deg,#f6f8fa,#eef2f5);color:#192126}
+html[data-theme="light"] .ete-portal-mark,
+html[data-theme="light"] .ete-portal-user,
+html[data-theme="light"] .ete-portal-theme,
+html[data-theme="light"] .ete-portal-back,
+html[data-theme="light"] .ete-system-card,
+html[data-theme="light"] .ete-module-panel{background:#fff;border-color:#d7e0e5;color:#233139}
+html[data-theme="light"] .ete-system-card:hover{background:#f8fbfc;border-color:#bfcdd5}
+html[data-theme="light"] .ete-portal-brand small,
+html[data-theme="light"] .ete-portal-kicker,
+html[data-theme="light"] .ete-portal-hero p,
+html[data-theme="light"] .ete-portal-user,
+html[data-theme="light"] .ete-system-card p,
+html[data-theme="light"] .ete-system-open,
+html[data-theme="light"] .ete-module-panel p,
+html[data-theme="light"] .ete-module-note{color:#60737d}
+html[data-theme="light"] .portal-home-button{background:#fff;border-color:#d7e0e5;color:#233139}
+
+@media(max-width:760px){
+  .ete-portal-shell{width:min(100% - 28px,1180px);padding-top:18px}
+  .ete-portal-topbar{margin-bottom:42px;align-items:flex-start}
+  .ete-portal-user{display:none}
+  .ete-portal-grid{grid-template-columns:1fr}
+  .ete-system-card{min-height:190px;padding:18px}
+  .ete-portal-hero h1{font-size:36px}
+  .ete-portal-hero p{font-size:11px}
+  .ete-module-panel{padding:22px}
+  .portal-home-button{min-width:40px;padding:0 10px}
+  .portal-home-button .portal-home-label{display:none}
+}
