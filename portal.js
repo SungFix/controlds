@@ -27,15 +27,15 @@
 
   function ensureAtestadosAssets(callback){
     let css=document.getElementById("eteAtestadosStyles");
-    if(!css){css=document.createElement("link");css.id="eteAtestadosStyles";css.rel="stylesheet";css.href="atestados.css?v=4";document.head.appendChild(css);}else if(css.getAttribute("href")!=="atestados.css?v=4")css.href="atestados.css?v=4";
+    if(!css){css=document.createElement("link");css.id="eteAtestadosStyles";css.rel="stylesheet";css.href="atestados.css?v=5";document.head.appendChild(css);}else if(css.getAttribute("href")!=="atestados.css?v=5")css.href="atestados.css?v=5";
     let roomCss=document.getElementById("eteAtestadosRoomStyles");
     if(!roomCss){roomCss=document.createElement("link");roomCss.id="eteAtestadosRoomStyles";roomCss.rel="stylesheet";roomCss.href="atestados-room-picker.css?v=4";document.head.appendChild(roomCss);}else if(roomCss.getAttribute("href")!=="atestados-room-picker.css?v=4")roomCss.href="atestados-room-picker.css?v=4";
     let roomScript=document.getElementById("eteAtestadosRoomScript");
-    if(!roomScript){roomScript=document.createElement("script");roomScript.id="eteAtestadosRoomScript";roomScript.src="atestados-room-picker.js?v=1";roomScript.defer=true;document.head.appendChild(roomScript);}
+    if(!roomScript){roomScript=document.createElement("script");roomScript.id="eteAtestadosRoomScript";roomScript.src="atestados-room-picker.js?v=2";roomScript.defer=true;document.head.appendChild(roomScript);}
     if(window.ETEAtestados){callback?.();return;}
     let script=document.getElementById("eteAtestadosScript");
-    if(!script){script=document.createElement("script");script.id="eteAtestadosScript";script.src="atestados.js?v=3";script.defer=true;script.addEventListener("load",function(){callback?.();},{once:true});document.head.appendChild(script);return;}
-    if(script.getAttribute("src")!=="atestados.js?v=3")script.src="atestados.js?v=3";
+    if(!script){script=document.createElement("script");script.id="eteAtestadosScript";script.src="atestados.js?v=4";script.defer=true;script.addEventListener("load",function(){callback?.();},{once:true});document.head.appendChild(script);return;}
+    if(script.getAttribute("src")!=="atestados.js?v=4")script.src="atestados.js?v=4";
     script.addEventListener("load",function(){callback?.();},{once:true});
   }
 
