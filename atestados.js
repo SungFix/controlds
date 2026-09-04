@@ -2,6 +2,11 @@
   "use strict";
 
   const TABLE="ete_atestados_justified_absences";
+  const ROOMS=[
+    {group:"DS",label:"Desenvolvimento de Sistemas",rooms:["1º DS A","1º DS B","2º DS A","2º DS B"]},
+    {group:"EDF",label:"Edificações",rooms:["1º EDF A","1º EDF B","2º EDF A","2º EDF B","3º EDF A","3º EDF B"]},
+    {group:"GTU",label:"GTU",rooms:["3º GTU"]}
+  ];
   let root=null,rows=[],activeTab="overview",channel=null;
 
   function user(){try{return typeof currentUser!=="undefined"?currentUser:null;}catch(_){return null;}}
@@ -67,11 +72,15 @@
     wrap.innerHTML=list.length?'<div class="at-table-wrap"><table class="at-table"><thead><tr><th>Aluno</th><th>Turma</th><th>Justificativa</th><th>Projeto</th><th>Data</th><th>Taxa</th>'+(canManage()?'<th></th>':'')+'</tr></thead><tbody>'+list.map(r=>'<tr><td><div class="at-student-cell"><span>'+esc(String(r.student_name||"?").charAt(0).toUpperCase())+'</span><strong>'+esc(r.student_name)+'</strong></div></td><td><span class="at-badge">'+esc(r.class_name)+'</span></td><td>'+esc(r.reason)+'</td><td>'+esc(r.project_name||"Nenhum")+'</td><td>'+fmtDate(r.absence_date)+'</td><td><span class="at-rate">'+num(r.justified_rate).toFixed(1).replace(".",",")+'%</span></td>'+(canManage()?'<td><button class="at-icon-danger" title="Excluir" type="button" data-at-delete="'+esc(r.id)+'">×</button></td>':'')+'</tr>').join("")+'</tbody></table></div>':'<div class="at-empty-state compact"><span class="at-empty-icon">⌕</span><strong>Nenhum registro encontrado</strong><p>Ajuste os filtros ou cadastre uma nova falta justificada.</p></div>';
   }
 
+  function roomPicker(){
+    return '<div class="at-room-picker"><label>Turma</label><div class="at-room-groups">'+ROOMS.map(group=>'<section class="at-room-group '+(group.group==="GTU"?'gtu':'')+'"><div class="at-room-group-title"><span>'+esc(group.group)+'</span><small>'+esc(group.label)+'</small></div><div class="at-room-options">'+group.rooms.map(room=>'<label class="at-room-option"><input type="radio" name="atClass" value="'+esc(room)+'" required><span>'+esc(room)+'</span></label>').join("")+'</div></section>').join("")+'</div><span class="at-room-help">Selecione uma turma. Não é necessário digitar.</span></div>';
+  }
+
   function renderForm(){
     if(!canManage()){activeTab="records";render();return;}
     root.querySelector("#atView").innerHTML='<section class="at-form-layout"><div class="at-form-intro"><span class="at-card-kicker">Novo registro</span><h2>Cadastrar falta justificada</h2><p>Registre a ausência para que os professores saibam que ela já foi justificada.</p><div class="at-form-note"><strong>Informação visível aos professores</strong><span>Após salvar, o registro aparece imediatamente na consulta do módulo.</span></div></div><div class="at-card at-form-card"><form id="atForm" class="at-form">'
       +'<div class="at-field full"><label>Aluno</label><input class="at-input" id="atStudent" required maxlength="160" placeholder="Nome completo do aluno"></div>'
-      +'<div class="at-field"><label>Turma</label><input class="at-input" id="atClass" required maxlength="40" placeholder="Ex.: 2ADS"></div>'
+      +roomPicker()
       +'<div class="at-field"><label>Data da falta</label><input class="at-input" id="atDate" type="date" required value="'+new Date().toISOString().slice(0,10)+'"></div>'
       +'<div class="at-field full"><label>Motivo da falta</label><textarea class="at-textarea" id="atReason" required maxlength="500" placeholder="Ex.: Atestado médico, consulta, acompanhamento..."></textarea></div>'
       +'<div class="at-field"><label>Projeto <span>opcional</span></label><input class="at-input" id="atProject" maxlength="160" placeholder="Nenhum ou nome do projeto"></div>'
@@ -82,7 +91,7 @@
 
   function render(){if(!root)return;root.querySelectorAll(".at-nav-item").forEach(b=>b.classList.toggle("active",b.dataset.atTab===activeTab));if(activeTab==="overview")renderOverview();else if(activeTab==="records")renderRecords();else renderForm();}
   async function load(){const c=client();if(!c){setStatus("Supabase indisponível",true);return;}setStatus("Sincronizando...");const{data,error}=await c.from(TABLE).select("*").order("absence_date",{ascending:false}).order("created_at",{ascending:false});if(error){console.error("Atestados:",error);setStatus("Falha ao carregar",true);return;}rows=data||[];setStatus("Atualizado");render();}
-  async function saveRecord(event){event.preventDefault();if(!canManage())return;const c=client();if(!c)return;const btn=event.currentTarget.querySelector('button[type="submit"]');if(btn){btn.disabled=true;btn.textContent="Salvando...";}const payload={student_name:root.querySelector("#atStudent").value.trim(),class_name:root.querySelector("#atClass").value.trim().toUpperCase(),reason:root.querySelector("#atReason").value.trim(),project_name:root.querySelector("#atProject").value.trim()||null,absence_date:root.querySelector("#atDate").value,justified_rate:num(root.querySelector("#atRate").value)};const{error}=await c.from(TABLE).insert(payload);if(btn){btn.disabled=false;btn.textContent="Salvar falta justificada";}if(error){console.error("Atestados:",error);setStatus("Não foi possível salvar",true);return;}activeTab="records";await load();}
+  async function saveRecord(event){event.preventDefault();if(!canManage())return;const c=client();if(!c)return;const selectedRoom=root.querySelector('input[name="atClass"]:checked');if(!selectedRoom){setStatus("Selecione uma turma",true);return;}const btn=event.currentTarget.querySelector('button[type="submit"]');if(btn){btn.disabled=true;btn.textContent="Salvando...";}const payload={student_name:root.querySelector("#atStudent").value.trim(),class_name:selectedRoom.value,reason:root.querySelector("#atReason").value.trim(),project_name:root.querySelector("#atProject").value.trim()||null,absence_date:root.querySelector("#atDate").value,justified_rate:num(root.querySelector("#atRate").value)};const{error}=await c.from(TABLE).insert(payload);if(btn){btn.disabled=false;btn.textContent="Salvar falta justificada";}if(error){console.error("Atestados:",error);setStatus("Não foi possível salvar",true);return;}activeTab="records";await load();}
   async function removeRecord(id){if(!canManage()||!id)return;const c=client();if(!c)return;const{error}=await c.from(TABLE).delete().eq("id",id);if(error){console.error("Atestados:",error);setStatus("Não foi possível excluir",true);return;}await load();}
   function setStatus(text,error){const el=root?.querySelector("#atStatus");if(!el)return;el.textContent=text;el.classList.toggle("error",!!error);}
   function subscribe(){const c=client();if(!c)return;if(channel){try{c.removeChannel(channel);}catch(_){}}channel=c.channel("ete-atestados-"+Math.random().toString(36).slice(2)).on("postgres_changes",{event:"*",schema:"public",table:TABLE},()=>load().catch(()=>{})).subscribe();}
