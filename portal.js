@@ -21,7 +21,7 @@
     link=document.createElement("link");
     link.id="etePortalExitDropdownStyles";
     link.rel="stylesheet";
-    link.href="portal-exit-dropdown.css?v=2";
+    link.href="portal-exit-dropdown.css?v=3";
     document.head.appendChild(link);
   }
 
@@ -36,12 +36,14 @@
     exitLayer=document.createElement("div");
     exitLayer.className="ete-exit-layer";
     exitLayer.hidden=true;
+    const backIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10.5 6 4.5 12l6 6"/><path d="M5 12h14"/></svg>';
+    const logoutIcon='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8V5.75A1.75 1.75 0 0 0 12.25 4h-6.5A1.75 1.75 0 0 0 4 5.75v12.5A1.75 1.75 0 0 0 5.75 20h6.5A1.75 1.75 0 0 0 14 18.25V16"/><path d="M10 12h10"/><path d="m17 9 3 3-3 3"/></svg>';
     exitLayer.innerHTML=''
       +'<section class="ete-exit-card" role="menu" aria-label="Opções de saída">'
       +'<div class="ete-exit-head"><div><span class="ete-portal-kicker">Sessão</span><h2>O que deseja fazer?</h2></div></div>'
       +'<div class="ete-exit-options">'
-      +'<button type="button" class="ete-exit-option" role="menuitem" data-exit-portal><span class="ete-exit-option-icon">←</span><span><strong>Voltar ao portal</strong><small>Escolher outro sistema sem sair da conta</small></span></button>'
-      +'<button type="button" class="ete-exit-option danger" role="menuitem" data-exit-account><span class="ete-exit-option-icon">↪</span><span><strong>Sair da conta</strong><small>Encerrar sua sessão neste dispositivo</small></span></button>'
+      +'<button type="button" class="ete-exit-option" role="menuitem" data-exit-portal><span class="ete-exit-option-icon">'+backIcon+'</span><span><strong>Voltar ao portal</strong><small>Escolher outro sistema sem sair da conta</small></span></button>'
+      +'<button type="button" class="ete-exit-option danger" role="menuitem" data-exit-account><span class="ete-exit-option-icon">'+logoutIcon+'</span><span><strong>Sair da conta</strong><small>Encerrar sua sessão neste dispositivo</small></span></button>'
       +'</div>'
       +'</section>';
 
