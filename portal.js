@@ -27,7 +27,9 @@
 
   function ensureAtestadosAssets(callback){
     let css=document.getElementById("eteAtestadosStyles");
-    if(!css){css=document.createElement("link");css.id="eteAtestadosStyles";css.rel="stylesheet";css.href="atestados.css?v=5";document.head.appendChild(css);}else if(css.getAttribute("href")!=="atestados.css?v=5")css.href="atestados.css?v=5";
+    if(!css){css=document.createElement("link");css.id="eteAtestadosStyles";css.rel="stylesheet";css.href="atestados.css?v=4";document.head.appendChild(css);}else if(css.getAttribute("href")!=="atestados.css?v=4")css.href="atestados.css?v=4";
+    let roomCss=document.getElementById("eteAtestadosRoomStyles");
+    if(!roomCss){roomCss=document.createElement("link");roomCss.id="eteAtestadosRoomStyles";roomCss.rel="stylesheet";roomCss.href="atestados-room-picker.css?v=1";document.head.appendChild(roomCss);}
     if(window.ETEAtestados){callback?.();return;}
     let script=document.getElementById("eteAtestadosScript");
     if(!script){script=document.createElement("script");script.id="eteAtestadosScript";script.src="atestados.js?v=3";script.defer=true;script.addEventListener("load",function(){callback?.();},{once:true});document.head.appendChild(script);return;}
