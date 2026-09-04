@@ -31,9 +31,9 @@
     let roomCss=document.getElementById("eteAtestadosRoomStyles");
     if(!roomCss){roomCss=document.createElement("link");roomCss.id="eteAtestadosRoomStyles";roomCss.rel="stylesheet";roomCss.href="atestados-room-picker.css?v=5";document.head.appendChild(roomCss);}else if(roomCss.getAttribute("href")!=="atestados-room-picker.css?v=5")roomCss.href="atestados-room-picker.css?v=5";
     let controlCss=document.getElementById("eteAtestadosControlLayoutStyles");
-    if(!controlCss){controlCss=document.createElement("link");controlCss.id="eteAtestadosControlLayoutStyles";controlCss.rel="stylesheet";controlCss.href="atestados-control-layout.css?v=1";document.head.appendChild(controlCss);}else if(controlCss.getAttribute("href")!=="atestados-control-layout.css?v=1")controlCss.href="atestados-control-layout.css?v=1";
+    if(!controlCss){controlCss=document.createElement("link");controlCss.id="eteAtestadosControlLayoutStyles";controlCss.rel="stylesheet";controlCss.href="atestados-control-layout.css?v=2";document.head.appendChild(controlCss);}else if(controlCss.getAttribute("href")!=="atestados-control-layout.css?v=2")controlCss.href="atestados-control-layout.css?v=2";
     let roomScript=document.getElementById("eteAtestadosRoomScript");
-    if(!roomScript){roomScript=document.createElement("script");roomScript.id="eteAtestadosRoomScript";roomScript.src="atestados-room-picker.js?v=4";roomScript.defer=true;document.head.appendChild(roomScript);}else if(roomScript.getAttribute("src")!=="atestados-room-picker.js?v=4")roomScript.src="atestados-room-picker.js?v=4";
+    if(!roomScript){roomScript=document.createElement("script");roomScript.id="eteAtestadosRoomScript";roomScript.src="atestados-room-picker.js?v=5";roomScript.defer=true;document.head.appendChild(roomScript);}else if(roomScript.getAttribute("src")!=="atestados-room-picker.js?v=5")roomScript.src="atestados-room-picker.js?v=5";
     if(window.ETEAtestados){callback?.();return;}
     let script=document.getElementById("eteAtestadosScript");
     if(!script){script=document.createElement("script");script.id="eteAtestadosScript";script.src="atestados.js?v=5";script.defer=true;script.addEventListener("load",function(){callback?.();},{once:true});document.head.appendChild(script);return;}
