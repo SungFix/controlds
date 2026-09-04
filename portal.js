@@ -33,7 +33,7 @@
     let controlCss=document.getElementById("eteAtestadosControlLayoutStyles");
     if(!controlCss){controlCss=document.createElement("link");controlCss.id="eteAtestadosControlLayoutStyles";controlCss.rel="stylesheet";controlCss.href="atestados-control-layout.css?v=1";document.head.appendChild(controlCss);}else if(controlCss.getAttribute("href")!=="atestados-control-layout.css?v=1")controlCss.href="atestados-control-layout.css?v=1";
     let roomScript=document.getElementById("eteAtestadosRoomScript");
-    if(!roomScript){roomScript=document.createElement("script");roomScript.id="eteAtestadosRoomScript";roomScript.src="atestados-room-picker.js?v=3";roomScript.defer=true;document.head.appendChild(roomScript);}else if(roomScript.getAttribute("src")!=="atestados-room-picker.js?v=3")roomScript.src="atestados-room-picker.js?v=3";
+    if(!roomScript){roomScript=document.createElement("script");roomScript.id="eteAtestadosRoomScript";roomScript.src="atestados-room-picker.js?v=4";roomScript.defer=true;document.head.appendChild(roomScript);}else if(roomScript.getAttribute("src")!=="atestados-room-picker.js?v=4")roomScript.src="atestados-room-picker.js?v=4";
     if(window.ETEAtestados){callback?.();return;}
     let script=document.getElementById("eteAtestadosScript");
     if(!script){script=document.createElement("script");script.id="eteAtestadosScript";script.src="atestados.js?v=5";script.defer=true;script.addEventListener("load",function(){callback?.();},{once:true});document.head.appendChild(script);return;}
