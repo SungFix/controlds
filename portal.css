@@ -89,14 +89,14 @@ body.portal-open .control-theme-toggle-floating{display:none!important}
 .ete-exit-card{position:relative;width:min(430px,100%);padding:20px;border:1px solid #343c46;border-radius:18px;background:linear-gradient(180deg,#15191e,#101317);color:#eef1f4;box-shadow:0 30px 90px rgba(0,0,0,.5)}
 .ete-exit-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px}
 .ete-exit-head .ete-portal-kicker{margin-bottom:6px}
-.ete-exit-head h2{margin:0;font-size:22px;letter-spacing:-.03em}
+.ete-exit-head h2{margin:0;font-size:26px;letter-spacing:-.03em}
 .ete-exit-close{width:34px;height:34px;border:1px solid #333a43;border-radius:10px;background:#181c21;color:#9ca5ae;font-size:20px;line-height:1;cursor:pointer}
 .ete-exit-options{display:grid;gap:9px}
-.ete-exit-option{width:100%;min-height:76px;padding:13px;border:1px solid #2e353e;border-radius:13px;background:#14181d;color:#edf0f3;display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer;transition:.14s ease}
+.ete-exit-option{width:100%;min-height:82px;padding:14px;border:1px solid #2e353e;border-radius:13px;background:#14181d;color:#edf0f3;display:flex;align-items:center;gap:13px;text-align:left;cursor:pointer;transition:.14s ease}
 .ete-exit-option:hover{background:#1a1f25;border-color:#424b56;transform:translateY(-1px)}
-.ete-exit-option-icon{width:40px;height:40px;flex:0 0 40px;border:1px solid #33404c;border-radius:11px;background:#19232d;display:grid;place-items:center;color:#9ec0e7;font-size:16px;font-weight:900}
-.ete-exit-option strong{display:block;font-size:11px}
-.ete-exit-option small{display:block;margin-top:4px;color:#7f8994;font-size:8px;line-height:1.4}
+.ete-exit-option-icon{width:42px;height:42px;flex:0 0 42px;border:1px solid #33404c;border-radius:11px;background:#19232d;display:grid;place-items:center;color:#9ec0e7;font-size:18px;font-weight:900}
+.ete-exit-option strong{display:block;font-size:15px}
+.ete-exit-option small{display:block;margin-top:5px;color:#7f8994;font-size:11px;line-height:1.45}
 .ete-exit-option.danger .ete-exit-option-icon{background:#261719;border-color:#4a292e;color:#d98790}
 .ete-exit-option.danger:hover{border-color:#513037}
 
