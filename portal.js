@@ -32,6 +32,8 @@
     if(!roomCss){roomCss=document.createElement("link");roomCss.id="eteAtestadosRoomStyles";roomCss.rel="stylesheet";roomCss.href="atestados-room-picker.css?v=5";document.head.appendChild(roomCss);}else if(roomCss.getAttribute("href")!=="atestados-room-picker.css?v=5")roomCss.href="atestados-room-picker.css?v=5";
     let controlCss=document.getElementById("eteAtestadosControlLayoutStyles");
     if(!controlCss){controlCss=document.createElement("link");controlCss.id="eteAtestadosControlLayoutStyles";controlCss.rel="stylesheet";controlCss.href="atestados-control-layout.css?v=2";document.head.appendChild(controlCss);}else if(controlCss.getAttribute("href")!=="atestados-control-layout.css?v=2")controlCss.href="atestados-control-layout.css?v=2";
+    let minimalCss=document.getElementById("eteAtestadosMinimalStyles");
+    if(!minimalCss){minimalCss=document.createElement("link");minimalCss.id="eteAtestadosMinimalStyles";minimalCss.rel="stylesheet";minimalCss.href="atestados-minimal.css?v=1";document.head.appendChild(minimalCss);}else if(minimalCss.getAttribute("href")!=="atestados-minimal.css?v=1")minimalCss.href="atestados-minimal.css?v=1";
     let roomScript=document.getElementById("eteAtestadosRoomScript");
     if(!roomScript){roomScript=document.createElement("script");roomScript.id="eteAtestadosRoomScript";roomScript.src="atestados-room-picker.js?v=5";roomScript.defer=true;document.head.appendChild(roomScript);}else if(roomScript.getAttribute("src")!=="atestados-room-picker.js?v=5")roomScript.src="atestados-room-picker.js?v=5";
     if(window.ETEAtestados){callback?.();return;}
