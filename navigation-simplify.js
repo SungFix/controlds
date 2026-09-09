@@ -24,6 +24,12 @@
     if(link.getAttribute("href")!=="group-picker-polish.css?v=1")link.href="group-picker-polish.css?v=1";
   }
 
+  function ensureSavedStudentPolish(){
+    let link=document.getElementById("controlSavedStudentPolishStyles");
+    if(!link){link=document.createElement("link");link.id="controlSavedStudentPolishStyles";link.rel="stylesheet";document.head.appendChild(link);}
+    if(link.getAttribute("href")!=="saved-student-polish.css?v=1")link.href="saved-student-polish.css?v=1";
+  }
+
   function setButtonLabel(button, label){
     if (!button || !label) return;
     const icon = button.querySelector(".navicon");
@@ -70,6 +76,7 @@
 
   function applyNavigation(){
     ensureGroupPickerPolish();
+    ensureSavedStudentPolish();
     applyLabels();
     applyProfileNavigation();
   }
