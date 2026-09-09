@@ -18,6 +18,12 @@
     computers: "Notebooks"
   };
 
+  function ensureGroupPickerPolish(){
+    let link=document.getElementById("controlGroupPickerPolishStyles");
+    if(!link){link=document.createElement("link");link.id="controlGroupPickerPolishStyles";link.rel="stylesheet";document.head.appendChild(link);}
+    if(link.getAttribute("href")!=="group-picker-polish.css?v=1")link.href="group-picker-polish.css?v=1";
+  }
+
   function setButtonLabel(button, label){
     if (!button || !label) return;
     const icon = button.querySelector(".navicon");
@@ -63,6 +69,7 @@
   }
 
   function applyNavigation(){
+    ensureGroupPickerPolish();
     applyLabels();
     applyProfileNavigation();
   }
