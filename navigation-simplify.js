@@ -24,10 +24,10 @@
     if(link.getAttribute("href")!=="group-picker-polish.css?v=1")link.href="group-picker-polish.css?v=1";
   }
 
-  function ensureSavedStudentPolish(){
-    let link=document.getElementById("controlSavedStudentPolishStyles");
-    if(!link){link=document.createElement("link");link.id="controlSavedStudentPolishStyles";link.rel="stylesheet";document.head.appendChild(link);}
-    if(link.getAttribute("href")!=="saved-student-polish.css?v=1")link.href="saved-student-polish.css?v=1";
+  function ensureStudentEditFix(){
+    let script=document.getElementById("controlStudentEditErrorFixScript");
+    if(!script){script=document.createElement("script");script.id="controlStudentEditErrorFixScript";script.src="student-edit-error-fix.js?v=1";script.defer=true;document.head.appendChild(script);}
+    else if(script.getAttribute("src")!=="student-edit-error-fix.js?v=1")script.src="student-edit-error-fix.js?v=1";
   }
 
   function setButtonLabel(button, label){
@@ -76,7 +76,7 @@
 
   function applyNavigation(){
     ensureGroupPickerPolish();
-    ensureSavedStudentPolish();
+    ensureStudentEditFix();
     applyLabels();
     applyProfileNavigation();
   }
