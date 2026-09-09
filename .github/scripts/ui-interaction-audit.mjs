@@ -23,6 +23,9 @@ await page.evaluate(()=>{
   setAuthLocked(false); setCurrentUser(currentUser); render();
 });
 
+await page.evaluate(()=>window.ETEPortal?.openSystem('control-ds'));
+await page.waitForFunction(()=>!document.body.classList.contains('portal-open'));
+
 for(const section of ['home','agenda','permissions','requests','students','computers','history']){
   await page.click(`[data-page="${section}"]`);
   if(!(await page.locator(`#page-${section}`).evaluate(el=>el.classList.contains('active')))) throw new Error(`Página ${section} não ativou`);
