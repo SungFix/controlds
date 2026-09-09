@@ -36,14 +36,16 @@ textarea:focus-visible,
 /* Solicitações: cards sem disputa de espaço */
 #page-requests .request-card{overflow:hidden!important}
 #page-requests .request-card-top{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:14px!important;flex-wrap:wrap!important}
-#page-requests .request-card-body{display:grid!important;grid-template-columns:minmax(380px,1.2fr) minmax(280px,.8fr) minmax(120px,auto)!important;gap:16px!important;align-items:stretch!important;padding:18px!important}
-#page-requests .request-info-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;min-width:0!important}
+#page-requests .request-card-body{display:grid!important;grid-template-columns:minmax(380px,1.2fr) minmax(280px,.8fr) minmax(120px,auto)!important;gap:16px!important;align-items:start!important;padding:18px!important}
+#page-requests .request-info-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;min-width:0!important;align-self:stretch!important}
 #page-requests .request-info-box,
 #page-requests .request-reason{min-width:0!important;overflow:hidden!important}
 #page-requests .request-info-box strong,
 #page-requests .request-reason p{overflow-wrap:anywhere!important;word-break:normal!important}
+#page-requests .request-reason{align-self:start!important;min-height:0!important;height:auto!important;padding:14px 16px!important;display:block!important}
+#page-requests .request-reason p{margin:6px 0 0!important;line-height:1.45!important}
 #page-requests .request-card-actions,
-#page-requests .row-actions{min-width:120px!important;display:flex!important;align-items:center!important;justify-content:center!important}
+#page-requests .row-actions{min-width:120px!important;display:flex!important;align-items:center!important;justify-content:center!important;align-self:center!important}
 #page-requests .request-card-actions .btn,
 #page-requests .row-actions .btn{min-width:112px!important;white-space:nowrap!important}
 
@@ -99,6 +101,7 @@ html[data-theme="light"] #page-requests .request-search-wrap input::placeholder{
   #page-requests .request-sort{width:100%!important}
   #page-requests .request-card-body{grid-template-columns:1fr!important;padding:14px!important}
   #page-requests .request-info-grid{grid-template-columns:1fr!important}
+  #page-requests .request-reason{width:100%!important}
   #page-requests .request-card-actions,
   #page-requests .row-actions{grid-column:auto!important;justify-content:stretch!important}
   #page-requests .request-card-actions .btn,
