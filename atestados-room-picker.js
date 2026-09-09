@@ -1,6 +1,13 @@
 (function initAtestadosEnhancements(){
   "use strict";
 
+  const ROOM_LABELS={
+    "3º EDF A":"3A EDF",
+    "3º EDF B":"3B EDF",
+    "3º GTU":"3GTU"
+  };
+  const roomLabel=value=>ROOM_LABELS[String(value||"")]||String(value||"");
+
   const icons={
     home:'<svg viewBox="0 0 24 24"><path d="m4 11 8-7 8 7"/><path d="M6 10v10h12V10M10 20v-6h4v6"/></svg>',
     list:'<svg viewBox="0 0 24 24"><path d="M8 6h11M8 12h11M8 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg>',
@@ -29,6 +36,12 @@
     const groups=picker.querySelector(".at-room-groups");
     if(!groups)return;
     picker.dataset.triggerReady="1";
+
+    picker.querySelectorAll('.at-room-option input[name="atClass"]').forEach(function(input){
+      const text=input.closest(".at-room-option")?.querySelector("span");
+      if(text)text.textContent=roomLabel(input.value);
+    });
+
     const trigger=document.createElement("button");
     trigger.type="button";
     trigger.className="at-room-trigger";
@@ -39,7 +52,7 @@
     const label=trigger.querySelector(".at-room-trigger-label");
     function close(){picker.classList.remove("open");trigger.setAttribute("aria-expanded","false");}
     function open(){closeOpenPickers(picker);picker.classList.add("open");trigger.setAttribute("aria-expanded","true");}
-    function sync(){const selected=picker.querySelector('input[name="atClass"]:checked');if(selected){label.textContent=selected.value;trigger.classList.add("has-value");}else{label.textContent="Selecione a turma";trigger.classList.remove("has-value");}}
+    function sync(){const selected=picker.querySelector('input[name="atClass"]:checked');if(selected){label.textContent=roomLabel(selected.value);trigger.classList.add("has-value");}else{label.textContent="Selecione a turma";trigger.classList.remove("has-value");}}
     trigger.addEventListener("click",function(event){event.preventDefault();event.stopPropagation();picker.classList.contains("open")?close():open();});
     picker.addEventListener("change",function(event){if(event.target.matches('input[name="atClass"]')){sync();close();}});
     sync();
