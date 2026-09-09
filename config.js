@@ -131,6 +131,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlMobileGroupPickerFlowStyles", "mobile-group-picker-flow.css?v=4");
     ensureStylesheet("controlMobileTextareaExpandStyles", "mobile-textarea-expand.css?v=2");
     ensureStylesheet("controlPortalStyles", "portal.css?v=2");
+    ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=1");
 
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
@@ -150,7 +151,6 @@ window.ETE_CONFIG = {
     ensureScript("controlStudentReputationScript", "student-reputation.js?v=3");
     ensureScript("controlPermissionFilterLabelFixScript", "permission-filter-label-fix.js?v=1");
     ensureScript("controlHistoryFilterPolishScript", "history-filter-polish.js?v=1");
-    ensureScript("controlRequestSearchPolishScript", "request-search-polish.js?v=2");
     ensureScript("controlMobileLogoutIconScript", "mobile-logout-icon.js?v=2");
     ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=3");
     ensureScript("controlPortalScript", "portal.js?v=2");
