@@ -3,6 +3,7 @@
 
   const HOURS=Array.from({length:24},(_,i)=>String(i).padStart(2,"0"));
   const MINUTES=Array.from({length:60},(_,i)=>String(i).padStart(2,"0"));
+  let enhanceQueued=false;
 
   function closeAll(except){
     document.querySelectorAll(".at-time-custom.open").forEach(function(picker){
@@ -16,6 +17,10 @@
     return values.map(function(value){
       return '<button type="button" class="at-time-option" data-at-time-part="'+part+'" data-at-time-value="'+value+'" role="option" aria-selected="false">'+value+'</button>';
     }).join("");
+  }
+
+  function setText(node,value){
+    if(node&&node.textContent!==value)node.textContent=value;
   }
 
   function updateUI(input,wrapper){
@@ -34,16 +39,16 @@
     const minute=wrapper.dataset.minute||"";
     const triggerLabel=wrapper.querySelector(".at-time-trigger-value");
     const preview=wrapper.querySelector(".at-time-preview");
-    const hasValue=/^\d{2}:\d{2}$/.test(input.value||"");
+    const hasValue=/^\d{2}:\d{2}$/.test(value);
 
-    if(triggerLabel)triggerLabel.textContent=hasValue?input.value:"Selecionar horário";
-    if(preview)preview.textContent=(hour||"--")+":"+(minute||"--");
+    setText(triggerLabel,hasValue?value:"Selecionar horário");
+    setText(preview,(hour||"--")+":"+(minute||"--"));
     wrapper.querySelector(".at-time-trigger")?.classList.toggle("has-value",hasValue);
 
     wrapper.querySelectorAll(".at-time-option").forEach(function(button){
       const selected=(button.dataset.atTimePart==="hour"?hour:minute)===button.dataset.atTimeValue;
       button.classList.toggle("selected",selected);
-      button.setAttribute("aria-selected",String(selected));
+      if(button.getAttribute("aria-selected")!==String(selected))button.setAttribute("aria-selected",String(selected));
     });
   }
 
@@ -73,10 +78,9 @@
   }
 
   function enhance(input){
-    if(!input||input.dataset.atCustomTime==="1")return;
+    if(!input||input.dataset.atCustomTime==="1"||input.type!=="time")return;
+    if(input.closest("[hidden]"))return;
     input.dataset.atCustomTime="1";
-    const originalType=input.type;
-    if(originalType!=="time")return;
 
     const wrapper=document.createElement("div");
     wrapper.className="at-time-custom";
@@ -144,15 +148,21 @@
     updateUI(input,wrapper);
   }
 
-  function syncAll(){
-    document.querySelectorAll('.ete-atestados input[type="time"],.ete-atestados input.at-time-source').forEach(function(input){
-      if(input.type==="time")enhance(input);
+  function enhanceVisible(){
+    enhanceQueued=false;
+    document.querySelectorAll('.ete-atestados input[type="time"]').forEach(enhance);
+  }
+
+  function queueEnhance(){
+    if(enhanceQueued)return;
+    enhanceQueued=true;
+    requestAnimationFrame(enhanceVisible);
+  }
+
+  function refreshExisting(){
+    document.querySelectorAll('.ete-atestados input.at-time-source').forEach(function(input){
       const wrapper=input.closest(".at-time-custom");
-      if(wrapper&&!input.value&&!wrapper.dataset.partialSelection){
-        wrapper.dataset.hour="";
-        wrapper.dataset.minute="";
-        updateUI(input,wrapper);
-      }
+      if(wrapper)updateUI(input,wrapper);
     });
   }
 
@@ -161,12 +171,20 @@
   },true);
   document.addEventListener("keydown",function(event){if(event.key==="Escape")closeAll();});
   document.addEventListener("change",function(event){
-    if(event.target.matches?.('input[name="atAbsenceScope"]'))setTimeout(syncAll,0);
+    if(event.target.matches?.('input[name="atAbsenceScope"]')){
+      setTimeout(function(){refreshExisting();queueEnhance();},0);
+    }
   });
 
-  const observer=new MutationObserver(syncAll);
+  const observer=new MutationObserver(function(mutations){
+    const hasAddedElement=mutations.some(function(mutation){
+      return Array.from(mutation.addedNodes).some(function(node){return node.nodeType===1;});
+    });
+    if(hasAddedElement)queueEnhance();
+  });
+
   function start(){
-    syncAll();
+    queueEnhance();
     if(document.body)observer.observe(document.body,{childList:true,subtree:true});
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
