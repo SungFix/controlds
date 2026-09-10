@@ -29,8 +29,31 @@
     }
   }
 
+  function applyOfficialRosterMode(){
+    ["newStudentBtn","newStudentBtn2","newStudentFromRequest"].forEach(id=>{
+      const button=document.getElementById(id);
+      if(!button)return;
+      if(!button.hidden)button.hidden=true;
+      if(button.getAttribute("aria-hidden")!=="true")button.setAttribute("aria-hidden","true");
+      if(button.tabIndex!==-1)button.tabIndex=-1;
+    });
+
+    const page=document.getElementById("page-students");
+    const description=page?.querySelector(".pagehead p");
+    const officialDescription="Alunos importados da listagem oficial da escola e organizados por turma.";
+    if(description&&description.textContent!==officialDescription)description.textContent=officialDescription;
+
+    const savedLabel=page?.querySelector(".student-stat span");
+    if(savedLabel&&savedLabel.textContent.trim()==="Alunos salvos")savedLabel.textContent="Alunos cadastrados";
+
+    const savedHint=page?.querySelector(".student-stat small");
+    const officialHint="listagem oficial disponível para uso no sistema";
+    if(savedHint&&savedHint.textContent!==officialHint)savedHint.textContent=officialHint;
+  }
+
   function apply(){
     queued=false;
+    applyOfficialRosterMode();
     document.querySelectorAll(".student-card button,[data-use-student],[data-edit-student],[data-delete-student]").forEach(button=>{
       if(button.closest(".student-card")) decorateButton(button);
     });
