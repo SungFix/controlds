@@ -171,9 +171,9 @@
       const originalId=form.id;
       const temporaryId=originalId+"RegisteredFlow";
       form.id=temporaryId;
-      queueMicrotask(()=>{
+      setTimeout(()=>{
         if(form.id===temporaryId) form.id=originalId;
-      });
+      },0);
     },true);
   }
   function polishRequest(){
