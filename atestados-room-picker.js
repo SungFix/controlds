@@ -26,11 +26,25 @@
     });
   }
 
+  function closeOpenReasonPickers(except){
+    document.querySelectorAll(".at-reason-picker.open").forEach(function(picker){
+      if(picker===except)return;
+      picker.classList.remove("open");
+      picker.querySelector(".at-reason-trigger")?.setAttribute("aria-expanded","false");
+    });
+  }
+
   document.addEventListener("click",function(event){
     const picker=event.target.closest?.(".at-room-picker");
     if(!picker)closeOpenPickers();
+    const reasonPicker=event.target.closest?.(".at-reason-picker");
+    if(!reasonPicker)closeOpenReasonPickers();
   },true);
-  document.addEventListener("keydown",function(event){if(event.key==="Escape")closeOpenPickers();});
+  document.addEventListener("keydown",function(event){
+    if(event.key!=="Escape")return;
+    closeOpenPickers();
+    closeOpenReasonPickers();
+  });
 
   function enhancePicker(picker){
     if(!picker||picker.dataset.triggerReady==="1")return;
@@ -52,10 +66,40 @@
     groups.before(trigger);
     const label=trigger.querySelector(".at-room-trigger-label");
     function close(){picker.classList.remove("open");trigger.setAttribute("aria-expanded","false");}
-    function open(){closeOpenPickers(picker);picker.classList.add("open");trigger.setAttribute("aria-expanded","true");}
+    function open(){closeOpenPickers(picker);closeOpenReasonPickers();picker.classList.add("open");trigger.setAttribute("aria-expanded","true");}
     function sync(){const selected=picker.querySelector('input[name="atClass"]:checked');if(selected){label.textContent=roomLabel(selected.value);trigger.classList.add("has-value");}else{label.textContent="Selecione a turma";trigger.classList.remove("has-value");}}
     trigger.addEventListener("click",function(event){event.preventDefault();event.stopPropagation();picker.classList.contains("open")?close():open();});
     picker.addEventListener("change",function(event){if(event.target.matches('input[name="atClass"]')){sync();close();}});
+    sync();
+  }
+
+  function enhanceReasonPicker(list){
+    if(!list||list.dataset.triggerReady==="1")return;
+    const picker=list.closest(".at-field");
+    if(!picker)return;
+    list.dataset.triggerReady="1";
+    picker.classList.add("at-reason-picker");
+    if(!list.id)list.id="atReasonChecklist";
+
+    const trigger=document.createElement("button");
+    trigger.type="button";
+    trigger.className="at-reason-trigger";
+    trigger.setAttribute("aria-expanded","false");
+    trigger.setAttribute("aria-controls",list.id);
+    trigger.innerHTML='<span class="at-reason-trigger-label">Selecionar justificativas</span><span class="at-reason-trigger-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 9 5 5 5-5"/></svg></span>';
+    list.before(trigger);
+    const label=trigger.querySelector(".at-reason-trigger-label");
+
+    function close(){picker.classList.remove("open");trigger.setAttribute("aria-expanded","false");}
+    function open(){closeOpenReasonPickers(picker);closeOpenPickers();picker.classList.add("open");trigger.setAttribute("aria-expanded","true");}
+    function sync(){
+      const count=list.querySelectorAll('input[name="atReason"]:checked').length;
+      label.textContent=count?count+" justificativa"+(count===1?"":"s")+" selecionada"+(count===1?"":"s"):"Selecionar justificativas";
+      trigger.classList.toggle("has-value",count>0);
+    }
+
+    trigger.addEventListener("click",function(event){event.preventDefault();event.stopPropagation();picker.classList.contains("open")?close():open();});
+    list.addEventListener("change",function(event){if(event.target.matches('input[name="atReason"]'))sync();});
     sync();
   }
 
@@ -170,6 +214,7 @@
     ensureLayoutStyles();
     document.querySelectorAll(".ete-atestados").forEach(enhanceModule);
     document.querySelectorAll(".at-room-picker").forEach(enhancePicker);
+    document.querySelectorAll(".at-reason-list").forEach(enhanceReasonPicker);
   }
 
   const observer=new MutationObserver(scan);
