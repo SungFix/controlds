@@ -148,10 +148,9 @@
     document.querySelectorAll('.ete-atestados input[type="time"],.ete-atestados input.at-time-source').forEach(function(input){
       if(input.type==="time")enhance(input);
       const wrapper=input.closest(".at-time-custom");
-      if(wrapper&&!input.value){
+      if(wrapper&&!input.value&&!wrapper.dataset.partialSelection){
         wrapper.dataset.hour="";
         wrapper.dataset.minute="";
-        wrapper.dataset.partialSelection="";
         updateUI(input,wrapper);
       }
     });
