@@ -230,20 +230,31 @@
     try{
       if(typeof canCreatePermission==="function" && !canCreatePermission()) throw new Error("forbidden");
       const studentId=findPermissionStudentId();
+      const manualName=String(qs("#permissionStudent")?.value||"").trim();
+      const manualClass=String(qs("#permissionClass")?.value||"").trim();
       const interval=String(qs("#permissionInterval")?.value||"");
       const reason=String(qs("#permissionReason")?.value||"").trim();
-      if(!studentId){notify("Selecione um aluno cadastrado.");qs("#permissionSavedStudentTrigger")?.focus();return;}
+      if(!studentId && (!manualName||!manualClass)){notify("Selecione um aluno cadastrado.");qs("#permissionSavedStudentTrigger")?.focus();return;}
       if(!["morning","lunch","afternoon"].includes(interval)){notify("Selecione um horário válido.");return;}
       if(!reason){notify("Informe o motivo da autorização.");qs("#permissionReason")?.focus();return;}
 
       setBusy(form,true,"Salvando...");
-      await v46Rpc("ete_create_permission_v2",{
-        p_student_id:studentId,
-        p_student:"",
-        p_class_name:"",
-        p_interval:interval,
-        p_reason:reason
-      });
+      if(studentId){
+        await v46Rpc("ete_create_permission_v2",{
+          p_student_id:studentId,
+          p_student:"",
+          p_class_name:"",
+          p_interval:interval,
+          p_reason:reason
+        });
+      }else{
+        await v46Rpc("ete_create_permission",{
+          p_student:manualName,
+          p_class_name:manualClass,
+          p_interval:interval,
+          p_reason:reason
+        });
+      }
       closeDialog(form,"#permissionModal");
       form.reset();
       permissionSelectedStudentId="";
