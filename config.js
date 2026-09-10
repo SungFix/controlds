@@ -157,7 +157,7 @@ window.ETE_CONFIG = {
     ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=3");
     ensureScript("controlPortalScript", "portal.js?v=10");
     ensureScript("controlRelationalFrontendV2Script", "relational-frontend-v2.js?v=1");
-    ensureScript("controlRegisteredStudentFlowScript", "registered-student-flow.js?v=3");
+    ensureScript("controlRegisteredStudentFlowScript", "registered-student-flow.js?v=4");
   }
 
   function updateButton(button){
