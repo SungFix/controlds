@@ -153,7 +153,7 @@ window.ETE_CONFIG = {
     ensureScript("controlHistoryFilterPolishScript", "history-filter-polish.js?v=1");
     ensureScript("controlMobileLogoutIconScript", "mobile-logout-icon.js?v=2");
     ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=3");
-    ensureScript("controlPortalScript", "portal.js?v=6");
+    ensureScript("controlPortalScript", "portal.js?v=7");
     ensureScript("controlRelationalFrontendV2Script", "relational-frontend-v2.js?v=1");
   }
 
