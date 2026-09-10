@@ -8,12 +8,22 @@
     {group:"GTU",rooms:["3º GTU"]}
   ];
   const REASONS=[
-    {code:"doenca",label:"Doença"},
-    {code:"obrigacoes_legais",label:"Cumprimento de obrigações legais"},
-    {code:"intercambio",label:"Intercâmbio"},
-    {code:"outro",label:"Outro motivo justificado",note:true},
+    {code:"atestado_medico",label:"Atestado Médico",siepe:true},
+    {code:"declaracao_comparecimento_consulta_medica",label:"Declaração de Comparecimento à consulta Médica",siepe:true},
+    {code:"declaracao_pais_responsavel",label:"Declaração dos pais ou responsável",siepe:true},
+    {code:"estudante_atleta",label:"Estudante Atleta",siepe:true},
+    {code:"estudante_gestante",label:"Estudante Gestante",siepe:true},
+    {code:"estudante_trabalhador",label:"Estudante Trabalhador",siepe:true},
+    {code:"falta_transporte_escolar",label:"Falta de Transporte Escolar",siepe:true},
+    {code:"outro",label:"Outros/Casos Omissos",note:true,siepe:true},
+    {code:"programa_ganhe_o_mundo",label:"Programa Ganhe o Mundo",siepe:true},
     {code:"projeto",label:"Projeto / atividade escolar",project:true}
   ];
+  const LEGACY_REASON_LABELS={
+    doenca:"Doença",
+    obrigacoes_legais:"Cumprimento de obrigações legais",
+    intercambio:"Intercâmbio"
+  };
 
   let root=null;
   let rows=[];
@@ -38,7 +48,7 @@
   function reasonMeta(code){return REASONS.find(item=>item.code===code)||null;}
   function reasonNames(row){
     const codes=Array.isArray(row?.reason_codes)?row.reason_codes.filter(Boolean):[];
-    if(codes.length)return codes.map(code=>reasonMeta(code)?.label||String(code));
+    if(codes.length)return codes.map(code=>reasonMeta(code)?.label||LEGACY_REASON_LABELS[code]||String(code));
     const legacy=String(row?.reason||"").trim();
     return legacy?[legacy]:["Não informado"];
   }
@@ -46,7 +56,7 @@
     const names=reasonNames(row);
     const note=String(row?.reason_note||"").trim();
     if(note&&Array.isArray(row?.reason_codes)&&row.reason_codes.includes("outro")){
-      return names.map(name=>name==="Outro motivo justificado"?name+": "+note:name).join(" · ");
+      return names.map(name=>name==="Outros/Casos Omissos"?name+": "+note:name).join(" · ");
     }
     return names.join(" · ");
   }
@@ -203,14 +213,14 @@
   }
 
   function reasonPicker(){
-    return '<div class="at-field full"><label>Justificativas tabeladas</label><div class="at-reason-list">'+REASONS.map(item=>'<label class="at-reason-option"><input type="checkbox" name="atReason" value="'+esc(item.code)+'"><span><strong>'+esc(item.label)+'</strong><small>'+(item.project?'Marque para vincular o nome do projeto.':item.note?'Use o campo de detalhe para especificar o motivo.':'Motivo de falta justificada.')+'</small></span></label>').join("")+'</div><small class="at-field-help">Selecione uma ou mais opções. A lista pode ser ampliada conforme o cadastro usado pela escola no SIEPE.</small></div>';
+    return '<div class="at-field full"><label>Justificativas tabeladas do SIEPE</label><div class="at-reason-list">'+REASONS.map(item=>'<label class="at-reason-option"><input type="checkbox" name="atReason" value="'+esc(item.code)+'"><span><strong>'+esc(item.label)+'</strong><small>'+(item.project?'Opção adicional: informe o nome do projeto.':item.note?'Descreva o caso omisso no campo que será aberto.':'Motivo cadastrado no SIEPE.')+'</small></span></label>').join("")+'</div><small class="at-field-help">Selecione uma ou mais opções do SIEPE. Projeto / atividade escolar é uma opção adicional.</small></div>';
   }
 
   function renderForm(){
     if(!canManage()){activeTab="records";render();return;}
     const view=root.querySelector("#atView");
     if(!view)return;
-    view.innerHTML='<section class="at-form-layout"><aside class="at-form-intro"><span class="at-eyebrow">NOVO REGISTRO</span><h2>Falta justificada</h2><p>Registre quem faltou, quando ocorreu e qual justificativa foi utilizada.</p><div class="at-form-steps"><div><b>1</b><span>Identifique aluno e turma</span></div><div><b>2</b><span>Informe a data e o período</span></div><div><b>3</b><span>Marque a justificativa</span></div><div><b>4</b><span>Adicione projeto ou detalhe, se necessário</span></div></div><div class="at-form-note"><strong>Taxa removida</strong><span>A porcentagem de justificativa não é mais solicitada nem exibida.</span></div></aside><div class="at-card at-form-card"><form id="atForm" class="at-form"><div class="at-field full"><label for="atStudent">Nome do aluno</label><input class="at-input" id="atStudent" required maxlength="160" placeholder="Nome completo do aluno"></div>'+roomPicker()+'<div class="at-field"><label for="atDate">Data da falta</label><input class="at-input" id="atDate" type="date" required value="'+today()+'"></div><div class="at-field"><label>Período da falta</label><div class="at-choice-grid"><label class="at-choice-card"><input type="radio" name="atAbsenceScope" value="full_day" checked><span><strong>Dia inteiro</strong><small>Ausência durante todo o dia</small></span></label><label class="at-choice-card"><input type="radio" name="atAbsenceScope" value="partial"><span><strong>Horário específico</strong><small>Informe início e fim</small></span></label></div></div><div class="at-time-grid full" id="atTimeFields" hidden><div class="at-field"><label for="atStartTime">Início</label><input class="at-input" id="atStartTime" type="time"></div><div class="at-field"><label for="atEndTime">Fim</label><input class="at-input" id="atEndTime" type="time"></div></div>'+reasonPicker()+'<div class="at-field full at-dependent-field" id="atReasonNoteField" hidden><label for="atReasonNote">Detalhe do outro motivo</label><input class="at-input" id="atReasonNote" maxlength="240" placeholder="Informe o motivo cadastrado no SIEPE"></div><div class="at-field full at-dependent-field" id="atProjectField" hidden><label for="atProject">Nome do projeto</label><input class="at-input" id="atProject" maxlength="160" placeholder="Nome do projeto ou atividade"></div><div class="at-form-actions"><button class="at-btn" type="button" data-at-cancel>Cancelar</button><button class="at-btn primary" type="submit">Salvar falta justificada</button></div></form></div></section>';
+    view.innerHTML='<section class="at-form-layout"><aside class="at-form-intro"><span class="at-eyebrow">NOVO REGISTRO</span><h2>Falta justificada</h2><p>Registre quem faltou, quando ocorreu e qual justificativa foi utilizada.</p><div class="at-form-steps"><div><b>1</b><span>Identifique aluno e turma</span></div><div><b>2</b><span>Informe a data e o período</span></div><div><b>3</b><span>Marque a justificativa</span></div><div><b>4</b><span>Adicione projeto ou detalhe, se necessário</span></div></div><div class="at-form-note"><strong>Taxa removida</strong><span>A porcentagem de justificativa não é mais solicitada nem exibida.</span></div></aside><div class="at-card at-form-card"><form id="atForm" class="at-form"><div class="at-field full"><label for="atStudent">Nome do aluno</label><input class="at-input" id="atStudent" required maxlength="160" placeholder="Nome completo do aluno"></div>'+roomPicker()+'<div class="at-field"><label for="atDate">Data da falta</label><input class="at-input" id="atDate" type="date" required value="'+today()+'"></div><div class="at-field"><label>Período da falta</label><div class="at-choice-grid"><label class="at-choice-card"><input type="radio" name="atAbsenceScope" value="full_day" checked><span><strong>Dia inteiro</strong><small>Ausência durante todo o dia</small></span></label><label class="at-choice-card"><input type="radio" name="atAbsenceScope" value="partial"><span><strong>Horário específico</strong><small>Informe início e fim</small></span></label></div></div><div class="at-time-grid full" id="atTimeFields" hidden><div class="at-field"><label for="atStartTime">Início</label><input class="at-input" id="atStartTime" type="time"></div><div class="at-field"><label for="atEndTime">Fim</label><input class="at-input" id="atEndTime" type="time"></div></div>'+reasonPicker()+'<div class="at-field full at-dependent-field" id="atReasonNoteField" hidden><label for="atReasonNote">Detalhe de Outros/Casos Omissos</label><input class="at-input" id="atReasonNote" maxlength="240" placeholder="Descreva o caso omisso"></div><div class="at-field full at-dependent-field" id="atProjectField" hidden><label for="atProject">Nome do projeto</label><input class="at-input" id="atProject" maxlength="160" placeholder="Nome do projeto ou atividade"></div><div class="at-form-actions"><button class="at-btn" type="button" data-at-cancel>Cancelar</button><button class="at-btn primary" type="submit">Salvar falta justificada</button></div></form></div></section>';
     root.querySelector("#atForm")?.addEventListener("submit",saveRecord);
     root.querySelectorAll('input[name="atAbsenceScope"]').forEach(input=>input.addEventListener("change",syncScopeFields));
     root.querySelectorAll('input[name="atReason"]').forEach(input=>input.addEventListener("change",syncReasonFields));
@@ -281,9 +291,9 @@
     const projectName=reasonCodes.includes("projeto")?root.querySelector("#atProject")?.value.trim()||"":null;
     if(reasonCodes.includes("projeto")&&!projectName){setStatus("Informe o nome do projeto",true);return;}
     const reasonNote=reasonCodes.includes("outro")?root.querySelector("#atReasonNote")?.value.trim()||"":null;
-    if(reasonCodes.includes("outro")&&!reasonNote){setStatus("Detalhe o outro motivo",true);return;}
-    const labels=reasonCodes.map(code=>reasonMeta(code)?.label||code);
-    const readable=labels.map(label=>label==="Outro motivo justificado"&&reasonNote?label+": "+reasonNote:label).join(" · ");
+    if(reasonCodes.includes("outro")&&!reasonNote){setStatus("Detalhe Outros/Casos Omissos",true);return;}
+    const labels=reasonCodes.map(code=>reasonMeta(code)?.label||LEGACY_REASON_LABELS[code]||code);
+    const readable=labels.map(label=>label==="Outros/Casos Omissos"&&reasonNote?label+": "+reasonNote:label).join(" · ");
     const button=event.currentTarget.querySelector('button[type="submit"]');
     if(button){button.disabled=true;button.setAttribute("aria-busy","true");button.textContent="Salvando...";}
     try{
