@@ -107,7 +107,10 @@
   overscroll-behavior:contain;
   scrollbar-gutter:stable;
   align-content:start;
-  padding:2px 7px 4px 2px;
+  padding:10px 14px 10px 10px;
+  border:1px solid #2a3037;
+  border-radius:16px;
+  background:#12161b;
   scroll-behavior:smooth;
 }
 #page-students #studentRows::-webkit-scrollbar{width:8px}
@@ -116,7 +119,15 @@
 #page-students #studentRows::-webkit-scrollbar-thumb:hover{background:#4a5561;background-clip:padding-box}
 #page-students #studentRows{scrollbar-width:thin;scrollbar-color:#3a434d transparent}
 #page-students #studentRows .student-card[hidden]{display:none!important}
-#page-students #studentRows .student-card{min-width:0}
+#page-students #studentRows .student-card{
+  min-width:0;
+  background:#181c21!important;
+  border-color:#303740!important;
+}
+#page-students #studentRows .student-card-head{
+  background:#23282e!important;
+  border-bottom-color:#343b43!important;
+}
 
 @media(min-width:1320px){
   #page-students #studentRows.student-list{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -134,7 +145,7 @@
   .student-filter-popover.is-open{transform:none}
   .student-filter-grid{grid-template-columns:1fr}
   .student-list-status{align-items:flex-start;flex-direction:column;gap:3px}
-  #page-students #studentRows.student-list{max-height:62vh;padding-right:5px}
+  #page-students #studentRows.student-list{max-height:62vh;padding:8px 10px 8px 8px}
 }
 
 html.theme-light #page-students{
@@ -147,7 +158,19 @@ html.theme-light #page-students{
 }
 html.theme-light .student-filter-popover{box-shadow:0 22px 55px rgba(31,45,61,.16)}
 html.theme-light .student-filter-field select{background:#f8fafb;color:#1b2530}
-html.theme-light #page-students #studentRows{scrollbar-color:#b8c2cc transparent}
+html.theme-light #page-students #studentRows{
+  scrollbar-color:#b8c2cc transparent;
+  background:#e6e9ed;
+  border-color:#cbd2d9;
+}
+html.theme-light #page-students #studentRows .student-card{
+  background:#f7f8f9!important;
+  border-color:#cbd2d9!important;
+}
+html.theme-light #page-students #studentRows .student-card-head{
+  background:#e1e5e9!important;
+  border-bottom-color:#c9d0d7!important;
+}
 
 @media(prefers-reduced-motion:reduce){
   .student-filter-button,.student-filter-popover{transition:none!important}
