@@ -8,6 +8,7 @@ on:
       - "*.js"
       - "*.css"
       - ".github/scripts/ui-interaction-audit.mjs"
+      - ".github/scripts/atestados-register-audit.mjs"
       - ".github/workflows/ui-interaction-audit-v2.yml"
   pull_request:
     branches: [main]
@@ -16,6 +17,7 @@ on:
       - "*.js"
       - "*.css"
       - ".github/scripts/ui-interaction-audit.mjs"
+      - ".github/scripts/atestados-register-audit.mjs"
       - ".github/workflows/ui-interaction-audit-v2.yml"
 
 permissions:
@@ -33,7 +35,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: JavaScript audit syntax
-        run: node --check .github/scripts/ui-interaction-audit.mjs
+        run: |
+          node --check .github/scripts/ui-interaction-audit.mjs
+          node --check .github/scripts/atestados-register-audit.mjs
 
       - name: Install Playwright
         run: |
@@ -50,3 +54,4 @@ jobs:
           trap 'kill $SERVER_PID || true' EXIT
           sleep 2
           node .github/scripts/ui-interaction-audit.mjs
+          node .github/scripts/atestados-register-audit.mjs
