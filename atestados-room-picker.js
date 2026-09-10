@@ -11,6 +11,7 @@
   const icons={
     home:'<svg viewBox="0 0 24 24"><path d="m4 11 8-7 8 7"/><path d="M6 10v10h12V10M10 20v-6h4v6"/></svg>',
     list:'<svg viewBox="0 0 24 24"><path d="M8 6h11M8 12h11M8 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg>',
+    report:'<svg viewBox="0 0 24 24"><path d="M5 19V9M12 19V5M19 19v-7"/><path d="M3 20h18"/></svg>',
     add:'<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>',
     portal:'<svg viewBox="0 0 24 24"><path d="M5 5h6v6H5zM13 5h6v6h-6zM5 13h6v6H5zM13 13h6v6h-6z"/></svg>',
     theme:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
@@ -58,10 +59,15 @@
     sync();
   }
 
-  function tabMeta(tab){if(tab==="records")return["Registros","Consulta de faltas justificadas"];if(tab==="new")return["Cadastrar","Nova falta justificada"];return["Visão geral","Atestados e frequência"];}
+  function tabMeta(tab){
+    if(tab==="records")return["Registros","Consulta de faltas justificadas"];
+    if(tab==="reports")return["Relatórios","Indicadores por aluno, turma e justificativa"];
+    if(tab==="new")return["Cadastrar","Nova falta justificada"];
+    return["Visão geral","Atestados e frequência"];
+  }
 
   function decorateNav(nav){
-    const map={overview:icons.home,records:icons.list,new:icons.add};
+    const map={overview:icons.home,records:icons.list,reports:icons.report,new:icons.add};
     nav.querySelectorAll("[data-at-tab]").forEach(function(button){
       if(button.querySelector(".at-control-navicon"))return;
       const icon=document.createElement("span");
