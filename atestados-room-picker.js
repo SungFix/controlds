@@ -7,6 +7,8 @@
     "3º GTU":"3GTU"
   };
   const roomLabel=value=>ROOM_LABELS[String(value||"")]||String(value||"");
+  let openReasonPicker=null;
+  let scanQueued=false;
 
   const icons={
     home:'<svg viewBox="0 0 24 24"><path d="m4 11 8-7 8 7"/><path d="M6 10v10h12V10M10 20v-6h4v6"/></svg>',
@@ -18,6 +20,8 @@
     exit:'<svg viewBox="0 0 24 24"><path d="M14 8V5.5A1.5 1.5 0 0 0 12.5 4h-7A1.5 1.5 0 0 0 4 5.5v13A1.5 1.5 0 0 0 5.5 20h7a1.5 1.5 0 0 0 1.5-1.5V16"/><path d="M10 12h10M17 9l3 3-3 3"/></svg>'
   };
 
+  function setText(el,value){if(el&&el.textContent!==value)el.textContent=value;}
+
   function closeOpenPickers(except){
     document.querySelectorAll(".at-room-picker.open").forEach(function(picker){
       if(picker===except)return;
@@ -26,12 +30,17 @@
     });
   }
 
+  function closeReasonPicker(picker){
+    if(!picker)return;
+    const list=picker.querySelector(".at-reason-list");
+    const trigger=picker.querySelector(".at-reason-trigger");
+    if(list)list.style.removeProperty("display");
+    if(trigger)trigger.setAttribute("aria-expanded","false");
+    if(openReasonPicker===picker)openReasonPicker=null;
+  }
+
   function closeOpenReasonPickers(except){
-    document.querySelectorAll(".at-reason-picker.open").forEach(function(picker){
-      if(picker===except)return;
-      picker.classList.remove("open");
-      picker.querySelector(".at-reason-trigger")?.setAttribute("aria-expanded","false");
-    });
+    if(openReasonPicker&&openReasonPicker!==except)closeReasonPicker(openReasonPicker);
   }
 
   document.addEventListener("click",function(event){
@@ -67,7 +76,7 @@
     const label=trigger.querySelector(".at-room-trigger-label");
     function close(){picker.classList.remove("open");trigger.setAttribute("aria-expanded","false");}
     function open(){closeOpenPickers(picker);closeOpenReasonPickers();picker.classList.add("open");trigger.setAttribute("aria-expanded","true");}
-    function sync(){const selected=picker.querySelector('input[name="atClass"]:checked');if(selected){label.textContent=roomLabel(selected.value);trigger.classList.add("has-value");}else{label.textContent="Selecione a turma";trigger.classList.remove("has-value");}}
+    function sync(){const selected=picker.querySelector('input[name="atClass"]:checked');if(selected){setText(label,roomLabel(selected.value));trigger.classList.add("has-value");}else{setText(label,"Selecione a turma");trigger.classList.remove("has-value");}}
     trigger.addEventListener("click",function(event){event.preventDefault();event.stopPropagation();picker.classList.contains("open")?close():open();});
     picker.addEventListener("change",function(event){if(event.target.matches('input[name="atClass"]')){sync();close();}});
     sync();
@@ -90,15 +99,26 @@
     list.before(trigger);
     const label=trigger.querySelector(".at-reason-trigger-label");
 
-    function close(){picker.classList.remove("open");trigger.setAttribute("aria-expanded","false");}
-    function open(){closeOpenReasonPickers(picker);closeOpenPickers();picker.classList.add("open");trigger.setAttribute("aria-expanded","true");}
+    function close(){closeReasonPicker(picker);}
+    function open(){
+      closeOpenReasonPickers(picker);
+      closeOpenPickers();
+      openReasonPicker=picker;
+      list.style.setProperty("display","flex","important");
+      trigger.setAttribute("aria-expanded","true");
+    }
     function sync(){
       const count=list.querySelectorAll('input[name="atReason"]:checked').length;
-      label.textContent=count?count+" justificativa"+(count===1?"":"s")+" selecionada"+(count===1?"":"s"):"Selecionar justificativas";
+      const text=count?count+" justificativa"+(count===1?"":"s")+" selecionada"+(count===1?"":"s"):"Selecionar justificativas";
+      setText(label,text);
       trigger.classList.toggle("has-value",count>0);
     }
 
-    trigger.addEventListener("click",function(event){event.preventDefault();event.stopPropagation();picker.classList.contains("open")?close():open();});
+    trigger.addEventListener("click",function(event){
+      event.preventDefault();
+      event.stopPropagation();
+      openReasonPicker===picker?close():open();
+    });
     list.addEventListener("change",function(event){if(event.target.matches('input[name="atReason"]'))sync();});
     sync();
   }
@@ -124,10 +144,8 @@
   function updateTopbar(module){
     const active=module.querySelector(".at-nav-item.active")?.dataset.atTab||"overview";
     const meta=tabMeta(active);
-    const title=module.querySelector(".at-app-top-title strong");
-    const sub=module.querySelector(".at-app-top-title small");
-    if(title)title.textContent=meta[0];
-    if(sub)sub.textContent=meta[1];
+    setText(module.querySelector(".at-app-top-title strong"),meta[0]);
+    setText(module.querySelector(".at-app-top-title small"),meta[1]);
   }
 
   function syncConnectionState(module){
@@ -138,8 +156,7 @@
     const error=source.classList.contains("error")||source.dataset.state==="error";
     target.classList.toggle("error",error);
     target.classList.toggle("loading",!error&&text!=="Atualizado");
-    const label=target.querySelector("span");
-    if(label)label.textContent=text==="Atualizado"?"Sincronizado":text;
+    setText(target.querySelector("span"),text==="Atualizado"?"Sincronizado":text);
   }
 
   function enhanceMetrics(module){
@@ -189,7 +206,18 @@
     topbar.querySelector(".at-app-exit")?.addEventListener("click",function(event){event.stopPropagation();window.ETEPortal?.openExitMenu(event.currentTarget);});
     nav.addEventListener("click",function(){requestAnimationFrame(function(){updateTopbar(module);enhanceMetrics(module);syncConnectionState(module);});});
 
-    const viewObserver=new MutationObserver(function(){enhanceMetrics(module);updateTopbar(module);syncConnectionState(module);});
+    let viewSyncQueued=false;
+    function queueViewSync(){
+      if(viewSyncQueued)return;
+      viewSyncQueued=true;
+      requestAnimationFrame(function(){
+        viewSyncQueued=false;
+        enhanceMetrics(module);
+        updateTopbar(module);
+        syncConnectionState(module);
+      });
+    }
+    const viewObserver=new MutationObserver(queueViewSync);
     viewObserver.observe(view,{childList:true,subtree:true});
     const statusObserver=new MutationObserver(function(){syncConnectionState(module);});
     statusObserver.observe(pageHead,{childList:true,subtree:true,attributes:true,attributeFilter:["class","data-state"]});
@@ -217,7 +245,13 @@
     document.querySelectorAll(".at-reason-list").forEach(enhanceReasonPicker);
   }
 
-  const observer=new MutationObserver(scan);
+  function queueScan(){
+    if(scanQueued)return;
+    scanQueued=true;
+    requestAnimationFrame(function(){scanQueued=false;scan();});
+  }
+
+  const observer=new MutationObserver(queueScan);
   function start(){scan();if(document.body)observer.observe(document.body,{childList:true,subtree:true});}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
 })();
