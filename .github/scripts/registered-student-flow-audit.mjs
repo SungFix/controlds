@@ -81,11 +81,18 @@ await page.fill('#computerCode','123456');
 const pickupConfirm=page.locator('#pickupForm button').filter({hasText:/Confirmar|Retirada|Confirmando/i}).last();
 if(!(await pickupConfirm.count())) throw new Error('Botão de confirmação da retirada não encontrado');
 await pickupConfirm.click();
-await waitDialogClosed('#pickupModal');
-calls=await page.evaluate(()=>window.__registeredFlowRpcCalls);
-const pickupCall=calls.find(call=>call.name==='ete_pickup_request_v3');
-if(!pickupCall||pickupCall.args.p_request_id!=='rq-flow'||pickupCall.args.p_code!=='123456') throw new Error('Retirada não usou RPC v3 sem PIN');
+await page.waitForTimeout(500);
+const pickupState=await page.evaluate(()=>({
+  open:document.querySelector('#pickupModal')?.open,
+  calls:window.__registeredFlowRpcCalls,
+  submitFlag:document.querySelector('#pickupForm')?.dataset.registeredFlowSubmit||'',
+  code:document.querySelector('#computerCode')?.value||''
+}));
+const pickupCall=pickupState.calls.find(call=>call.name==='ete_pickup_request_v3');
+if(!pickupCall) throw new Error('Retirada não chamou RPC v3. Estado: '+JSON.stringify(pickupState));
+if(pickupCall.args.p_request_id!=='rq-flow'||pickupCall.args.p_code!=='123456') throw new Error('Retirada enviou dados incorretos: '+JSON.stringify(pickupCall));
 if(Object.prototype.hasOwnProperty.call(pickupCall.args,'p_pin')) throw new Error('Retirada ainda envia PIN');
+if(pickupState.open) throw new Error('Retirada chamou RPC v3, mas modal permaneceu aberto. Estado: '+JSON.stringify(pickupState));
 
 if(pageErrors.length) throw new Error('Erros JavaScript: '+pageErrors.join(' | '));
 console.log('REGISTERED STUDENT FLOW AUDIT: PASS');
