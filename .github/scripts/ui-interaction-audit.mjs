@@ -44,21 +44,56 @@ async function confirmCustomAction(expectedTitle){
 }
 
 await page.click('[data-page="students"]');
-await page.click('#newStudentBtn2');
-if(!(await page.locator('#studentModal').evaluate(el=>el.open))) throw new Error('Modal de novo aluno não abriu');
-await page.fill('#newStudentName','Aluno Novo de Teste');
-await page.locator('#studentForm button[type="submit"]').click();
-await page.waitForTimeout(100);
-let calls=await page.evaluate(()=>window.__rpcCalls);
-if(!calls.some(x=>x.name==='ete_upsert_student'&&x.args.p_name==='Aluno Novo de Teste')) throw new Error('Cadastro de aluno não chamou RPC correta');
+if(await page.locator('#newStudentBtn2').isVisible()) throw new Error('Cadastro manual de aluno ainda está visível');
+if(!(await page.locator('#studentFilterButton').isVisible())) throw new Error('Botão de filtros de alunos não apareceu');
 
-await page.evaluate(()=>renderStudents());
+await page.evaluate(()=>{
+  students=Array.from({length:65},(_,i)=>normalizeStudent({
+    id:`st-list-${i}`,
+    name:`Aluno ${String(i+1).padStart(2,'0')}`,
+    className:i%3===0?'1°A':i%3===1?'2°B':'3°A',
+    course:i%5===0?'EDF':i%7===0?'GTU':'DS',
+    useCount:i%4,
+    lastUsed:i%6===0?new Date(Date.now()-i*60000).toISOString():''
+  }));
+  students[0]=normalizeStudent({id:'st-audit',name:'Aluno de Teste',className:'1°A',course:'DS',useCount:1,lastUsed:new Date().toISOString()});
+  renderStudents();
+});
+await page.waitForTimeout(180);
+let visibleStudents=await page.locator('#studentRows .student-card:visible').count();
+if(visibleStudents!==40) throw new Error(`Limite padrão de alunos deveria ser 40, recebeu ${visibleStudents}`);
+const hasInternalScroll=await page.locator('#studentRows').evaluate(el=>el.scrollHeight>el.clientHeight);
+if(!hasInternalScroll) throw new Error('Lista de alunos não ganhou rolagem interna');
+
+await page.click('#studentFilterButton');
+if(!(await page.locator('#studentFilterPopover').evaluate(el=>el.classList.contains('is-open')))) throw new Error('Painel de filtros não abriu');
+await page.locator('[data-student-filter="course"]').selectOption('DS');
+await page.locator('[data-student-filter="year"]').selectOption('1');
+await page.locator('[data-student-filter="room"]').selectOption('A');
+await page.locator('[data-student-filter="sort"]').selectOption('za');
+await page.locator('[data-student-filter="limit"]').selectOption('20');
+await page.waitForTimeout(160);
+visibleStudents=await page.locator('#studentRows .student-card:visible').count();
+if(visibleStudents<1||visibleStudents>20) throw new Error(`Filtros retornaram quantidade inválida: ${visibleStudents}`);
+const filteredLabels=await page.locator('#studentRows .student-card:visible .student-card-title small').allTextContents();
+if(filteredLabels.some(label=>!label.includes('1°A')||!label.includes('DS'))) throw new Error('Filtro combinado de turma/sala/curso não foi aplicado');
+const filteredNames=await page.locator('#studentRows .student-card:visible .student-card-title strong').allTextContents();
+const descending=[...filteredNames].sort((a,b)=>b.localeCompare(a,'pt-BR',{sensitivity:'base'}));
+if(filteredNames.join('|')!==descending.join('|')) throw new Error('Ordenação Z → A não foi aplicada');
+await page.click('#studentFilterReset');
+await page.waitForTimeout(100);
+
+await page.evaluate(()=>{
+  students=[normalizeStudent({id:'st-audit',name:'Aluno de Teste',className:'1°A',course:'DS',useCount:1,lastUsed:new Date().toISOString()})];
+  renderStudents();
+});
+await page.waitForTimeout(120);
 await page.click('[data-edit-student="st-audit"]:visible');
 if((await page.inputValue('#newStudentName'))!=='Aluno de Teste') throw new Error('Edição não carregou aluno');
 await page.fill('#newStudentName','Aluno Editado de Teste');
 await page.locator('#studentForm button[type="submit"]').click();
 await page.waitForTimeout(100);
-calls=await page.evaluate(()=>window.__rpcCalls);
+let calls=await page.evaluate(()=>window.__rpcCalls);
 if(!calls.some(x=>x.name==='ete_update_student'&&x.args.p_student_id==='st-audit')) throw new Error('Edição não chamou RPC correta');
 
 await page.evaluate(()=>renderStudents());
@@ -151,7 +186,7 @@ await page.evaluate(()=>{
 });
 const roleHidden=async sel=>await page.locator(sel).evaluate(el=>el.classList.contains('role-hidden'));
 if(await roleHidden('#newPermissionBtn')) throw new Error('Professor não vê Nova permissão');
-if(await roleHidden('#newStudentBtn2')) throw new Error('Professor não vê Novo aluno');
+if(await page.locator('#newStudentBtn2').isVisible()) throw new Error('Professor vê cadastro manual de aluno');
 if(await roleHidden('#clearHistoryButton')) throw new Error('Professor não vê Apagar histórico');
 const professorFns=await page.evaluate(()=>({create:canCreateRequest(),students:canManageStudents(),permission:canCreatePermission(),history:canClearHistory()}));
 if(!Object.values(professorFns).every(Boolean)) throw new Error('Professor não herdou permissões de gestão');
@@ -166,7 +201,7 @@ await page.evaluate(()=>{
 });
 const hidden=async sel=>await page.locator(sel).evaluate(el=>el.classList.contains('role-hidden'));
 if(!(await hidden('#newPermissionBtn'))) throw new Error('Monitor vê Nova permissão');
-if(!(await hidden('#newStudentBtn2'))) throw new Error('Monitor vê Novo aluno');
+if(await page.locator('#newStudentBtn2').isVisible()) throw new Error('Monitor vê cadastro manual de aluno');
 if(!(await hidden('#clearHistoryButton'))) throw new Error('Monitor vê Apagar histórico');
 await page.click('[data-page="requests"]');
 await page.evaluate(()=>renderRequests());
