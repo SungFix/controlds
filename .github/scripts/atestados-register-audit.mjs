@@ -31,6 +31,27 @@ await page.locator('.ete-atestados').waitFor({state:'visible'});
 await page.locator('[data-at-tab="new"]').click();
 await page.locator('#atForm').waitFor({state:'visible'});
 
+const dateInput=page.locator('#atDate');
+const dateTrigger=page.locator('.at-date-trigger');
+const datePopover=page.locator('.at-date-popover');
+await dateTrigger.waitFor({state:'visible'});
+const initialDate=await dateInput.inputValue();
+await dateTrigger.click();
+await datePopover.waitFor({state:'visible'});
+const initialMonth=await datePopover.locator('.at-date-month').textContent();
+await datePopover.locator('[data-at-date-next]').click();
+const nextMonth=await datePopover.locator('.at-date-month').textContent();
+if(initialMonth===nextMonth)throw new Error('Calendário não avançou para o próximo mês');
+await datePopover.locator('.at-date-day:not(.outside)').first().click();
+await datePopover.waitFor({state:'hidden'});
+const changedDate=await dateInput.inputValue();
+if(!changedDate||changedDate===initialDate)throw new Error('Calendário personalizado não atualizou a data');
+await dateTrigger.click();
+await datePopover.waitFor({state:'visible'});
+await datePopover.locator('[data-at-date-today]').click();
+await datePopover.waitFor({state:'hidden'});
+if((await dateInput.inputValue())!==initialDate)throw new Error('Botão Hoje não restaurou a data atual');
+
 const reasonTrigger=page.locator('.at-reason-trigger');
 const reasonList=page.locator('.at-reason-list');
 await reasonTrigger.waitFor({state:'visible'});
