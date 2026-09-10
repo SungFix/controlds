@@ -18,6 +18,12 @@
     computers: "Notebooks"
   };
 
+  function ensureNavigationContrast(){
+    let style=document.getElementById("controlNavigationContrastFix");
+    if(!style){style=document.createElement("style");style.id="controlNavigationContrastFix";document.head.appendChild(style);}
+    style.textContent='html[data-theme="dark"] .nav button[data-page]:not(.role-hidden),html:not([data-theme="light"]) .nav button[data-page]:not(.role-hidden){opacity:1!important;color:#eef2f5!important}html[data-theme="dark"] .nav button[data-page]:not(.role-hidden) .navicon,html:not([data-theme="light"]) .nav button[data-page]:not(.role-hidden) .navicon{opacity:1!important;color:#e1e7eb!important}';
+  }
+
   function ensureGroupPickerPolish(){
     let link=document.getElementById("controlGroupPickerPolishStyles");
     if(!link){link=document.createElement("link");link.id="controlGroupPickerPolishStyles";link.rel="stylesheet";document.head.appendChild(link);}
@@ -75,6 +81,7 @@
   }
 
   function applyNavigation(){
+    ensureNavigationContrast();
     ensureGroupPickerPolish();
     ensureStudentEditFix();
     applyLabels();
