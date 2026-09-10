@@ -4,7 +4,7 @@
   let requestSelectedStudentId="";
   let permissionSelectedStudentId="";
   let installed=false;
-  let submitPriorityInstalled=false;
+  let submitRouterInstalled=false;
 
   function qs(selector,root){return (root||document).querySelector(selector);}
   function currentStudents(){
@@ -124,6 +124,8 @@
         display:grid;
         gap:14px;
       }
+      #requestForm .simple-grid,
+      #permissionForm .simple-grid,
       #pickupForm .simple-grid{
         grid-template-columns:1fr!important;
       }
@@ -161,19 +163,136 @@
     wrapped.__registeredStudentFlow=true;
     v46PickupRpc=wrapped;
   }
-  function installSubmitPriority(){
-    if(submitPriorityInstalled) return;
-    submitPriorityInstalled=true;
+  function closeDialog(form,selector){
+    const dialogs=[];
+    const own=form?.closest?.("dialog");
+    const current=qs(selector);
+    if(own) dialogs.push(own);
+    if(current && current!==own) dialogs.push(current);
+    dialogs.forEach(dialog=>{
+      try{
+        if(dialog.open) dialog.close();
+        else dialog.removeAttribute("open");
+      }catch(_){dialog.removeAttribute("open");}
+    });
+  }
+  function setBusy(form,busy,label){
+    const button=form?.querySelector('button[type="submit"]');
+    if(!button) return;
+    if(busy){
+      if(!button.dataset.registeredFlowText) button.dataset.registeredFlowText=button.textContent||"Salvar";
+      button.disabled=true;
+      button.textContent=label;
+    }else{
+      button.disabled=false;
+      button.textContent=button.dataset.registeredFlowText||button.textContent;
+      delete button.dataset.registeredFlowText;
+    }
+  }
+  async function handleRequestSubmit(form){
+    try{
+      if(typeof canCreateRequest==="function" && !canCreateRequest()) throw new Error("forbidden");
+      const studentId=requestStudentId();
+      if(!studentId){notify("Selecione um aluno cadastrado.");qs("#studentPickerTrigger")?.focus();return;}
+      const student=currentStudents().find(item=>String(item?.id)===studentId);
+      if(!student){notify("Aluno não encontrado. Atualize a página e tente novamente.");return;}
+
+      const start=String(typeof formState!=="undefined"?formState.start:"");
+      const end=String(typeof formState!=="undefined"?formState.end:"");
+      const startMin=minutes(start),endMin=minutes(end);
+      const min=7*60+30,max=16*60+40;
+      if(!Number.isFinite(startMin)||!Number.isFinite(endMin)||startMin<min||endMin>max||endMin<=startMin){notify("Confira o horário de retirada e devolução.");return;}
+      const dateKey=String(qs("#date")?.value||"");
+      const reason=String(qs("#reason")?.value||"").trim();
+      if(!dateKey){notify("Informe a data do pedido.");return;}
+      if(!reason){notify("Informe o motivo do pedido.");qs("#reason")?.focus();return;}
+
+      setBusy(form,true,"Criando...");
+      await v46Rpc("ete_create_request_v3",{
+        p_student_id:studentId,
+        p_reason:reason,
+        p_start_time:start,
+        p_end_time:end,
+        p_date_key:dateKey
+      });
+      closeDialog(form,"#requestModal");
+      if(typeof resetRequestForm==="function") resetRequestForm(); else form.reset();
+      requestSelectedStudentId="";
+      notify("Pedido criado e salvo.");
+    }catch(err){
+      console.error(err);
+      notify(friendlyError(err));
+    }finally{
+      setBusy(form,false,"Criando...");
+    }
+  }
+  async function handlePermissionSubmit(form){
+    try{
+      if(typeof canCreatePermission==="function" && !canCreatePermission()) throw new Error("forbidden");
+      const studentId=findPermissionStudentId();
+      const interval=String(qs("#permissionInterval")?.value||"");
+      const reason=String(qs("#permissionReason")?.value||"").trim();
+      if(!studentId){notify("Selecione um aluno cadastrado.");qs("#permissionSavedStudentTrigger")?.focus();return;}
+      if(!["morning","lunch","afternoon"].includes(interval)){notify("Selecione um horário válido.");return;}
+      if(!reason){notify("Informe o motivo da autorização.");qs("#permissionReason")?.focus();return;}
+
+      setBusy(form,true,"Salvando...");
+      await v46Rpc("ete_create_permission_v2",{
+        p_student_id:studentId,
+        p_student:"",
+        p_class_name:"",
+        p_interval:interval,
+        p_reason:reason
+      });
+      closeDialog(form,"#permissionModal");
+      form.reset();
+      permissionSelectedStudentId="";
+      const name=qs("#permissionSavedStudentName");
+      const meta=qs("#permissionSavedStudentMeta");
+      if(name) name.textContent="Selecionar aluno";
+      if(meta) meta.textContent="Pesquise por nome ou turma";
+      if(typeof setIntervalPickerValue==="function") setIntervalPickerValue("permissionInterval","morning",false);
+      notify("Autorização registrada.");
+    }catch(err){
+      console.error(err);
+      notify(friendlyError(err));
+    }finally{
+      setBusy(form,false,"Salvando...");
+    }
+  }
+  async function handlePickupSubmit(form){
+    try{
+      if(typeof canPickup==="function" && !canPickup()) throw new Error("forbidden");
+      const requestId=String(form.dataset.id||"");
+      const code=String(qs("#computerCode")?.value||"").trim();
+      if(!requestId){notify("Pedido não encontrado.");return;}
+      if(!/^\d{6}$/.test(code)){notify("Digite um código de notebook com 6 dígitos.");qs("#computerCode")?.focus();return;}
+
+      setBusy(form,true,"Confirmando...");
+      await v46PickupRpc({p_request_id:requestId,p_code:code});
+      closeDialog(form,"#pickupModal");
+      form.reset();
+      notify("Retirada confirmada.");
+    }catch(err){
+      console.error(err);
+      notify(friendlyError(err));
+    }finally{
+      setBusy(form,false,"Confirmando...");
+    }
+  }
+  function installSubmitRouter(){
+    if(submitRouterInstalled) return;
+    submitRouterInstalled=true;
     window.addEventListener("submit",event=>{
       const form=event.target;
       if(!(form instanceof HTMLFormElement) || form.dataset.registeredFlowSubmit!=="1") return;
-      if(!["requestForm","permissionForm","pickupForm"].includes(form.id)) return;
-      const originalId=form.id;
-      const temporaryId=originalId+"RegisteredFlow";
-      form.id=temporaryId;
-      setTimeout(()=>{
-        if(form.id===temporaryId) form.id=originalId;
-      },0);
+      const id=form.id;
+      if(!["requestForm","permissionForm","pickupForm"].includes(id)) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      if(id==="requestForm") void handleRequestSubmit(form);
+      else if(id==="permissionForm") void handlePermissionSubmit(form);
+      else void handlePickupSubmit(form);
     },true);
   }
   function polishRequest(){
@@ -213,7 +332,6 @@
     if(form.dataset.registeredFlowSubmit!=="1"){
       form.dataset.registeredFlowSubmit="1";
       form.addEventListener("reset",()=>{requestSelectedStudentId="";});
-      form.addEventListener("submit",handleRequestSubmit,true);
     }
     return true;
   }
@@ -245,7 +363,6 @@
     if(form.dataset.registeredFlowSubmit!=="1"){
       form.dataset.registeredFlowSubmit="1";
       form.addEventListener("reset",()=>{permissionSelectedStudentId="";});
-      form.addEventListener("submit",handlePermissionSubmit,true);
     }
     return true;
   }
@@ -256,134 +373,13 @@
     fullWidthLabel("computerCode");
     const title=qs("#pickupModalTitle");
     if(title) title.textContent="Confirmar retirada";
-    if(form.dataset.registeredFlowSubmit!=="1"){
-      form.dataset.registeredFlowSubmit="1";
-      form.addEventListener("submit",handlePickupSubmit,true);
-    }
+    form.dataset.registeredFlowSubmit="1";
     return true;
-  }
-  function setBusy(form,busy,label){
-    const button=form?.querySelector('button[type="submit"]');
-    if(!button) return;
-    if(busy){
-      if(!button.dataset.registeredFlowText) button.dataset.registeredFlowText=button.textContent||"Salvar";
-      button.disabled=true;
-      button.textContent=label;
-    }else{
-      button.disabled=false;
-      button.textContent=button.dataset.registeredFlowText||button.textContent;
-      delete button.dataset.registeredFlowText;
-    }
-  }
-  async function handleRequestSubmit(event){
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    const form=event.currentTarget;
-    try{
-      if(typeof canCreateRequest==="function" && !canCreateRequest()) throw new Error("forbidden");
-      const studentId=requestStudentId();
-      if(!studentId){notify("Selecione um aluno cadastrado.");qs("#studentPickerTrigger")?.focus();return;}
-      const student=currentStudents().find(item=>String(item?.id)===studentId);
-      if(!student){notify("Aluno não encontrado. Atualize a página e tente novamente.");return;}
-
-      const start=String(typeof formState!=="undefined"?formState.start:"");
-      const end=String(typeof formState!=="undefined"?formState.end:"");
-      const startMin=minutes(start),endMin=minutes(end);
-      const min=7*60+30,max=16*60+40;
-      if(!Number.isFinite(startMin)||!Number.isFinite(endMin)||startMin<min||endMin>max||endMin<=startMin){notify("Confira o horário de retirada e devolução.");return;}
-      const dateKey=String(qs("#date")?.value||"");
-      const reason=String(qs("#reason")?.value||"").trim();
-      if(!dateKey){notify("Informe a data do pedido.");return;}
-      if(!reason){notify("Informe o motivo do pedido.");qs("#reason")?.focus();return;}
-
-      setBusy(form,true,"Criando...");
-      await v46Rpc("ete_create_request_v3",{
-        p_student_id:studentId,
-        p_reason:reason,
-        p_start_time:start,
-        p_end_time:end,
-        p_date_key:dateKey
-      });
-      if(typeof resetRequestForm==="function") resetRequestForm(); else form.reset();
-      try{qs("#requestModal")?.close();}catch(_){ }
-      notify("Pedido criado e salvo.");
-    }catch(err){
-      console.error(err);
-      notify(friendlyError(err));
-    }finally{
-      setBusy(form,false,"Criando...");
-    }
-  }
-  async function handlePermissionSubmit(event){
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    const form=event.currentTarget;
-    try{
-      if(typeof canCreatePermission==="function" && !canCreatePermission()) throw new Error("forbidden");
-      const studentId=findPermissionStudentId();
-      const manualName=String(qs("#permissionStudent")?.value||"").trim();
-      const manualClass=String(qs("#permissionClass")?.value||"").trim();
-      const interval=String(qs("#permissionInterval")?.value||"");
-      const reason=String(qs("#permissionReason")?.value||"").trim();
-      if(!studentId && (!manualName||!manualClass)){notify("Selecione um aluno cadastrado.");qs("#permissionSavedStudentTrigger")?.focus();return;}
-      if(!["morning","lunch","afternoon"].includes(interval)){notify("Selecione um horário válido.");return;}
-      if(!reason){notify("Informe o motivo da autorização.");qs("#permissionReason")?.focus();return;}
-
-      setBusy(form,true,"Salvando...");
-      if(studentId){
-        await v46Rpc("ete_create_permission_v2",{
-          p_student_id:studentId,
-          p_student:"",
-          p_class_name:"",
-          p_interval:interval,
-          p_reason:reason
-        });
-      }else{
-        await v46Rpc("ete_create_permission",{
-          p_student:manualName,
-          p_class_name:manualClass,
-          p_interval:interval,
-          p_reason:reason
-        });
-      }
-      form.reset();
-      if(typeof setIntervalPickerValue==="function") setIntervalPickerValue("permissionInterval","morning",false);
-      try{qs("#permissionModal")?.close();}catch(_){ }
-      notify("Autorização registrada.");
-    }catch(err){
-      console.error(err);
-      notify(friendlyError(err));
-    }finally{
-      setBusy(form,false,"Salvando...");
-    }
-  }
-  async function handlePickupSubmit(event){
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    const form=event.currentTarget;
-    try{
-      if(typeof canPickup==="function" && !canPickup()) throw new Error("forbidden");
-      const requestId=String(form.dataset.id||"");
-      const code=String(qs("#computerCode")?.value||"").trim();
-      if(!requestId){notify("Pedido não encontrado.");return;}
-      if(!/^\d{6}$/.test(code)){notify("Digite um código de notebook com 6 dígitos.");qs("#computerCode")?.focus();return;}
-
-      setBusy(form,true,"Confirmando...");
-      await v46PickupRpc({p_request_id:requestId,p_code:code});
-      form.reset();
-      try{qs("#pickupModal")?.close();}catch(_){ }
-      notify("Retirada confirmada.");
-    }catch(err){
-      console.error(err);
-      notify(friendlyError(err));
-    }finally{
-      setBusy(form,false,"Confirmando...");
-    }
   }
   function install(){
     installStyles();
     installPickupRpcV3();
-    installSubmitPriority();
+    installSubmitRouter();
     const requestReady=polishRequest();
     const pickupReady=polishPickup();
     const permissionReady=polishPermission();
