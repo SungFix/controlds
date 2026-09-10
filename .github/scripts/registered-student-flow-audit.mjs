@@ -28,7 +28,7 @@ await page.evaluate(()=>{
 
 await page.evaluate(()=>window.ETEPortal?.openSystem('control-ds'));
 await page.waitForFunction(()=>!document.body.classList.contains('portal-open'));
-await page.waitForSelector('#registeredStudentFlowStyles');
+await page.waitForSelector('#registeredStudentFlowStyles',{state:'attached'});
 
 const visuallyRemoved=async selector=>page.locator(selector).evaluate(el=>{
   const label=el.closest('label');
