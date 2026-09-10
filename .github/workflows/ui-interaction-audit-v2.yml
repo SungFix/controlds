@@ -9,6 +9,7 @@ on:
       - "*.css"
       - ".github/scripts/ui-interaction-audit.mjs"
       - ".github/scripts/atestados-register-audit.mjs"
+      - ".github/scripts/registered-student-flow-audit.mjs"
       - ".github/workflows/ui-interaction-audit-v2.yml"
   pull_request:
     branches: [main]
@@ -18,6 +19,7 @@ on:
       - "*.css"
       - ".github/scripts/ui-interaction-audit.mjs"
       - ".github/scripts/atestados-register-audit.mjs"
+      - ".github/scripts/registered-student-flow-audit.mjs"
       - ".github/workflows/ui-interaction-audit-v2.yml"
 
 permissions:
@@ -38,6 +40,7 @@ jobs:
         run: |
           node --check .github/scripts/ui-interaction-audit.mjs
           node --check .github/scripts/atestados-register-audit.mjs
+          node --check .github/scripts/registered-student-flow-audit.mjs
 
       - name: Install Playwright
         run: |
@@ -55,3 +58,4 @@ jobs:
           sleep 2
           node .github/scripts/ui-interaction-audit.mjs
           node .github/scripts/atestados-register-audit.mjs
+          node .github/scripts/registered-student-flow-audit.mjs
