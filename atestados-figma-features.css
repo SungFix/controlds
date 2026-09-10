@@ -5,10 +5,10 @@
 .ete-atestados .at-choice-card,.ete-atestados .at-reason-option{display:flex;align-items:flex-start;gap:10px;min-width:0;padding:11px 12px;border:1px solid var(--at-border);border-radius:10px;background:var(--at-panel2);cursor:pointer;transition:border-color .14s ease,transform .14s ease,background .14s ease}
 .ete-atestados .at-choice-card:hover,.ete-atestados .at-reason-option:hover{transform:translateY(-1px);border-color:#536675}
 .ete-atestados .at-choice-card:has(input:checked),.ete-atestados .at-reason-option:has(input:checked){border-color:#6f8da3;background:#15212a}
-.ete-atestados .at-choice-card input,.ete-atestados .at-reason-option input{margin:2px 0 0;flex:0 0 auto;accent-color:#86a8c8}
-.ete-atestados .at-choice-card span,.ete-atestados .at-reason-option span{min-width:0}
-.ete-atestados .at-choice-card strong,.ete-atestados .at-reason-option strong{display:block;color:var(--at-text);font-size:9.4px;line-height:1.35}
-.ete-atestados .at-choice-card small,.ete-atestados .at-reason-option small{display:block;margin-top:3px;color:var(--at-muted);font-size:8px;line-height:1.4}
+.ete-atestados .at-choice-card input,.ete-atestados .at-reason-option input{width:16px!important;height:16px!important;min-width:16px!important;min-height:16px!important;max-width:16px!important;margin:2px 0 0!important;padding:0!important;flex:0 0 16px!important;border:0!important;box-shadow:none!important;background:transparent!important;accent-color:#86a8c8}
+.ete-atestados .at-choice-card span,.ete-atestados .at-reason-option span{min-width:0;flex:1 1 auto}
+.ete-atestados .at-choice-card strong,.ete-atestados .at-reason-option strong{display:block;color:var(--at-text);font-size:9.4px;line-height:1.35;overflow-wrap:normal;word-break:normal}
+.ete-atestados .at-choice-card small,.ete-atestados .at-reason-option small{display:block;margin-top:3px;color:var(--at-muted);font-size:8px;line-height:1.4;overflow-wrap:normal;word-break:normal}
 .ete-atestados .at-time-grid{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:12px;border:1px solid var(--at-border);border-radius:11px;background:var(--at-panel2)}
 .ete-atestados .at-time-grid[hidden],.ete-atestados .at-dependent-field[hidden]{display:none!important}
 .ete-atestados .at-reason-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
