@@ -178,7 +178,7 @@
   }
   function setBusy(form,busy,label){
     const button=form?.querySelector('button[type="submit"]');
-    if(!button) return;
+    if(!button)return;
     if(busy){
       if(!button.dataset.registeredFlowText) button.dataset.registeredFlowText=button.textContent||"Salvar";
       button.disabled=true;
@@ -380,8 +380,7 @@
   function polishPickup(){
     const form=qs("#pickupForm");
     if(!form) return false;
-    const pin=hideLegacyInput("pickupPin");
-    if(pin) pin.disabled=true;
+    hideLegacyInput("pickupPin");
     fullWidthLabel("computerCode");
     const title=qs("#pickupModalTitle");
     if(title) title.textContent="Confirmar retirada";
