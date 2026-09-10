@@ -52,11 +52,32 @@
     return {total:returns.length,onTime,late,score,level,tone};
   }
 
+  function registrationOf(student){
+    return String(student?.registrationNumber||student?.registration_number||"").trim();
+  }
+
   function visibleStudents(){
     const q=(document.querySelector("#studentSearch")?.value||"").toLocaleLowerCase("pt-BR");
     return [...(Array.isArray(students)?students:[])]
-      .filter(student=>(student.name+" "+student.className+" "+student.course).toLocaleLowerCase("pt-BR").includes(q))
+      .filter(student=>(student.name+" "+student.className+" "+student.course+" "+registrationOf(student)).toLocaleLowerCase("pt-BR").includes(q))
       .sort((a,b)=>a.name.localeCompare(b.name,"pt-BR"));
+  }
+
+  function decorateStudentDetails(card,student){
+    const metas=card.querySelectorAll(".student-card-body .student-meta");
+    if(metas.length<2) return;
+
+    const groupLabel=metas[0].querySelector("span");
+    const groupValue=metas[0].querySelector("strong");
+    const groupText=[student?.className,student?.course].filter(Boolean).join(" · ");
+    if(groupLabel && groupLabel.textContent!=="Turma / Curso") groupLabel.textContent="Turma / Curso";
+    if(groupValue && groupValue.textContent!==groupText) groupValue.textContent=groupText;
+
+    const registrationLabel=metas[1].querySelector("span");
+    const registrationValue=metas[1].querySelector("strong");
+    const registration=registrationOf(student)||"—";
+    if(registrationLabel && registrationLabel.textContent!=="Matrícula") registrationLabel.textContent="Matrícula";
+    if(registrationValue && registrationValue.textContent!==registration) registrationValue.textContent=registration;
   }
 
   function decorate(){
@@ -69,6 +90,7 @@
       const head=card.querySelector(".student-card-head");
       if(!student||!head) return;
       card.dataset.studentReputationId=String(student.id||"");
+      decorateStudentDetails(card,student);
       head.querySelector(".student-reputation")?.remove();
       const stat=statsForStudent(student.id);
       const badge=document.createElement("div");
@@ -86,7 +108,20 @@
     requestAnimationFrame(decorate);
   }
 
+  function installRegistrationMapping(){
+    if(typeof v46MapStudent!=="function" || v46MapStudent.__registrationNumberWrapped) return;
+    const base=v46MapStudent;
+    const wrapped=function(row){
+      const student=base(row);
+      if(student && typeof student==="object") student.registrationNumber=String(row?.registration_number||"").trim();
+      return student;
+    };
+    wrapped.__registrationNumberWrapped=true;
+    v46MapStudent=wrapped;
+  }
+
   function install(){
+    installRegistrationMapping();
     if(typeof renderStudents==="function" && !renderStudents.__reputationWrapped){
       const base=renderStudents;
       const wrapped=function(){ const result=base.apply(this,arguments); queue(); return result; };
