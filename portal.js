@@ -17,7 +17,7 @@
     asset("link","eteAtestadosMinimalStyles",{rel:"stylesheet",href:"atestados-minimal.css?v=2"});
     asset("link","eteAtestadosFigmaStyles",{rel:"stylesheet",href:"atestados-figma-features.css?v=5"});
     asset("link","eteAtestadosTimePickerStyles",{rel:"stylesheet",href:"atestados-time-picker.css?v=2"});
-    asset("link","eteAtestadosDatePickerStyles",{rel:"stylesheet",href:"atestados-date-picker.css?v=1"});
+    asset("link","eteAtestadosDatePickerStyles",{rel:"stylesheet",href:"atestados-date-picker.css?v=2"});
     asset("script","eteAtestadosRoomScript",{src:"atestados-room-picker.js?v=9",defer:true});
     asset("script","eteAtestadosTimePickerScript",{src:"atestados-time-picker.js?v=3",defer:true});
     asset("script","eteAtestadosDatePickerScript",{src:"atestados-date-picker.js?v=1",defer:true});
