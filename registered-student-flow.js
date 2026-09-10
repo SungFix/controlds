@@ -380,11 +380,21 @@
   function polishPickup(){
     const form=qs("#pickupForm");
     if(!form) return false;
-    hideLegacyInput("pickupPin");
+    const pin=hideLegacyInput("pickupPin");
+    if(pin) pin.disabled=true;
     fullWidthLabel("computerCode");
     const title=qs("#pickupModalTitle");
     if(title) title.textContent="Confirmar retirada";
     form.dataset.registeredFlowSubmit="1";
+    const submit=form.querySelector('button[type="submit"]');
+    if(submit && submit.dataset.registeredFlowClick!=="1"){
+      submit.dataset.registeredFlowClick="1";
+      submit.addEventListener("click",event=>{
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        void handlePickupSubmit(form);
+      },true);
+    }
     return true;
   }
   function install(){
