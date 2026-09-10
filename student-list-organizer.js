@@ -198,7 +198,7 @@
     const wrap=document.createElement("div");
     wrap.className="student-filter-wrap";
     wrap.innerHTML=`
-      <button type="button" class="student-filter-button" id="studentFilterButton" aria-expanded="false" aria-controls="studentFilterPopover">
+      <button type="button" class="student-filter-button" id="studentFilterButton" aria-label="Abrir filtros de alunos" title="Filtros de alunos" aria-expanded="false" aria-controls="studentFilterPopover">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
         <span class="student-filter-label">Filtros</span>
         <span class="student-filter-badge" hidden>0</span>
