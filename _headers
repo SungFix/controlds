@@ -18,6 +18,18 @@
 /config.js
   Cache-Control: no-store, max-age=0
 
+/portal.js
+  Cache-Control: no-store, max-age=0
+
+/atestados.js
+  Cache-Control: no-store, max-age=0
+
+/atestados-room-picker.js
+  Cache-Control: no-store, max-age=0
+
+/atestados-figma-features.css
+  Cache-Control: no-store, max-age=0
+
 /manifest.webmanifest
   Cache-Control: no-cache, max-age=0, must-revalidate
 
