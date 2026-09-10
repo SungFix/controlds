@@ -109,3 +109,7 @@ html[data-theme="light"] #page-requests .request-search-wrap input::placeholder{
   .at-control-main .at-page-head{align-items:flex-start!important}
   .at-control-main .at-table{min-width:640px!important}
 }
+
+/* Contraste final: textos pequenos e navegação em tema escuro */
+html:not([data-theme="light"]) :is(.brand small,.section-label,#sideSyncText){color:#9da8b0!important}
+html:not([data-theme="light"]) button[data-page="students"]{color:#fff!important}
