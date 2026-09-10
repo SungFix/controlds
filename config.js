@@ -133,6 +133,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlMobileTextareaExpandStyles", "mobile-textarea-expand.css?v=2");
     ensureStylesheet("controlPortalStyles", "portal.css?v=2");
     ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=3");
+    ensureStylesheet("controlAtestadosImageUploadStyles", "atestados-image-upload.css?v=1");
 
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
@@ -155,9 +156,10 @@ window.ETE_CONFIG = {
     ensureScript("controlHistoryFilterPolishScript", "history-filter-polish.js?v=1");
     ensureScript("controlMobileLogoutIconScript", "mobile-logout-icon.js?v=2");
     ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=3");
-    ensureScript("controlPortalScript", "portal.js?v=12");
+    ensureScript("controlPortalScript", "portal.js?v=13");
     ensureScript("controlRelationalFrontendV2Script", "relational-frontend-v2.js?v=1");
     ensureScript("controlRegisteredStudentFlowScript", "registered-student-flow.js?v=6");
+    ensureScript("controlAtestadosImageUploadScript", "atestados-image-upload.js?v=1");
   }
 
   function updateButton(button){
