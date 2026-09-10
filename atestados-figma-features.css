@@ -11,9 +11,14 @@
 .ete-atestados .at-choice-card small,.ete-atestados .at-reason-option small{display:block;margin-top:3px;color:var(--at-muted);font-size:8px;line-height:1.4;overflow-wrap:normal;word-break:normal}
 .ete-atestados .at-time-grid{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:12px;border:1px solid var(--at-border);border-radius:11px;background:var(--at-panel2)}
 .ete-atestados .at-time-grid[hidden],.ete-atestados .at-dependent-field[hidden]{display:none!important}
-.ete-atestados .at-reason-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.ete-atestados .at-reason-option:last-child{grid-column:1/-1}
-.ete-atestados .at-field-help{display:block;color:var(--at-muted);font-size:8px;line-height:1.45}
+.ete-atestados .at-reason-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--at-border);border-radius:11px;overflow:hidden;background:var(--at-panel2)}
+.ete-atestados .at-reason-option{align-items:center;min-height:44px!important;padding:10px 12px;border:0!important;border-bottom:1px solid var(--at-border)!important;border-radius:0!important;background:transparent;transform:none!important}
+.ete-atestados .at-reason-option:last-child{grid-column:auto;border-bottom:0!important}
+.ete-atestados .at-reason-option:hover{background:rgba(127,165,200,.07);transform:none!important}
+.ete-atestados .at-reason-option:has(input:checked){border-color:var(--at-border)!important;background:#15212a}
+.ete-atestados .at-reason-option strong{font-size:9.7px;line-height:1.35}
+.ete-atestados .at-reason-option small{display:none}
+.ete-atestados .at-field-help{display:block;margin-top:6px;color:var(--at-muted);font-size:8px;line-height:1.45}
 .ete-atestados .at-report-filterbar{display:grid;grid-template-columns:minmax(220px,1fr) 190px;gap:8px;padding:11px 13px;border-bottom:1px solid var(--at-border);background:var(--at-panel2)}
 .ete-atestados .at-report-metrics-clean{padding:12px 13px}
 .ete-atestados .at-report-grid-clean{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 13px 13px}
@@ -28,14 +33,16 @@
 .ete-atestados .at-class-chart-track span{display:block;height:100%;border-radius:inherit;background:#7fa5c8}
 .ete-atestados .at-class-chart-row b{text-align:right;color:var(--at-text);font-size:9px}
 html.theme-light .ete-atestados .at-choice-card:has(input:checked),html.theme-light .ete-atestados .at-reason-option:has(input:checked){background:#edf4f8}
+html.theme-light .ete-atestados .at-reason-option:hover{background:#f3f7fa}
 html.theme-light .ete-atestados .at-class-chart-track{background:#dfe6eb}
 @media (max-width:1450px){
   .ete-atestados .at-form-layout{grid-template-columns:1fr}
   .ete-atestados .at-form-intro{display:none}
   .ete-atestados .at-form-card{width:100%;min-width:0}
   .ete-atestados .at-form>.at-field:has(#atDate),.ete-atestados .at-form>.at-field:has(.at-choice-grid){grid-column:1/-1}
-  .ete-atestados .at-choice-card,.ete-atestados .at-reason-option{min-height:58px}
+  .ete-atestados .at-choice-card{min-height:58px}
+  .ete-atestados .at-reason-option{min-height:44px!important}
 }
 @media (max-width:900px){.ete-atestados .at-report-grid-clean{grid-template-columns:1fr}.ete-atestados .at-form-layout{grid-template-columns:1fr}.ete-atestados .at-form-intro{display:none}.ete-atestados .at-form{grid-template-columns:1fr}.ete-atestados .at-field.full,.ete-atestados .at-form-actions,.ete-atestados .at-form>.at-field:has(#atDate),.ete-atestados .at-form>.at-field:has(.at-choice-grid){grid-column:1}}
-@media (max-width:700px){.ete-atestados .at-choice-grid,.ete-atestados .at-reason-list,.ete-atestados .at-time-grid,.ete-atestados .at-report-filterbar{grid-template-columns:1fr}.ete-atestados .at-reason-option:last-child{grid-column:auto}.ete-atestados .at-report-metrics-clean{grid-template-columns:repeat(2,minmax(0,1fr))}.ete-atestados .at-class-chart-row{grid-template-columns:minmax(0,1fr) 70px 28px}.ete-atestados .at-report-grid-clean{padding-left:10px;padding-right:10px}.ete-atestados .at-report-table-card{margin-left:10px;margin-right:10px}}
-@media (max-width:430px){.ete-atestados .at-report-metrics-clean{grid-template-columns:1fr 1fr}.ete-atestados .at-choice-card,.ete-atestados .at-reason-option{padding:10px}.ete-atestados .at-class-chart-row{grid-template-columns:1fr 56px 24px;gap:7px}}
+@media (max-width:700px){.ete-atestados .at-choice-grid,.ete-atestados .at-time-grid,.ete-atestados .at-report-filterbar{grid-template-columns:1fr}.ete-atestados .at-report-metrics-clean{grid-template-columns:repeat(2,minmax(0,1fr))}.ete-atestados .at-class-chart-row{grid-template-columns:minmax(0,1fr) 70px 28px}.ete-atestados .at-report-grid-clean{padding-left:10px;padding-right:10px}.ete-atestados .at-report-table-card{margin-left:10px;margin-right:10px}}
+@media (max-width:430px){.ete-atestados .at-report-metrics-clean{grid-template-columns:1fr 1fr}.ete-atestados .at-choice-card{padding:10px}.ete-atestados .at-reason-option{padding:10px 11px}.ete-atestados .at-class-chart-row{grid-template-columns:1fr 56px 24px;gap:7px}}
