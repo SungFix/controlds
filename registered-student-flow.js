@@ -4,6 +4,7 @@
   let requestSelectedStudentId="";
   let permissionSelectedStudentId="";
   let installed=false;
+  let submitPriorityInstalled=false;
 
   function qs(selector,root){return (root||document).querySelector(selector);}
   function currentStudents(){
@@ -159,6 +160,21 @@
     };
     wrapped.__registeredStudentFlow=true;
     v46PickupRpc=wrapped;
+  }
+  function installSubmitPriority(){
+    if(submitPriorityInstalled) return;
+    submitPriorityInstalled=true;
+    window.addEventListener("submit",event=>{
+      const form=event.target;
+      if(!(form instanceof HTMLFormElement) || form.dataset.registeredFlowSubmit!=="1") return;
+      if(!["requestForm","permissionForm","pickupForm"].includes(form.id)) return;
+      const originalId=form.id;
+      const temporaryId=originalId+"RegisteredFlow";
+      form.id=temporaryId;
+      queueMicrotask(()=>{
+        if(form.id===temporaryId) form.id=originalId;
+      });
+    },true);
   }
   function polishRequest(){
     const form=qs("#requestForm");
@@ -367,6 +383,7 @@
   function install(){
     installStyles();
     installPickupRpcV3();
+    installSubmitPriority();
     const requestReady=polishRequest();
     const pickupReady=polishPickup();
     const permissionReady=polishPermission();
