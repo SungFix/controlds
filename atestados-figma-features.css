@@ -1,4 +1,5 @@
 /* Atestados — feedback do professor · fase 1 */
+.ete-atestados .at-form-note{display:none!important}
 .ete-atestados .at-period-badge{display:inline-flex;align-items:center;min-height:23px;padding:0 8px;border:1px solid var(--at-border);border-radius:999px;background:var(--at-panel2);color:var(--at-text);font-size:8px;font-weight:850;white-space:nowrap}
 .ete-atestados .at-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .ete-atestados .at-choice-card,.ete-atestados .at-reason-option{display:flex;align-items:flex-start;gap:10px;min-width:0;padding:11px 12px;border:1px solid var(--at-border);border-radius:10px;background:var(--at-panel2);cursor:pointer;transition:border-color .14s ease,transform .14s ease,background .14s ease}
