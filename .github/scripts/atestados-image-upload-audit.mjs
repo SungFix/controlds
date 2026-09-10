@@ -40,7 +40,10 @@ if(!accept?.includes('image/jpeg')||!accept.includes('image/png'))throw new Erro
 await page.locator('.at-student-trigger').click();
 await page.fill('.at-student-search','Aluno Imagem');
 await page.locator('[data-at-student-id="st-image-audit"]').click();
+await page.locator('.at-reason-trigger').click();
+await page.locator('.at-reason-list').waitFor({state:'visible'});
 await page.locator('input[name="atReason"][value="atestado_medico"]').check();
+await page.locator('.at-reason-trigger').click();
 
 await input.setInputFiles({name:'atestado-teste.jpg',mimeType:'image/jpeg',buffer:Buffer.from([255,216,255,217])});
 await page.locator('.at-image-preview').waitFor({state:'visible'});
