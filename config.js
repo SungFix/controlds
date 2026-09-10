@@ -154,6 +154,7 @@ window.ETE_CONFIG = {
     ensureScript("controlMobileLogoutIconScript", "mobile-logout-icon.js?v=2");
     ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=3");
     ensureScript("controlPortalScript", "portal.js?v=2");
+    ensureScript("controlRelationalFrontendV2Script", "relational-frontend-v2.js?v=1");
   }
 
   function updateButton(button){
