@@ -237,7 +237,6 @@
     search.addEventListener("input",()=>requestAnimationFrame(queueApply));
     document.addEventListener("click",closePopover);
     document.addEventListener("keydown",event=>{if(event.key==="Escape")closePopover()});
-    rows.addEventListener("scroll",()=>updateStatus(rows.querySelectorAll(".student-card:not([hidden])").length,sortItems(buildMappedCards().filter(({student})=>isMatch(student))).length,Array.isArray(students)?students.length:0),{passive:true});
 
     mounted=true;
   }
