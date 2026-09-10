@@ -1,11 +1,37 @@
 /* Control Ds — reputação dos alunos, visual discreto */
 #page-students .student-card-head{
-  flex-wrap:wrap;
+  flex-wrap:nowrap;
+  align-items:center;
+  min-height:84px;
+}
+
+#page-students .student-card-title{
+  flex:1 1 auto;
+  min-width:0;
+}
+
+#page-students .student-card-title strong{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  line-clamp:2;
+  min-height:2.5em;
+  line-height:1.25;
+  overflow:hidden;
+  overflow-wrap:anywhere;
+}
+
+#page-students .student-card-title small{
+  display:block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
 #page-students .student-reputation{
   margin-left:auto;
   min-width:148px;
+  flex:0 0 148px;
   padding:4px 0 4px 10px;
   display:flex;
   align-items:flex-start;
@@ -71,11 +97,17 @@ html[data-theme="light"] #page-students .student-reputation small{
 
 @media(max-width:720px){
   #page-students .student-card-head{
+    flex-wrap:wrap;
     align-items:flex-start;
+    min-height:0;
+  }
+  #page-students .student-card-title{
+    flex:1 1 calc(100% - 60px);
   }
   #page-students .student-reputation{
     width:100%;
     min-width:0;
+    flex:1 0 100%;
     margin-left:0;
     margin-top:4px;
     padding:8px 0 0;
