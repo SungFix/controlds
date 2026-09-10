@@ -17,7 +17,7 @@
     asset("link","eteAtestadosMinimalStyles",{rel:"stylesheet",href:"atestados-minimal.css?v=2"});
     asset("link","eteAtestadosFigmaStyles",{rel:"stylesheet",href:"atestados-figma-features.css?v=5"});
     asset("link","eteAtestadosTimePickerStyles",{rel:"stylesheet",href:"atestados-time-picker.css?v=2"});
-    asset("script","eteAtestadosRoomScript",{src:"atestados-room-picker.js?v=8",defer:true});
+    asset("script","eteAtestadosRoomScript",{src:"atestados-room-picker.js?v=9",defer:true});
     asset("script","eteAtestadosTimePickerScript",{src:"atestados-time-picker.js?v=3",defer:true});
     if(window.ETEAtestados){callback?.();return;}
     let script=document.getElementById("eteAtestadosScript");if(!script){script=document.createElement("script");script.id="eteAtestadosScript";script.src="atestados.js?v=8";script.defer=true;script.addEventListener("load",function(){callback?.();},{once:true});document.head.appendChild(script);return;}script.addEventListener("load",function(){callback?.();},{once:true});
