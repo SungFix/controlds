@@ -50,8 +50,13 @@
     input.required=false;
     input.removeAttribute("minlength");
     input.removeAttribute("maxlength");
+    input.tabIndex=-1;
+    input.setAttribute("aria-hidden","true");
     const label=input.closest("label");
-    if(label) label.classList.add("registered-flow-hidden");
+    if(label){
+      label.classList.add("registered-flow-legacy-field");
+      label.setAttribute("aria-hidden","true");
+    }
     return input;
   }
   function fullWidthLabel(id){
@@ -64,6 +69,30 @@
     style.id="registeredStudentFlowStyles";
     style.textContent=`
       .registered-flow-hidden{display:none!important}
+      .registered-flow-legacy-field{
+        position:absolute!important;
+        width:1px!important;
+        height:1px!important;
+        min-width:1px!important;
+        min-height:1px!important;
+        margin:0!important;
+        padding:0!important;
+        border:0!important;
+        opacity:0!important;
+        overflow:hidden!important;
+        pointer-events:none!important;
+        z-index:-1!important;
+      }
+      .registered-flow-legacy-field input,
+      .registered-flow-legacy-field .group-picker{
+        width:1px!important;
+        height:1px!important;
+        min-width:1px!important;
+        min-height:1px!important;
+        margin:0!important;
+        padding:0!important;
+        border:0!important;
+      }
       .registered-flow-full{grid-column:1/-1!important;width:100%!important}
       #requestForm .saved-student-box.registered-flow-official,
       #permissionForm .saved-student-box.registered-flow-official{
@@ -118,13 +147,30 @@
       trigger.title="Selecionar aluno da listagem oficial";
     }
   }
+  function installPickupRpcV3(){
+    if(typeof v46PickupRpc!=="function" || v46PickupRpc.__registeredStudentFlow) return;
+    const wrapped=async function(args={}){
+      const result=await v46Rpc("ete_pickup_request_v3",{
+        p_request_id:String(args.p_request_id||""),
+        p_code:String(args.p_code||"")
+      });
+      if(result && result.ok===false) throw new Error(String(result.error||"pickup_failed"));
+      return result?.request||result;
+    };
+    wrapped.__registeredStudentFlow=true;
+    v46PickupRpc=wrapped;
+  }
   function polishRequest(){
     const form=qs("#requestForm");
     if(!form) return false;
 
     hideLegacyInput("student");
     hideLegacyInput("studentPin");
-    qs("#studentGroupPicker")?.closest("label")?.classList.add("registered-flow-hidden");
+    const groupLabel=qs("#studentGroupPicker")?.closest("label");
+    if(groupLabel){
+      groupLabel.classList.add("registered-flow-legacy-field");
+      groupLabel.setAttribute("aria-hidden","true");
+    }
     fullWidthLabel("date");
 
     const box=qs("#studentPicker")?.closest(".saved-student-box");
@@ -259,20 +305,31 @@
     try{
       if(typeof canCreatePermission==="function" && !canCreatePermission()) throw new Error("forbidden");
       const studentId=findPermissionStudentId();
-      if(!studentId){notify("Selecione um aluno cadastrado.");qs("#permissionSavedStudentTrigger")?.focus();return;}
+      const manualName=String(qs("#permissionStudent")?.value||"").trim();
+      const manualClass=String(qs("#permissionClass")?.value||"").trim();
       const interval=String(qs("#permissionInterval")?.value||"");
       const reason=String(qs("#permissionReason")?.value||"").trim();
+      if(!studentId && (!manualName||!manualClass)){notify("Selecione um aluno cadastrado.");qs("#permissionSavedStudentTrigger")?.focus();return;}
       if(!["morning","lunch","afternoon"].includes(interval)){notify("Selecione um horário válido.");return;}
       if(!reason){notify("Informe o motivo da autorização.");qs("#permissionReason")?.focus();return;}
 
       setBusy(form,true,"Salvando...");
-      await v46Rpc("ete_create_permission_v2",{
-        p_student_id:studentId,
-        p_student:"",
-        p_class_name:"",
-        p_interval:interval,
-        p_reason:reason
-      });
+      if(studentId){
+        await v46Rpc("ete_create_permission_v2",{
+          p_student_id:studentId,
+          p_student:"",
+          p_class_name:"",
+          p_interval:interval,
+          p_reason:reason
+        });
+      }else{
+        await v46Rpc("ete_create_permission",{
+          p_student:manualName,
+          p_class_name:manualClass,
+          p_interval:interval,
+          p_reason:reason
+        });
+      }
       form.reset();
       if(typeof setIntervalPickerValue==="function") setIntervalPickerValue("permissionInterval","morning",false);
       try{qs("#permissionModal")?.close();}catch(_){ }
@@ -296,8 +353,7 @@
       if(!/^\d{6}$/.test(code)){notify("Digite um código de notebook com 6 dígitos.");qs("#computerCode")?.focus();return;}
 
       setBusy(form,true,"Confirmando...");
-      const result=await v46Rpc("ete_pickup_request_v3",{p_request_id:requestId,p_code:code});
-      if(result && result.ok===false) throw new Error(String(result.error||"pickup_failed"));
+      await v46PickupRpc({p_request_id:requestId,p_code:code});
       form.reset();
       try{qs("#pickupModal")?.close();}catch(_){ }
       notify("Retirada confirmada.");
@@ -310,6 +366,7 @@
   }
   function install(){
     installStyles();
+    installPickupRpcV3();
     const requestReady=polishRequest();
     const pickupReady=polishPickup();
     const permissionReady=polishPermission();
