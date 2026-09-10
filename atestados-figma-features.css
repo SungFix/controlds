@@ -29,6 +29,13 @@
 .ete-atestados .at-class-chart-row b{text-align:right;color:var(--at-text);font-size:9px}
 html.theme-light .ete-atestados .at-choice-card:has(input:checked),html.theme-light .ete-atestados .at-reason-option:has(input:checked){background:#edf4f8}
 html.theme-light .ete-atestados .at-class-chart-track{background:#dfe6eb}
-@media (max-width:900px){.ete-atestados .at-report-grid-clean{grid-template-columns:1fr}.ete-atestados .at-form-layout{grid-template-columns:1fr}.ete-atestados .at-form-intro{display:none}}
+@media (max-width:1450px){
+  .ete-atestados .at-form-layout{grid-template-columns:1fr}
+  .ete-atestados .at-form-intro{display:none}
+  .ete-atestados .at-form-card{width:100%;min-width:0}
+  .ete-atestados .at-form>.at-field:has(#atDate),.ete-atestados .at-form>.at-field:has(.at-choice-grid){grid-column:1/-1}
+  .ete-atestados .at-choice-card,.ete-atestados .at-reason-option{min-height:58px}
+}
+@media (max-width:900px){.ete-atestados .at-report-grid-clean{grid-template-columns:1fr}.ete-atestados .at-form-layout{grid-template-columns:1fr}.ete-atestados .at-form-intro{display:none}.ete-atestados .at-form{grid-template-columns:1fr}.ete-atestados .at-field.full,.ete-atestados .at-form-actions,.ete-atestados .at-form>.at-field:has(#atDate),.ete-atestados .at-form>.at-field:has(.at-choice-grid){grid-column:1}}
 @media (max-width:700px){.ete-atestados .at-choice-grid,.ete-atestados .at-reason-list,.ete-atestados .at-time-grid,.ete-atestados .at-report-filterbar{grid-template-columns:1fr}.ete-atestados .at-reason-option:last-child{grid-column:auto}.ete-atestados .at-report-metrics-clean{grid-template-columns:repeat(2,minmax(0,1fr))}.ete-atestados .at-class-chart-row{grid-template-columns:minmax(0,1fr) 70px 28px}.ete-atestados .at-report-grid-clean{padding-left:10px;padding-right:10px}.ete-atestados .at-report-table-card{margin-left:10px;margin-right:10px}}
 @media (max-width:430px){.ete-atestados .at-report-metrics-clean{grid-template-columns:1fr 1fr}.ete-atestados .at-choice-card,.ete-atestados .at-reason-option{padding:10px}.ete-atestados .at-class-chart-row{grid-template-columns:1fr 56px 24px;gap:7px}}
