@@ -61,9 +61,11 @@
 
   function decorate(){
     queued=false;
-    const list=visibleStudents();
+    const fallback=visibleStudents();
+    const byId=new Map((Array.isArray(students)?students:[]).map(student=>[String(student.id||""),student]));
     document.querySelectorAll("#studentRows .student-card").forEach((card,index)=>{
-      const student=list[index];
+      const mappedId=String(card.dataset.studentId||card.dataset.studentReputationId||"");
+      const student=(mappedId&&byId.get(mappedId))||fallback[index];
       const head=card.querySelector(".student-card-head");
       if(!student||!head) return;
       card.dataset.studentReputationId=String(student.id||"");
@@ -98,4 +100,5 @@
   else install();
   window.addEventListener("pageshow",queue);
   window.addEventListener("control-theme-change",queue);
+  window.addEventListener("student-list-updated",queue);
 })();
