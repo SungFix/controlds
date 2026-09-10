@@ -62,9 +62,11 @@
 
   function buildMappedCards(){
     const source=baseStudents();
+    const byId=new Map(source.map(student=>[String(student.id||""),student]));
     const cards=[...document.querySelectorAll("#studentRows .student-card")];
     return cards.map((card,index)=>{
-      const student=source[index];
+      const currentId=String(card.dataset.studentId||"");
+      const student=(currentId&&byId.get(currentId))||source[index];
       if(student){
         card.dataset.studentId=String(student.id||"");
         card.dataset.studentCourse=String(student.course||"");
@@ -128,7 +130,11 @@
     const filtered=sortItems(mapped.filter(({student})=>isMatch(student)));
     const limit=state.limit==="all"?filtered.length:Number(state.limit||40);
     const visible=filtered.slice(0,limit);
-    visible.forEach(({card},index)=>{card.hidden=false;card.style.order=String(index)});
+    visible.forEach(({card},index)=>{
+      card.hidden=false;
+      card.style.order=String(index);
+      rows.appendChild(card);
+    });
 
     updateFilterBadge();
     updateStatus(visible.length,filtered.length,Array.isArray(students)?students.length:0);
