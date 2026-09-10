@@ -31,6 +31,25 @@ await page.locator('.ete-atestados').waitFor({state:'visible'});
 await page.locator('[data-at-tab="new"]').click();
 await page.locator('#atForm').waitFor({state:'visible'});
 
+const reasonTrigger=page.locator('.at-reason-trigger');
+const reasonList=page.locator('.at-reason-list');
+await reasonTrigger.waitFor({state:'visible'});
+await reasonTrigger.click();
+await reasonList.waitFor({state:'visible'});
+await page.waitForTimeout(250);
+
+const reasonCheckbox=page.locator('input[name="atReason"][value="atestado_medico"]');
+await reasonCheckbox.check();
+if(!(await reasonCheckbox.isChecked()))throw new Error('Justificativa do SIEPE não pôde ser marcada');
+if(!/1 justificativa selecionada/i.test(await reasonTrigger.textContent()||''))throw new Error('Resumo da justificativa selecionada não foi atualizado');
+
+await reasonTrigger.click();
+await page.waitForFunction(()=>getComputedStyle(document.querySelector('.at-reason-list')).display==='none');
+await reasonTrigger.click();
+await reasonList.waitFor({state:'visible'});
+await reasonTrigger.click();
+await page.waitForFunction(()=>getComputedStyle(document.querySelector('.at-reason-list')).display==='none');
+
 if(await page.locator('.at-time-custom').count()){
   throw new Error('Seletor de horário foi montado enquanto o período específico estava oculto');
 }
