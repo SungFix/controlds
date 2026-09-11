@@ -28,6 +28,53 @@
   transform:translateY(-0.5px);
 }
 
+/* Ações do Portal: somente ícones, mantendo nomes acessíveis no DOM */
+#eteCentralPortal #etePortalTheme,
+#eteCentralPortal #etePortalExit{
+  width:42px!important;
+  min-width:42px!important;
+  height:42px!important;
+  min-height:42px!important;
+  padding:0!important;
+  display:inline-grid!important;
+  place-items:center!important;
+  font-size:0!important;
+  line-height:1!important;
+}
+
+#eteCentralPortal #etePortalTheme::before,
+#eteCentralPortal #etePortalExit::before{
+  display:block!important;
+  margin:0!important;
+  font-size:18px!important;
+  line-height:1!important;
+  font-weight:700!important;
+}
+
+#eteCentralPortal #etePortalTheme::before{
+  content:"☀";
+}
+
+html[data-theme="light"] #eteCentralPortal #etePortalTheme::before{
+  content:"☾";
+}
+
+#eteCentralPortal #etePortalExit::before{
+  content:"⇥";
+  font-size:20px!important;
+  transform:translateX(0.5px);
+}
+
+@media(max-width:760px){
+  #eteCentralPortal #etePortalTheme,
+  #eteCentralPortal #etePortalExit{
+    width:40px!important;
+    min-width:40px!important;
+    height:40px!important;
+    min-height:40px!important;
+  }
+}
+
 /* Fechamento administrativo: X geométrico e exatamente centralizado */
 .ete-admin-close,
 .ete-admin-modal-close{
