@@ -11,3 +11,42 @@
   display:block!important;
   transform:translateY(-0.5px);
 }
+
+/* Fechamento administrativo: X geométrico e exatamente centralizado */
+.ete-admin-close,
+.ete-admin-modal-close{
+  position:relative!important;
+  display:block!important;
+  padding:0!important;
+  text-align:center!important;
+  font-size:0!important;
+  line-height:0!important;
+}
+
+.ete-admin-close::before,
+.ete-admin-close::after,
+.ete-admin-modal-close::before,
+.ete-admin-modal-close::after{
+  content:""!important;
+  position:absolute!important;
+  top:50%!important;
+  left:50%!important;
+  width:16px!important;
+  height:2px!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:999px!important;
+  background:currentColor!important;
+  transform-origin:50% 50%!important;
+  pointer-events:none!important;
+}
+
+.ete-admin-close::before,
+.ete-admin-modal-close::before{
+  transform:translate(-50%,-50%) rotate(45deg)!important;
+}
+
+.ete-admin-close::after,
+.ete-admin-modal-close::after{
+  transform:translate(-50%,-50%) rotate(-45deg)!important;
+}
