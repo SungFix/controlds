@@ -76,7 +76,7 @@
     if(!script){
       script=document.createElement("script");
       script.id="eteAtestadosScript";
-      script.src="atestados.js?v=8";
+      script.src="atestados.js?v=9";
       script.defer=true;
       script.addEventListener("load",function(){callback?.();},{once:true});
       document.head.appendChild(script);
