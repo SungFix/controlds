@@ -113,3 +113,189 @@ html[data-theme="light"] #page-requests .request-search-wrap input::placeholder{
 /* Contraste final: textos pequenos e navegação em tema escuro */
 html:not([data-theme="light"]) :is(.brand small,.section-label,#sideSyncText){color:#9da8b0!important}
 html:not([data-theme="light"]) button[data-page="students"]{color:#fff!important}
+
+/* =========================================================
+   TEMA CLARO FINAL — sem superfícies escuras
+   Mantém contraste por diferença de tons claros, não por preto.
+   ========================================================= */
+html[data-theme="light"]{
+  --ui-bg:#dfe7ea!important;
+  --ui-bg-2:#d7e1e4!important;
+  --ui-sidebar:#e7edef!important;
+  --ui-surface:#e5ecef!important;
+  --ui-surface-2:#dbe5e8!important;
+  --ui-surface-3:#d1dfe3!important;
+  --ui-surface-4:#c7d8dd!important;
+  --ui-border:#b4c5cc!important;
+  --ui-border-strong:#9fb6bf!important;
+  --ui-text:#425863!important;
+  --ui-text-2:#526a74!important;
+  --ui-muted:#667a83!important;
+  --ui-faint:#7c8d94!important;
+  --ui-accent-soft:#cbdce2!important;
+  --ui-success-bg:#cfe2d5!important;
+  --ui-success-border:#aac5b2!important;
+  --ui-warning-bg:#e8dfc8!important;
+  --ui-warning-border:#cbbd98!important;
+  --ui-danger-bg:#ead8dc!important;
+  --ui-danger-border:#cfb5ba!important;
+  --ui-info-bg:#cedee5!important;
+  --ui-info-border:#abc0ca!important;
+}
+
+html[data-theme="light"] body{
+  background:linear-gradient(180deg,#e7edef 0%,#dfe8eb 52%,#d8e3e6 100%)!important;
+}
+html[data-theme="light"] .sidebar{background:#e7edef!important;border-color:#b9c9cf!important}
+html[data-theme="light"] .topbar{background:rgba(229,236,239,.96)!important;border-color:#b6c7cd!important}
+html[data-theme="light"] .panel,
+html[data-theme="light"] .hero-stat,
+html[data-theme="light"] .mini-stat,
+html[data-theme="light"] .request-card,
+html[data-theme="light"] .computer-item,
+html[data-theme="light"] .student-item,
+html[data-theme="light"] .permission-item{background:#e4ecee!important;border-color:#b6c7cd!important}
+html[data-theme="light"] .panelhead,
+html[data-theme="light"] .request-card-top,
+html[data-theme="light"] .computer-item-head{background:#d7e3e6!important;border-color:#b5c7cd!important}
+html[data-theme="light"] #page-requests .request-search-wrap,
+html[data-theme="light"] #page-requests .request-tabs{background:#dbe6e9!important;border-color:#afc2c9!important}
+
+/* Botão de perfil e popover */
+html[data-theme="light"] body .topbar-right .header-account,
+html[data-theme="light"] body .top-right .header-account{
+  background:#d4e1e5!important;
+  border-color:#abc0c8!important;
+  color:#516a75!important;
+}
+html[data-theme="light"] body .topbar-right .header-avatar::before,
+html[data-theme="light"] body .top-right .header-avatar::before{background:#5d7580!important}
+html[data-theme="light"] body .user-profile-popover{
+  background:#d6e2e5!important;
+  border-color:#a9bdc5!important;
+  color:#455c66!important;
+  box-shadow:0 12px 28px rgba(75,98,108,.16)!important;
+}
+html[data-theme="light"] body .user-profile-row{
+  background:#e1e9eb!important;
+  border-color:#b4c6cc!important;
+}
+html[data-theme="light"] body .user-profile-row span{color:#6c7f87!important}
+html[data-theme="light"] body .user-profile-row strong{color:#465d67!important}
+
+/* Novo pedido de notebook */
+html[data-theme="light"] body #requestModal{
+  background:#e5ecef!important;
+  border-color:#b2c5cc!important;
+  color:#455c66!important;
+}
+html[data-theme="light"] body #requestModal .modal{background:#e5ecef!important;color:#455c66!important}
+html[data-theme="light"] body #requestModal .request-modal-eyebrow{
+  background:#cbdbe0!important;
+  border-color:#a9bec6!important;
+  color:#536e79!important;
+}
+html[data-theme="light"] body #requestModal .close{
+  background:#d4e2e6!important;
+  border-color:#aac0c8!important;
+  color:#526c77!important;
+}
+html[data-theme="light"] body #requestModal .request-section,
+html[data-theme="light"] body #requestModal .request-summary-card{
+  background:#dbe6e9!important;
+  border-color:#afc2c9!important;
+  box-shadow:none!important;
+}
+html[data-theme="light"] body #requestModal .request-section-head,
+html[data-theme="light"] body #requestModal .request-summary-top{
+  background:#cbdde2!important;
+  border-color:#adc2ca!important;
+}
+html[data-theme="light"] body #requestModal .request-section-badge{
+  background:#dce7ea!important;
+  border-color:#a9bec7!important;
+  color:#526b76!important;
+}
+html[data-theme="light"] body #requestModal .request-section-copy h3,
+html[data-theme="light"] body #requestModal .request-summary-top h4{color:#435b65!important}
+html[data-theme="light"] body #requestModal .request-section-copy p,
+html[data-theme="light"] body #requestModal .request-summary-top p{color:#657982!important}
+html[data-theme="light"] body #requestModal .request-section-body,
+html[data-theme="light"] body #requestModal .request-summary-body{background:#e4ecee!important}
+html[data-theme="light"] body #requestModal .saved-student-box{
+  background:#d4e2e6!important;
+  border-color:#adc2ca!important;
+}
+html[data-theme="light"] body #requestModal .student-picker-trigger,
+html[data-theme="light"] body #requestModal .time-trigger,
+html[data-theme="light"] body #requestModal input,
+html[data-theme="light"] body #requestModal textarea{
+  background:#e8eef0!important;
+  border-color:#abc0c8!important;
+  color:#455d67!important;
+}
+html[data-theme="light"] body #requestModal .student-picker-trigger:hover,
+html[data-theme="light"] body #requestModal .time-trigger:hover{
+  background:#dde8eb!important;
+  border-color:#9fb8c1!important;
+}
+html[data-theme="light"] body #requestModal .student-picker-main strong{color:#455d67!important}
+html[data-theme="light"] body #requestModal .student-picker-main small{color:#6d7f87!important}
+html[data-theme="light"] body #requestModal .student-picker-chevron{
+  background:#d0dfe4!important;
+  border-color:#acc1c9!important;
+  color:#617985!important;
+}
+html[data-theme="light"] body #requestModal .student-picker-popup,
+html[data-theme="light"] body #requestModal .time-popup{
+  background:#dce7ea!important;
+  border-color:#a9bec6!important;
+  box-shadow:0 16px 36px rgba(75,98,108,.17)!important;
+}
+html[data-theme="light"] body #requestModal .student-picker-search{
+  background:#e8eef0!important;
+  border-color:#afc2c9!important;
+  color:#465e68!important;
+}
+html[data-theme="light"] body #requestModal .student-option{color:#526a74!important}
+html[data-theme="light"] body #requestModal .student-option:hover{background:#cfdfe4!important}
+html[data-theme="light"] body #requestModal .student-option.active{background:#c5d9e1!important;color:#466371!important}
+html[data-theme="light"] body #requestModal .time-card{
+  background:#d7e4e7!important;
+  border-color:#afc3ca!important;
+}
+html[data-theme="light"] body #requestModal .time-card .title{color:#647983!important}
+html[data-theme="light"] body #requestModal .time-trigger span:last-child{color:#647c87!important}
+html[data-theme="light"] body #requestModal .time-note{color:#71838a!important}
+html[data-theme="light"] body #requestModal .time-info,
+html[data-theme="light"] body #requestModal .summary-note{
+  background:#d3e0e3!important;
+  border-color:#afc2c9!important;
+  color:#62767f!important;
+}
+html[data-theme="light"] body #requestModal .summary-item{
+  background:#d7e4e7!important;
+  border-color:#aec2c9!important;
+}
+html[data-theme="light"] body #requestModal .summary-item span{color:#6b7e86!important}
+html[data-theme="light"] body #requestModal .summary-item strong{color:#465e68!important}
+html[data-theme="light"] body #requestModal label{color:#566f79!important}
+html[data-theme="light"] body #requestModal textarea::placeholder,
+html[data-theme="light"] body #requestModal input::placeholder{color:#84959c!important}
+html[data-theme="light"] body #requestModal .modalactions{border-color:#b4c6cc!important}
+html[data-theme="light"] body #requestModal .btn,
+html[data-theme="light"] body #requestModal button:not(.close):not(.student-option){
+  background:#d1e0e4!important;
+  border-color:#a9bec6!important;
+  color:#506a75!important;
+}
+html[data-theme="light"] body #requestModal .btn:hover,
+html[data-theme="light"] body #requestModal button:not(.close):not(.student-option):hover{
+  background:#c6d9df!important;
+  border-color:#9bb5bf!important;
+}
+html[data-theme="light"] body #requestModal .btn.primary{
+  background:#bed5de!important;
+  border-color:#96b3bf!important;
+  color:#435f6b!important;
+}
