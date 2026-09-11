@@ -27,6 +27,9 @@
 /portal-admin-v2.css
   Cache-Control: no-store, max-age=0
 
+/portal-admin-icon-fix.css
+  Cache-Control: no-store, max-age=0
+
 /user-capabilities.js
   Cache-Control: no-store, max-age=0
 
