@@ -5,7 +5,8 @@ window.ETE_CONFIG = {
     klenio: "klenio@email.com",
     miguel: "miguel@email.com",
     ronaldo: "ronaldo@email.com",
-    monitor: "monitor@email.com"
+    monitor: "monitor@email.com",
+    tayna: "tayna@email.com"
   }
 };
 
