@@ -11,6 +11,7 @@ on:
       - ".github/scripts/atestados-register-audit.mjs"
       - ".github/scripts/atestados-image-upload-audit.mjs"
       - ".github/scripts/registered-student-flow-audit.mjs"
+      - ".github/scripts/request-creator-audit.mjs"
       - ".github/workflows/ui-interaction-audit-v2.yml"
   pull_request:
     branches: [main]
@@ -22,6 +23,7 @@ on:
       - ".github/scripts/atestados-register-audit.mjs"
       - ".github/scripts/atestados-image-upload-audit.mjs"
       - ".github/scripts/registered-student-flow-audit.mjs"
+      - ".github/scripts/request-creator-audit.mjs"
       - ".github/workflows/ui-interaction-audit-v2.yml"
 
 permissions:
@@ -44,6 +46,7 @@ jobs:
           node --check .github/scripts/atestados-register-audit.mjs
           node --check .github/scripts/atestados-image-upload-audit.mjs
           node --check .github/scripts/registered-student-flow-audit.mjs
+          node --check .github/scripts/request-creator-audit.mjs
 
       - name: Install Playwright
         run: |
@@ -63,3 +66,13 @@ jobs:
           node .github/scripts/atestados-register-audit.mjs
           node .github/scripts/atestados-image-upload-audit.mjs
           node .github/scripts/registered-student-flow-audit.mjs
+          node .github/scripts/request-creator-audit.mjs
+
+      - name: Upload request creator preview
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: request-creator-preview
+          path: artifacts/request-creator-preview.png
+          if-no-files-found: ignore
+          retention-days: 7
