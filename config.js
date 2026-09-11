@@ -134,7 +134,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlMobileGroupPickerFlowStyles", "mobile-group-picker-flow.css?v=4");
     ensureStylesheet("controlMobileTextareaExpandStyles", "mobile-textarea-expand.css?v=2");
     ensureStylesheet("controlPortalStyles", "portal.css?v=2");
-    ensureStylesheet("controlPortalAdminStyles", "portal-admin.css?v=1");
+    ensureStylesheet("controlPortalAdminStyles", "portal-admin.css?v=2");
     ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=3");
     ensureStylesheet("controlAtestadosImageUploadStyles", "atestados-image-upload.css?v=1");
 
