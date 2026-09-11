@@ -56,14 +56,38 @@ body.portal-open.ete-exit-open{overflow:hidden!important}
 .ete-exit-option.danger .ete-exit-option-icon{background:linear-gradient(180deg,#2d1b1e,#241719)!important;border-color:#64353c!important;color:#ff9ca8!important}
 .ete-exit-option.danger:hover{border-color:#603a40!important}
 
-html[data-theme="light"] .ete-exit-card{background:#fff!important;color:#213039!important;border-color:#c9d5dc!important;box-shadow:0 14px 34px rgba(45,62,72,.18)!important}
-html[data-theme="light"] .ete-exit-head{border-bottom-color:#dce4e9}
-html[data-theme="light"] .ete-exit-head .ete-portal-kicker{color:#55728d!important}
-html[data-theme="light"] .ete-exit-option{background:#f8fafb!important;border-color:#d1dce2!important;color:#24323a!important}
-html[data-theme="light"] .ete-exit-option:hover{background:#f1f6f8!important;border-color:#b9c9d2!important}
-html[data-theme="light"] .ete-exit-option small{color:#5c707b!important}
-html[data-theme="light"] .ete-exit-option-icon{background:#edf4f9!important;border-color:#c5d6e2!important;color:#3f729f!important;box-shadow:none!important}
-html[data-theme="light"] .ete-exit-option.danger .ete-exit-option-icon{background:#fff0f2!important;border-color:#e2bdc2!important;color:#b44f5d!important}
+/* Tema claro: sem branco puro ou superfícies escuras */
+html[data-theme="light"] .ete-exit-card{
+  background:#dfe9ec!important;
+  color:#4a5f69!important;
+  border-color:#adc1c8!important;
+  box-shadow:0 14px 34px rgba(91,113,123,.16)!important
+}
+html[data-theme="light"] .ete-exit-head{border-bottom-color:#b9ccd2!important}
+html[data-theme="light"] .ete-exit-head .ete-portal-kicker{color:#526873!important}
+html[data-theme="light"] .ete-exit-head h2{color:#485d67!important}
+html[data-theme="light"] .ete-exit-option{
+  background:#d4e2e6!important;
+  border-color:#adc2c9!important;
+  color:#4d626c!important
+}
+html[data-theme="light"] .ete-exit-option:hover{
+  background:#cbdde1!important;
+  border-color:#9fb8c1!important
+}
+html[data-theme="light"] .ete-exit-option small{color:#596e77!important}
+html[data-theme="light"] .ete-exit-option-icon{
+  background:#c4d9e1!important;
+  border-color:#a3bdc7!important;
+  color:#567585!important;
+  box-shadow:none!important
+}
+html[data-theme="light"] .ete-exit-option.danger .ete-exit-option-icon{
+  background:#ead9dc!important;
+  border-color:#cfb5ba!important;
+  color:#9d626b!important
+}
+html[data-theme="light"] .ete-exit-option.danger:hover{border-color:#c3a8ad!important}
 
 @media(max-width:760px){
   .ete-exit-card{width:min(300px,calc(100vw - 16px))!important;padding:11px!important}
