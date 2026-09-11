@@ -214,3 +214,21 @@
 
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
 })();
+
+(function loadAtestadosReportPieAssets(){
+  "use strict";
+  if(!document.getElementById("eteAtestadosReportPieStyles")){
+    const link=document.createElement("link");
+    link.id="eteAtestadosReportPieStyles";
+    link.rel="stylesheet";
+    link.href="atestados-report-pie.css?v=1";
+    document.head.appendChild(link);
+  }
+  if(!document.getElementById("eteAtestadosReportPieScript")){
+    const script=document.createElement("script");
+    script.id="eteAtestadosReportPieScript";
+    script.src="atestados-report-pie.js?v=1";
+    script.defer=true;
+    document.head.appendChild(script);
+  }
+})();
