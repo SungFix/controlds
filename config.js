@@ -161,6 +161,7 @@ window.ETE_CONFIG = {
     ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=3");
     ensureScript("controlPortalScript", "portal.js?v=14");
     ensureScript("controlPortalAdminScript", "portal-admin.js?v=2");
+    ensureScript("controlPortalAdminCornerScript", "portal-admin-corner.js?v=1");
     ensureScript("controlRelationalFrontendV2Script", "relational-frontend-v2.js?v=1");
     ensureScript("controlRegisteredStudentFlowScript", "registered-student-flow.js?v=6");
     ensureScript("controlRequestCreatorLabelScript", "request-creator-label.js?v=1");
