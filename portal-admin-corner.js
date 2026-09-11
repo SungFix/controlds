@@ -3,6 +3,13 @@
 
   let queued=false;
 
+  function isPortalHomeVisible(portal){
+    return !!portal
+      && !portal.hidden
+      && !portal.classList.contains("module-open")
+      && document.body.classList.contains("portal-open");
+  }
+
   function placeButton(){
     queued=false;
     const portal=document.getElementById("eteCentralPortal");
@@ -10,6 +17,13 @@
     if(!portal||!button)return;
 
     if(button.parentElement!==portal)portal.insertBefore(button,portal.firstChild);
+
+    const visible=isPortalHomeVisible(portal);
+    button.hidden=!visible;
+    button.setAttribute("aria-hidden",visible?"false":"true");
+    button.style.setProperty("display",visible?"inline-flex":"none","important");
+
+    if(!visible)return;
 
     button.style.setProperty("position","fixed","important");
     button.style.setProperty("top","8px","important");
@@ -32,8 +46,14 @@
     placeButton();
     if(!document.body)return;
     const observer=new MutationObserver(queuePlace);
-    observer.observe(document.body,{childList:true,subtree:true});
+    observer.observe(document.body,{
+      childList:true,
+      subtree:true,
+      attributes:true,
+      attributeFilter:["class","hidden"]
+    });
     window.addEventListener("pageshow",placeButton);
+    window.addEventListener("popstate",placeButton);
     setTimeout(placeButton,80);
     setTimeout(placeButton,300);
     setTimeout(placeButton,800);
