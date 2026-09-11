@@ -90,3 +90,120 @@
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",mount,{once:true});
   else mount();
 })();
+
+(function initIndividualHistoryDelete(){
+  "use strict";
+
+  function getVisibleHistory(){
+    if(typeof history==="undefined" || !Array.isArray(history)) return [];
+    const search=document.getElementById("historySearch");
+    const filterSelect=document.getElementById("historyFilter");
+    const q=(search?.value || "").toLowerCase();
+    const filter=filterSelect?.value || "all";
+    const label=typeof historyTypeLabel==="function" ? historyTypeLabel : function(type){return String(type || "");};
+
+    const list=history.filter(function(item){
+      const matchFilter=filter==="all" || item.type===filter;
+      const hay=(String(item.text || "")+" "+String(item.detail || "")+" "+label(item.type)).toLowerCase();
+      return matchFilter && hay.includes(q);
+    });
+
+    return list.slice().sort(function(a,b){
+      const av=Date.parse(a.atISO || "") || 0;
+      const bv=Date.parse(b.atISO || "") || 0;
+      return typeof historyNewestFirst==="undefined" || historyNewestFirst ? bv-av : av-bv;
+    });
+  }
+
+  function makeDeleteButton(id){
+    const button=document.createElement("button");
+    button.type="button";
+    button.className="history-delete-one";
+    button.dataset.historyDeleteId=id;
+    button.setAttribute("aria-label","Apagar este evento do histórico");
+    button.title="Apagar este evento";
+    button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="m7 7 1 13h8l1-13"/><path d="M10 11v5M14 11v5"/></svg>';
+    return button;
+  }
+
+  function decorate(){
+    const rows=document.getElementById("historyRows");
+    if(!rows) return;
+
+    const allowed=typeof canClearHistory==="function" && canClearHistory();
+    const items=getVisibleHistory();
+    const events=Array.from(rows.querySelectorAll(".history-event"));
+
+    events.forEach(function(event,index){
+      event.querySelectorAll(".history-delete-one").forEach(function(button){button.remove();});
+      if(!allowed) return;
+      const item=items[index];
+      if(!item?.id) return;
+      const side=event.querySelector(".history-side");
+      if(!side) return;
+      event.dataset.historyId=item.id;
+      side.appendChild(makeDeleteButton(item.id));
+    });
+  }
+
+  async function removeOne(id,button){
+    if(typeof canClearHistory!=="function" || !canClearHistory()){
+      if(typeof toast==="function") toast("Seu perfil não pode apagar o histórico.");
+      return;
+    }
+    if(typeof history==="undefined" || !Array.isArray(history)) return;
+
+    const item=history.find(function(entry){return entry.id===id;});
+    if(!item){
+      if(typeof toast==="function") toast("Este evento não foi encontrado.");
+      if(typeof renderHistory==="function") renderHistory();
+      return;
+    }
+
+    const description=String(item.text || "este evento");
+    const confirmed=window.confirm('Apagar somente este evento do histórico?\n\n"'+description+'"');
+    if(!confirmed) return;
+
+    const previous=history.slice();
+    if(button){button.disabled=true;button.classList.add("is-loading");}
+
+    try{
+      history=history.filter(function(entry){return entry.id!==id;});
+      if(typeof persistLocalShared==="function") persistLocalShared();
+      if(typeof renderHistory==="function") renderHistory();
+
+      if(typeof pushRemoteState!=="function") throw new Error("Sincronização indisponível.");
+      const saved=await pushRemoteState();
+      if(!saved) throw new Error("Não foi possível sincronizar a exclusão.");
+
+      if(typeof toast==="function") toast("Evento removido do histórico.");
+    }catch(error){
+      history=previous;
+      if(typeof persistLocalShared==="function") persistLocalShared();
+      if(typeof renderHistory==="function") renderHistory();
+      if(typeof toast==="function") toast("Não foi possível apagar o evento. O histórico foi restaurado.");
+      console.error("Falha ao apagar evento individual do histórico:",error);
+    }
+  }
+
+  function mountDelete(){
+    const rows=document.getElementById("historyRows");
+    if(!rows || rows.dataset.individualDeleteMounted==="1") return;
+    rows.dataset.individualDeleteMounted="1";
+
+    rows.addEventListener("click",function(event){
+      const button=event.target.closest(".history-delete-one");
+      if(!button || !rows.contains(button)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      removeOne(button.dataset.historyDeleteId,button);
+    });
+
+    const observer=new MutationObserver(function(){decorate();});
+    observer.observe(rows,{childList:true});
+    decorate();
+  }
+
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",mountDelete,{once:true});
+  else mountDelete();
+})();
