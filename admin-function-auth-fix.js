@@ -2,6 +2,7 @@
   "use strict";
 
   const FUNCTION_NAME="admin-user-management";
+  const directFetch=window.fetch.bind(window);
   let installing=false;
 
   async function currentSession(client){
@@ -37,7 +38,7 @@
       const client=getClient();
       const functions=client?.functions;
       if(!functions||typeof functions.invoke!=="function")return;
-      if(functions.__eteAdminAuthPatched)return;
+      if(functions.__eteAdminAuthPatchedV2)return;
 
       const originalInvoke=functions.invoke.bind(functions);
       functions.invoke=async function(name,options){
@@ -45,15 +46,48 @@
 
         const session=await currentSession(client);
         const accessToken=String(session?.access_token||"");
-        const nextOptions={...(options||{})};
-        const headers={...(nextOptions.headers||{})};
+        const cfg=window.ETE_CONFIG||{};
+        const supabaseUrl=String(cfg.supabaseUrl||"").replace(/\/$/,"");
+        const publishableKey=String(cfg.supabasePublishableKey||"");
 
-        if(accessToken)headers.Authorization=`Bearer ${accessToken}`;
-        nextOptions.headers=headers;
-        return originalInvoke(name,nextOptions);
+        if(!accessToken||!supabaseUrl||!publishableKey){
+          const error=new Error("admin_session_unavailable");
+          error.context=null;
+          return{data:null,error};
+        }
+
+        try{
+          const response=await directFetch(`${supabaseUrl}/functions/v1/${FUNCTION_NAME}`,{
+            method:"POST",
+            mode:"cors",
+            credentials:"omit",
+            cache:"no-store",
+            headers:{
+              "Content-Type":"application/json",
+              "apikey":publishableKey,
+              "Authorization":`Bearer ${accessToken}`
+            },
+            body:JSON.stringify(options?.body||{})
+          });
+
+          if(!response.ok){
+            const error=new Error(`Edge Function returned ${response.status}`);
+            error.context=response;
+            return{data:null,error};
+          }
+
+          let data=null;
+          try{data=await response.json();}
+          catch(_){data=null;}
+          return{data,error:null};
+        }catch(fetchError){
+          const error=fetchError instanceof Error?fetchError:new Error("admin_request_failed");
+          error.context=null;
+          return{data:null,error};
+        }
       };
 
-      Object.defineProperty(functions,"__eteAdminAuthPatched",{
+      Object.defineProperty(functions,"__eteAdminAuthPatchedV2",{
         value:true,
         configurable:false,
         enumerable:false,
