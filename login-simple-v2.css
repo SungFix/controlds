@@ -319,3 +319,76 @@ body.auth-locked .login-gate .login-note{
   body.auth-locked .login-gate .login-grid input,
   body.auth-locked .login-gate .login-card #loginSubmit{min-height:51px !important}
 }
+
+/* =========================================================
+   Tema claro — login sem superfícies pretas ou quase pretas
+   ========================================================= */
+html[data-theme="light"] body.auth-locked .login-gate{
+  background:
+    radial-gradient(circle at 50% 0%,rgba(95,127,174,.10),transparent 34%),
+    linear-gradient(180deg,#e7edef 0%,#dfe8eb 55%,#d8e3e6 100%) !important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card{
+  background:#e4ecee !important;
+  border-color:#afc2c9 !important;
+  box-shadow:0 22px 60px rgba(74,97,107,.16) !important;
+  color:#455d67 !important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-brand{
+  background:linear-gradient(180deg,#d9e5e8 0%,#d1e0e4 100%) !important;
+  border-color:#adc1c8 !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45) !important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-mark{
+  background:
+    linear-gradient(#e7edef,#e7edef) padding-box,
+    linear-gradient(135deg,#b69a5d 0 25%,#5e9b75 25% 50%,#a9666d 50% 75%,#5f7fae 75%) border-box !important;
+  color:#425a65 !important;
+  box-shadow:0 8px 20px rgba(74,97,107,.12) !important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-brand strong,
+html[data-theme="light"] body.auth-locked .login-gate .login-card #loginTitle{
+  color:#435b65 !important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-brand small,
+html[data-theme="light"] body.auth-locked .login-gate .login-card #loginTitle + p{
+  color:#667b84 !important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid label{
+  color:#566f79 !important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input{
+  background:#e9eff1 !important;
+  border-color:#abc0c8 !important;
+  color:#455d67 !important;
+  box-shadow:none !important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input::placeholder{
+  color:#84959c !important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input:focus{
+  background:#edf2f4 !important;
+  border-color:#91acb7 !important;
+  box-shadow:0 0 0 3px rgba(96,132,149,.12) !important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input:-webkit-autofill,
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input:-webkit-autofill:hover,
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input:-webkit-autofill:focus{
+  -webkit-text-fill-color:#455d67 !important;
+  -webkit-box-shadow:0 0 0 1000px #e9eff1 inset !important;
+  box-shadow:0 0 0 1000px #e9eff1 inset !important;
+  border-color:#abc0c8 !important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit{
+  background:#c6dbe2 !important;
+  border-color:#9fb9c2 !important;
+  color:#435f6b !important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit:hover{
+  background:#bdd3dc !important;
+  border-color:#94b1bc !important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-note{
+  border-top-color:#b6c7cd !important;
+  color:#697d85 !important;
+}
