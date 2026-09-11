@@ -65,7 +65,7 @@
 
 /* Lua no tema claro */
 html[data-theme="light"] #eteCentralPortal #etePortalTheme::before{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23233139' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.5 14.4A8.4 8.4 0 0 1 9.6 3.5 8.7 8.7 0 1 0 20.5 14.4Z'/%3E%3C/svg%3E")!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235b717b' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.5 14.4A8.4 8.4 0 0 1 9.6 3.5 8.7 8.7 0 1 0 20.5 14.4Z'/%3E%3C/svg%3E")!important;
 }
 
 /* Logout */
@@ -75,7 +75,7 @@ html[data-theme="light"] #eteCentralPortal #etePortalTheme::before{
 }
 
 html[data-theme="light"] #eteCentralPortal #etePortalExit::before{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23233139' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 4.5H6.5A2.5 2.5 0 0 0 4 7v10a2.5 2.5 0 0 0 2.5 2.5H10'/%3E%3Cpath d='M14.5 8 18.5 12l-4 4'/%3E%3Cpath d='M18.5 12H9'/%3E%3C/svg%3E")!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235b717b' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 4.5H6.5A2.5 2.5 0 0 0 4 7v10a2.5 2.5 0 0 0 2.5 2.5H10'/%3E%3Cpath d='M14.5 8 18.5 12l-4 4'/%3E%3Cpath d='M18.5 12H9'/%3E%3C/svg%3E")!important;
 }
 
 @media(max-width:760px){
@@ -165,6 +165,240 @@ html[data-theme="light"] #eteCentralPortal #etePortalExit::before{
 /* Atestados: documento com confirmação */
 #eteCentralPortal .ete-system-card[data-system="atestados"] .ete-system-icon::before{
   -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 3.25h7.1l4.4 4.45v12.55a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V3.75a.5.5 0 0 1 .5-.5Z'/%3E%3Cpath d='M14 3.5V8h4.5M9.25 11.25h5.5M9.5 15l1.5 1.5 3.5-3.75'/%3E%3C/svg%3E")!important;
-  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 3.25h7.1l4.4 4.45v12.55a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V3.75a.5.5 0 0 1 .5-.5Z'/%3E%3Cpath d='M14 3.5V8h4.5M9.25 11.25h5.5M9.5 15l1.5 1.5 3.5-3.75'/%3E%3C/svg%3E")!important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 3.25h7.1l4.4 4.45v12.55a.5.5 0 0 1-.5-.5V3.75a.5.5 0 0 1 .5-.5Z'/%3E%3Cpath d='M14 3.5V8h4.5M9.25 11.25h5.5M9.5 15l1.5 1.5 3.5-3.75'/%3E%3C/svg%3E")!important;
   transform:translate(calc(-50% - 0.5px),-50%)!important;
+}
+
+/* Tema claro do Portal: suave, legível e com superfícies distinguíveis */
+html[data-theme="light"] #eteCentralPortal{
+  background:
+    radial-gradient(circle at 13% 0%,rgba(116,157,176,.18),transparent 34%),
+    radial-gradient(circle at 88% 4%,rgba(126,166,143,.14),transparent 31%),
+    linear-gradient(180deg,#e5ecef 0%,#dce6e9 55%,#d5e1e4 100%)!important;
+  color:#465a64!important;
+}
+
+html[data-theme="light"] #eteCentralPortal::before{
+  opacity:.22!important;
+  background-image:
+    linear-gradient(rgba(91,113,123,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(91,113,123,.055) 1px,transparent 1px)!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-portal-topbar{
+  background:rgba(224,234,237,.94)!important;
+  border-color:#b6c7cd!important;
+  box-shadow:0 12px 30px rgba(91,113,123,.10)!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-portal-mark{
+  background:#d2e1e6!important;
+  border-color:#adc2ca!important;
+  color:#4d6470!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-portal-brand strong,
+html[data-theme="light"] #eteCentralPortal .ete-portal-hero h1,
+html[data-theme="light"] #eteCentralPortal .ete-portal-section-head>span{
+  color:#465a64!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-portal-brand small,
+html[data-theme="light"] #eteCentralPortal .ete-portal-hero p,
+html[data-theme="light"] #eteCentralPortal .ete-portal-section-head small{
+  color:#566b75!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-portal-kicker{
+  color:#526873!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-portal-user{
+  background:#d7e5e2!important;
+  border-color:#afc5bf!important;
+  color:#526a61!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-portal-theme,
+html[data-theme="light"] #eteCentralPortal .ete-portal-exit,
+html[data-theme="light"] #eteCentralPortal .ete-portal-back{
+  background:#d6e3e7!important;
+  border-color:#afc2ca!important;
+  color:#536a74!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-portal-theme:hover,
+html[data-theme="light"] #eteCentralPortal .ete-portal-exit:hover,
+html[data-theme="light"] #eteCentralPortal .ete-portal-back:hover{
+  background:#cbdce1!important;
+  border-color:#9eb7c1!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-system-card{
+  box-shadow:0 13px 28px rgba(91,113,123,.10)!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-system-card[data-system="control-ds"]{
+  background:#dce8ee!important;
+  border-color:#adc4ce!important;
+  color:#42555f!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-system-card[data-system="atestados"]{
+  background:#dcebe3!important;
+  border-color:#b0c8b9!important;
+  color:#4b6156!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-system-card[data-system="control-ds"]:hover{
+  background:#d3e2e9!important;
+  border-color:#9ebac5!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-system-card[data-system="atestados"]:hover{
+  background:#d3e4da!important;
+  border-color:#a0bfa9!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-system-card[data-system="control-ds"] .ete-system-icon{
+  background:#c8dce5!important;
+  border-color:#a5bec9!important;
+  color:#516f7d!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-system-card[data-system="atestados"] .ete-system-icon{
+  background:#c9dfd1!important;
+  border-color:#a8c3b1!important;
+  color:#587565!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-system-status{
+  background:#d2e3d8!important;
+  border-color:#aac5b3!important;
+  color:#4f6859!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-system-card[data-system="control-ds"] p{
+  color:#556973!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-system-card[data-system="atestados"] p{
+  color:#556b60!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-system-card[data-system="control-ds"] .ete-system-open{
+  border-color:#b7ccd4!important;
+  color:#526873!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-system-card[data-system="atestados"] .ete-system-open{
+  border-color:#b9cec0!important;
+  color:#526a5d!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-system-open span:last-child{
+  color:currentColor!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-portal-points span,
+html[data-theme="light"] #eteCentralPortal .ete-module-note{
+  background:#d8e5e8!important;
+  border-color:#b5c7ce!important;
+  color:#536a74!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-module-panel{
+  background:#dde8eb!important;
+  border-color:#b5c6cc!important;
+  color:#465a64!important;
+}
+
+html[data-theme="light"] #eteCentralPortal .ete-module-panel p{
+  color:#566b75!important;
+}
+
+/* Tema claro da administração do Portal */
+html[data-theme="light"] .ete-admin-layer{
+  background:
+    radial-gradient(circle at 12% 0%,rgba(116,157,176,.16),transparent 34%),
+    linear-gradient(180deg,#e4ecef,#d7e3e6)!important;
+  color:#465a64!important;
+}
+
+html[data-theme="light"] .ete-admin-topbar,
+html[data-theme="light"] .ete-admin-user-card,
+html[data-theme="light"] .ete-admin-modal,
+html[data-theme="light"] .ete-admin-stat,
+html[data-theme="light"] .ete-admin-toggle,
+html[data-theme="light"] .ete-admin-activity-item,
+html[data-theme="light"] .ete-admin-security-card{
+  background:#dde8eb!important;
+  border-color:#b4c6cc!important;
+  color:#465a64!important;
+}
+
+html[data-theme="light"] .ete-admin-tabs,
+html[data-theme="light"] .ete-admin-overview-note,
+html[data-theme="light"] .ete-admin-activity-icon,
+html[data-theme="light"] .ete-admin-cap-badge{
+  background:#d6e3e7!important;
+  border-color:#afc3ca!important;
+  color:#536a74!important;
+}
+
+html[data-theme="light"] .ete-admin-tab{
+  color:#596f78!important;
+}
+
+html[data-theme="light"] .ete-admin-tab:hover{
+  background:#ccdce1!important;
+  color:#4b626d!important;
+}
+
+html[data-theme="light"] .ete-admin-tab.active{
+  background:#c6dbe4!important;
+  border-color:#a3bdc8!important;
+  color:#4d6876!important;
+}
+
+html[data-theme="light"] .ete-admin-search input,
+html[data-theme="light"] .ete-admin-field input,
+html[data-theme="light"] .ete-admin-refresh,
+html[data-theme="light"] .ete-admin-reset-button,
+html[data-theme="light"] .ete-admin-cancel,
+html[data-theme="light"] .ete-admin-show-password,
+html[data-theme="light"] .ete-admin-close,
+html[data-theme="light"] .ete-admin-modal-close,
+html[data-theme="light"] .ete-admin-permissions-button,
+html[data-theme="light"] .ete-admin-security-action{
+  background:#d4e2e6!important;
+  border-color:#aec2c9!important;
+  color:#506872!important;
+}
+
+html[data-theme="light"] .ete-admin-avatar{
+  background:#c8dce5!important;
+  border-color:#a5bec9!important;
+  color:#516f7d!important;
+}
+
+html[data-theme="light"] .ete-admin-toggle-copy strong,
+html[data-theme="light"] .ete-admin-overview-note strong{
+  color:#485e68!important;
+}
+
+html[data-theme="light"] .ete-admin-topbar p,
+html[data-theme="light"] .ete-admin-target,
+html[data-theme="light"] .ete-admin-user-main span,
+html[data-theme="light"] .ete-admin-user-main small,
+html[data-theme="light"] .ete-admin-search>span,
+html[data-theme="light"] .ete-admin-field>span,
+html[data-theme="light"] .ete-admin-toggle-copy small,
+html[data-theme="light"] .ete-admin-activity-copy span,
+html[data-theme="light"] .ete-admin-activity-item time{
+  color:#5a6f78!important;
+}
+
+html[data-theme="light"] .ete-admin-modal-layer{
+  background:rgba(138,158,166,.42)!important;
 }
