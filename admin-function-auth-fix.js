@@ -1,26 +1,12 @@
 (function installAdminFunctionAuthFix(){
   "use strict";
 
-  if(window.__eteAdminFunctionAuthFixInstalled)return;
-  window.__eteAdminFunctionAuthFixInstalled=true;
+  const FUNCTION_NAME="admin-user-management";
+  let installing=false;
 
-  const nativeFetch=window.fetch.bind(window);
-  const functionPath="/functions/v1/admin-user-management";
-
-  function requestUrl(input){
+  async function currentSession(client){
     try{
-      if(typeof input==="string")return input;
-      if(input instanceof URL)return input.href;
-      if(input&&typeof input.url==="string")return input.url;
-    }catch(_){}
-    return "";
-  }
-
-  async function currentSession(){
-    try{
-      const client=typeof initSupabase==="function"?initSupabase():null;
       if(!client?.auth)return null;
-
       let result=await client.auth.getSession();
       let session=result?.data?.session||null;
       if(result?.error||!session)return null;
@@ -36,19 +22,52 @@
     }
   }
 
-  window.fetch=async function(input,init){
-    const url=requestUrl(input);
-    if(!url.includes(functionPath))return nativeFetch(input,init);
+  function getClient(){
+    try{
+      if(typeof initSupabase==="function")return initSupabase();
+      if(typeof sb!=="undefined"&&sb)return sb;
+    }catch(_){}
+    return null;
+  }
 
-    const session=await currentSession();
-    const headers=new Headers(init?.headers||(input instanceof Request?input.headers:undefined));
-    const publishableKey=String(window.ETE_CONFIG?.supabasePublishableKey||"");
+  function install(){
+    if(installing)return;
+    installing=true;
+    try{
+      const client=getClient();
+      const functions=client?.functions;
+      if(!functions||typeof functions.invoke!=="function")return;
+      if(functions.__eteAdminAuthPatched)return;
 
-    if(publishableKey&&!headers.has("apikey"))headers.set("apikey",publishableKey);
-    if(session?.access_token)headers.set("Authorization",`Bearer ${session.access_token}`);
+      const originalInvoke=functions.invoke.bind(functions);
+      functions.invoke=async function(name,options){
+        if(String(name)!==FUNCTION_NAME)return originalInvoke(name,options);
 
-    const nextInit={...(init||{}),headers};
-    if(input instanceof Request)return nativeFetch(new Request(input,nextInit));
-    return nativeFetch(input,nextInit);
-  };
+        const session=await currentSession(client);
+        const accessToken=String(session?.access_token||"");
+        const nextOptions={...(options||{})};
+        const headers={...(nextOptions.headers||{})};
+
+        if(accessToken)headers.Authorization=`Bearer ${accessToken}`;
+        nextOptions.headers=headers;
+        return originalInvoke(name,nextOptions);
+      };
+
+      Object.defineProperty(functions,"__eteAdminAuthPatched",{
+        value:true,
+        configurable:false,
+        enumerable:false,
+        writable:false
+      });
+    }finally{
+      installing=false;
+    }
+  }
+
+  install();
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});
+  window.addEventListener("pageshow",install);
+  setTimeout(install,50);
+  setTimeout(install,250);
+  setTimeout(install,800);
 })();
