@@ -14,10 +14,10 @@ await page.evaluate(()=>{
     return {};
   };
   v46AuthUser={id:'flow-audit-user'};
-  currentUser={username:'audit',displayName:'Auditor',role:'adm',roleLabel:'Administrador',userId:'flow-audit-user'};
+  currentUser={username:'adm',displayName:'Auditor',role:'adm',roleLabel:'Administrador',userId:'flow-audit-user'};
   appReady=true;
   students=[normalizeStudent({id:'st-flow',name:'Aluno Cadastrado',className:'1°A',course:'DS',useCount:0,lastUsed:''})];
-  data=[normalizeRequest({id:'rq-flow',student:'Aluno Cadastrado',studentName:'Aluno Cadastrado',studentClass:'1°A',studentCourse:'DS',studentId:'st-flow',room:'1°A DS',reason:'Teste',startTime:'10:20',endTime:'11:10',time:'10:20–11:10',dateKey:recifeDateKey(),status:'wait',requestedBy:'audit',requestedById:'flow-audit-user',requestedByLabel:'Auditor',createdAt:new Date().toISOString()})];
+  data=[normalizeRequest({id:'rq-flow',student:'Aluno Cadastrado',studentName:'Aluno Cadastrado',studentClass:'1°A',studentCourse:'DS',studentId:'st-flow',room:'1°A DS',reason:'Teste',startTime:'10:20',endTime:'11:10',time:'10:20–11:10',dateKey:recifeDateKey(),status:'wait',requestedBy:'adm',requestedById:'flow-audit-user',requestedByLabel:'Auditor',createdAt:new Date().toISOString()})];
   permissions=[];
   history=[];
   setAuthLocked(false);
