@@ -159,6 +159,7 @@ window.ETE_CONFIG = {
     ensureScript("controlPortalScript", "portal.js?v=14");
     ensureScript("controlRelationalFrontendV2Script", "relational-frontend-v2.js?v=1");
     ensureScript("controlRegisteredStudentFlowScript", "registered-student-flow.js?v=6");
+    ensureScript("controlRequestCreatorLabelScript", "request-creator-label.js?v=1");
     ensureScript("controlAtestadosImageUploadScript", "atestados-image-upload.js?v=1");
   }
 
