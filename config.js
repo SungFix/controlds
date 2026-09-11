@@ -139,6 +139,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlPortalAdminIconFixStyles", "portal-admin-icon-fix.css?v=1");
     ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=3");
     ensureStylesheet("controlAtestadosImageUploadStyles", "atestados-image-upload.css?v=1");
+    ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=1");
 
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
