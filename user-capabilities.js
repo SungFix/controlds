@@ -295,13 +295,24 @@
 
   document.addEventListener("click",handlePortalClick,true);
 
+  function observePortalDom(){
+    if(!document.body||domObserver)return;
+    domObserver=new MutationObserver(queueDomSync);
+    domObserver.observe(document.body,{
+      childList:true,
+      subtree:true,
+      attributes:true,
+      attributeFilter:["class","hidden"]
+    });
+  }
+
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>{
     queueAuthSync();
-    if(document.body){domObserver=new MutationObserver(queueDomSync);domObserver.observe(document.body,{childList:true,subtree:true});}
+    observePortalDom();
   },{once:true});
   else{
     queueAuthSync();
-    if(document.body){domObserver=new MutationObserver(queueDomSync);domObserver.observe(document.body,{childList:true,subtree:true});}
+    observePortalDom();
   }
 
   const authObserver=new MutationObserver(queueAuthSync);
