@@ -59,6 +59,24 @@ html[data-theme="light"] .at-class-chart-row small{color:#6b7b84}
 html[data-theme="light"] .at-class-chart-track{background:#e5ecef}
 html[data-theme="light"] .at-class-chart-row b{color:#556a75}
 
+/* Indicadores coloridos: reserva espaço real para a bolinha e evita sobreposição. */
+.at-app-content .at-metric>div>span{
+  padding-left:13px!important;
+}
+.at-app-content .at-metric:after{
+  left:18px!important;
+  right:auto!important;
+  top:25px!important;
+  bottom:auto!important;
+  width:7px!important;
+  height:7px!important;
+}
+.at-status:before,
+.at-app-sync i,
+.at-control-side-dot{
+  flex:0 0 auto!important;
+}
+
 @media(min-width:1101px){
   .at-app-content .at-dashboard-grid{align-items:stretch!important}
   .at-app-content .at-main-records{height:100%!important}
@@ -85,5 +103,6 @@ html[data-theme="light"] .at-class-chart-row b{color:#556a75}
   .at-app-content .at-metrics{grid-template-columns:1fr 1fr!important;gap:8px!important}
   .at-app-content .at-metric{min-height:104px!important;padding:14px!important}
   .at-app-content .at-metric strong{font-size:26px!important;margin-top:13px!important}
+  .at-app-content .at-metric:after{left:14px!important;top:21px!important}
   .at-class-chart-row{grid-template-columns:78px minmax(0,1fr) 46px;gap:8px}
 }
