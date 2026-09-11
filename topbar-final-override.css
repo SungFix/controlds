@@ -123,3 +123,36 @@ html.theme-transitioning .quick-title{
     overflow:hidden !important;
   }
 }
+
+/* =========================================================
+   Tema claro — resíduos escuros encontrados na revisão visual
+   ========================================================= */
+html[data-theme="light"] body .page-symbol{
+  background:#d4e2e6 !important;
+  border-color:#a9bec7 !important;
+  color:#58717c !important;
+  box-shadow:none !important;
+}
+
+html[data-theme="light"] body #requestModal .time-trigger span:last-child{
+  background:#c8dbe1 !important;
+  border-color:#9fb8c1 !important;
+  color:#4f6974 !important;
+  box-shadow:none !important;
+}
+html[data-theme="light"] body #requestModal .time-trigger:hover span:last-child{
+  background:#bfd4dc !important;
+  border-color:#94b0bb !important;
+}
+
+html[data-theme="light"] body .exit-confirm-note,
+html[data-theme="light"] body .exit-confirm-note.clean{
+  background:#d5e2e6 !important;
+  border-color:#acc1c9 !important;
+  color:#5c717a !important;
+  box-shadow:none !important;
+}
+html[data-theme="light"] body .exit-confirm-note b,
+html[data-theme="light"] body .exit-confirm-note.clean b{
+  color:#465f69 !important;
+}
