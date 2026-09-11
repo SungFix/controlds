@@ -1,0 +1,198 @@
+/* Portal ETE / Control Ds — paleta clara v2
+   Areia clara + salvia suave + azul nevoa.
+   Carregada por ultimo para alterar apenas cores do tema claro. */
+
+html[data-theme="light"]{
+  --ui-bg:#f1eee8!important;
+  --ui-bg-2:#ebe7df!important;
+  --ui-sidebar:#f3f0e9!important;
+  --ui-surface:#f8f5ef!important;
+  --ui-surface-2:#eef1ea!important;
+  --ui-surface-3:#e5ece7!important;
+  --ui-surface-4:#dce6e2!important;
+  --ui-border:#c9cec6!important;
+  --ui-border-strong:#b7c1ba!important;
+  --ui-text:#53616a!important;
+  --ui-text-2:#637078!important;
+  --ui-muted:#778188!important;
+  --ui-faint:#8d969a!important;
+  --ui-primary:#9bb3bd!important;
+  --ui-primary-hover:#8faab5!important;
+  --ui-primary-text:#4b5d66!important;
+  --ui-accent:#8fa8b2!important;
+  --ui-accent-soft:#dce8eb!important;
+  --ui-success:#718b79!important;
+  --ui-success-bg:#dfe9df!important;
+  --ui-success-border:#bfd0c1!important;
+  --ui-warning:#9b865e!important;
+  --ui-warning-bg:#efe6d4!important;
+  --ui-warning-border:#dac9a8!important;
+  --ui-danger:#9a7074!important;
+  --ui-danger-bg:#eddede!important;
+  --ui-danger-border:#d8bfc1!important;
+  --ui-info:#738f9d!important;
+  --ui-info-bg:#dde8ec!important;
+  --ui-info-border:#bdced5!important;
+  color-scheme:light;
+}
+
+html[data-theme="light"] body{
+  background:linear-gradient(180deg,#f3f0ea 0%,#eeeae3 52%,#e9e5de 100%)!important;
+  color:#53616a!important;
+}
+
+/* Login */
+html[data-theme="light"] body.auth-locked .login-gate{
+  background:radial-gradient(circle at 50% 0%,rgba(142,168,178,.14),transparent 34%),linear-gradient(180deg,#f3f0ea,#eae6df)!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card{
+  background:#f8f5ef!important;border-color:#c7cec6!important;color:#53616a!important;
+  box-shadow:0 22px 58px rgba(101,111,104,.14)!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-brand{
+  background:linear-gradient(180deg,#edf1ea,#e3eae5)!important;border-color:#c5cec6!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-mark{
+  background:linear-gradient(#f6f3ed,#f6f3ed) padding-box,linear-gradient(135deg,#c6ad75 0 25%,#8fa88f 25% 50%,#c69292 50% 75%,#8da8b6 75%) border-box!important;
+  color:#56656d!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card :is(.login-brand strong,#loginTitle){color:#53616a!important}
+html[data-theme="light"] body.auth-locked .login-gate .login-card :is(.login-brand small,#loginTitle + p,.login-note){color:#788389!important}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid label{color:#66747b!important}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input{
+  background:#f2f3ee!important;border-color:#c4ccc5!important;color:#55636b!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input::placeholder{color:#939b9f!important}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input:focus{background:#f7f5f0!important;border-color:#9eafb0!important}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input:-webkit-autofill,
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input:-webkit-autofill:hover,
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input:-webkit-autofill:focus{
+  -webkit-text-fill-color:#55636b!important;-webkit-box-shadow:0 0 0 1000px #f2f3ee inset!important;box-shadow:0 0 0 1000px #f2f3ee inset!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit{
+  background:#dbe7ea!important;border-color:#b8cbd1!important;color:#536773!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit:hover{background:#cfdee3!important;border-color:#aabfc7!important}
+html[data-theme="light"] body.auth-locked .login-gate .login-note{border-top-color:#cdd2cb!important}
+
+/* Estrutura Control Ds */
+html[data-theme="light"] .sidebar{background:#f1eee8!important;border-color:#c9cec6!important}
+html[data-theme="light"] .topbar{background:rgba(248,245,239,.96)!important;border-color:#c9cec6!important}
+html[data-theme="light"] :is(.panel,.hero-stat,.mini-stat,.request-card,.computer-item,.student-item,.student-card,.permission-item,.permission-card,.settingscard){
+  background:#f8f5ef!important;border-color:#c8cec7!important;box-shadow:0 8px 24px rgba(105,112,106,.07)!important;
+}
+html[data-theme="light"] :is(.panelhead,.request-card-top,.computer-item-head){background:#eef1ea!important;border-color:#c7cec7!important}
+html[data-theme="light"] .page-symbol{background:#e2ebe6!important;border-color:#bfcac2!important;color:#647b72!important}
+html[data-theme="light"] :is(.nav button.active,.nav button:hover){background:#e3ece7!important;border-color:#c1ccc4!important;color:#596971!important}
+html[data-theme="light"] :is(.navicon,.nav button.active .navicon){background:#dbe7e1!important;border-color:#b8c8bf!important;color:#61796f!important}
+html[data-theme="light"] :is(.btn,.secondary,.control-theme-toggle-header,.header-account,.header-logout,.logout){
+  background:#e5ece7!important;border-color:#c0cac2!important;color:#596a71!important;
+}
+html[data-theme="light"] :is(.btn:hover,.secondary:hover,.control-theme-toggle-header:hover,.header-account:hover,.header-logout:hover,.logout:hover){background:#dce7e1!important;border-color:#b4c2b8!important}
+html[data-theme="light"] .primary{background:#d7e5e9!important;border-color:#afc5cc!important;color:#536873!important}
+html[data-theme="light"] .danger{background:#eddede!important;border-color:#d4b9bc!important;color:#8d666b!important}
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea{background:#f4f3ed!important;border-color:#c4ccc5!important;color:#55636b!important}
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder{color:#939b9f!important}
+
+/* Perfil */
+html[data-theme="light"] body .topbar-right .header-account,
+html[data-theme="light"] body .top-right .header-account{background:#e1e9e4!important;border-color:#bdc9c1!important;color:#5d6e75!important}
+html[data-theme="light"] body .user-profile-popover{background:#f0f1eb!important;border-color:#c3cbc4!important;color:#58676f!important}
+html[data-theme="light"] body .user-profile-row{background:#f7f4ee!important;border-color:#c9cec6!important}
+html[data-theme="light"] body .user-profile-row span{color:#7d878b!important}
+html[data-theme="light"] body .user-profile-row strong{color:#57666e!important}
+
+/* Novo pedido de notebook */
+html[data-theme="light"] body #requestModal,
+html[data-theme="light"] body #requestModal .modal{background:#f3f0e9!important;border-color:#c6cec6!important;color:#55636b!important}
+html[data-theme="light"] body #requestModal :is(.request-section,.request-summary-card){background:#edf1ea!important;border-color:#c5cdc5!important}
+html[data-theme="light"] body #requestModal :is(.request-section-head,.request-summary-top){background:#e0eae4!important;border-color:#bdc9c0!important}
+html[data-theme="light"] body #requestModal :is(.request-section-body,.request-summary-body){background:#f7f4ee!important}
+html[data-theme="light"] body #requestModal .request-section-badge{background:#edf1ea!important;border-color:#bdc9c1!important;color:#60736f!important}
+html[data-theme="light"] body #requestModal .saved-student-box{background:#e7ede7!important;border-color:#c1cbc3!important}
+html[data-theme="light"] body #requestModal :is(.student-picker-trigger,.time-trigger,input,textarea){background:#f5f3ed!important;border-color:#c2cbc3!important;color:#55636b!important}
+html[data-theme="light"] body #requestModal :is(.student-picker-trigger,.time-trigger):hover{background:#ecefe8!important;border-color:#b4c1b7!important}
+html[data-theme="light"] body #requestModal .student-picker-chevron{background:#dfe9e4!important;border-color:#bdc9c1!important;color:#667c73!important}
+html[data-theme="light"] body #requestModal :is(.student-picker-popup,.time-popup){background:#eef1ea!important;border-color:#c2cbc3!important;box-shadow:0 16px 34px rgba(102,111,104,.13)!important}
+html[data-theme="light"] body #requestModal .student-picker-search{background:#f7f4ee!important;border-color:#c5cdc6!important;color:#58666e!important}
+html[data-theme="light"] body #requestModal .student-option:hover{background:#e2ebe5!important}
+html[data-theme="light"] body #requestModal .student-option.active{background:#d6e5df!important;color:#5b706b!important}
+html[data-theme="light"] body #requestModal .time-card{background:#e7ede7!important;border-color:#c1cbc3!important}
+html[data-theme="light"] body #requestModal .time-trigger span:last-child{background:#d9e6e0!important;border-color:#b4c5bb!important;color:#5e756d!important}
+html[data-theme="light"] body #requestModal :is(.time-info,.summary-note){background:#e9e7dd!important;border-color:#cbc5b7!important;color:#746f62!important}
+html[data-theme="light"] body #requestModal .summary-item{background:#edf1ea!important;border-color:#c3ccc4!important}
+html[data-theme="light"] body #requestModal :is(.btn,button:not(.close):not(.student-option)){background:#e3ebe6!important;border-color:#bec9c1!important;color:#5d6e75!important}
+html[data-theme="light"] body #requestModal .btn.primary{background:#d6e5e9!important;border-color:#adc3ca!important;color:#566b75!important}
+html[data-theme="light"] body #requestModal .close{background:#e3ebe6!important;border-color:#bec9c1!important;color:#607078!important}
+html[data-theme="light"] body :is(.exit-confirm-note,.exit-confirm-note.clean){background:#e8ede5!important;border-color:#c2cabf!important;color:#6a756f!important}
+
+/* Portal */
+html[data-theme="light"] .ete-portal{background:radial-gradient(circle at 14% 0%,rgba(142,168,178,.11),transparent 34%),radial-gradient(circle at 88% 5%,rgba(143,168,143,.10),transparent 30%),linear-gradient(180deg,#f3f0ea,#ebe7df)!important;color:#53616a!important}
+html[data-theme="light"] .ete-portal:before{opacity:.18!important}
+html[data-theme="light"] :is(.ete-portal-topbar,.ete-portal-mark,.ete-portal-user,.ete-portal-theme,.ete-portal-exit,.ete-portal-back,.ete-module-panel){background:#f8f5ef!important;border-color:#c8cec7!important;color:#56656d!important}
+html[data-theme="light"] .ete-system-card{background:#f8f5ef!important;border-color:#c8cec7!important;color:#56656d!important;box-shadow:0 12px 30px rgba(106,112,105,.08)!important}
+html[data-theme="light"] .ete-system-card:nth-child(1){background:#f4f3ed!important}
+html[data-theme="light"] .ete-system-card:nth-child(2){background:#eef3ee!important}
+html[data-theme="light"] .ete-system-card:hover{background:#eef1ea!important;border-color:#b9c3bb!important}
+html[data-theme="light"] :is(.ete-system-icon,.ete-system-status,.ete-portal-points span,.ete-module-note){background:#e7ede7!important;border-color:#c2cbc3!important;color:#5f706f!important}
+html[data-theme="light"] .ete-system-card:nth-child(1) .ete-system-icon{background:#dde8ec!important;border-color:#bdced5!important;color:#607b88!important}
+html[data-theme="light"] .ete-system-card:nth-child(2) .ete-system-icon{background:#dfe9df!important;border-color:#bfd0c1!important;color:#687e6e!important}
+html[data-theme="light"] :is(.ete-portal-brand small,.ete-portal-hero p,.ete-system-card p,.ete-system-open,.ete-module-panel p,.ete-module-note){color:#748087!important}
+html[data-theme="light"] .ete-exit-backdrop{background:rgba(123,129,122,.24)!important}
+html[data-theme="light"] .ete-exit-card{background:#f7f4ee!important;color:#56656d!important;border-color:#c6cec6!important}
+html[data-theme="light"] :is(.ete-exit-close,.ete-exit-option){background:#edf1ea!important;border-color:#c3cbc4!important;color:#58676f!important}
+html[data-theme="light"] .ete-exit-option:hover{background:#e3ebe6!important;border-color:#b8c5bb!important}
+html[data-theme="light"] .ete-exit-option-icon{background:#dce8eb!important;border-color:#bdced5!important;color:#607b88!important}
+html[data-theme="light"] .ete-exit-option.danger .ete-exit-option-icon{background:#eddede!important;border-color:#d7bdc0!important;color:#956c70!important}
+
+/* Area administrativa */
+html[data-theme="light"] .ete-admin-layer{background:radial-gradient(circle at 12% 0%,rgba(142,168,178,.11),transparent 34%),linear-gradient(180deg,#f3f0ea,#ebe7df)!important;color:#53616a!important}
+html[data-theme="light"] :is(.ete-admin-topbar,.ete-admin-user-card,.ete-admin-modal){background:#f8f5ef!important;border-color:#c8cec7!important;color:#56656d!important}
+html[data-theme="light"] :is(.ete-admin-search input,.ete-admin-field input,.ete-admin-refresh,.ete-admin-reset-button,.ete-admin-cancel,.ete-admin-show-password,.ete-admin-close,.ete-admin-modal-close){background:#eef1ea!important;border-color:#c2cbc3!important;color:#5a6970!important}
+html[data-theme="light"] .ete-admin-avatar{background:#e1eae5!important;border-color:#bdc9c1!important;color:#617970!important}
+html[data-theme="light"] .ete-admin-notice{background:#edf1ea!important;border-color:#c4ccc5!important;color:#647079!important}
+html[data-theme="light"] .ete-admin-notice[data-type="success"]{background:#dfe9df!important;border-color:#bfd0c1!important;color:#6e826f!important}
+html[data-theme="light"] .ete-admin-notice[data-type="error"]{background:#eddede!important;border-color:#d8bfc1!important;color:#956b70!important}
+html[data-theme="light"] .ete-admin-modal-layer{background:rgba(120,126,119,.27)!important}
+html[data-theme="light"] .ete-admin-save{background:#d8e6ea!important;border-color:#b2c6cd!important;color:#566a74!important}
+html[data-theme="light"] .ete-admin-self-warning{background:#efe6d4!important;border-color:#dac9a8!important;color:#8f7b59!important}
+
+/* Atestados */
+html[data-theme="light"] body #eteCentralPortal .ete-atestados,
+html[data-theme="light"] body #eteCentralPortal .at-control-shell,
+html[data-theme="light"] body #eteCentralPortal .at-control-main,
+html[data-theme="light"] body #eteCentralPortal .at-view,
+html[data-theme="light"] body #eteCentralPortal .at-app-main{background:#f1eee8!important;color:#53616a!important}
+html[data-theme="light"] body #eteCentralPortal .at-control-sidebar{background:#ebece5!important;border-color:#c5ccc4!important}
+html[data-theme="light"] body #eteCentralPortal .at-app-topbar{background:rgba(248,245,239,.96)!important;border-color:#c7cec6!important}
+html[data-theme="light"] body #eteCentralPortal .at-app-content :is(.at-card,.at-metric,.at-form-intro,.at-form-card,.at-records-card){background:#f8f5ef!important;border-color:#c8cec7!important;color:#56656d!important}
+html[data-theme="light"] body #eteCentralPortal .at-app-content :is(.at-card-head,.at-records-top,.at-overview-toolbar,.at-inline-search,.at-toolbar,.at-records-summary,.at-report-filterbar){background:#eef1ea!important;border-color:#c4ccc5!important;color:#5b6a72!important}
+html[data-theme="light"] body #eteCentralPortal .at-control-sidebar .at-nav-item:hover{background:#e2eae4!important;border-color:#bec8bf!important}
+html[data-theme="light"] body #eteCentralPortal .at-control-sidebar .at-nav-item.active{background:#d9e5df!important;border-color:#b5c4ba!important;color:#5e726b!important}
+html[data-theme="light"] body #eteCentralPortal .at-control-navicon{background:#e0e9e4!important;border-color:#bdc9c1!important;color:#62786f!important}
+html[data-theme="light"] body #eteCentralPortal :is(.at-app-home,.at-app-theme,.at-app-user,.at-app-exit){background:#e6ece7!important;border-color:#c0cac2!important;color:#5c6d74!important}
+html[data-theme="light"] body #eteCentralPortal .at-app-content :is(.at-input,.at-select,.at-textarea,.at-room-trigger,.at-reason-trigger,.at-date-trigger,.at-time-trigger){background:#f4f3ed!important;border-color:#c3cbc4!important;color:#56656d!important}
+html[data-theme="light"] body #eteCentralPortal .at-app-content :is(.at-input,.at-select,.at-textarea,.at-room-trigger,.at-reason-trigger,.at-date-trigger,.at-time-trigger):hover{background:#ecefe8!important;border-color:#b5c2b8!important}
+html[data-theme="light"] body #eteCentralPortal .at-app-content .at-filter-tabs button{background:#e4ebe6!important;border-color:#c0cac2!important;color:#637278!important}
+html[data-theme="light"] body #eteCentralPortal .at-app-content .at-filter-tabs button.active{background:#d8e5df!important;border-color:#b3c3b8!important;color:#5c7068!important}
+html[data-theme="light"] body #eteCentralPortal .at-app-content .at-metric-icon{background:#dce8eb!important;border-color:#bdced5!important;color:#617d89!important}
+html[data-theme="light"] body #eteCentralPortal .at-app-content .at-table th{background:#e7ece6!important;border-color:#c4ccc5!important;color:#748087!important}
+html[data-theme="light"] body #eteCentralPortal .at-app-content .at-table td{background:#f8f5ef!important;border-color:#d0d3cc!important;color:#66737a!important}
+html[data-theme="light"] body #eteCentralPortal .at-app-content .at-table tbody tr:hover td{background:#eef1ea!important}
+html[data-theme="light"] body #eteCentralPortal .at-app-content .at-avatar,
+html[data-theme="light"] body #eteCentralPortal .at-app-content .at-badge{background:#dce8eb!important;border-color:#bdced5!important;color:#607b88!important}
+html[data-theme="light"] body #eteCentralPortal .at-app-content :is(.at-rate,.at-period-badge,.at-app-sync,.at-status){background:#dfe9df!important;border-color:#bfd0c1!important;color:#6e826f!important}
+html[data-theme="light"] body #eteCentralPortal .at-app-content .at-icon-danger{background:#eddede!important;border-color:#d8bfc1!important;color:#956b70!important}
+html[data-theme="light"] body #eteCentralPortal .ete-atestados :is(.at-time-popover,.at-room-groups,.at-reason-list,.at-date-popover){background:#eef1ea!important;border-color:#c3cbc4!important;box-shadow:0 16px 36px rgba(102,111,104,.13)!important}
+html[data-theme="light"] body #eteCentralPortal .ete-atestados :is(.at-time-popover-head,.at-time-popover-foot,.at-time-column-title){background:#e5ece7!important;border-color:#c2cbc3!important;color:#64747a!important}
+html[data-theme="light"] body #eteCentralPortal .ete-atestados .at-time-column{background:#f5f3ed!important;border-color:#c5cdc6!important}
+html[data-theme="light"] body #eteCentralPortal .ete-atestados .at-time-option:hover,
+html[data-theme="light"] body #eteCentralPortal .ete-atestados .at-room-option span:hover{background:#e2eae4!important}
+html[data-theme="light"] body #eteCentralPortal .ete-atestados .at-time-option.selected,
+html[data-theme="light"] body #eteCentralPortal .ete-atestados .at-room-option input:checked+span{background:#d5e3dd!important;border-color:#b1c2b7!important;color:#5b7068!important}
+
+/* Estados suaves */
+html[data-theme="light"] :is(.sync-pill,.syncbadge,.at-app-sync,.ete-system-status){box-shadow:none!important}
