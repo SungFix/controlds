@@ -70,6 +70,7 @@ html[data-theme="light"] #eteCentralPortal #etePortalTheme::before{
 
 /* Logout */
 #eteCentralPortal #etePortalExit::before{
+  transform:translate(calc(-50% + 0.6px),-50%)!important;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23eef1f4' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 4.5H6.5A2.5 2.5 0 0 0 4 7v10a2.5 2.5 0 0 0 2.5 2.5H10'/%3E%3Cpath d='M14.5 8 18.5 12l-4 4'/%3E%3Cpath d='M18.5 12H9'/%3E%3C/svg%3E")!important;
 }
 
