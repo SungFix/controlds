@@ -35,14 +35,16 @@
     button.style.setProperty("margin","0","important");
     button.style.setProperty("transform","none","important");
     button.style.setProperty("z-index","2147483643","important");
-    button.style.setProperty("width","44px","important");
-    button.style.setProperty("min-width","44px","important");
-    button.style.setProperty("height","44px","important");
-    button.style.setProperty("min-height","44px","important");
+    button.style.setProperty("width","50px","important");
+    button.style.setProperty("min-width","50px","important");
+    button.style.setProperty("height","50px","important");
+    button.style.setProperty("min-height","50px","important");
     button.style.setProperty("padding","0","important");
     button.style.setProperty("font-size","0","important");
     button.style.setProperty("line-height","1","important");
-    button.style.setProperty("border-radius","12px","important");
+    button.style.setProperty("align-items","center","important");
+    button.style.setProperty("justify-content","center","important");
+    button.style.setProperty("border-radius","13px","important");
     button.dataset.cornerFixed="true";
     button.dataset.iconOnly="true";
   }
