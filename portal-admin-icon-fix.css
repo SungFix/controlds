@@ -137,9 +137,14 @@ html[data-theme="light"] #eteCentralPortal #etePortalExit::before{
 
 #eteCentralPortal .ete-system-icon::before{
   content:""!important;
+  position:absolute!important;
+  top:50%!important;
+  left:50%!important;
   width:24px!important;
   height:24px!important;
   display:block!important;
+  margin:0!important;
+  transform:translate(-50%,-50%)!important;
   background:currentColor!important;
   -webkit-mask-repeat:no-repeat!important;
   -webkit-mask-position:center!important;
