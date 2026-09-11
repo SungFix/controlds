@@ -30,7 +30,7 @@
   content:""!important;
   position:absolute!important;
   top:50%!important;
-  left:50%!important;
+  left:calc(50% + 0.75px)!important;
   width:16px!important;
   height:2px!important;
   margin:0!important;
