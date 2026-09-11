@@ -4,3 +4,31 @@ body.ete-admin-open,body.ete-admin-modal-open{overflow:hidden}
 .ete-admin-modal-layer{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;padding:18px;background:rgba(4,6,8,.76);backdrop-filter:blur(8px)}.ete-admin-modal-layer[hidden]{display:none!important}.ete-admin-modal{position:relative;width:min(520px,100%);padding:25px;border:1px solid #3a4652;border-radius:19px;background:linear-gradient(180deg,#151a20,#101419);color:#eef2f5;box-shadow:0 30px 90px rgba(0,0,0,.52)}.ete-admin-modal-close{position:absolute;right:17px;top:17px}.ete-admin-modal h2{margin:0 52px 5px 0;font-size:27px;letter-spacing:-.035em}.ete-admin-target{margin:0 0 19px;color:#aeb8c2;font-size:13px}.ete-admin-self-warning{margin:0 0 16px;padding:11px 12px;border:1px solid #735d36;border-radius:10px;background:#241d12;color:#e6d1a5;font-size:11px;line-height:1.45}.ete-admin-field{display:block;margin-top:15px}.ete-admin-password-wrap{display:flex;gap:8px}.ete-admin-password-wrap input{flex:1;min-width:0}.ete-admin-show-password{min-width:76px;padding:0 10px}.ete-admin-strength{margin-top:7px;color:#9faab4;font-size:10px;font-weight:750}.ete-admin-strength[data-level="weak"]{color:#e7a2a9}.ete-admin-strength[data-level="medium"]{color:#e4ca8f}.ete-admin-strength[data-level="strong"]{color:#9dd1ad}.ete-admin-form-error{margin-top:14px;padding:10px 11px;border:1px solid #60383d;border-radius:9px;background:#231416;color:#f1c0c5;font-size:11px;line-height:1.45}.ete-admin-modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:22px}.ete-admin-cancel,.ete-admin-save{min-height:42px;padding:0 14px}.ete-admin-save{border-color:#3c6689;background:#1b3a53;color:#e5f3ff}.ete-admin-save:hover{background:#224967;border-color:#5682a6}.ete-admin-save:disabled{cursor:wait;opacity:.65}
 html[data-theme="light"] .ete-portal-admin-button{background:#eef5fb;border-color:#bfd1e0;color:#31506a}html[data-theme="light"] .ete-admin-layer{background:radial-gradient(circle at 12% 0%,rgba(92,124,160,.10),transparent 34%),linear-gradient(180deg,#f7f9fb,#eef2f5);color:#192126}html[data-theme="light"] .ete-admin-topbar,html[data-theme="light"] .ete-admin-user-card,html[data-theme="light"] .ete-admin-modal{background:#fff;border-color:#d5dfe5;color:#24313a}html[data-theme="light"] .ete-admin-topbar p,html[data-theme="light"] .ete-admin-target,html[data-theme="light"] .ete-admin-user-main span,html[data-theme="light"] .ete-admin-user-main small,html[data-theme="light"] .ete-admin-search>span,html[data-theme="light"] .ete-admin-field>span{color:#536873}html[data-theme="light"] .ete-admin-search input,html[data-theme="light"] .ete-admin-field input,html[data-theme="light"] .ete-admin-refresh,html[data-theme="light"] .ete-admin-reset-button,html[data-theme="light"] .ete-admin-cancel,html[data-theme="light"] .ete-admin-show-password,html[data-theme="light"] .ete-admin-close,html[data-theme="light"] .ete-admin-modal-close{background:#f8fafb;border-color:#ccd8df;color:#26353e}html[data-theme="light"] .ete-admin-avatar{background:#f3f7f9;border-color:#cedae1;color:#35566f}html[data-theme="light"] .ete-admin-loading,html[data-theme="light"] .ete-admin-empty{border-color:#ccd7de;color:#61727c}html[data-theme="light"] .ete-admin-notice{background:#f8fafb;border-color:#ccd8df;color:#455b67}html[data-theme="light"] .ete-admin-modal-layer{background:rgba(30,39,45,.38)}
 @media(max-width:720px){.ete-portal-admin-button{min-height:40px;padding:0 10px;font-size:10px}.ete-admin-shell{width:min(100% - 20px,1040px);padding-top:10px}.ete-admin-topbar{padding:18px}.ete-admin-topbar h1{font-size:25px}.ete-admin-topbar p{font-size:12px}.ete-admin-toolbar{align-items:stretch;flex-direction:column}.ete-admin-refresh{width:100%}.ete-admin-user-card{align-items:stretch;flex-direction:column}.ete-admin-reset-button{width:100%}.ete-admin-modal{padding:22px 18px}.ete-admin-modal h2{font-size:24px}.ete-admin-password-wrap{align-items:stretch;flex-direction:column}.ete-admin-show-password{min-height:38px}.ete-admin-modal-actions{flex-direction:column-reverse}.ete-admin-cancel,.ete-admin-save{width:100%}}
+
+/* V2 — entrada administrativa apenas no Portal ETE */
+#eteControlAdminConfigButton{display:none!important}
+#eteCentralPortal .ete-portal-admin-button{
+  position:fixed!important;
+  top:18px!important;
+  left:18px!important;
+  right:auto!important;
+  z-index:2147483000!important;
+  min-height:44px!important;
+  padding:0 14px!important;
+  border-radius:11px!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.24)!important;
+}
+#eteCentralPortal .ete-portal-admin-button::before{
+  content:"⚙";
+  margin-right:7px;
+  font-size:14px;
+  line-height:1;
+}
+@media(max-width:720px){
+  #eteCentralPortal .ete-portal-admin-button{
+    top:12px!important;
+    left:12px!important;
+    min-height:40px!important;
+    padding:0 11px!important;
+  }
+}
