@@ -161,6 +161,7 @@ window.ETE_CONFIG = {
     ensureScript("controlMobileLogoutIconScript", "mobile-logout-icon.js?v=2");
     ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=3");
     ensureScript("controlPortalScript", "portal.js?v=14");
+    ensureScript("controlAdminFunctionAuthFixScript", "admin-function-auth-fix.js?v=1");
     ensureScript("controlPortalAdminScript", "portal-admin.js?v=2");
     ensureScript("controlPortalAdminCornerScript", "portal-admin-corner.js?v=3");
     ensureScript("controlRelationalFrontendV2Script", "relational-frontend-v2.js?v=1");
