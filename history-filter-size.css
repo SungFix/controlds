@@ -129,8 +129,78 @@ html[data-theme="light"] .history-filter-option:hover,
 html[data-theme="light"] .history-filter-option:focus-visible{background:#eef4f7;border-color:#d0dfe6;color:#223944}
 html[data-theme="light"] .history-filter-option.is-selected{background:#e8f0f4;border-color:#bfd1da;color:#223944}
 
+/* Exclusão individual de eventos */
+.history-delete-one{
+  width:34px;
+  min-width:34px;
+  height:34px;
+  min-height:34px;
+  padding:0;
+  margin:1px 0 0;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  align-self:flex-end;
+  border:1px solid #55343a;
+  border-radius:9px;
+  background:#24191c;
+  color:#d78f98;
+  line-height:0;
+  cursor:pointer;
+  transition:background .13s ease,border-color .13s ease,color .13s ease,transform .13s ease;
+}
+.history-delete-one svg{
+  width:15px;
+  height:15px;
+  display:block;
+  flex:0 0 15px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.history-delete-one:hover{
+  background:#312126;
+  border-color:#764850;
+  color:#f0adb5;
+  transform:translateY(-1px);
+}
+.history-delete-one:active{transform:none}
+.history-delete-one:focus-visible{
+  outline:2px solid #bd7e87;
+  outline-offset:2px;
+}
+.history-delete-one:disabled{
+  cursor:wait;
+  opacity:.55;
+  transform:none;
+}
+.history-delete-one.is-loading svg{opacity:.45}
+
+html[data-theme="light"] .history-delete-one{
+  background:#eddede;
+  border-color:#d8bfc1;
+  color:#8f676c;
+}
+html[data-theme="light"] .history-delete-one:hover{
+  background:#e5d2d3;
+  border-color:#cbaeb1;
+  color:#805b60;
+}
+
 @media(max-width:820px){
   .history-filter-shell{width:100%;min-width:0}
   .history-filter-trigger{min-height:54px;font-size:12px}
   .history-filter-option{min-height:42px;font-size:11px}
+}
+
+@media(max-width:560px){
+  .history-delete-one{
+    width:36px;
+    min-width:36px;
+    height:36px;
+    min-height:36px;
+    align-self:flex-start;
+  }
 }
