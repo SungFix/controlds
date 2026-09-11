@@ -72,24 +72,99 @@
     return data;
   }
 
-  function ensureButton(){
+  function ensureEntryStyles(){
+    if(document.getElementById("eteAdminEntryStyles"))return;
+    const style=document.createElement("style");
+    style.id="eteAdminEntryStyles";
+    style.textContent=`
+      .ete-control-admin-button{
+        display:inline-flex!important;
+        align-items:center!important;
+        justify-content:center!important;
+        gap:7px!important;
+        min-height:48px!important;
+        padding:0 14px!important;
+        border-color:#38434e!important;
+        background:#15191e!important;
+        color:#dfe5ea!important;
+        white-space:nowrap!important;
+      }
+      .ete-control-admin-button:hover{
+        background:#1d232a!important;
+        border-color:#52606e!important;
+      }
+      .ete-control-admin-button .ete-config-icon{
+        font-size:15px!important;
+        line-height:1!important;
+      }
+      .ete-control-admin-button .ete-config-label{
+        font-size:10px!important;
+        font-weight:850!important;
+      }
+      html[data-theme="light"] .ete-control-admin-button{
+        background:#f7fafc!important;
+        border-color:#cad6de!important;
+        color:#324b5d!important;
+      }
+      @media(max-width:820px){
+        .ete-control-admin-button{
+          width:40px!important;
+          min-width:40px!important;
+          min-height:40px!important;
+          padding:0!important;
+          border-radius:10px!important;
+        }
+        .ete-control-admin-button .ete-config-label{display:none!important}
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function ensurePortalButton(admin){
     const actions=document.querySelector("#eteCentralPortal .ete-portal-actions");
-    const existing=document.getElementById("etePortalAdminButton");
-    if(!actions||!isAdmin()){
-      existing?.remove();
-      if(panel&&!panel.hidden&&!isAdmin())closePanel();
+    let button=document.getElementById("etePortalAdminButton");
+    if(!actions||!admin){
+      button?.remove();
       return;
     }
-    if(existing)return;
-    const button=document.createElement("button");
+    if(button)return;
+    button=document.createElement("button");
     button.type="button";
     button.id="etePortalAdminButton";
     button.className="ete-portal-admin-button";
     button.textContent="Administração";
-    button.title="Gerenciar usuários";
+    button.title="Abrir configurações administrativas";
     button.addEventListener("click",openPanel);
     const themeButton=actions.querySelector("#etePortalTheme");
     actions.insertBefore(button,themeButton||actions.firstChild);
+  }
+
+  function ensureControlConfigButton(admin){
+    const actions=document.querySelector(".topbar .topbar-right");
+    let button=document.getElementById("eteControlAdminConfigButton");
+    if(!actions||!admin){
+      button?.remove();
+      return;
+    }
+    if(button)return;
+    button=document.createElement("button");
+    button.type="button";
+    button.id="eteControlAdminConfigButton";
+    button.className="btn secondary small ete-control-admin-button";
+    button.setAttribute("aria-label","Abrir configurações administrativas");
+    button.title="Configurações administrativas";
+    button.innerHTML='<span class="ete-config-icon" aria-hidden="true">⚙</span><span class="ete-config-label">Config</span>';
+    button.addEventListener("click",openPanel);
+    const account=actions.querySelector(".header-account");
+    actions.insertBefore(button,account||actions.querySelector("#logoutBtn")||actions.firstChild);
+  }
+
+  function ensureAdminButtons(){
+    ensureEntryStyles();
+    const admin=isAdmin();
+    ensurePortalButton(admin);
+    ensureControlConfigButton(admin);
+    if(!admin&&panel&&!panel.hidden)closePanel();
   }
 
   function roleLabel(role){
@@ -111,14 +186,14 @@
     panel.id="etePortalAdminPanel";
     panel.className="ete-admin-layer";
     panel.hidden=true;
-    panel.setAttribute("aria-label","Administração de usuários");
+    panel.setAttribute("aria-label","Configurações administrativas");
     panel.innerHTML=`
       <div class="ete-admin-shell">
         <header class="ete-admin-topbar">
           <div>
             <span class="ete-admin-kicker">Portal ETE</span>
-            <h1>Administração de usuários</h1>
-            <p>Redefina senhas com validação segura no Supabase.</p>
+            <h1>Configurações administrativas</h1>
+            <p>Gerencie usuários e credenciais com validação segura no Supabase.</p>
           </div>
           <button type="button" class="ete-admin-close" data-admin-close aria-label="Fechar">×</button>
         </header>
@@ -361,23 +436,23 @@
   }
 
   function install(){
-    ensureButton();
+    ensureAdminButtons();
     if(!document.body)return;
     const observer=new MutationObserver(()=>{
       if(observerQueued)return;
       observerQueued=true;
-      requestAnimationFrame(()=>{observerQueued=false;ensureButton();});
+      requestAnimationFrame(()=>{observerQueued=false;ensureAdminButtons();});
     });
     observer.observe(document.body,{childList:true,subtree:true});
-    window.addEventListener("pageshow",ensureButton);
+    window.addEventListener("pageshow",ensureAdminButtons);
     document.addEventListener("keydown",event=>{
       if(event.key!=="Escape")return;
       if(resetModal&&!resetModal.hidden){closeReset();return;}
       if(panel&&!panel.hidden)closePanel();
     });
-    setTimeout(ensureButton,80);
-    setTimeout(ensureButton,300);
-    setTimeout(ensureButton,800);
+    setTimeout(ensureAdminButtons,80);
+    setTimeout(ensureAdminButtons,300);
+    setTimeout(ensureAdminButtons,800);
   }
 
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});
