@@ -2,6 +2,22 @@
 #eteCentralPortal #etePortalAdminButton{
   align-items:center!important;
   justify-content:center!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+}
+
+#eteCentralPortal #etePortalAdminButton:hover,
+#eteCentralPortal #etePortalAdminButton:active{
+  background:transparent!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+}
+
+#eteCentralPortal #etePortalAdminButton:focus-visible{
+  outline:2px solid currentColor!important;
+  outline-offset:3px!important;
 }
 
 #eteCentralPortal #etePortalAdminButton::before{
