@@ -146,6 +146,16 @@
     });
   }
 
+  async function reloadAndCheck(id){
+    if(typeof v46LoadData!=="function") return null;
+    try{
+      await v46LoadData(false);
+      return !history.some(function(entry){return entry.id===id;});
+    }catch(_){
+      return null;
+    }
+  }
+
   async function removeOne(id,button){
     if(typeof canClearHistory!=="function" || !canClearHistory()){
       if(typeof toast==="function") toast("Seu perfil não pode apagar o histórico.");
@@ -164,25 +174,22 @@
     const confirmed=window.confirm('Apagar somente este evento do histórico?\n\n"'+description+'"');
     if(!confirmed) return;
 
-    const previous=history.slice();
     if(button){button.disabled=true;button.classList.add("is-loading");}
 
     try{
-      history=history.filter(function(entry){return entry.id!==id;});
-      if(typeof persistLocalShared==="function") persistLocalShared();
-      if(typeof renderHistory==="function") renderHistory();
-
-      if(typeof pushRemoteState!=="function") throw new Error("Sincronização indisponível.");
-      const saved=await pushRemoteState();
-      if(!saved) throw new Error("Não foi possível sincronizar a exclusão.");
-
+      if(typeof v46Rpc!=="function") throw new Error("RPC V46 indisponível.");
+      const removed=await v46Rpc("ete_delete_history_event",{p_history_id:String(id)});
+      if(removed!==true) throw new Error("Evento não encontrado no Supabase.");
       if(typeof toast==="function") toast("Evento removido do histórico.");
     }catch(error){
-      history=previous;
-      if(typeof persistLocalShared==="function") persistLocalShared();
-      if(typeof renderHistory==="function") renderHistory();
-      if(typeof toast==="function") toast("Não foi possível apagar o evento. O histórico foi restaurado.");
+      const reallyRemoved=await reloadAndCheck(id);
+      if(reallyRemoved===true){
+        if(typeof toast==="function") toast("Evento removido do histórico.");
+        return;
+      }
+      if(typeof toast==="function") toast("Não foi possível apagar o evento.");
       console.error("Falha ao apagar evento individual do histórico:",error);
+      if(button){button.disabled=false;button.classList.remove("is-loading");}
     }
   }
 
