@@ -14,9 +14,9 @@ await page.evaluate(()=>{
   v46PickupRpc=async(args={})=>{window.__pickupCalls.push(args);return {};};
   clearHistoryWithPassword=async(password)=>{window.__clearPassword=password;return{removed:history.length,preview:true};};
   v46AuthUser={id:'audit-adm'};
-  currentUser={username:'audit',displayName:'Auditor do Sistema',role:'adm',roleLabel:'Administrador',userId:'audit-adm'};
+  currentUser={username:'adm',displayName:'Auditor do Sistema',role:'adm',roleLabel:'Administrador',userId:'audit-adm'};
   appReady=true;
-  data=[normalizeRequest({id:'rq-audit',student:'Aluno de Teste',studentName:'Aluno de Teste',studentClass:'1°A',studentCourse:'DS',studentId:'st-audit',room:'1°A DS',reason:'Teste automatizado',startTime:'10:20',endTime:'11:10',time:'10:20–11:10',dateKey:recifeDateKey(),status:'wait',requestedBy:'audit',requestedById:'audit-adm',requestedByLabel:'Auditor do Sistema',createdAt:new Date().toISOString()})];
+  data=[normalizeRequest({id:'rq-audit',student:'Aluno de Teste',studentName:'Aluno de Teste',studentClass:'1°A',studentCourse:'DS',studentId:'st-audit',room:'1°A DS',reason:'Teste automatizado',startTime:'10:20',endTime:'11:10',time:'10:20–11:10',dateKey:recifeDateKey(),status:'wait',requestedBy:'adm',requestedById:'audit-adm',requestedByLabel:'Auditor do Sistema',createdAt:new Date().toISOString()})];
   students=[normalizeStudent({id:'st-audit',name:'Aluno de Teste',className:'1°A',course:'DS',useCount:1,lastUsed:new Date().toISOString()})];
   permissions=[normalizePermission({id:'pm-audit',student:'Aluno de Teste',className:'1°A DS',interval:'morning',reason:'Teste automatizado',active:true,exitConfirmed:false,createdAt:new Date().toISOString()})];
   history=[normalizeHistoryItem({id:'hs-audit',atISO:new Date().toISOString(),text:'Evento de teste',detail:'Teste automatizado',type:'system',responsible:'Auditor do Sistema'})];
