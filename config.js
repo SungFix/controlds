@@ -135,6 +135,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlMobileTextareaExpandStyles", "mobile-textarea-expand.css?v=2");
     ensureStylesheet("controlPortalStyles", "portal.css?v=2");
     ensureStylesheet("controlPortalAdminStyles", "portal-admin.css?v=2");
+    ensureStylesheet("controlPortalAdminIconFixStyles", "portal-admin-icon-fix.css?v=1");
     ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=3");
     ensureStylesheet("controlAtestadosImageUploadStyles", "atestados-image-upload.css?v=1");
 
@@ -161,7 +162,7 @@ window.ETE_CONFIG = {
     ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=3");
     ensureScript("controlPortalScript", "portal.js?v=14");
     ensureScript("controlPortalAdminScript", "portal-admin.js?v=2");
-    ensureScript("controlPortalAdminCornerScript", "portal-admin-corner.js?v=2");
+    ensureScript("controlPortalAdminCornerScript", "portal-admin-corner.js?v=3");
     ensureScript("controlRelationalFrontendV2Script", "relational-frontend-v2.js?v=1");
     ensureScript("controlRegisteredStudentFlowScript", "registered-student-flow.js?v=6");
     ensureScript("controlRequestCreatorLabelScript", "request-creator-label.js?v=1");
