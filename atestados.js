@@ -121,6 +121,66 @@
     return '<div class="at-class-chart">'+items.map(([name,count])=>'<div class="at-class-chart-row"><div><strong>'+esc(name)+'</strong><small>'+count+' registro'+(count===1?'':'s')+'</small></div><div class="at-class-chart-track"><span style="width:'+Math.max(4,Math.round(count/max*100))+'%"></span></div><b>'+count+'</b></div>').join("")+'</div>';
   }
 
+  function ensureReportPieStyles(){
+    if(document.getElementById("atReportPieInlineStyles"))return;
+    const style=document.createElement("style");
+    style.id="atReportPieInlineStyles";
+    style.textContent=`
+      .ete-atestados .at-report-pie{display:grid;grid-template-columns:minmax(180px,.82fr) minmax(0,1.18fr);gap:22px;align-items:center;padding:20px}
+      .ete-atestados .at-report-pie-visual{display:grid;justify-items:center;gap:10px;min-width:0}
+      .ete-atestados .at-report-pie-graphic{width:min(190px,100%);aspect-ratio:1;border-radius:50%;border:1px solid var(--at-border);box-shadow:0 12px 28px rgba(0,0,0,.12),inset 0 0 0 1px rgba(255,255,255,.07)}
+      .ete-atestados .at-report-pie-total{display:flex;align-items:baseline;justify-content:center;gap:6px;color:var(--at-muted);font-size:8px;font-weight:750;text-align:center}
+      .ete-atestados .at-report-pie-total strong{color:var(--at-text);font-size:18px;line-height:1}
+      .ete-atestados .at-report-pie-legend{list-style:none;display:grid;gap:7px;min-width:0;margin:0;padding:0}
+      .ete-atestados .at-report-pie-item{display:grid;grid-template-columns:11px minmax(0,1fr) auto;gap:9px;align-items:center;min-width:0;padding:8px 9px;border:1px solid var(--at-border);border-radius:9px;background:var(--at-panel2)}
+      .ete-atestados .at-report-pie-dot{width:10px;height:10px;border-radius:50%}
+      .ete-atestados .at-report-pie-copy{min-width:0}
+      .ete-atestados .at-report-pie-copy strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--at-text);font-size:9px;line-height:1.3}
+      .ete-atestados .at-report-pie-copy small{display:block;margin-top:2px;color:var(--at-muted);font-size:7.7px}
+      .ete-atestados .at-report-pie-item>b{color:var(--at-text);font-size:9px;font-weight:900;white-space:nowrap}
+      html[data-theme="light"] .ete-atestados .at-report-pie-item,html.theme-light .ete-atestados .at-report-pie-item{background:#f3f1ea;border-color:#c9cec6}
+      html[data-theme="light"] .ete-atestados .at-report-pie-graphic,html.theme-light .ete-atestados .at-report-pie-graphic{border-color:#c4cbc4;box-shadow:0 10px 24px rgba(97,108,101,.12),inset 0 0 0 1px rgba(255,255,255,.48)}
+      @media(max-width:900px){.ete-atestados .at-report-pie{grid-template-columns:1fr;gap:16px}.ete-atestados .at-report-pie-graphic{width:min(180px,70vw)}}
+      @media(max-width:520px){.ete-atestados .at-report-pie{padding:15px 12px}.ete-atestados .at-report-pie-graphic{width:min(168px,66vw)}.ete-atestados .at-report-pie-copy strong{white-space:normal;overflow:visible;text-overflow:clip}}
+    `;
+    document.head.appendChild(style);
+  }
+
+  function pieChart(items,kind){
+    ensureReportPieStyles();
+    if(!items.length)return '<div class="at-empty-state compact" role="status"><strong>Sem dados</strong><span>Os indicadores aparecerão após os primeiros registros.</span></div>';
+    const colors=["#7fa5c8","#8fb899","#c9aa72","#c88991","#a391c2","#73a9a1"];
+    const sorted=items.slice().sort((a,b)=>b[1]-a[1]||String(a[0]).localeCompare(String(b[0]),"pt-BR"));
+    let grouped=sorted;
+    if(sorted.length>6){
+      const visible=sorted.slice(0,5);
+      const rest=sorted.slice(5).reduce((sum,item)=>sum+Number(item[1]||0),0);
+      grouped=[...visible,[kind==="reason"?"Outras justificativas":"Outras turmas",rest]];
+    }
+    const total=grouped.reduce((sum,item)=>sum+Number(item[1]||0),0);
+    if(!total)return '<div class="at-empty-state compact" role="status"><strong>Sem dados</strong><span>Os indicadores aparecerão após os primeiros registros.</span></div>';
+    let cursor=0;
+    const stops=grouped.map((item,index)=>{
+      const start=cursor;
+      cursor+=Number(item[1]||0)/total*100;
+      const end=index===grouped.length-1?100:cursor;
+      return colors[index%colors.length]+" "+start.toFixed(3)+"% "+end.toFixed(3)+"%";
+    }).join(",");
+    const totalLabel=kind==="reason"?(total===1?"justificativa selecionada":"justificativas selecionadas"):(total===1?"registro":"registros");
+    const unit=kind==="reason"?"seleção":"registro";
+    const legend=grouped.map((item,index)=>{
+      const name=String(item[0]);
+      const count=Number(item[1]||0);
+      const percentage=(count/total*100).toLocaleString("pt-BR",{maximumFractionDigits:1});
+      return '<li class="at-report-pie-item"><span class="at-report-pie-dot" style="background:'+colors[index%colors.length]+'" aria-hidden="true"></span><span class="at-report-pie-copy"><strong>'+esc(name)+'</strong><small>'+count+' '+unit+(count===1?'':'s')+'</small></span><b>'+percentage+'%</b></li>';
+    }).join("");
+    const aria=grouped.map(item=>{
+      const count=Number(item[1]||0);
+      return String(item[0])+", "+count+", "+(count/total*100).toLocaleString("pt-BR",{maximumFractionDigits:1})+"%";
+    }).join("; ");
+    return '<div class="at-report-pie"><div class="at-report-pie-visual"><div class="at-report-pie-graphic" style="background:conic-gradient('+stops+')" role="img" aria-label="'+esc(aria)+'"></div><div class="at-report-pie-total"><strong>'+total+'</strong><span>'+totalLabel+'</span></div></div><ol class="at-report-pie-legend">'+legend+'</ol></div>';
+  }
+
   function renderOverview(){
     const cls=classes();
     const todayRows=rows.filter(r=>r.absence_date===today());
@@ -175,6 +235,7 @@
   function renderReports(){
     const view=root.querySelector("#atView");
     if(!view)return;
+    ensureReportPieStyles();
     const opts=classes().map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join("");
     view.innerHTML='<section class="at-card at-records-card"><div class="at-records-top"><div><h2>Relatórios</h2><p>Filtre por nome do aluno ou turma e exporte apenas o resultado exibido.</p></div><button class="at-btn" type="button" data-at-export>Exportar CSV</button></div><div class="at-report-filterbar"><label class="at-search-wrap"><span>'+icon("search")+'</span><input id="atReportSearch" class="at-input" type="search" aria-label="Filtrar relatório por aluno" placeholder="Nome do aluno"></label><select id="atReportClass" class="at-select" aria-label="Filtrar relatório por turma"><option value="">Todas as turmas</option>'+opts+'</select></div><div id="atReportResults"></div></section>';
     root.querySelector("#atReportSearch")?.addEventListener("input",renderReportResults);
@@ -193,7 +254,7 @@
     const projects=list.filter(r=>String(r.project_name||"").trim());
     const byClass=countBy(list,r=>r.class_name);
     const byReason=reasonCounts(list);
-    target.innerHTML='<section class="at-metrics at-report-metrics-clean">'+metric("Total",list.length,"No filtro atual","doc")+metric("Mês atual",monthRows.length,"Registros no mês","today")+metric("Hoje",todayRows.length,"Ocorrências","today")+metric("Projetos",projects.length,"Vinculados ao filtro","project")+'</section><section class="at-report-grid-clean"><article class="at-card"><div class="at-card-head"><div><strong>Por turma</strong><small>Quantidade de registros</small></div></div>'+bars(byClass)+'</article><article class="at-card"><div class="at-card-head"><div><strong>Por justificativa</strong><small>Motivos selecionados</small></div></div>'+bars(byReason)+'</article></section><section class="at-report-table-card"><div class="at-card-head"><div><strong>Registros do filtro</strong><small>'+list.length+' resultado'+(list.length===1?'':'s')+'</small></div></div>'+(list.length?'<div class="at-table-wrap"><table class="at-table"><thead><tr><th>Aluno</th><th>Turma</th><th>Data</th><th>Período</th><th>Projeto</th>'+(canManage()?'<th></th>':'')+'</tr></thead><tbody>'+list.map(rowHtml).join("")+'</tbody></table></div>':'<div class="at-empty-state compact"><strong>Nenhum resultado</strong><span>Altere o nome ou a turma selecionada.</span></div>')+'</section>';
+    target.innerHTML='<section class="at-metrics at-report-metrics-clean">'+metric("Total",list.length,"No filtro atual","doc")+metric("Mês atual",monthRows.length,"Registros no mês","today")+metric("Hoje",todayRows.length,"Ocorrências","today")+metric("Projetos",projects.length,"Vinculados ao filtro","project")+'</section><section class="at-report-grid-clean"><article class="at-card"><div class="at-card-head"><div><strong>Por turma</strong><small>Percentual dos registros por turma</small></div></div>'+pieChart(byClass,"class")+'</article><article class="at-card"><div class="at-card-head"><div><strong>Por justificativa</strong><small>Percentual das justificativas selecionadas</small></div></div>'+pieChart(byReason,"reason")+'</article></section><section class="at-report-table-card"><div class="at-card-head"><div><strong>Registros do filtro</strong><small>'+list.length+' resultado'+(list.length===1?'':'s')+'</small></div></div>'+(list.length?'<div class="at-table-wrap"><table class="at-table"><thead><tr><th>Aluno</th><th>Turma</th><th>Data</th><th>Período</th><th>Projeto</th>'+(canManage()?'<th></th>':'')+'</tr></thead><tbody>'+list.map(rowHtml).join("")+'</tbody></table></div>':'<div class="at-empty-state compact"><strong>Nenhum resultado</strong><span>Altere o nome ou a turma selecionada.</span></div>')+'</section>';
   }
 
   function exportCsv(){
