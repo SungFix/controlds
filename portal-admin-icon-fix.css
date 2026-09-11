@@ -159,10 +159,12 @@ html[data-theme="light"] #eteCentralPortal #etePortalExit::before{
 #eteCentralPortal .ete-system-card[data-system="control-ds"] .ete-system-icon::before{
   -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3.25' y='4.25' width='17.5' height='12.25' rx='2.25'/%3E%3Cpath d='M2.75 19.25h18.5M9.25 19.25h5.5'/%3E%3Crect x='7.25' y='8' width='3' height='3' rx='.65'/%3E%3Cpath d='M13.25 8.4h3.5M13.25 10.65h2.2'/%3E%3C/svg%3E")!important;
   mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3.25' y='4.25' width='17.5' height='12.25' rx='2.25'/%3E%3Cpath d='M2.75 19.25h18.5M9.25 19.25h5.5'/%3E%3Crect x='7.25' y='8' width='3' height='3' rx='.65'/%3E%3Cpath d='M13.25 8.4h3.5M13.25 10.65h2.2'/%3E%3C/svg%3E")!important;
+  transform:translate(-50%,calc(-50% + 0.25px))!important;
 }
 
 /* Atestados: documento com confirmação */
 #eteCentralPortal .ete-system-card[data-system="atestados"] .ete-system-icon::before{
   -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 3.25h7.1l4.4 4.45v12.55a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V3.75a.5.5 0 0 1 .5-.5Z'/%3E%3Cpath d='M14 3.5V8h4.5M9.25 11.25h5.5M9.5 15l1.5 1.5 3.5-3.75'/%3E%3C/svg%3E")!important;
   mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 3.25h7.1l4.4 4.45v12.55a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V3.75a.5.5 0 0 1 .5-.5Z'/%3E%3Cpath d='M14 3.5V8h4.5M9.25 11.25h5.5M9.5 15l1.5 1.5 3.5-3.75'/%3E%3C/svg%3E")!important;
+  transform:translate(calc(-50% - 0.5px),-50%)!important;
 }
