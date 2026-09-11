@@ -2,6 +2,7 @@ window.ETE_CONFIG = {
   supabaseUrl: "https://fisgkrmporzovogpmfpg.supabase.co",
   supabasePublishableKey: "sb_publishable_Wc3EyfhAQGbrf3n_NE0Clg_ermVC_Pq",
   authEmails: {
+    adm: "adm@email.com",
     klenio: "klenio@email.com",
     miguel: "miguel@email.com",
     ronaldo: "ronaldo@email.com",
@@ -140,7 +141,7 @@ window.ETE_CONFIG = {
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
     ensureScript("controlPermissionDetailsScript", "permission-details-enhance.js?v=3");
     ensureScript("controlRoleLabelFixScript", "role-label-fix.js?v=2");
-    ensureScript("controlProfessorDirectorParityScript", "professor-director-parity.js?v=3");
+    ensureScript("controlProfessorDirectorParityScript", "professor-director-parity.js?v=4");
     ensureScript("controlPermissionFormPickerScript", "permission-form-picker-enhance.js?v=1");
     ensureScript("controlActionModalScript", "action-modal.js?v=1");
     ensureScript("controlPermissionDeleteScript", "permission-delete-enhance.js?v=2");
