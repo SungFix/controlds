@@ -2,6 +2,7 @@
   "use strict";
 
   const managementRoles=["adm","diretor","professor"];
+  const requestCreatorUsernames=new Set(["adm","miguel","klenio","ronaldo"]);
 
   function getCurrentRole(){
     try{
@@ -10,8 +11,19 @@
     return "";
   }
 
+  function getCurrentUsername(){
+    try{
+      if(typeof currentUser!=="undefined" && currentUser) return String(currentUser.username||"").trim().toLowerCase();
+    }catch(_){}
+    return "";
+  }
+
   function hasManagementLevel(){
     return managementRoles.includes(getCurrentRole());
+  }
+
+  function canCreateRequestForApprovedAccount(){
+    return requestCreatorUsernames.has(getCurrentUsername());
   }
 
   function canPickupWithProfessor(){
@@ -39,7 +51,7 @@
   }
 
   function install(){
-    try{ canCreateRequest=hasManagementLevel; }catch(_){}
+    try{ canCreateRequest=canCreateRequestForApprovedAccount; }catch(_){}
     try{ canManageStudents=hasManagementLevel; }catch(_){}
     try{ canCreatePermission=hasManagementLevel; }catch(_){}
     try{ canClearHistory=hasManagementLevel; }catch(_){}
