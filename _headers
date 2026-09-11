@@ -21,6 +21,9 @@
 /portal.js
   Cache-Control: no-store, max-age=0
 
+/portal-admin-corner.js
+  Cache-Control: no-store, max-age=0
+
 /atestados.js
   Cache-Control: no-store, max-age=0
 
