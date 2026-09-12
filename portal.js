@@ -185,6 +185,9 @@
     ensureExitDropdownStyles();
     buildExitLayer();
     exitAnchor=anchor||document.querySelector("#etePortalExit")||document.querySelector("#logoutBtn");
+    const portalOption=exitLayer.querySelector("[data-exit-portal]");
+    const alreadyOnPortalHome=exitAnchor?.id==="etePortalExit"&&portal&&!portal.classList.contains("module-open");
+    if(portalOption)portalOption.hidden=!!alreadyOnPortalHome;
     exitLayer.hidden=false;
     document.body.classList.add("ete-exit-open");
     if(exitAnchor)exitAnchor.setAttribute("aria-expanded","true");
