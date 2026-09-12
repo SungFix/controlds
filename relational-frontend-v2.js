@@ -138,7 +138,7 @@
   window.addEventListener("pageshow",install);
 })();
 
-(function initAgendaCancelPickup(){
+(function initAgendaCancelWaitingRequest(){
   "use strict";
 
   let installed=false;
@@ -152,49 +152,67 @@
     }
   }
 
+  function currentAuthId(){
+    try{
+      return String(v46AuthUser?.id||"");
+    }catch(_){
+      return "";
+    }
+  }
+
+  function canCancel(request){
+    try{
+      if(!request || !currentUser) return false;
+      if(["adm","professor"].includes(String(currentUser.role||""))) return true;
+      return String(request.requestedById||"")===currentAuthId();
+    }catch(_){
+      return false;
+    }
+  }
+
   function mountButtons(){
-    if(typeof canPickup!=="function" || !canPickup()) return;
-    document.querySelectorAll("#agendaRows [data-return]").forEach(returnButton=>{
-      const actions=returnButton.parentElement;
-      if(!actions || actions.querySelector("[data-cancel-pickup]")) return;
-      const id=String(returnButton.dataset.return||"");
-      if(!id) return;
+    document.querySelectorAll("#agendaRows [data-cancel-pickup]").forEach(button=>button.remove());
+
+    document.querySelectorAll("#agendaRows [data-pickup]").forEach(pickupButton=>{
+      const actions=pickupButton.parentElement;
+      const id=String(pickupButton.dataset.pickup||"");
+      if(!actions || !id || actions.querySelector("[data-cancel-waiting-request]")) return;
 
       const request=currentRequests().find(item=>String(item?.id)===id);
-      if(!request || !["use","late"].includes(request.status)) return;
+      if(!request || request.status!=="wait" || !canCancel(request)) return;
 
       const button=document.createElement("button");
       button.type="button";
       button.className="btn secondary small";
-      button.dataset.cancelPickup=id;
-      button.textContent="Cancelar retirada";
-      button.title="Desfazer a retirada e liberar o notebook";
-      actions.insertBefore(button,returnButton);
+      button.dataset.cancelWaitingRequest=id;
+      button.textContent="Cancelar pedido";
+      button.title="Cancelar este pedido antes da retirada";
+      actions.insertBefore(button,pickupButton);
     });
   }
 
   async function handleCancel(button){
-    if(typeof canPickup!=="function" || !canPickup()) throw new Error("forbidden");
-
-    const id=String(button.dataset.cancelPickup||"");
+    const id=String(button.dataset.cancelWaitingRequest||"");
     const request=currentRequests().find(item=>String(item?.id)===id);
-    if(!request) throw new Error("request_not_found");
-    if(!["use","late"].includes(request.status)) throw new Error("invalid_status");
 
-    const notebook=request.code ? `Notebook ${request.code}` : "O notebook";
-    if(!confirm(`Cancelar a retirada de ${request.student}?\n\n${notebook} será liberado e o pedido voltará para aguardando retirada.`)) return;
+    if(!request) throw new Error("request_not_found");
+    if(request.status!=="wait") throw new Error("invalid_status");
+    if(!canCancel(request)) throw new Error("forbidden");
+
+    if(!confirm(`Cancelar o pedido de ${request.student}?\n\nO pedido será removido da Agenda sem registrar retirada do notebook.`)) return;
 
     const oldText=button.textContent;
     button.disabled=true;
     button.textContent="Cancelando...";
+
     try{
-      await v46Rpc("ete_cancel_pickup_request",{p_request_id:id});
-      if(typeof toast==="function") toast("Retirada cancelada. O pedido voltou a aguardar retirada.");
+      await v46Rpc("ete_cancel_waiting_request",{p_request_id:id});
+      if(typeof toast==="function") toast("Pedido cancelado antes da retirada.");
     }catch(err){
       console.error(err);
       const message=typeof v46ExplainError==="function"
         ? v46ExplainError(err)
-        : "Não foi possível cancelar a retirada.";
+        : "Não foi possível cancelar o pedido.";
       if(typeof toast==="function") toast(message);
     }finally{
       if(button.isConnected){
@@ -214,11 +232,11 @@
       mountButtons();
       return result;
     };
-    wrappedRenderAgenda.__agendaCancelPickup=true;
+    wrappedRenderAgenda.__agendaCancelWaitingRequest=true;
     renderAgenda=wrappedRenderAgenda;
 
     document.addEventListener("click",event=>{
-      const button=event.target.closest?.("[data-cancel-pickup]");
+      const button=event.target.closest?.("[data-cancel-waiting-request]");
       if(!button) return;
       event.preventDefault();
       event.stopImmediatePropagation();
@@ -226,7 +244,7 @@
         console.error(err);
         const message=typeof v46ExplainError==="function"
           ? v46ExplainError(err)
-          : "Não foi possível cancelar a retirada.";
+          : "Não foi possível cancelar o pedido.";
         if(typeof toast==="function") toast(message);
       });
     },true);
