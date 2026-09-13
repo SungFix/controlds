@@ -36,210 +36,173 @@ jobs:
           const browser=await chromium.launch({headless:true});
           const results=[];
 
-          const SAND={
-            s0:'rgb(255, 250, 242)',
-            s1:'rgb(248, 239, 226)',
-            s2:'rgb(240, 226, 208)',
-            s3:'rgb(229, 210, 186)',
-            s4:'rgb(213, 191, 165)',
-            s5:'rgb(185, 154, 122)',
-            s6:'rgb(146, 115, 86)',
-            s7:'rgb(110, 84, 63)',
-            s8:'rgb(75, 57, 43)'
-          };
-          const allowedChannels=new Set(Object.values(SAND).map(value=>value.match(/\d+/g).slice(0,3).join(',')));
-          const isSandColor=value=>{
-            if(value==='rgba(0, 0, 0, 0)')return true;
-            const parts=String(value||'').match(/\d+(?:\.\d+)?/g);
-            return !!parts&&parts.length>=3&&allowedChannels.has(parts.slice(0,3).map(Number).join(','));
-          };
+          const allowedChannels=new Set([
+            '255,250,242','248,239,226','240,226,208','229,210,186','213,191,165',
+            '185,154,122','146,115,86','110,84,63','75,57,43'
+          ]);
 
-          async function themeSnapshot(page){
-            return page.evaluate(()=>{
-              const root=document.documentElement;
-              const bodyStyle=getComputedStyle(document.body);
-              const loginCard=document.querySelector('.login-card');
-              const cardStyle=loginCard?getComputedStyle(loginCard):null;
-              const toggle=document.querySelector('.control-theme-toggle-floating');
-              const toggleStyle=toggle?getComputedStyle(toggle):null;
-              const rootStyle=getComputedStyle(root);
-              return {
-                theme:root.dataset.theme||'',
-                stored:localStorage.getItem('control-ds-theme'),
-                bodyOpacity:Number.parseFloat(bodyStyle.opacity),
-                bodyFilter:bodyStyle.filter,
-                bodyBackgroundColor:bodyStyle.backgroundColor,
-                cardBackgroundColor:cardStyle?.backgroundColor||'',
-                cardColor:cardStyle?.color||'',
-                cardTransitionProperty:cardStyle?.transitionProperty||'',
-                cardTransitionDuration:cardStyle?.transitionDuration||'',
-                toggleAnimationName:toggleStyle?.animationName||'',
-                toggleTransitionProperty:toggleStyle?.transitionProperty||'',
-                uiBg:rootStyle.getPropertyValue('--ui-bg').trim(),
-                uiSurface2:rootStyle.getPropertyValue('--ui-surface-2').trim(),
-                uiText:rootStyle.getPropertyValue('--ui-text').trim(),
-                uiBorder:rootStyle.getPropertyValue('--ui-border').trim(),
-                legacyBg:rootStyle.getPropertyValue('--bg').trim(),
-                legacyText:rootStyle.getPropertyValue('--text').trim(),
-                themeColor:document.querySelector('meta[name="theme-color"]')?.content||''
-              };
+          function colorIsAllowed(value){
+            const text=String(value||'').trim();
+            if(!text||text==='none'||text==='normal'||text==='transparent')return true;
+            const matches=[...text.matchAll(/rgba?\(([^)]+)\)/g)];
+            if(!matches.length)return true;
+            return matches.every(match=>{
+              const nums=match[1].split(',').map(v=>Number.parseFloat(v.trim()));
+              if(nums.length>=4&&nums[3]===0)return true;
+              return allowedChannels.has(nums.slice(0,3).map(v=>Math.round(v)).join(','));
             });
           }
 
-          async function installThemeAuditFixture(page){
+          async function setLight(page){
+            await page.evaluate(()=>window.ControlTheme?.set?.('light'));
+            await page.waitForTimeout(120);
+            await page.waitForFunction(()=>{
+              const link=document.getElementById('eteLightSandHardLockStyles');
+              return document.documentElement.dataset.theme==='light'&&!!link&&!!link.sheet;
+            },null,{timeout:5000});
+          }
+
+          async function installFixture(page){
             await page.evaluate(()=>{
               document.getElementById('themeAuditFixture')?.remove();
               const host=document.createElement('div');
               host.id='themeAuditFixture';
-              host.style.cssText='position:fixed;left:-10000px;top:0;width:1200px;height:900px;pointer-events:none;';
+              host.style.cssText='position:absolute;left:0;top:0;width:1280px;min-height:1000px;z-index:-1;pointer-events:none;';
               host.innerHTML=`
-                <div class="shell"><aside class="sidebar"><div class="brandmark"></div><span class="local-pill">Supabase</span></aside><main class="main"><div class="topbar"><span class="page-symbol"></span><span class="sync">Sincronizado</span></div><div class="content"><button class="btn primary">Novo pedido</button><div class="quick-card"><div class="left"><strong>Ação</strong><small>Teste</small></div></div></div></main></div>
-                <section id="eteCentralPortal" class="ete-portal"><div class="ete-system-card available"><span class="ete-system-icon"></span><span class="ete-system-status">Disponível</span></div><div class="ete-system-card available"><span class="ete-system-icon"></span><span class="ete-system-status">Disponível</span></div><div class="at-control-shell"><aside class="at-control-sidebar"><span class="at-control-brandmark">ETE</span><span class="at-control-side-dot"></span></aside><main class="at-app-main"><header class="at-app-topbar"><button class="at-app-theme">Tema</button><span class="at-app-sync"><i></i>Sincronizado</span></header><div class="at-app-content"><button class="at-btn primary">Novo registro</button><article class="at-metric"><div><strong>0</strong></div></article><div class="at-inline-search"><input class="at-input"></div></div></main></div></section>`;
+                <div class="shell">
+                  <aside class="sidebar">
+                    <div class="brand"><div class="brandmark"></div><span><strong>ETE</strong><small>Controle</small></span></div>
+                    <span class="section-label">Operação</span>
+                    <nav class="nav"><button class="active"><span class="navicon"></span>Início</button><button><span class="navicon"></span>Agenda</button></nav>
+                    <div class="side-status"><span class="local-pill">Supabase conectado</span></div>
+                  </aside>
+                  <main class="main">
+                    <header class="topbar"><span class="page-symbol"></span><span class="sync">Sincronizado</span><button class="user">Usuário</button></header>
+                    <div class="content">
+                      <button class="btn primary">Novo pedido</button><button class="btn secondary">Ver agenda</button>
+                      <div class="hero-stat"><strong>0</strong><div class="hero-bars"><span></span><span></span><span></span><span></span></div></div>
+                      <div class="mini-stat"><span class="dot blue"></span><strong>0</strong></div>
+                      <section class="panel"><div class="panelhead"><strong>Agenda</strong></div><div class="quick-panel"><div class="quick-card"><div class="left"><strong>Ação</strong><small>Teste</small></div><button class="btn">Abrir</button></div></div></section>
+                    </div>
+                  </main>
+                </div>
+                <section id="eteCentralPortal" class="ete-portal">
+                  <div class="ete-portal-shell"><header class="ete-portal-topbar"><span class="ete-portal-mark">ETE</span><span class="ete-portal-user">ADM</span><button class="ete-portal-theme">Tema</button><button class="ete-portal-exit">Sair</button></header>
+                    <main class="ete-portal-home"><div class="ete-portal-hero"><span class="ete-portal-kicker">Central</span><h1>Escolha</h1></div>
+                      <div class="ete-portal-grid"><button class="ete-system-card available"><span class="ete-system-icon"></span><span class="ete-system-status">Disponível</span><strong>Control Ds</strong></button><button class="ete-system-card available"><span class="ete-system-icon"></span><span class="ete-system-status">Disponível</span><strong>Atestados</strong></button></div>
+                    </main>
+                    <div class="at-control-shell"><aside class="at-control-sidebar"><div class="at-control-brand"><span class="at-control-brandmark">ETE</span></div><button class="at-nav-item active"><span class="at-control-navicon"></span>Visão geral</button><span class="at-control-side-dot"></span></aside>
+                      <main class="at-app-main"><header class="at-app-topbar"><button class="at-app-theme">Tema</button><span class="at-app-sync"><i></i>Sincronizado</span><button class="at-app-exit">Sair</button></header>
+                        <div class="at-app-content"><button class="at-btn primary">Novo registro</button><span class="at-status">Atualizado</span>
+                          <article class="at-metric"><div><span>Registros</span><strong>0</strong></div></article>
+                          <section class="at-card"><div class="at-card-head"><strong>Faltas</strong></div><div class="at-inline-search"><input class="at-input" placeholder="Pesquisar"><select class="at-select"><option>Turmas</option></select></div></section>
+                        </div>
+                      </main>
+                    </div>
+                  </div>
+                </section>`;
               document.body.appendChild(host);
             });
           }
 
-          async function assertSandOnly(page,label){
-            await installThemeAuditFixture(page);
-            const sample=await page.evaluate(()=>{
-              const one=(selector,pseudo='')=>{
-                const el=document.querySelector(selector);
-                if(!el)return null;
-                const s=getComputedStyle(el,pseudo||null);
-                return {backgroundColor:s.backgroundColor,color:s.color,borderColor:s.borderColor};
+          async function fullColorAudit(page,label){
+            await installFixture(page);
+            const violations=await page.evaluate(()=>{
+              const root=document.getElementById('themeAuditFixture');
+              const nodes=[root,...root.querySelectorAll('*')];
+              const checks=['color','backgroundColor','borderTopColor','borderRightColor','borderBottomColor','borderLeftColor','outlineColor','textDecorationColor','caretColor','fill','stroke','boxShadow','textShadow','backgroundImage'];
+              const palette=new Set(['255,250,242','248,239,226','240,226,208','229,210,186','213,191,165','185,154,122','146,115,86','110,84,63','75,57,43']);
+              const ok=value=>{
+                const text=String(value||'').trim();
+                if(!text||text==='none'||text==='normal'||text==='transparent')return true;
+                const matches=[...text.matchAll(/rgba?\(([^)]+)\)/g)];
+                if(!matches.length)return true;
+                return matches.every(match=>{
+                  const nums=match[1].split(',').map(v=>Number.parseFloat(v.trim()));
+                  if(nums.length>=4&&nums[3]===0)return true;
+                  return palette.has(nums.slice(0,3).map(v=>Math.round(v)).join(','));
+                });
               };
-              return {
-                body:one('body'),
-                main:one('#themeAuditFixture .main'),
-                sidebar:one('#themeAuditFixture .sidebar'),
-                pageSymbol:one('#themeAuditFixture .page-symbol'),
-                sync:one('#themeAuditFixture .sync'),
-                syncDot:one('#themeAuditFixture .sync','::before'),
-                quickCard:one('#themeAuditFixture .quick-card'),
-                primary:one('#themeAuditFixture .btn.primary'),
-                portal:one('#themeAuditFixture #eteCentralPortal.ete-portal'),
-                portalCard1:one('#themeAuditFixture .ete-system-card:nth-child(1)'),
-                portalCard2:one('#themeAuditFixture .ete-system-card:nth-child(2)'),
-                portalStatus:one('#themeAuditFixture .ete-system-status'),
-                portalDot:one('#themeAuditFixture .ete-system-status','::before'),
-                atSidebar:one('#themeAuditFixture .at-control-sidebar'),
-                atBrand:one('#themeAuditFixture .at-control-brandmark'),
-                atSideDot:one('#themeAuditFixture .at-control-side-dot'),
-                atTopbar:one('#themeAuditFixture .at-app-topbar'),
-                atSync:one('#themeAuditFixture .at-app-sync'),
-                atSyncDot:one('#themeAuditFixture .at-app-sync i'),
-                atPrimary:one('#themeAuditFixture .at-btn.primary'),
-                atMetric:one('#themeAuditFixture .at-metric'),
-                atMetricDot:one('#themeAuditFixture .at-metric','::after'),
-                atSearch:one('#themeAuditFixture .at-input')
+              const out=[];
+              const inspect=(el,pseudo='')=>{
+                const style=getComputedStyle(el,pseudo||null);
+                for(const prop of checks){
+                  const value=style[prop];
+                  if(!ok(value)){
+                    out.push({tag:el.tagName,id:el.id||'',className:typeof el.className==='string'?el.className:'',pseudo,prop,value});
+                    if(out.length>=40)return false;
+                  }
+                }
+                return true;
               };
+              for(const el of nodes){
+                if(['SCRIPT','STYLE','LINK','IMG','VIDEO','CANVAS','PICTURE','SOURCE'].includes(el.tagName))continue;
+                if(!inspect(el))break;
+                for(const pseudo of ['::before','::after']){
+                  const ps=getComputedStyle(el,pseudo);
+                  if(ps.content&&ps.content!=='none'&&ps.content!=='normal'){
+                    if(!inspect(el,pseudo))break;
+                  }
+                }
+                if(out.length>=40)break;
+              }
+              return out;
             });
-
-            const backgroundKeys=['body','main','sidebar','pageSymbol','sync','syncDot','quickCard','primary','portalCard1','portalCard2','portalStatus','portalDot','atSidebar','atBrand','atSideDot','atTopbar','atSync','atSyncDot','atPrimary','atMetric','atMetricDot','atSearch'];
-            for(const key of backgroundKeys){
-              const value=sample[key]?.backgroundColor;
-              if(!value) throw new Error(`${label}: seletor de auditoria ausente: ${key}`);
-              if(!isSandColor(value)) throw new Error(`${label}: ${key} ainda usa cor fora da família areia: ${value}`);
+            if(violations.length){
+              console.log('=== COLOR VIOLATIONS ===');
+              console.log(JSON.stringify(violations,null,2));
+              throw new Error(`${label}: ${violations.length} cores fora da família areia; primeira: ${violations[0].className||violations[0].tag} ${violations[0].prop}=${violations[0].value}`);
             }
-            if(!isSandColor(sample.portal.backgroundColor)) throw new Error(`${label}: Portal ainda usa fundo fora da família areia: ${sample.portal.backgroundColor}`);
-            results.push(`${label} sand-only computed colors PASS`);
+            results.push(`${label} full sand color audit PASS`);
           }
 
-          async function testThemeSwitch(page,label){
-            const toggle=page.locator('.control-theme-toggle-floating').first();
-            await toggle.waitFor({state:'visible',timeout:5000});
-            await page.evaluate(()=>window.ControlTheme?.set?.('dark'));
-            await page.waitForTimeout(40);
-            const before=await themeSnapshot(page);
-            const darkFingerprint={
-              bodyBackgroundColor:before.bodyBackgroundColor,
-              cardBackgroundColor:before.cardBackgroundColor,
-              cardColor:before.cardColor
-            };
-
-            await toggle.click();
-            await page.waitForTimeout(60);
-            const light=await themeSnapshot(page);
-            if(light.theme!=='light') throw new Error(`${label}: tema claro não foi aplicado imediatamente`);
-            if(light.cardTransitionProperty!=='none') throw new Error(`${label}: ainda existe transição visual no card (${light.cardTransitionProperty})`);
-            if(light.toggleAnimationName!=='none') throw new Error(`${label}: botão de tema ainda possui animação (${light.toggleAnimationName})`);
-            if(light.toggleTransitionProperty!=='none') throw new Error(`${label}: botão de tema ainda possui transição (${light.toggleTransitionProperty})`);
-            if(Math.abs(light.bodyOpacity-1)>.01||light.bodyFilter!=='none') throw new Error(`${label}: troca de tema alterou opacidade ou filtro`);
-
-            const expected={
-              uiBg:'#f8efe2',
-              uiSurface2:'#fffaf2',
-              uiText:'#4b392b',
-              uiBorder:'#d5bfa5',
-              legacyBg:'#f8efe2',
-              legacyText:'#4b392b'
-            };
-            for(const [key,value] of Object.entries(expected)){
-              if(light[key].toLowerCase()!==value) throw new Error(`${label}: paleta areia incorreta em ${key}: ${light[key]}`);
-            }
-            if(light.themeColor.toLowerCase()!=='#f8efe2') throw new Error(`${label}: theme-color não está em areia: ${light.themeColor}`);
-
-            await assertSandOnly(page,label);
-
-            await toggle.click();
-            await page.waitForTimeout(20);
-            const after=await themeSnapshot(page);
-            if(after.theme!=='dark') throw new Error(`${label}: tema escuro não voltou imediatamente`);
-            for(const [key,value] of Object.entries(darkFingerprint)){
-              if(after[key]!==value) throw new Error(`${label}: tema escuro mudou em ${key}`);
-            }
-            results.push(`${label} instant theme PASS`);
-          }
-
-          async function run(url,label,invalidLogin=false){
+          async function runLocal(){
             const page=await browser.newPage({viewport:{width:1366,height:768}});
-            const pageErrors=[];
-            page.on('pageerror',e=>pageErrors.push(e.message));
-            const res=await page.goto(url,{waitUntil:'networkidle',timeout:30000});
-            if(!res?.ok()) throw new Error(`${label}: HTTP ${res?.status()}`);
+            const errors=[];
+            page.on('pageerror',e=>errors.push(e.message));
+            const res=await page.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle',timeout:30000});
+            if(!res?.ok())throw new Error(`local: HTTP ${res?.status()}`);
             await page.locator('#loginGate').waitFor({state:'visible'});
-            const checks={
-              username:await page.locator('#loginUsername').getAttribute('placeholder'),
-              password:await page.locator('#loginPassword').getAttribute('placeholder'),
-              button:await page.locator('#loginSubmit').isVisible(),
-              title:await page.title(),
-              overflow:await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+2),
-              favicon:await page.locator('link[rel="icon"]').getAttribute('href')
-            };
-            if(checks.username!=='Nome de usuário') throw new Error(`${label}: placeholder de usuário incorreto`);
-            if(checks.password!=='Digite sua senha') throw new Error(`${label}: placeholder de senha incorreto`);
-            if(!checks.button) throw new Error(`${label}: botão Entrar não visível`);
-            if(checks.title!=='Control Ds') throw new Error(`${label}: título inesperado ${checks.title}`);
-            if(checks.overflow) throw new Error(`${label}: overflow horizontal desktop`);
-            if(!checks.favicon?.includes('favicon.svg')) throw new Error(`${label}: favicon não configurado`);
-            if(pageErrors.length) throw new Error(`${label}: page errors ${pageErrors.join(' | ')}`);
-            if(label==='local') await testThemeSwitch(page,label);
-            if(invalidLogin){
-              await page.fill('#loginUsername','usuario_inexistente_teste');
-              await page.fill('#loginPassword','senha_invalida_teste');
-              await page.click('#loginSubmit');
-              await page.waitForTimeout(1800);
-              if(!(await page.locator('#loginError').isVisible())) throw new Error(`${label}: login inválido não exibiu erro`);
-            }
-            results.push(`${label} desktop PASS`);
+            if(errors.length)throw new Error(`local page errors: ${errors.join(' | ')}`);
+
+            await page.evaluate(()=>window.ControlTheme?.set?.('dark'));
+            await page.waitForTimeout(30);
+            const dark=await page.evaluate(()=>({theme:document.documentElement.dataset.theme,bg:getComputedStyle(document.body).backgroundColor}));
+            if(dark.theme!=='dark')throw new Error('local: tema escuro não aplicou');
+
+            await setLight(page);
+            const light=await page.evaluate(()=>{
+              const s=getComputedStyle(document.documentElement);
+              return {theme:document.documentElement.dataset.theme,bg:s.getPropertyValue('--ui-bg').trim(),text:s.getPropertyValue('--ui-text').trim(),border:s.getPropertyValue('--ui-border').trim(),hardLock:document.getElementById('eteLightSandHardLockStyles')?.getAttribute('href')||''};
+            });
+            if(light.theme!=='light')throw new Error('local: tema claro não aplicou');
+            if(light.bg!=='#f8efe2'||light.text!=='#4b392b'||light.border!=='#d5bfa5')throw new Error(`local: variáveis fora da paleta areia ${JSON.stringify(light)}`);
+            if(!light.hardLock.includes('theme-light-sand-hardlock.css'))throw new Error('local: hard lock não carregado');
+
+            await fullColorAudit(page,'local');
+
+            await page.evaluate(()=>window.ControlTheme?.set?.('dark'));
+            await page.waitForTimeout(30);
+            const darkAfter=await page.evaluate(()=>({theme:document.documentElement.dataset.theme,bg:getComputedStyle(document.body).backgroundColor}));
+            if(darkAfter.theme!=='dark'||darkAfter.bg!==dark.bg)throw new Error('local: hard lock alterou o tema escuro');
+
+            await page.fill('#loginUsername','usuario_inexistente_teste');
+            await page.fill('#loginPassword','senha_invalida_teste');
+            await page.click('#loginSubmit');
+            await page.waitForTimeout(1800);
+            if(!(await page.locator('#loginError').isVisible()))throw new Error('local: login inválido não exibiu erro');
+
             await page.setViewportSize({width:390,height:844});
             await page.reload({waitUntil:'networkidle'});
             await page.locator('#loginGate').waitFor({state:'visible'});
-            if(await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+2)) throw new Error(`${label}: overflow horizontal mobile`);
-            const card=page.locator('.login-card');
-            const box=await card.boundingBox();
-            if(!box || box.x<0 || box.x+box.width>390.5) throw new Error(`${label}: card fora da tela mobile`);
-            results.push(`${label} mobile PASS`);
+            if(await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+2))throw new Error('local: overflow horizontal mobile');
+            const box=await page.locator('.login-card').boundingBox();
+            if(!box||box.x<0||box.x+box.width>390.5)throw new Error('local: card fora da tela mobile');
+            results.push('local desktop/mobile PASS');
             await page.close();
           }
 
-          await run('http://127.0.0.1:4173/','local',true);
-          for(const [url,label] of [
-            ['https://ete-controle-notebooks.pages.dev/','cloudflare'],
-            ['https://sungfix.github.io/ete-controle-notebooks/','github-pages']
-          ]){
-            try{await run(url,label,false)}catch(e){results.push(`${label} WARN: ${e.message}`)}
-          }
+          await runLocal();
           console.log('=== BROWSER RESULTS ===');
           results.forEach(x=>console.log(x));
           await browser.close();
