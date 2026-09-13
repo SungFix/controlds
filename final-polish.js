@@ -91,8 +91,10 @@
   "use strict";
 
   const root=document.documentElement;
+  let metaSyncQueued=false;
 
   function syncThemeMeta(){
+    metaSyncQueued=false;
     const light=root.dataset.theme==="light";
     let scheme=document.querySelector('meta[name="color-scheme"]');
     if(!scheme){
@@ -111,6 +113,12 @@
     meta.content=light?"#f5efe6":"#090b0e";
   }
 
+  function queueThemeMeta(){
+    if(metaSyncQueued)return;
+    metaSyncQueued=true;
+    queueMicrotask(syncThemeMeta);
+  }
+
   window.addEventListener("click",event=>{
     const button=event.target.closest?.(".control-theme-toggle");
     if(!button)return;
@@ -119,8 +127,8 @@
     try{window.ControlTheme?.toggle();}catch(_){ }
   },true);
 
-  const observer=new MutationObserver(syncThemeMeta);
+  const observer=new MutationObserver(queueThemeMeta);
   observer.observe(root,{attributes:true,attributeFilter:["data-theme"]});
-  window.addEventListener("control-theme-change",syncThemeMeta);
+  window.addEventListener("control-theme-change",queueThemeMeta);
   syncThemeMeta();
 })();
