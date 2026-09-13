@@ -1,79 +1,62 @@
-/* Última barreira cromática do tema claro.
-   Tudo que é texto/ícone de interface fica dentro da família areia/marrom.
-   A repetição intencional do atributo aumenta a especificidade acima das folhas antigas com !important. */
+/* Barreira cromática final do tema claro.
+   O ID fictício dentro de :is() é intencional: ele dá especificidade de ID à regra
+   sem depender de um elemento real, vencendo regras legadas que usam :is() com IDs. */
 
-/* Base global do modo claro. */
-html[data-theme="light"][data-theme="light"][data-theme="light"] body,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body *{
-  color:var(--sand-7)!important;
-  border-color:var(--sand-4)!important;
-  outline-color:var(--sand-5)!important;
-  text-decoration-color:var(--sand-5)!important;
-  caret-color:var(--sand-7)!important;
+html[data-theme="light"] body :is(#__ete_sand_lock_never_matches__, *){
+  color:#6e543f!important;
+  border-color:#d5bfa5!important;
+  outline-color:#b99a7a!important;
+  text-decoration-color:#b99a7a!important;
+  caret-color:#6e543f!important;
 }
 
-/* Títulos e textos fortes. */
-html[data-theme="light"][data-theme="light"][data-theme="light"] body :is(
+/* Títulos e informação principal. */
+html[data-theme="light"] body :is(
+  #__ete_sand_heading_lock_never_matches__,
   h1,h2,h3,h4,h5,h6,strong,b,label,th,
-  .value,.code,.pagehead h1,.top-title strong,.brand strong
-){
-  color:var(--sand-8)!important;
-}
-
-/* Textos secundários: sem qualquer cinza azulado. */
-html[data-theme="light"][data-theme="light"][data-theme="light"] body :is(
-  p,small,span,li,td,dd,dt,a,time,
-  .brand small,.top-title small,.pagehead p,.meta,.who small,.history-line time,.history-line small,.quick-card .left small
-){
-  color:var(--sand-7)!important;
-}
-
-/* Portal/Atestados: especificidade com ID para vencer estilos internos antigos. */
-html[data-theme="light"][data-theme="light"][data-theme="light"] body #eteCentralPortal,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body #eteCentralPortal *{
-  color:var(--sand-7)!important;
-  border-color:var(--sand-4)!important;
-  outline-color:var(--sand-5)!important;
-  text-decoration-color:var(--sand-5)!important;
-  caret-color:var(--sand-7)!important;
-}
-
-html[data-theme="light"][data-theme="light"][data-theme="light"] body #eteCentralPortal :is(
-  h1,h2,h3,h4,h5,h6,strong,b,label,th,
+  .value,.code,.pagehead h1,.top-title strong,.brand strong,
   .at-metric strong,.ete-system-card strong
 ){
-  color:var(--sand-8)!important;
+  color:#4b392b!important;
 }
 
-html[data-theme="light"][data-theme="light"][data-theme="light"] body #eteCentralPortal :is(
+/* Texto secundário continua marrom quente. */
+html[data-theme="light"] body :is(
+  #__ete_sand_secondary_lock_never_matches__,
   p,small,span,li,td,dd,dt,a,time,
-  .ete-portal-brand small,.ete-portal-hero p,.ete-portal-section-head small,.ete-system-card p,
-  .ete-system-open,.at-app-top-title small,.at-page-head p,.at-card-head small,.at-empty-state span
+  .brand small,.top-title small,.pagehead p,.meta,.who small,
+  .history-line time,.history-line small,.quick-card .left small,
+  .ete-portal-brand small,.ete-portal-hero p,.ete-portal-section-head small,
+  .ete-system-card p,.ete-system-open,.at-app-top-title small,.at-page-head p,
+  .at-card-head small,.at-empty-state span,.permission-help,#permissionFilterSubtitle,#headerUserRole
 ){
-  color:var(--sand-7)!important;
+  color:#6e543f!important;
 }
 
-/* Texto de botões primários continua creme, não marrom. */
-html[data-theme="light"][data-theme="light"][data-theme="light"] body :is(.primary,.btn.primary,.ete-admin-save),
-html[data-theme="light"][data-theme="light"][data-theme="light"] body :is(.primary,.btn.primary,.ete-admin-save) *,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body #requestModal .btn.primary,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body #requestModal .btn.primary *,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body #eteCentralPortal .at-btn.primary,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body #eteCentralPortal .at-btn.primary *{
-  color:var(--sand-0)!important;
+/* Botões primários usam creme sobre marrom. */
+html[data-theme="light"] body :is(
+  #__ete_sand_primary_lock_never_matches__,
+  .primary,.btn.primary,.ete-admin-save,#requestModal .btn.primary,#eteCentralPortal .at-btn.primary
+),
+html[data-theme="light"] body :is(
+  #__ete_sand_primary_child_lock_never_matches__,
+  .primary *,.btn.primary *,.ete-admin-save *,#requestModal .btn.primary *,#eteCentralPortal .at-btn.primary *
+){
+  color:#fffaf2!important;
 }
 
-/* SVGs/ícones: marrom quente. */
-html[data-theme="light"][data-theme="light"][data-theme="light"] body svg,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body svg *{
-  color:var(--sand-7)!important;
+/* SVGs e ícones. */
+html[data-theme="light"] body :is(#__ete_sand_svg_lock_never_matches__, svg,svg *){
+  color:#6e543f!important;
   stroke:currentColor!important;
 }
-html[data-theme="light"][data-theme="light"][data-theme="light"] body svg [fill]:not([fill="none"]){fill:currentColor!important}
+html[data-theme="light"] body :is(#__ete_sand_fill_lock_never_matches__, svg [fill]:not([fill="none"])){
+  fill:currentColor!important;
+}
 
-/* O Chromium identificou este subtítulo como o último tom frio remanescente. */
-html[data-theme="light"] body .quick-card .left small,
-html[data-theme="light"] body .quick-card small,
-html[data-theme="light"][data-theme="light"] body .quick-card .left small{
+/* Pseudo-elementos decorativos/status também ficam em areia/marrom. */
+html[data-theme="light"] body :is(#__ete_sand_pseudo_lock_never_matches__, *)::before,
+html[data-theme="light"] body :is(#__ete_sand_pseudo_lock_never_matches__, *)::after{
+  border-color:#d5bfa5!important;
   color:#6e543f!important;
 }
