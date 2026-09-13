@@ -30,6 +30,18 @@
 /relational-frontend-v2.js
   Cache-Control: no-store, max-age=0
 
+/student-list-organizer.js
+  Cache-Control: no-store, max-age=0
+
+/student-list-organizer.css
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/student-collapsible-list.js
+  Cache-Control: no-store, max-age=0
+
+/student-collapsible-list.css
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
 /portal.js
   Cache-Control: no-store, max-age=0
 
