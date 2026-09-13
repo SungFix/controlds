@@ -1,0 +1,48 @@
+/* Lista de alunos: controle de expandir/recolher somente com o ícone */
+#page-students #studentRows .student-row-chevron,
+#page-students #studentRows .student-card-head:hover .student-row-chevron,
+#page-students #studentRows .student-card.is-open .student-row-chevron,
+html[data-theme="light"] #page-students #studentRows .student-row-chevron,
+html.theme-light #page-students #studentRows .student-row-chevron,
+html[data-theme="light"] #page-students #studentRows .student-card-head:hover .student-row-chevron,
+html.theme-light #page-students #studentRows .student-card-head:hover .student-row-chevron,
+html[data-theme="light"] #page-students #studentRows .student-card.is-open .student-row-chevron,
+html.theme-light #page-students #studentRows .student-card.is-open .student-row-chevron{
+  width:30px!important;
+  height:30px!important;
+  min-width:30px!important;
+  flex:0 0 30px!important;
+  display:grid!important;
+  place-items:center!important;
+  margin-left:auto!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  outline:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+#page-students #studentRows .student-row-chevron{
+  color:#87939e!important;
+  pointer-events:none;
+}
+
+#page-students #studentRows .student-card-head:hover .student-row-chevron,
+#page-students #studentRows .student-card.is-open .student-row-chevron{
+  color:#d7dfe5!important;
+}
+
+#page-students #studentRows .student-row-chevron svg{
+  width:14px!important;
+  height:14px!important;
+  display:block!important;
+  margin:auto!important;
+  transform:none!important;
+}
+
+html[data-theme="light"] #page-students #studentRows .student-row-chevron{color:#64716a!important}
+html[data-theme="light"] #page-students #studentRows .student-card-head:hover .student-row-chevron,
+html[data-theme="light"] #page-students #studentRows .student-card.is-open .student-row-chevron,
+html.theme-light #page-students #studentRows .student-card-head:hover .student-row-chevron,
+html.theme-light #page-students #studentRows .student-card.is-open .student-row-chevron{color:#52625a!important}
