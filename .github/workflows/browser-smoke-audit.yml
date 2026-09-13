@@ -43,7 +43,7 @@ jobs:
               const final=document.getElementById('eteLightSandFinalStyles');
               return document.documentElement.dataset.theme==='light' &&
                 !!hard?.sheet && !!final?.sheet &&
-                String(final.getAttribute('href')||'').includes('theme-light-sand-final.css?v=3');
+                String(final.getAttribute('href')||'').includes('theme-light-sand-final.css?v=4');
             },null,{timeout:7000});
             await page.waitForTimeout(80);
           }
@@ -176,7 +176,7 @@ jobs:
             if(light.theme!=='light')throw new Error('local: tema claro não aplicou');
             if(light.bg!=='#f8efe2'||light.text!=='#4b392b'||light.border!=='#d5bfa5')throw new Error(`local: variáveis fora da paleta areia ${JSON.stringify(light)}`);
             if(!light.hardLock.includes('theme-light-sand-hardlock.css'))throw new Error('local: hard lock não carregado');
-            if(!light.finalLock.includes('theme-light-sand-final.css?v=3'))throw new Error(`local: final lock v3 não carregado (${light.finalLock})`);
+            if(!light.finalLock.includes('theme-light-sand-final.css?v=4'))throw new Error(`local: final lock v4 não carregado (${light.finalLock})`);
 
             await fullColorAudit(page,'local');
 
