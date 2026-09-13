@@ -32,6 +32,7 @@ for(const section of ['home','agenda','permissions','requests','students','compu
 }
 
 if(!(await page.evaluate(()=>!!window.ControlActionModal))) throw new Error('Sistema global de confirmação personalizada não carregou');
+if((await page.evaluate(()=>authEmailForUsername('carlinhos')))!=='carlinhos@email.com') throw new Error('Resolução automática de conta não funciona para usuário fora da lista estática');
 
 async function confirmCustomAction(expectedTitle){
   const modal=page.locator('#controlActionModal');
@@ -102,6 +103,15 @@ await confirmCustomAction('Remover aluno');
 calls=await page.evaluate(()=>window.__rpcCalls);
 if(!calls.some(x=>x.name==='ete_delete_student'&&x.args.p_student_id==='st-audit')) throw new Error('Exclusão de aluno não chamou RPC correta');
 
+await page.click('[data-page="agenda"]');
+await page.evaluate(()=>renderAgenda());
+const cancelWaiting=page.locator('[data-cancel-waiting-request="rq-audit"]:visible');
+if(!(await cancelWaiting.count())) throw new Error('Cancelar pedido aguardando não apareceu na Agenda');
+await cancelWaiting.click();
+await confirmCustomAction('Cancelar pedido');
+calls=await page.evaluate(()=>window.__rpcCalls);
+if(!calls.some(x=>x.name==='ete_cancel_waiting_request'&&x.args.p_request_id==='rq-audit')) throw new Error('Cancelamento antes da retirada não chamou RPC correta');
+
 await page.click('[data-page="requests"]');
 await page.evaluate(()=>renderRequests());
 const requestDelete=page.locator('[data-delete-request="rq-audit"]:visible');
@@ -127,6 +137,7 @@ await page.evaluate(()=>{data[0].status='use';data[0].code='123456';render();});
 await page.click('[data-page="requests"]');
 await page.evaluate(()=>renderRequests());
 await page.click('[data-return="rq-audit"]:visible');
+await confirmCustomAction('Confirmar devolução');
 await page.waitForTimeout(100);
 calls=await page.evaluate(()=>window.__rpcCalls);
 if(!calls.some(x=>x.name==='ete_return_request'&&x.args.p_request_id==='rq-audit')) throw new Error('Devolução não chamou RPC correta');
