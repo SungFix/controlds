@@ -41,7 +41,7 @@
       finalLock.rel="stylesheet";
       document.head.appendChild(finalLock);
     }
-    if(finalLock.getAttribute("href")!=="theme-light-sand-final.css?v=1") finalLock.href="theme-light-sand-final.css?v=1";
+    if(finalLock.getAttribute("href")!=="theme-light-sand-final.css?v=2") finalLock.href="theme-light-sand-final.css?v=2";
 
     document.head.appendChild(palette);
     document.head.appendChild(lock);
