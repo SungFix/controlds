@@ -86,3 +86,41 @@
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",start,{once:true});
   else start();
 })();
+
+(function initEpochThemeInteractionGuard(){
+  "use strict";
+
+  const root=document.documentElement;
+
+  function syncThemeMeta(){
+    const light=root.dataset.theme==="light";
+    let scheme=document.querySelector('meta[name="color-scheme"]');
+    if(!scheme){
+      scheme=document.createElement("meta");
+      scheme.name="color-scheme";
+      document.head.appendChild(scheme);
+    }
+    scheme.content="dark light";
+
+    let meta=document.querySelector('meta[name="theme-color"]');
+    if(!meta){
+      meta=document.createElement("meta");
+      meta.name="theme-color";
+      document.head.appendChild(meta);
+    }
+    meta.content=light?"#f5efe6":"#090b0e";
+  }
+
+  window.addEventListener("click",event=>{
+    const button=event.target.closest?.(".control-theme-toggle");
+    if(!button)return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    try{window.ControlTheme?.toggle();}catch(_){ }
+  },true);
+
+  const observer=new MutationObserver(syncThemeMeta);
+  observer.observe(root,{attributes:true,attributeFilter:["data-theme"]});
+  window.addEventListener("control-theme-change",syncThemeMeta);
+  syncThemeMeta();
+})();
