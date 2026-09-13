@@ -1,0 +1,125 @@
+/* Tema claro — paleta fixa e coerente.
+   Sem mistura de vermelho, azul, amarelo e verde: todos os estados usam
+   a mesma família quente de areia, marfim e marrom neutro.
+   O tema escuro não é afetado. */
+
+html[data-theme="light"]{
+  --bg:#f5efe6!important;
+  --bg-2:#f1eadf!important;
+  --sidebar:#ede6dc!important;
+  --panel:#faf6f0!important;
+  --panel-2:#f3ece2!important;
+  --line:#d7cec1!important;
+  --line-soft:#e8e0d5!important;
+  --text:#1b1916!important;
+  --muted:#554d45!important;
+  --muted-2:#7f756c!important;
+
+  /* Um único tom funcional no lugar de azul/verde/amarelo/vermelho. */
+  --blue:#554d45!important;
+  --green:#554d45!important;
+  --yellow:#554d45!important;
+  --red:#554d45!important;
+
+  --ui-bg:#f5efe6!important;
+  --ui-bg-2:#f1eadf!important;
+  --ui-sidebar:#ede6dc!important;
+  --ui-surface:#faf6f0!important;
+  --ui-surface-2:#fffdf9!important;
+  --ui-surface-3:#f3ece2!important;
+  --ui-surface-4:#e5dccf!important;
+  --ui-border:#d7cec1!important;
+  --ui-border-strong:#c5b9aa!important;
+  --ui-text:#1b1916!important;
+  --ui-text-2:#554d45!important;
+  --ui-muted:#7f756c!important;
+  --ui-faint:#a09589!important;
+  --ui-primary:#1b1916!important;
+  --ui-primary-hover:#302b25!important;
+  --ui-primary-text:#fffdf9!important;
+  --ui-accent:#554d45!important;
+  --ui-accent-soft:#f3ece2!important;
+
+  /* Estados sem cores concorrentes. */
+  --ui-success:#554d45!important;
+  --ui-success-bg:#f3ece2!important;
+  --ui-success-border:#c5b9aa!important;
+  --ui-warning:#554d45!important;
+  --ui-warning-bg:#f3ece2!important;
+  --ui-warning-border:#c5b9aa!important;
+  --ui-danger:#554d45!important;
+  --ui-danger-bg:#f3ece2!important;
+  --ui-danger-border:#c5b9aa!important;
+  --ui-info:#554d45!important;
+  --ui-info-bg:#f3ece2!important;
+  --ui-info-border:#c5b9aa!important;
+}
+
+/* Ações e estados sem vermelho/verde/amarelo/azul. */
+html[data-theme="light"] :is(
+  .danger,
+  .success,
+  .warning,
+  .info,
+  .sync-pill,
+  .syncbadge,
+  .ete-system-status
+){
+  background:#f3ece2!important;
+  border-color:#c5b9aa!important;
+  color:#554d45!important;
+  box-shadow:none!important;
+}
+
+/* Portal */
+html[data-theme="light"] .ete-system-card:nth-child(2) .ete-system-icon,
+html[data-theme="light"] .ete-exit-option.danger .ete-exit-option-icon{
+  background:#f3ece2!important;
+  border-color:#d7cec1!important;
+  color:#554d45!important;
+}
+
+/* Administração */
+html[data-theme="light"] .ete-admin-notice,
+html[data-theme="light"] .ete-admin-notice[data-type="success"],
+html[data-theme="light"] .ete-admin-notice[data-type="error"],
+html[data-theme="light"] .ete-admin-self-warning{
+  background:#f3ece2!important;
+  border-color:#c5b9aa!important;
+  color:#554d45!important;
+}
+
+/* Atestados */
+html[data-theme="light"] body #eteCentralPortal .at-app-content :is(
+  .at-rate,
+  .at-period-badge,
+  .at-app-sync,
+  .at-status,
+  .at-icon-danger
+){
+  background:#f3ece2!important;
+  border-color:#c5b9aa!important;
+  color:#554d45!important;
+  box-shadow:none!important;
+}
+
+/* Badges e indicadores genéricos seguem a mesma família visual. */
+html[data-theme="light"] :is(
+  .badge,
+  .status,
+  .status-pill,
+  .pill,
+  .chip,
+  .tag
+){
+  border-color:#d7cec1!important;
+}
+
+/* Controles selecionados/ativos usam somente contraste de tom, não outra cor. */
+html[data-theme="light"] :is(
+  .active,
+  [aria-selected="true"],
+  [aria-pressed="true"]
+){
+  --ui-accent:#554d45!important;
+}
