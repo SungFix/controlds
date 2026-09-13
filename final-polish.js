@@ -5,6 +5,23 @@
   const EMPTY_SELECTOR=".request-empty,.permission-empty,.student-empty,.computer-empty,.history-empty,.agenda-empty,.student-picker-empty";
   let queued=false;
 
+  function ensureGlobalSelectAssets(){
+    if(!document.getElementById("eteCustomSelectStyles")){
+      const link=document.createElement("link");
+      link.id="eteCustomSelectStyles";
+      link.rel="stylesheet";
+      link.href="custom-select.css?v=1";
+      document.head.appendChild(link);
+    }
+    if(!document.getElementById("eteCustomSelectScript")){
+      const script=document.createElement("script");
+      script.id="eteCustomSelectScript";
+      script.src="custom-select.js?v=1";
+      script.defer=true;
+      document.head.appendChild(script);
+    }
+  }
+
   function syncButton(button){
     if(!(button instanceof HTMLButtonElement)) return;
     const text=String(button.textContent||"").trim();
@@ -50,6 +67,7 @@
 
   function start(){
     document.documentElement.dataset.finalPolish="1";
+    ensureGlobalSelectAssets();
     sync();
     const observer=new MutationObserver(queue);
     observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:["disabled","class"]});
