@@ -1,4 +1,4 @@
-/* Control Ds — transição de tema sincronizada e leve */
+/* Control Ds — transição de tema sincronizada, suave e perceptível */
 :root{
   --control-theme-transition-duration:512ms;
   --control-theme-transition-easing:cubic-bezier(.22,.72,.24,1);
@@ -31,29 +31,38 @@ html.theme-view-transitioning body *::after{
   animation-timing-function:var(--control-theme-transition-easing)!important;
 }
 
+::view-transition-image-pair(root){
+  isolation:isolate;
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root){
   animation-duration:var(--control-theme-transition-duration)!important;
   animation-timing-function:var(--control-theme-transition-easing)!important;
+  animation-fill-mode:both!important;
   mix-blend-mode:normal;
+  transform-origin:center center;
+  will-change:opacity,filter;
 }
 
 ::view-transition-old(root){
-  animation-name:control-theme-old;
+  animation-name:control-theme-old!important;
 }
 
 ::view-transition-new(root){
-  animation-name:control-theme-new;
+  animation-name:control-theme-new!important;
 }
 
 @keyframes control-theme-old{
-  from{opacity:1}
-  to{opacity:0}
+  0%{opacity:1;filter:brightness(1) saturate(1)}
+  45%{opacity:.7;filter:brightness(.96) saturate(.96)}
+  100%{opacity:0;filter:brightness(.9) saturate(.9)}
 }
 
 @keyframes control-theme-new{
-  from{opacity:0}
-  to{opacity:1}
+  0%{opacity:0;filter:brightness(1.1) saturate(.92)}
+  38%{opacity:.42;filter:brightness(1.055) saturate(.96)}
+  100%{opacity:1;filter:brightness(1) saturate(1)}
 }
 
 @media (prefers-reduced-motion:reduce){
