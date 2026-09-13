@@ -8,12 +8,20 @@
   function rows(){return document.getElementById("studentRows");}
 
   function ensureBorderlessStyles(){
-    if(document.getElementById("controlStudentDetailsBorderlessStyles"))return;
-    const link=document.createElement("link");
-    link.id="controlStudentDetailsBorderlessStyles";
-    link.rel="stylesheet";
-    link.href="student-details-borderless.css?v=2";
-    document.head.appendChild(link);
+    if(!document.getElementById("controlStudentDetailsBorderlessStyles")){
+      const link=document.createElement("link");
+      link.id="controlStudentDetailsBorderlessStyles";
+      link.rel="stylesheet";
+      link.href="student-details-borderless.css?v=2";
+      document.head.appendChild(link);
+    }
+    if(!document.getElementById("controlStudentChevronIconOnlyStyles")){
+      const link=document.createElement("link");
+      link.id="controlStudentChevronIconOnlyStyles";
+      link.rel="stylesheet";
+      link.href="student-chevron-icon-only.css?v=1";
+      document.head.appendChild(link);
+    }
   }
 
   function studentId(card,index){
