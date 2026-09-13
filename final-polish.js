@@ -94,6 +94,8 @@
   const KEY="control-ds-theme";
   const DURATION=512;
   const HALF=DURATION/2;
+  const MID_OPACITY=.72;
+  const EASING="cubic-bezier(.4,0,.2,1)";
   let running=false;
   let activeAnimations=[];
 
@@ -108,7 +110,8 @@
       }
       html.ete-theme-guaranteed body{
         transform:translateZ(0);
-        will-change:opacity,filter;
+        will-change:opacity;
+        filter:none!important;
       }
     `;
     document.head.appendChild(style);
@@ -171,11 +174,11 @@
     }
 
     const outgoing=body.animate([
-      {opacity:1,filter:"brightness(1) saturate(1)"},
-      {opacity:.46,filter:"brightness(.86) saturate(.84)"}
+      {opacity:1},
+      {opacity:MID_OPACITY}
     ],{
       duration:HALF,
-      easing:"cubic-bezier(.4,0,.6,1)",
+      easing:EASING,
       fill:"forwards"
     });
     activeAnimations.push(outgoing);
@@ -185,11 +188,11 @@
     apply(target,false);
 
     const incoming=body.animate([
-      {opacity:.46,filter:"brightness(1.14) saturate(.86)"},
-      {opacity:1,filter:"brightness(1) saturate(1)"}
+      {opacity:MID_OPACITY},
+      {opacity:1}
     ],{
       duration:HALF,
-      easing:"cubic-bezier(.18,.74,.22,1)",
+      easing:EASING,
       fill:"forwards"
     });
     activeAnimations.push(incoming);
