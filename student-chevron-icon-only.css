@@ -41,8 +41,9 @@ html.theme-light #page-students #studentRows .student-card.is-open .student-row-
   transform:none!important;
 }
 
-html[data-theme="light"] #page-students #studentRows .student-row-chevron{color:#64716a!important}
+html[data-theme="light"] #page-students #studentRows .student-row-chevron,
+html.theme-light #page-students #studentRows .student-row-chevron{color:#7f756c!important}
 html[data-theme="light"] #page-students #studentRows .student-card-head:hover .student-row-chevron,
 html[data-theme="light"] #page-students #studentRows .student-card.is-open .student-row-chevron,
 html.theme-light #page-students #studentRows .student-card-head:hover .student-row-chevron,
-html.theme-light #page-students #studentRows .student-card.is-open .student-row-chevron{color:#52625a!important}
+html.theme-light #page-students #studentRows .student-card.is-open .student-row-chevron{color:#554d45!important}
