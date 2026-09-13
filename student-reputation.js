@@ -87,18 +87,18 @@
     document.querySelectorAll("#studentRows .student-card").forEach((card,index)=>{
       const mappedId=String(card.dataset.studentId||card.dataset.studentReputationId||"");
       const student=(mappedId&&byId.get(mappedId))||fallback[index];
-      const head=card.querySelector(".student-card-head");
-      if(!student||!head) return;
+      const body=card.querySelector(".student-card-body");
+      if(!student||!body) return;
       card.dataset.studentReputationId=String(student.id||"");
       decorateStudentDetails(card,student);
-      head.querySelector(".student-reputation")?.remove();
+      card.querySelectorAll(".student-reputation").forEach(node=>node.remove());
       const stat=statsForStudent(student.id);
       const badge=document.createElement("div");
       badge.className="student-reputation is-"+stat.tone;
       badge.setAttribute("aria-label",stat.total?`Reputação ${stat.level}. ${stat.onTime} devoluções no prazo e ${stat.late} atrasadas.`:"Reputação sem histórico de devoluções.");
       badge.title=stat.total?`${stat.onTime} no prazo · ${stat.late} atrasada${stat.late===1?"":"s"}`:"Ainda não há devoluções registradas";
-      badge.innerHTML=`<span class="student-reputation-dot" aria-hidden="true"></span><span class="student-reputation-copy"><span class="student-reputation-title">Reputação: <strong>${stat.level}</strong></span><small>${stat.total?`${stat.score}% no prazo · ${stat.total} devolução${stat.total===1?"":"ões"}`:"Sem devoluções registradas"}</small></span>`;
-      head.appendChild(badge);
+      badge.innerHTML=`<span class="student-reputation-label">Reputação</span><span class="student-reputation-copy"><span class="student-reputation-value"><span class="student-reputation-dot" aria-hidden="true"></span><strong>${stat.level}</strong></span><small>${stat.total?`${stat.score}% no prazo · ${stat.total} devolução${stat.total===1?"":"ões"}`:"Sem devoluções registradas"}</small></span>`;
+      body.appendChild(badge);
     });
   }
 
