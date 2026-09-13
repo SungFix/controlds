@@ -94,24 +94,29 @@
   const KEY="control-ds-theme";
   const DURATION=512;
   const HALF=DURATION/2;
-  const MID_OPACITY=.72;
   const EASING="cubic-bezier(.4,0,.2,1)";
+  const OVERLAY_ID="eteThemeTransitionOverlay";
   let running=false;
-  let activeAnimations=[];
+  let activeAnimation=null;
 
   if(!document.getElementById("eteGuaranteedThemeStyles")){
     const style=document.createElement("style");
     style.id="eteGuaranteedThemeStyles";
     style.textContent=`
-      html.ete-theme-guaranteed body *,
-      html.ete-theme-guaranteed body *::before,
-      html.ete-theme-guaranteed body *::after{
+      html.ete-theme-transition-running body *,
+      html.ete-theme-transition-running body *::before,
+      html.ete-theme-transition-running body *::after{
         transition:none!important;
       }
-      html.ete-theme-guaranteed body{
-        transform:translateZ(0);
+      #${OVERLAY_ID}{
+        position:fixed;
+        inset:0;
+        z-index:2147483646;
+        pointer-events:none;
+        opacity:0;
+        background:rgba(104,112,120,.24);
         will-change:opacity;
-        filter:none!important;
+        contain:strict;
       }
     `;
     document.head.appendChild(style);
@@ -146,11 +151,41 @@
     return next;
   }
 
-  function cancelActiveAnimations(){
-    activeAnimations.forEach(animation=>{
-      try{animation.cancel()}catch(_){ }
-    });
-    activeAnimations=[];
+  function ensureOverlay(){
+    let overlay=document.getElementById(OVERLAY_ID);
+    if(overlay)return overlay;
+    if(!document.body)return null;
+    overlay=document.createElement("div");
+    overlay.id=OVERLAY_ID;
+    overlay.setAttribute("aria-hidden","true");
+    overlay.dataset.themeTransition="idle";
+    document.body.appendChild(overlay);
+    return overlay;
+  }
+
+  function cancelAnimation(){
+    if(activeAnimation){
+      try{activeAnimation.cancel()}catch(_){ }
+      activeAnimation=null;
+    }
+  }
+
+  async function animateOpacity(overlay,from,to,duration,state){
+    overlay.dataset.themeTransition=state;
+    overlay.style.opacity=String(from);
+    if(typeof overlay.animate!=="function"){
+      overlay.style.opacity=String(to);
+      await new Promise(resolve=>setTimeout(resolve,duration));
+      return;
+    }
+    cancelAnimation();
+    activeAnimation=overlay.animate(
+      [{opacity:from},{opacity:to}],
+      {duration,easing:EASING,fill:"forwards"}
+    );
+    try{await activeAnimation.finished}catch(_){ }
+    overlay.style.opacity=String(to);
+    cancelAnimation();
   }
 
   async function animateTheme(target,persist){
@@ -159,49 +194,31 @@
       return target;
     }
 
-    const body=document.body;
-    if(!body||typeof body.animate!=="function"){
-      return apply(target,persist);
-    }
+    const overlay=ensureOverlay();
+    if(!overlay)return apply(target,persist);
 
     running=true;
-    cancelActiveAnimations();
-    root.classList.remove("theme-transitioning","theme-view-transitioning","ete-theme-view","ete-theme-fallback");
-    root.classList.add("ete-theme-guaranteed");
+    root.classList.remove("theme-transitioning","theme-view-transitioning","ete-theme-view","ete-theme-fallback","ete-theme-guaranteed");
+    root.classList.add("ete-theme-transition-running");
+    overlay.dataset.themeFrom=current();
+    overlay.dataset.themeTo=target;
 
     if(persist!==false){
       try{localStorage.setItem(KEY,target)}catch(_){ }
     }
 
-    const outgoing=body.animate([
-      {opacity:1},
-      {opacity:MID_OPACITY}
-    ],{
-      duration:HALF,
-      easing:EASING,
-      fill:"forwards"
-    });
-    activeAnimations.push(outgoing);
-
-    try{await outgoing.finished}catch(_){ }
-
-    apply(target,false);
-
-    const incoming=body.animate([
-      {opacity:MID_OPACITY},
-      {opacity:1}
-    ],{
-      duration:HALF,
-      easing:EASING,
-      fill:"forwards"
-    });
-    activeAnimations.push(incoming);
-
-    try{await incoming.finished}catch(_){ }
-
-    cancelActiveAnimations();
-    root.classList.remove("ete-theme-guaranteed");
-    running=false;
+    try{
+      await animateOpacity(overlay,0,1,HALF,"covering");
+      overlay.dataset.themeTransition="switching";
+      apply(target,false);
+      await animateOpacity(overlay,1,0,HALF,"revealing");
+    }finally{
+      cancelAnimation();
+      overlay.style.opacity="0";
+      overlay.dataset.themeTransition="idle";
+      root.classList.remove("ete-theme-transition-running");
+      running=false;
+    }
     return target;
   }
 
@@ -210,15 +227,13 @@
     const persist=!options||options.persist!==false;
     const skip=!!(options&&options.skipTransition===true);
 
-    if(skip||target===current()){
-      return apply(target,persist);
-    }
-
+    if(skip||target===current())return apply(target,persist);
     animateTheme(target,persist);
     return target;
   }
 
   function toggleTheme(){
+    if(running)return current();
     return setTheme(current()==="light"?"dark":"light");
   }
 
@@ -241,5 +256,6 @@
     if(event.newValue==="light"||event.newValue==="dark")setTheme(event.newValue,{persist:false});
   });
 
+  ensureOverlay();
   updateButtons();
 })();
