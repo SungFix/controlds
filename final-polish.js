@@ -93,7 +93,7 @@
 
   const root=document.documentElement;
   const KEY="control-ds-theme";
-  const DURATION=240;
+  const DURATION=512;
   let timer=0;
   let running=false;
 
