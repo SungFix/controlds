@@ -7,6 +7,15 @@
 
   function rows(){return document.getElementById("studentRows");}
 
+  function ensureBorderlessStyles(){
+    if(document.getElementById("controlStudentDetailsBorderlessStyles"))return;
+    const link=document.createElement("link");
+    link.id="controlStudentDetailsBorderlessStyles";
+    link.rel="stylesheet";
+    link.href="student-details-borderless.css?v=1";
+    document.head.appendChild(link);
+  }
+
   function studentId(card,index){
     const current=String(card?.dataset?.studentId||"");
     if(current)return current;
@@ -86,6 +95,7 @@
   }
 
   function mount(){
+    ensureBorderlessStyles();
     const container=rows();
     if(!container){setTimeout(mount,120);return;}
     if(container.dataset.collapsibleListMounted==="1"){queueScan();return;}
