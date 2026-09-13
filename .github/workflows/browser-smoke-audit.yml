@@ -35,6 +35,68 @@ jobs:
           import { chromium } from 'playwright';
           const browser=await chromium.launch({headless:true});
           const results=[];
+
+          async function themeSnapshot(page){
+            return page.evaluate(()=>{
+              const overlay=document.getElementById('eteThemeTransitionOverlay');
+              const overlayStyle=overlay?getComputedStyle(overlay):null;
+              const bodyStyle=getComputedStyle(document.body);
+              return {
+                theme:document.documentElement.dataset.theme||'',
+                exists:!!overlay,
+                overlayOpacity:overlayStyle?Number.parseFloat(overlayStyle.opacity):0,
+                overlayBackground:overlayStyle?.backgroundColor||'',
+                overlayState:overlay?.dataset?.themeTransition||'',
+                running:document.documentElement.classList.contains('ete-theme-transition-running'),
+                bodyOpacity:Number.parseFloat(bodyStyle.opacity),
+                bodyFilter:bodyStyle.filter
+              };
+            });
+          }
+
+          async function testThemeTransition(page,label){
+            const toggle=page.locator('.control-theme-toggle-floating').first();
+            await toggle.waitFor({state:'visible',timeout:5000});
+            const before=await themeSnapshot(page);
+            if(!before.exists) throw new Error(`${label}: véu de transição não foi montado`);
+
+            await toggle.click();
+            await page.waitForTimeout(120);
+            const early=await themeSnapshot(page);
+            if(!(early.overlayOpacity>.05&&early.overlayOpacity<.98)) throw new Error(`${label}: transição não ficou visível no início (${early.overlayOpacity})`);
+            if(early.theme!==before.theme) throw new Error(`${label}: tema mudou antes do meio da transição`);
+            if(!early.running||early.overlayState!=='covering') throw new Error(`${label}: fase inicial da transição incorreta`);
+            if(Math.abs(early.bodyOpacity-1)>.01) throw new Error(`${label}: conteúdo teve opacidade alterada durante a transição`);
+            if(early.bodyFilter!=='none') throw new Error(`${label}: conteúdo recebeu filtro de luminosidade`);
+
+            await page.waitForTimeout(190);
+            const middle=await themeSnapshot(page);
+            if(middle.theme===before.theme) throw new Error(`${label}: tema não mudou no meio da transição`);
+            if(!(middle.overlayOpacity>.05)) throw new Error(`${label}: véu sumiu cedo demais`);
+            if(!middle.running||middle.overlayState!=='revealing') throw new Error(`${label}: fase final da transição incorreta`);
+            if(Math.abs(middle.bodyOpacity-1)>.01||middle.bodyFilter!=='none') throw new Error(`${label}: conteúdo foi clareado/escurecido artificialmente`);
+            const neutralBackground=middle.overlayBackground;
+
+            await page.waitForTimeout(330);
+            const end=await themeSnapshot(page);
+            if(end.theme===before.theme) throw new Error(`${label}: troca de tema não concluiu`);
+            if(end.overlayOpacity>.02||end.overlayState!=='idle'||end.running) throw new Error(`${label}: transição não terminou limpa`);
+
+            await toggle.click();
+            await page.waitForTimeout(120);
+            const reverseEarly=await themeSnapshot(page);
+            if(reverseEarly.theme!==end.theme) throw new Error(`${label}: retorno mudou o tema antes do meio`);
+            if(!(reverseEarly.overlayOpacity>.05&&reverseEarly.overlayOpacity<.98)) throw new Error(`${label}: retorno não mostrou transição`);
+            if(reverseEarly.overlayBackground!==neutralBackground) throw new Error(`${label}: transição usa tonalidades diferentes entre os sentidos`);
+            if(Math.abs(reverseEarly.bodyOpacity-1)>.01||reverseEarly.bodyFilter!=='none') throw new Error(`${label}: retorno alterou brilho/opacidade do conteúdo`);
+
+            await page.waitForTimeout(520);
+            const reverseEnd=await themeSnapshot(page);
+            if(reverseEnd.theme!==before.theme) throw new Error(`${label}: retorno não restaurou o tema inicial`);
+            if(reverseEnd.overlayOpacity>.02||reverseEnd.overlayState!=='idle'||reverseEnd.running) throw new Error(`${label}: retorno não terminou limpo`);
+            results.push(`${label} theme transition PASS`);
+          }
+
           async function run(url,label,invalidLogin=false){
             const page=await browser.newPage({viewport:{width:1366,height:768}});
             const pageErrors=[];
@@ -57,6 +119,7 @@ jobs:
             if(checks.overflow) throw new Error(`${label}: overflow horizontal desktop`);
             if(!checks.favicon?.includes('favicon.svg')) throw new Error(`${label}: favicon não configurado`);
             if(pageErrors.length) throw new Error(`${label}: page errors ${pageErrors.join(' | ')}`);
+            if(label==='local') await testThemeTransition(page,label);
             if(invalidLogin){
               await page.fill('#loginUsername','usuario_inexistente_teste');
               await page.fill('#loginPassword','senha_invalida_teste');
