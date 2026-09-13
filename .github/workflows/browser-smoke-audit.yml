@@ -49,6 +49,7 @@ jobs:
                 stored:localStorage.getItem('control-ds-theme'),
                 controlThemeGet:window.ControlTheme?.get?.()||'',
                 transitioning:root.classList.contains('theme-transitioning'),
+                guaranteed:root.classList.contains('ete-theme-guaranteed'),
                 toggleAnimating:!!toggle?.classList.contains('theme-toggle-animating'),
                 overlayExists:!!document.getElementById('eteThemeTransitionOverlay'),
                 bodyOpacity:Number.parseFloat(bodyStyle.opacity),
@@ -79,6 +80,7 @@ jobs:
                 theme:root.dataset.theme||'',
                 stored:localStorage.getItem('control-ds-theme'),
                 transitioning:root.classList.contains('theme-transitioning'),
+                guaranteed:root.classList.contains('ete-theme-guaranteed'),
                 ...extra
               });
               new MutationObserver(records=>{
@@ -107,15 +109,26 @@ jobs:
             };
 
             await installThemeTrace(page);
+            const implementation=await page.evaluate(()=>({
+              toggle:String(window.ControlTheme?.toggle||''),
+              set:String(window.ControlTheme?.set||''),
+              get:String(window.ControlTheme?.get||''),
+              finalPolishText:document.getElementById('controlFinalPolishScript')?.src||'',
+              scripts:[...document.scripts].map(script=>script.src).filter(Boolean)
+            }));
             const directResult=await page.evaluate(()=>window.ControlTheme?.toggle?.());
             await page.waitForTimeout(70);
-            const directAfter=await themeSnapshot(page);
+            const direct70=await themeSnapshot(page);
+            await page.waitForTimeout(260);
+            const direct330=await themeSnapshot(page);
+            await page.waitForTimeout(300);
+            const direct630=await themeSnapshot(page);
             const directTrace=await page.evaluate(()=>window.__themeTrace||[]);
             console.log('=== DIRECT THEME DIAGNOSTIC ===');
-            console.log(JSON.stringify({before,directResult,directAfter,directTrace},null,2));
+            console.log(JSON.stringify({before,implementation,directResult,direct70,direct330,direct630,directTrace},null,2));
 
-            if(directAfter.theme!=='light'){
-              throw new Error(`${label}: chamada direta ControlTheme.toggle não manteve o tema claro`);
+            if(direct70.theme!=='light'){
+              throw new Error(`${label}: chamada direta ControlTheme.toggle não aplicou tema claro imediatamente`);
             }
 
             await page.evaluate(()=>window.ControlTheme?.set?.('dark'));
