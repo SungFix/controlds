@@ -139,7 +139,6 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlPortalAdminV2Styles", "portal-admin-v2.css?v=1");
     ensureStylesheet("controlPortalAdminIconFixStyles", "portal-admin-icon-fix.css?v=1");
     ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=3");
-    ensureStylesheet("controlAtestadosImageUploadStyles", "atestados-image-upload.css?v=2");
     ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=1");
 
     ensureScript("controlLoginUsabilityScript", "login-usability.js?v=1");
@@ -172,9 +171,7 @@ window.ETE_CONFIG = {
     ensureScript("controlRelationalFrontendV2Script", "relational-frontend-v2.js?v=2");
     ensureScript("controlRegisteredStudentFlowScript", "registered-student-flow.js?v=6");
     ensureScript("controlRequestCreatorLabelScript", "request-creator-label.js?v=1");
-    ensureScript("controlAtestadosImageUploadScript", "atestados-image-upload.js?v=2");
-    ensureScript("controlAtestadosImageRangeFixScript", "atestados-image-range-fix.js?v=1");
-    ensureScript("controlAtestadosActionPolishScript", "atestados-action-polish.js?v=1");
+    ensureScript("controlAtestadosOptionalLoaderScript", "atestados-optional-loader.js?v=1");
   }
 
   function updateButton(button){
