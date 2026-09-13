@@ -1,22 +1,70 @@
 /* Última barreira cromática do tema claro.
-   Prioridade alta para textos internos do Portal/Atestados que folhas antigas marcavam com !important. */
-html[data-theme="light"] body #eteCentralPortal,
-html[data-theme="light"] body #eteCentralPortal *{
+   Tudo que é texto/ícone de interface fica dentro da família areia/marrom.
+   Regras com alta especificidade vencem folhas antigas com !important. */
+
+/* Control Ds inteiro: nenhuma tipografia fria pode escapar. */
+html[data-theme="light"].theme-light body,
+html[data-theme="light"].theme-light body *{
   color:var(--sand-7)!important;
   border-color:var(--sand-4)!important;
   outline-color:var(--sand-5)!important;
   text-decoration-color:var(--sand-5)!important;
   caret-color:var(--sand-7)!important;
 }
-html[data-theme="light"] body #eteCentralPortal :is(h1,h2,h3,h4,h5,h6,strong,b,label,th,.at-metric strong,.ete-system-card strong){
+
+html[data-theme="light"].theme-light body :is(
+  h1,h2,h3,h4,h5,h6,strong,b,label,th,
+  .value,.code,.pagehead h1,.top-title strong,.brand strong
+){
   color:var(--sand-8)!important;
 }
-html[data-theme="light"] body #eteCentralPortal :is(p,small,.ete-portal-brand small,.ete-portal-hero p,.ete-portal-section-head small,.ete-system-card p,.ete-system-open,.at-app-top-title small,.at-page-head p,.at-card-head small,.at-empty-state span){
+
+html[data-theme="light"].theme-light body :is(
+  p,small,span,li,td,dd,dt,a,
+  .brand small,.top-title small,.pagehead p,.meta,.who small,.history-line time,.history-line small,.quick-card .left small
+){
   color:var(--sand-7)!important;
 }
-html[data-theme="light"] body #eteCentralPortal svg,
-html[data-theme="light"] body #eteCentralPortal svg *{
+
+/* Portal/Atestados: sobe ainda mais a especificidade. */
+html[data-theme="light"].theme-light body #eteCentralPortal,
+html[data-theme="light"].theme-light body #eteCentralPortal *{
+  color:var(--sand-7)!important;
+  border-color:var(--sand-4)!important;
+  outline-color:var(--sand-5)!important;
+  text-decoration-color:var(--sand-5)!important;
+  caret-color:var(--sand-7)!important;
+}
+
+html[data-theme="light"].theme-light body #eteCentralPortal :is(
+  h1,h2,h3,h4,h5,h6,strong,b,label,th,
+  .at-metric strong,.ete-system-card strong
+){
+  color:var(--sand-8)!important;
+}
+
+html[data-theme="light"].theme-light body #eteCentralPortal :is(
+  p,small,span,li,td,dd,dt,a,
+  .ete-portal-brand small,.ete-portal-hero p,.ete-portal-section-head small,.ete-system-card p,
+  .ete-system-open,.at-app-top-title small,.at-page-head p,.at-card-head small,.at-empty-state span
+){
+  color:var(--sand-7)!important;
+}
+
+/* Texto de botões primários continua creme, não marrom. */
+html[data-theme="light"].theme-light body :is(.primary,.btn.primary,.ete-admin-save),
+html[data-theme="light"].theme-light body :is(.primary,.btn.primary,.ete-admin-save) *,
+html[data-theme="light"].theme-light body #requestModal .btn.primary,
+html[data-theme="light"].theme-light body #requestModal .btn.primary *,
+html[data-theme="light"].theme-light body #eteCentralPortal .at-btn.primary,
+html[data-theme="light"].theme-light body #eteCentralPortal .at-btn.primary *{
+  color:var(--sand-0)!important;
+}
+
+/* SVGs/ícones: marrom quente. */
+html[data-theme="light"].theme-light body svg,
+html[data-theme="light"].theme-light body svg *{
   color:var(--sand-7)!important;
   stroke:currentColor!important;
 }
-html[data-theme="light"] body #eteCentralPortal svg [fill]:not([fill="none"]){fill:currentColor!important}
+html[data-theme="light"].theme-light body svg [fill]:not([fill="none"]){fill:currentColor!important}
