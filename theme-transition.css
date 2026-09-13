@@ -1,66 +1,71 @@
-/* Control Ds — transição uniforme entre tema claro e escuro */
-
+/* Control Ds — transição de tema sincronizada e leve */
 :root{
-  --control-theme-transition-duration:260ms;
-  --control-theme-transition-easing:linear;
+  --control-theme-transition-duration:240ms;
+  --control-theme-transition-easing:cubic-bezier(.22,.72,.24,1);
 }
 
-html.theme-transitioning,
+/* Fallback para navegadores sem View Transitions API.
+   Mantém tudo no mesmo tempo e evita animar propriedades pesadas. */
 html.theme-transitioning body,
 html.theme-transitioning body *,
 html.theme-transitioning body *::before,
 html.theme-transitioning body *::after{
-  transition-property:background-color,color,border-color,box-shadow,fill,stroke !important;
-  transition-duration:var(--control-theme-transition-duration) !important;
-  transition-delay:0ms !important;
-  transition-timing-function:var(--control-theme-transition-easing) !important;
+  transition-property:background-color,color,border-color,fill,stroke,outline-color!important;
+  transition-duration:var(--control-theme-transition-duration)!important;
+  transition-delay:0ms!important;
+  transition-timing-function:var(--control-theme-transition-easing)!important;
 }
 
-/* Quando disponível, faz um crossfade da página inteira.
-   Isso mantém fundos, gradientes, textos e cartões no mesmo ritmo. */
+/* No caminho principal usamos um único snapshot da página inteira.
+   Isso inclui gradientes, sombras, cards, textos e ícones no mesmo instante. */
 html.theme-view-transitioning,
 html.theme-view-transitioning body,
 html.theme-view-transitioning body *,
 html.theme-view-transitioning body *::before,
 html.theme-view-transitioning body *::after{
-  transition:none !important;
+  transition:none!important;
 }
 
 ::view-transition-group(root){
-  animation-duration:var(--control-theme-transition-duration);
-  animation-timing-function:var(--control-theme-transition-easing);
+  animation-duration:var(--control-theme-transition-duration)!important;
+  animation-timing-function:var(--control-theme-transition-easing)!important;
+}
+
+::view-transition-old(root),
+::view-transition-new(root){
+  animation-duration:var(--control-theme-transition-duration)!important;
+  animation-timing-function:var(--control-theme-transition-easing)!important;
+  mix-blend-mode:normal;
 }
 
 ::view-transition-old(root){
-  animation:control-theme-fade-out var(--control-theme-transition-duration) var(--control-theme-transition-easing) both;
+  animation-name:control-theme-old;
 }
 
 ::view-transition-new(root){
-  animation:control-theme-fade-in var(--control-theme-transition-duration) var(--control-theme-transition-easing) both;
+  animation-name:control-theme-new;
 }
 
-@keyframes control-theme-fade-out{
+@keyframes control-theme-old{
   from{opacity:1}
   to{opacity:0}
 }
 
-@keyframes control-theme-fade-in{
+@keyframes control-theme-new{
   from{opacity:0}
   to{opacity:1}
 }
 
-@media (prefers-reduced-motion: reduce){
-  html.theme-transitioning,
+@media (prefers-reduced-motion:reduce){
   html.theme-transitioning body,
   html.theme-transitioning body *,
   html.theme-transitioning body *::before,
   html.theme-transitioning body *::after{
-    transition-duration:0s !important;
+    transition:none!important;
   }
-
   ::view-transition-group(root),
   ::view-transition-old(root),
   ::view-transition-new(root){
-    animation-duration:0s !important;
+    animation-duration:0s!important;
   }
 }
