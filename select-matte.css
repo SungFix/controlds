@@ -1,0 +1,68 @@
+/* ETE — acabamento fosco para controles que abrem listas */
+button[aria-haspopup="listbox"],
+.at-reason-trigger{
+  background:color-mix(in srgb,var(--ui-surface-2,#151a20) 94%,#6f7b84 6%)!important;
+  border-color:color-mix(in srgb,var(--ui-border,#303943) 72%,transparent)!important;
+  box-shadow:none!important;
+  filter:saturate(.82)!important;
+}
+
+button[aria-haspopup="listbox"]:hover,
+.at-reason-trigger:hover{
+  background:color-mix(in srgb,var(--ui-surface-3,#1a2129) 92%,#75818a 8%)!important;
+  border-color:color-mix(in srgb,var(--ui-border-strong,#475463) 76%,transparent)!important;
+  box-shadow:none!important;
+}
+
+button[aria-haspopup="listbox"]:focus-visible,
+button[aria-haspopup="listbox"][aria-expanded="true"],
+.at-reason-trigger:focus-visible,
+.at-reason-trigger[aria-expanded="true"]{
+  background:color-mix(in srgb,var(--ui-surface-3,#1a2129) 90%,#7d8992 10%)!important;
+  border-color:color-mix(in srgb,var(--ui-accent,#7f9dad) 38%,var(--ui-border-strong,#475463))!important;
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--ui-accent,#7f9dad) 8%,transparent)!important;
+}
+
+.ete-select-menu{
+  background:color-mix(in srgb,var(--ui-surface,#11161b) 96%,#707a82 4%)!important;
+  box-shadow:0 14px 34px rgba(0,0,0,.25)!important;
+  filter:saturate(.88)!important;
+}
+
+html[data-theme="light"] button[aria-haspopup="listbox"],
+html.theme-light button[aria-haspopup="listbox"],
+html[data-theme="light"] .at-reason-trigger,
+html.theme-light .at-reason-trigger{
+  background:#eef1ed!important;
+  border-color:#c8cec9!important;
+  box-shadow:none!important;
+  filter:saturate(.76)!important;
+}
+
+html[data-theme="light"] button[aria-haspopup="listbox"]:hover,
+html.theme-light button[aria-haspopup="listbox"]:hover,
+html[data-theme="light"] .at-reason-trigger:hover,
+html.theme-light .at-reason-trigger:hover{
+  background:#e9ede8!important;
+  border-color:#bbc4bd!important;
+}
+
+html[data-theme="light"] button[aria-haspopup="listbox"]:focus-visible,
+html.theme-light button[aria-haspopup="listbox"]:focus-visible,
+html[data-theme="light"] button[aria-haspopup="listbox"][aria-expanded="true"],
+html.theme-light button[aria-haspopup="listbox"][aria-expanded="true"],
+html[data-theme="light"] .at-reason-trigger:focus-visible,
+html.theme-light .at-reason-trigger:focus-visible,
+html[data-theme="light"] .at-reason-trigger[aria-expanded="true"],
+html.theme-light .at-reason-trigger[aria-expanded="true"]{
+  background:#e5eae5!important;
+  border-color:#aab7af!important;
+  box-shadow:0 0 0 2px rgba(126,157,141,.08)!important;
+}
+
+html[data-theme="light"] .ete-select-menu,
+html.theme-light .ete-select-menu{
+  background:#f1f3ef!important;
+  box-shadow:0 14px 30px rgba(45,65,55,.11)!important;
+  filter:saturate(.8)!important;
+}
