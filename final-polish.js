@@ -67,7 +67,7 @@
 
   function start(){
     document.documentElement.dataset.finalPolish="1";
-    ensureGlobalSelectAssets();
+    setTimeout(ensureGlobalSelectAssets,0);
     sync();
     const observer=new MutationObserver(queue);
     observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:["disabled","class"]});
