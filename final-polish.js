@@ -14,8 +14,8 @@
       palette.rel="stylesheet";
       document.head.appendChild(palette);
     }
-    if(palette.getAttribute("href")!=="theme-light-fixed-palette.css?v=2"){
-      palette.href="theme-light-fixed-palette.css?v=2";
+    if(palette.getAttribute("href")!=="theme-light-fixed-palette.css?v=3"){
+      palette.href="theme-light-fixed-palette.css?v=3";
     }
     const styles=[...document.head.querySelectorAll('link[rel="stylesheet"]')];
     if(styles.length&&styles[styles.length-1]!==palette) document.head.appendChild(palette);
@@ -146,7 +146,7 @@
       meta.name="theme-color";
       document.head.appendChild(meta);
     }
-    meta.content=light?"#f5efe6":"#090b0e";
+    meta.content=light?"#f8efe2":"#090b0e";
   }
 
   function queueThemeMeta(){
