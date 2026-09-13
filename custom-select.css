@@ -246,6 +246,72 @@ html.theme-light .ete-select-option.is-selected{
 html[data-theme="light"] .ete-select-group,
 html.theme-light .ete-select-group{color:#738179}
 
+/* Padrão visual único para qualquer controle que abre uma lista. Mantém o layout
+   interno específico de cada componente, mas usa a mesma superfície do seletor global. */
+button[aria-haspopup="listbox"],
+.at-reason-trigger{
+  border:1px solid color-mix(in srgb,var(--ui-border,#303943) 82%,transparent)!important;
+  border-radius:12px!important;
+  background:linear-gradient(180deg,
+    color-mix(in srgb,var(--ui-surface-2,#151a20) 96%,#fff 4%),
+    var(--ui-surface-2,#151a20))!important;
+  color:var(--ui-text,#eef2f5)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025)!important;
+  outline:none!important;
+  transition:border-color .15s ease,background .15s ease,box-shadow .15s ease!important;
+}
+
+button[aria-haspopup="listbox"]:hover,
+.at-reason-trigger:hover{
+  border-color:color-mix(in srgb,var(--ui-border-strong,#475463) 88%,transparent)!important;
+  background:linear-gradient(180deg,
+    color-mix(in srgb,var(--ui-surface-3,#1a2129) 95%,#fff 5%),
+    var(--ui-surface-3,#1a2129))!important;
+}
+
+button[aria-haspopup="listbox"]:focus-visible,
+button[aria-haspopup="listbox"][aria-expanded="true"],
+.at-reason-trigger:focus-visible,
+.at-reason-trigger[aria-expanded="true"]{
+  border-color:color-mix(in srgb,var(--ui-accent,#7f9dad) 64%,var(--ui-border-strong,#475463))!important;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--ui-accent,#7f9dad) 11%,transparent),inset 0 1px 0 rgba(255,255,255,.03)!important;
+}
+
+button[aria-haspopup="listbox"] svg,
+.at-reason-trigger svg{
+  stroke:currentColor;
+}
+
+html[data-theme="light"] button[aria-haspopup="listbox"],
+html.theme-light button[aria-haspopup="listbox"],
+html[data-theme="light"] .at-reason-trigger,
+html.theme-light .at-reason-trigger{
+  border-color:#c9d2cc!important;
+  background:linear-gradient(180deg,#fafbf8,#f3f5f1)!important;
+  color:#31433a!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7)!important;
+}
+
+html[data-theme="light"] button[aria-haspopup="listbox"]:hover,
+html.theme-light button[aria-haspopup="listbox"]:hover,
+html[data-theme="light"] .at-reason-trigger:hover,
+html.theme-light .at-reason-trigger:hover{
+  border-color:#b6c3bb!important;
+  background:linear-gradient(180deg,#fff,#f0f3ee)!important;
+}
+
+html[data-theme="light"] button[aria-haspopup="listbox"]:focus-visible,
+html.theme-light button[aria-haspopup="listbox"]:focus-visible,
+html[data-theme="light"] button[aria-haspopup="listbox"][aria-expanded="true"],
+html.theme-light button[aria-haspopup="listbox"][aria-expanded="true"],
+html[data-theme="light"] .at-reason-trigger:focus-visible,
+html.theme-light .at-reason-trigger:focus-visible,
+html[data-theme="light"] .at-reason-trigger[aria-expanded="true"],
+html.theme-light .at-reason-trigger[aria-expanded="true"]{
+  border-color:#9fb3a8!important;
+  box-shadow:0 0 0 3px rgba(126,157,141,.11),inset 0 1px 0 rgba(255,255,255,.8)!important;
+}
+
 @media(max-width:680px){
   .ete-select[data-select-class~="filter-select"]{width:100%}
   .ete-select-trigger{min-height:48px;font-size:11px}
