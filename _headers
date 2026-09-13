@@ -42,6 +42,9 @@
 /theme-light-sand-hardlock.css
   Cache-Control: no-store, max-age=0
 
+/theme-light-sand-final.css
+  Cache-Control: no-store, max-age=0
+
 /theme-light-palette-sage.css
   Cache-Control: no-store, max-age=0
 
