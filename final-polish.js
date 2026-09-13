@@ -14,8 +14,8 @@
       palette.rel="stylesheet";
       document.head.appendChild(palette);
     }
-    if(palette.getAttribute("href")!=="theme-light-fixed-palette.css?v=4"){
-      palette.href="theme-light-fixed-palette.css?v=4";
+    if(palette.getAttribute("href")!=="theme-light-fixed-palette.css?v=5"){
+      palette.href="theme-light-fixed-palette.css?v=5";
     }
 
     let lock=document.getElementById("eteLightSandLockStyles");
@@ -25,8 +25,8 @@
       lock.rel="stylesheet";
       document.head.appendChild(lock);
     }
-    if(lock.getAttribute("href")!=="theme-light-sand-lock.css?v=1"){
-      lock.href="theme-light-sand-lock.css?v=1";
+    if(lock.getAttribute("href")!=="theme-light-sand-lock.css?v=2"){
+      lock.href="theme-light-sand-lock.css?v=2";
     }
 
     document.head.appendChild(palette);
