@@ -30,6 +30,15 @@
 /relational-frontend-v2.js
   Cache-Control: no-store, max-age=0
 
+/final-polish.js
+  Cache-Control: no-store, max-age=0
+
+/custom-select.js
+  Cache-Control: no-store, max-age=0
+
+/custom-select.css
+  Cache-Control: no-store, max-age=0
+
 /student-list-organizer.js
   Cache-Control: no-store, max-age=0
 
