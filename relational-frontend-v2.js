@@ -162,6 +162,9 @@
 
   function canCancel(request){
     try{
+      if(typeof canDeleteRequest==="function") return !!canDeleteRequest(request);
+    }catch(_){}
+    try{
       if(!request || !currentUser) return false;
       if(["adm","professor"].includes(String(currentUser.role||""))) return true;
       return String(request.requestedById||"")===currentAuthId();
@@ -187,8 +190,29 @@
       button.dataset.cancelWaitingRequest=id;
       button.textContent="Cancelar pedido";
       button.title="Cancelar este pedido antes da retirada";
+      button.setAttribute("aria-label","Cancelar pedido de "+String(request.student||"aluno"));
       actions.insertBefore(button,pickupButton);
     });
+  }
+
+  async function askConfirmation(request){
+    try{
+      if(window.ControlActionModal?.confirm){
+        return await window.ControlActionModal.confirm({
+          title:"Cancelar pedido",
+          subtitle:"O pedido ainda não foi retirado.",
+          message:`Deseja cancelar o pedido de ${request.student}?`,
+          details:[String(request.room||[request.studentClass,request.studentCourse].filter(Boolean).join(" ")||"Turma não informada"),String(request.time||"Horário não informado")],
+          warning:"O pedido será removido da Agenda sem registrar retirada do notebook.",
+          variant:"warning",
+          confirmText:"Cancelar pedido",
+          cancelText:"Manter pedido"
+        });
+      }
+    }catch(error){
+      console.warn("Falha ao abrir confirmação personalizada:",error);
+    }
+    return window.confirm(`Cancelar o pedido de ${request.student}?\n\nO pedido será removido da Agenda sem registrar retirada do notebook.`);
   }
 
   async function handleCancel(button){
@@ -199,10 +223,11 @@
     if(request.status!=="wait") throw new Error("invalid_status");
     if(!canCancel(request)) throw new Error("forbidden");
 
-    if(!confirm(`Cancelar o pedido de ${request.student}?\n\nO pedido será removido da Agenda sem registrar retirada do notebook.`)) return;
+    if(!(await askConfirmation(request))) return;
 
     const oldText=button.textContent;
     button.disabled=true;
+    button.setAttribute("aria-busy","true");
     button.textContent="Cancelando...";
 
     try{
@@ -217,6 +242,7 @@
     }finally{
       if(button.isConnected){
         button.disabled=false;
+        button.removeAttribute("aria-busy");
         button.textContent=oldText;
       }
     }
