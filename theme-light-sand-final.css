@@ -70,3 +70,10 @@ html[data-theme="light"][data-theme="light"][data-theme="light"] body svg *{
   stroke:currentColor!important;
 }
 html[data-theme="light"][data-theme="light"][data-theme="light"] body svg [fill]:not([fill="none"]){fill:currentColor!important}
+
+/* O Chromium identificou este subtítulo como o último tom frio remanescente. */
+html[data-theme="light"] body .quick-card .left small,
+html[data-theme="light"] body .quick-card small,
+html[data-theme="light"][data-theme="light"] body .quick-card .left small{
+  color:#6e543f!important;
+}
