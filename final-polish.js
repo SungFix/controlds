@@ -6,6 +6,9 @@
   let queued=false;
 
   function ensureGlobalSelectAssets(){
+    const historySelect=document.getElementById("historyFilter");
+    if(historySelect)historySelect.dataset.nativeSelect="true";
+
     if(!document.getElementById("eteCustomSelectStyles")){
       const link=document.createElement("link");
       link.id="eteCustomSelectStyles";
