@@ -33,6 +33,15 @@
 /final-polish.js
   Cache-Control: no-store, max-age=0
 
+/theme-light-fixed-palette.css
+  Cache-Control: no-store, max-age=0
+
+/theme-light-sand-lock.css
+  Cache-Control: no-store, max-age=0
+
+/theme-light-palette-sage.css
+  Cache-Control: no-store, max-age=0
+
 /custom-select.js
   Cache-Control: no-store, max-age=0
 
