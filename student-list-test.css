@@ -1,1 +1,21 @@
-#page-students #studentRows{grid-template-columns:1fr!important}
+#page-students #studentRows.student-list{grid-template-columns:1fr!important;gap:8px!important;max-height:64vh!important;padding:4px!important;border:0!important;background:transparent!important}
+#page-students #studentRows .student-card{width:100%!important;border-radius:13px!important;box-shadow:none!important;overflow:hidden!important}
+#page-students #studentRows .student-card-head{min-height:66px!important;display:flex!important;align-items:center!important;flex-wrap:nowrap!important;gap:12px!important;padding:11px 14px!important;cursor:pointer!important;background:transparent!important}
+#page-students #studentRows .student-avatar{width:40px!important;height:40px!important;flex:0 0 40px!important;border-radius:11px!important}
+#page-students #studentRows .student-card-title{flex:1 1 auto!important;min-width:0!important}
+#page-students #studentRows .student-card-title strong{display:block!important;min-height:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;-webkit-line-clamp:unset!important}
+#page-students #studentRows .student-card-title small{display:block!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#page-students #studentRows .student-reputation{display:none!important}
+#page-students #studentRows .student-card.is-open .student-reputation{display:flex!important;margin-left:auto!important}
+#page-students #studentRows .student-card-body,#page-students #studentRows .student-card-foot{display:none!important}
+#page-students #studentRows .student-card.is-open .student-card-body{display:grid!important;grid-template-columns:1fr!important;gap:0!important;padding:4px 16px 8px!important}
+#page-students #studentRows .student-card.is-open .student-meta{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:16px!important;padding:10px 0!important;border:0!important;border-bottom:1px solid #303740!important;border-radius:0!important;background:transparent!important}
+#page-students #studentRows .student-card.is-open .student-meta:last-child{border-bottom:0!important}
+#page-students #studentRows .student-card.is-open .student-meta strong{margin:0!important;text-align:right!important}
+#page-students #studentRows .student-card.is-open .student-card-foot{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;padding:10px 14px!important}
+#page-students #studentRows .student-row-chevron{width:30px;height:30px;flex:0 0 30px;display:grid;place-items:center;margin-left:auto;border:1px solid #343c45;border-radius:9px;color:#9aa4ae;background:#171c22;transition:transform .16s ease}
+#page-students #studentRows .student-row-chevron svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#page-students #studentRows .student-card.is-open .student-row-chevron{transform:rotate(180deg)}
+html.theme-light #page-students #studentRows .student-row-chevron,html[data-theme="light"] #page-students #studentRows .student-row-chevron{background:#eef1ed;border-color:#ccd4ce;color:#64716a}
+@media(max-width:760px){#page-students #studentRows .student-card.is-open .student-reputation{display:none!important}#page-students #studentRows .student-card.is-open .student-card-foot{align-items:flex-start!important;flex-direction:column!important}}
+@media(max-width:520px){#page-students #studentRows .student-card.is-open .student-meta{align-items:flex-start!important;flex-direction:column!important;gap:4px!important}#page-students #studentRows .student-card.is-open .student-meta strong{text-align:left!important}}
