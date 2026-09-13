@@ -4,6 +4,40 @@
   const LOADING_RE=/^(salvando|apagando|confirmando|entrando|carregando|enviando|processando)/i;
   const EMPTY_SELECTOR=".request-empty,.permission-empty,.student-empty,.computer-empty,.history-empty,.agenda-empty,.student-picker-empty";
   let queued=false;
+  let headObserver=null;
+
+  function ensureLightPaletteLast(){
+    let palette=document.getElementById("eteLightFixedPaletteStyles");
+    if(!palette){
+      palette=document.createElement("link");
+      palette.id="eteLightFixedPaletteStyles";
+      palette.rel="stylesheet";
+      document.head.appendChild(palette);
+    }
+    if(palette.getAttribute("href")!=="theme-light-fixed-palette.css?v=2"){
+      palette.href="theme-light-fixed-palette.css?v=2";
+    }
+    const styles=[...document.head.querySelectorAll('link[rel="stylesheet"]')];
+    if(styles.length&&styles[styles.length-1]!==palette) document.head.appendChild(palette);
+  }
+
+  function watchLateStyles(){
+    if(headObserver||!document.head)return;
+    headObserver=new MutationObserver(records=>{
+      let stylesheetAdded=false;
+      for(const record of records){
+        for(const node of record.addedNodes){
+          if(node instanceof HTMLLinkElement&&node.rel==="stylesheet"&&node.id!=="eteLightFixedPaletteStyles"){
+            stylesheetAdded=true;
+            break;
+          }
+        }
+        if(stylesheetAdded)break;
+      }
+      if(stylesheetAdded) requestAnimationFrame(ensureLightPaletteLast);
+    });
+    headObserver.observe(document.head,{childList:true});
+  }
 
   function ensureGlobalSelectAssets(){
     const historySelect=document.getElementById("historyFilter");
@@ -23,13 +57,8 @@
       matte.href="select-matte.css?v=1";
       document.head.appendChild(matte);
     }
-    if(!document.getElementById("eteLightFixedPaletteStyles")){
-      const palette=document.createElement("link");
-      palette.id="eteLightFixedPaletteStyles";
-      palette.rel="stylesheet";
-      palette.href="theme-light-fixed-palette.css?v=1";
-      document.head.appendChild(palette);
-    }
+    ensureLightPaletteLast();
+    watchLateStyles();
     if(!document.getElementById("eteCustomSelectScript")){
       const script=document.createElement("script");
       script.id="eteCustomSelectScript";
