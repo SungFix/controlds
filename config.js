@@ -33,6 +33,7 @@ window.ETE_CONFIG = {
   function finalizeLoginStyles(){
     const loginStyle = document.querySelector('link[href^="login-simple-v2.css"]');
     if (loginStyle && loginStyle.parentNode === document.head) {
+      if (loginStyle.getAttribute("href") !== "login-simple-v2.css?v=7") loginStyle.href = "login-simple-v2.css?v=7";
       document.head.appendChild(loginStyle);
     }
     requestAnimationFrame(release);
@@ -123,7 +124,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlActionModalStyles", "action-modal.css?v=1");
     ensureStylesheet("controlFinalPolishStyles", "final-polish.css?v=2");
     ensureStylesheet("controlContrastSweepStyles", "contrast-sweep.css?v=5");
-    ensureStylesheet("controlTopbarFinalOverrideStyles", "topbar-final-override.css?v=11");
+    ensureStylesheet("controlTopbarFinalOverrideStyles", "topbar-final-override.css?v=12");
     ensureStylesheet("controlUserProfileStyles", "user-profile.css?v=3");
     ensureStylesheet("controlStudentCardActionsStyles", "student-card-actions.css?v=3");
     ensureStylesheet("controlStudentReputationStyles", "student-reputation.css?v=3");
@@ -138,9 +139,10 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlPortalAdminV2Styles", "portal-admin-v2.css?v=1");
     ensureStylesheet("controlPortalAdminIconFixStyles", "portal-admin-icon-fix.css?v=1");
     ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=3");
-    ensureStylesheet("controlAtestadosImageUploadStyles", "atestados-image-upload.css?v=1");
+    ensureStylesheet("controlAtestadosImageUploadStyles", "atestados-image-upload.css?v=2");
     ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=1");
 
+    ensureScript("controlLoginUsabilityScript", "login-usability.js?v=1");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
     ensureScript("controlPermissionDetailsScript", "permission-details-enhance.js?v=3");
@@ -160,17 +162,19 @@ window.ETE_CONFIG = {
     ensureScript("controlStudentReputationScript", "student-reputation.js?v=4");
     ensureScript("controlStudentListOrganizerScript", "student-list-organizer.js?v=1");
     ensureScript("controlPermissionFilterLabelFixScript", "permission-filter-label-fix.js?v=1");
-    ensureScript("controlHistoryFilterPolishScript", "history-filter-polish.js?v=1");
+    ensureScript("controlHistoryFilterPolishScript", "history-filter-polish.js?v=2");
     ensureScript("controlMobileLogoutIconScript", "mobile-logout-icon.js?v=2");
     ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=3");
-    ensureScript("controlPortalScript", "portal.js?v=14");
+    ensureScript("controlPortalScript", "portal.js?v=15");
     ensureScript("controlAdminFunctionAuthFixScript", "admin-function-auth-fix.js?v=1");
     ensureScript("controlPortalAdminScript", "portal-admin.js?v=3");
     ensureScript("controlPortalAdminCornerScript", "portal-admin-corner.js?v=3");
-    ensureScript("controlRelationalFrontendV2Script", "relational-frontend-v2.js?v=1");
+    ensureScript("controlRelationalFrontendV2Script", "relational-frontend-v2.js?v=2");
     ensureScript("controlRegisteredStudentFlowScript", "registered-student-flow.js?v=6");
     ensureScript("controlRequestCreatorLabelScript", "request-creator-label.js?v=1");
-    ensureScript("controlAtestadosImageUploadScript", "atestados-image-upload.js?v=1");
+    ensureScript("controlAtestadosImageUploadScript", "atestados-image-upload.js?v=2");
+    ensureScript("controlAtestadosImageRangeFixScript", "atestados-image-range-fix.js?v=1");
+    ensureScript("controlAtestadosActionPolishScript", "atestados-action-polish.js?v=1");
   }
 
   function updateButton(button){
