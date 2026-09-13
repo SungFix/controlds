@@ -33,177 +33,80 @@ jobs:
           sleep 2
           cat > control-ds-smoke.mjs <<'JS'
           import { chromium } from 'playwright';
+
           const browser=await chromium.launch({headless:true});
-          const results=[];
+          const page=await browser.newPage({viewport:{width:1366,height:768}});
+          const errors=[];
+          page.on('pageerror',e=>errors.push(e.message));
 
-          async function setLight(page){
-            await page.evaluate(()=>window.ControlTheme?.set?.('light'));
-            await page.waitForFunction(()=>{
-              const hard=document.getElementById('eteLightSandHardLockStyles');
-              const final=document.getElementById('eteLightSandFinalStyles');
-              return document.documentElement.dataset.theme==='light' &&
-                !!hard?.sheet && !!final?.sheet &&
-                String(final.getAttribute('href')||'').includes('theme-light-sand-final.css?v=4');
-            },null,{timeout:7000});
-            await page.waitForTimeout(80);
+          const res=await page.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle',timeout:30000});
+          if(!res?.ok())throw new Error(`local: HTTP ${res?.status()}`);
+          await page.locator('#loginGate').waitFor({state:'visible'});
+          if(errors.length)throw new Error(`local page errors: ${errors.join(' | ')}`);
+
+          await page.evaluate(()=>window.ControlTheme?.set?.('dark'));
+          await page.waitForTimeout(30);
+          const dark=await page.evaluate(()=>({
+            theme:document.documentElement.dataset.theme,
+            bg:getComputedStyle(document.body).backgroundColor
+          }));
+          if(dark.theme!=='dark')throw new Error('local: tema escuro não aplicou');
+
+          await page.evaluate(()=>window.ControlTheme?.set?.('light'));
+          await page.waitForFunction(()=>document.documentElement.dataset.theme==='light',null,{timeout:3000});
+          await page.waitForTimeout(30);
+
+          const light=await page.evaluate(()=>{
+            const root=getComputedStyle(document.documentElement);
+            const body=getComputedStyle(document.body);
+            const sample=document.querySelector('.login-card')||document.body;
+            const sampleStyle=getComputedStyle(sample);
+            return {
+              theme:document.documentElement.dataset.theme,
+              bg:root.getPropertyValue('--ui-bg').trim(),
+              text:root.getPropertyValue('--ui-text').trim(),
+              border:root.getPropertyValue('--ui-border').trim(),
+              bodyTransition:body.transitionDuration,
+              sampleTransition:sampleStyle.transitionDuration,
+              paletteHref:document.getElementById('controlLightPaletteSageStyles')?.getAttribute('href')||'',
+              fixedHref:document.getElementById('eteLightFixedPaletteStyles')?.getAttribute('href')||''
+            };
+          });
+
+          if(light.theme!=='light')throw new Error('local: tema claro não aplicou');
+          if(light.bg!=='#dfe7ea'||light.text!=='#425863'||light.border!=='#b4c5cc'){
+            throw new Error(`local: tema não voltou à paleta anterior ${JSON.stringify(light)}`);
+          }
+          if(light.bodyTransition!=='0s'||light.sampleTransition!=='0s'){
+            throw new Error(`local: troca de tema ainda possui transição visual ${JSON.stringify(light)}`);
           }
 
-          async function installFixture(page){
-            await page.evaluate(()=>{
-              document.getElementById('themeAuditFixture')?.remove();
-              const host=document.createElement('div');
-              host.id='themeAuditFixture';
-              host.style.cssText='position:absolute;left:0;top:0;width:1280px;min-height:1000px;z-index:-1;pointer-events:none;';
-              host.innerHTML=`
-                <div class="shell">
-                  <aside class="sidebar">
-                    <div class="brand"><div class="brandmark"></div><span><strong>ETE</strong><small>Controle</small></span></div>
-                    <span class="section-label">Operação</span>
-                    <nav class="nav"><button class="active"><span class="navicon"><svg viewBox="0 0 24 24"><path d="M4 12h16"/></svg></span>Início</button><button><span class="navicon"><svg viewBox="0 0 24 24"><path d="M12 4v16"/></svg></span>Agenda</button></nav>
-                    <div class="side-status"><span class="local-pill">Supabase conectado</span></div>
-                  </aside>
-                  <main class="main">
-                    <header class="topbar"><span class="page-symbol"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5z"/></svg></span><span class="sync">Sincronizado</span><button class="user">Usuário</button></header>
-                    <div class="content">
-                      <button class="btn primary">Novo pedido</button><button class="btn secondary">Ver agenda</button>
-                      <div class="hero-stat"><strong>0</strong><div class="hero-bars"><span></span><span></span><span></span><span></span></div></div>
-                      <div class="mini-stat"><span class="dot blue"></span><strong>0</strong></div>
-                      <section class="panel"><div class="panelhead"><strong>Agenda</strong></div><div class="quick-panel"><div class="quick-card"><div class="left"><strong>Ação</strong><small>Teste</small></div><button class="btn">Abrir</button></div></div></section>
-                    </div>
-                  </main>
-                </div>
-                <section id="eteCentralPortal" class="ete-portal">
-                  <div class="ete-portal-shell"><header class="ete-portal-topbar"><span class="ete-portal-mark">ETE</span><span class="ete-portal-user">ADM</span><button class="ete-portal-theme">Tema</button><button class="ete-portal-exit">Sair</button></header>
-                    <main class="ete-portal-home"><div class="ete-portal-hero"><span class="ete-portal-kicker">Central</span><h1>Escolha</h1></div>
-                      <div class="ete-portal-grid"><button class="ete-system-card available"><span class="ete-system-icon"><svg viewBox="0 0 24 24"><path d="M4 7h16v10H4z"/></svg></span><span class="ete-system-status">Disponível</span><strong>Control Ds</strong></button><button class="ete-system-card available"><span class="ete-system-icon"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/></svg></span><span class="ete-system-status">Disponível</span><strong>Atestados</strong></button></div>
-                    </main>
-                    <div class="at-control-shell"><aside class="at-control-sidebar"><div class="at-control-brand"><span class="at-control-brandmark">ETE</span></div><button class="at-nav-item active"><span class="at-control-navicon"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5z"/></svg></span>Visão geral</button><span class="at-control-side-dot"></span></aside>
-                      <main class="at-app-main"><header class="at-app-topbar"><button class="at-app-theme">Tema</button><span class="at-app-sync"><i></i>Sincronizado</span><button class="at-app-exit">Sair</button></header>
-                        <div class="at-app-content"><button class="at-btn primary">Novo registro</button><span class="at-status">Atualizado</span>
-                          <article class="at-metric"><div><span>Registros</span><strong>0</strong></div></article>
-                          <section class="at-card"><div class="at-card-head"><strong>Faltas</strong></div><div class="at-inline-search"><input class="at-input" placeholder="Pesquisar"><select class="at-select"><option>Turmas</option></select></div></section>
-                        </div>
-                      </main>
-                    </div>
-                  </div>
-                </section>`;
-              document.body.appendChild(host);
-            });
-            await page.waitForTimeout(30);
+          await page.evaluate(()=>window.ControlTheme?.set?.('dark'));
+          await page.waitForTimeout(30);
+          const darkAfter=await page.evaluate(()=>({
+            theme:document.documentElement.dataset.theme,
+            bg:getComputedStyle(document.body).backgroundColor
+          }));
+          if(darkAfter.theme!=='dark'||darkAfter.bg!==dark.bg)throw new Error('local: retorno ao tema escuro falhou');
+
+          await page.fill('#loginUsername','usuario_inexistente_teste');
+          await page.fill('#loginPassword','senha_invalida_teste');
+          await page.click('#loginSubmit');
+          await page.waitForTimeout(1800);
+          if(!(await page.locator('#loginError').isVisible()))throw new Error('local: login inválido não exibiu erro');
+
+          await page.setViewportSize({width:390,height:844});
+          await page.reload({waitUntil:'networkidle'});
+          await page.locator('#loginGate').waitFor({state:'visible'});
+          if(await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+2)){
+            throw new Error('local: overflow horizontal mobile');
           }
+          const box=await page.locator('.login-card').boundingBox();
+          if(!box||box.x<0||box.x+box.width>390.5)throw new Error('local: card fora da tela mobile');
 
-          async function fullColorAudit(page,label){
-            await installFixture(page);
-            const violations=await page.evaluate(()=>{
-              const root=document.getElementById('themeAuditFixture');
-              const nodes=[root,...root.querySelectorAll('*')];
-              const commonChecks=['color','backgroundColor','borderTopColor','borderRightColor','borderBottomColor','borderLeftColor','outlineColor','textDecorationColor','caretColor','boxShadow','textShadow','backgroundImage'];
-              const svgTags=new Set(['SVG','PATH','CIRCLE','RECT','LINE','POLYLINE','POLYGON','ELLIPSE','G','USE']);
-              const palette=new Set(['255,250,242','248,239,226','240,226,208','229,210,186','213,191,165','185,154,122','146,115,86','110,84,63','75,57,43']);
-              const ok=value=>{
-                const text=String(value||'').trim();
-                if(!text||text==='none'||text==='normal'||text==='transparent')return true;
-                const matches=[...text.matchAll(/rgba?\(([^)]+)\)/g)];
-                if(!matches.length)return true;
-                return matches.every(match=>{
-                  const nums=match[1].split(',').map(v=>Number.parseFloat(v.trim()));
-                  if(nums.length>=4&&nums[3]===0)return true;
-                  return palette.has(nums.slice(0,3).map(v=>Math.round(v)).join(','));
-                });
-              };
-              const out=[];
-              const inspect=(el,pseudo='')=>{
-                const style=getComputedStyle(el,pseudo||null);
-                const checks=pseudo?commonChecks:(svgTags.has(el.tagName)?[...commonChecks,'fill','stroke']:commonChecks);
-                for(const prop of checks){
-                  const value=style[prop];
-                  if(!ok(value)){
-                    out.push({
-                      tag:el.tagName,id:el.id||'',className:typeof el.className==='string'?el.className:'',pseudo,prop,value,
-                      text:String(el.textContent||'').trim().slice(0,60),
-                      parent:el.parentElement ? `${el.parentElement.tagName}.${String(el.parentElement.className||'').replace(/\s+/g,'.')}` : ''
-                    });
-                    if(out.length>=40)return false;
-                  }
-                }
-                return true;
-              };
-              for(const el of nodes){
-                if(['SCRIPT','STYLE','LINK','IMG','VIDEO','CANVAS','PICTURE','SOURCE'].includes(el.tagName))continue;
-                if(!inspect(el))break;
-                for(const pseudo of ['::before','::after']){
-                  const ps=getComputedStyle(el,pseudo);
-                  if(ps.content&&ps.content!=='none'&&ps.content!=='normal'){
-                    if(!inspect(el,pseudo))break;
-                  }
-                }
-                if(out.length>=40)break;
-              }
-              return out;
-            });
-            if(violations.length){
-              console.log('=== COLOR VIOLATIONS ===');
-              console.log(JSON.stringify(violations,null,2));
-              throw new Error(`${label}: ${violations.length} cores fora da família areia; primeira: ${violations[0].className||violations[0].tag} ${violations[0].prop}=${violations[0].value}`);
-            }
-            results.push(`${label} full sand color audit PASS`);
-          }
-
-          async function runLocal(){
-            const page=await browser.newPage({viewport:{width:1366,height:768}});
-            const errors=[];
-            page.on('pageerror',e=>errors.push(e.message));
-            const res=await page.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle',timeout:30000});
-            if(!res?.ok())throw new Error(`local: HTTP ${res?.status()}`);
-            await page.locator('#loginGate').waitFor({state:'visible'});
-            if(errors.length)throw new Error(`local page errors: ${errors.join(' | ')}`);
-
-            await page.evaluate(()=>window.ControlTheme?.set?.('dark'));
-            await page.waitForTimeout(30);
-            const dark=await page.evaluate(()=>({theme:document.documentElement.dataset.theme,bg:getComputedStyle(document.body).backgroundColor}));
-            if(dark.theme!=='dark')throw new Error('local: tema escuro não aplicou');
-
-            await setLight(page);
-            const light=await page.evaluate(()=>{
-              const s=getComputedStyle(document.documentElement);
-              return {
-                theme:document.documentElement.dataset.theme,
-                bg:s.getPropertyValue('--ui-bg').trim(),text:s.getPropertyValue('--ui-text').trim(),border:s.getPropertyValue('--ui-border').trim(),
-                hardLock:document.getElementById('eteLightSandHardLockStyles')?.getAttribute('href')||'',
-                finalLock:document.getElementById('eteLightSandFinalStyles')?.getAttribute('href')||''
-              };
-            });
-            if(light.theme!=='light')throw new Error('local: tema claro não aplicou');
-            if(light.bg!=='#f8efe2'||light.text!=='#4b392b'||light.border!=='#d5bfa5')throw new Error(`local: variáveis fora da paleta areia ${JSON.stringify(light)}`);
-            if(!light.hardLock.includes('theme-light-sand-hardlock.css'))throw new Error('local: hard lock não carregado');
-            if(!light.finalLock.includes('theme-light-sand-final.css?v=4'))throw new Error(`local: final lock v4 não carregado (${light.finalLock})`);
-
-            await fullColorAudit(page,'local');
-
-            await page.evaluate(()=>window.ControlTheme?.set?.('dark'));
-            await page.waitForTimeout(30);
-            const darkAfter=await page.evaluate(()=>({theme:document.documentElement.dataset.theme,bg:getComputedStyle(document.body).backgroundColor}));
-            if(darkAfter.theme!=='dark'||darkAfter.bg!==dark.bg)throw new Error('local: hard lock alterou o tema escuro');
-
-            await page.fill('#loginUsername','usuario_inexistente_teste');
-            await page.fill('#loginPassword','senha_invalida_teste');
-            await page.click('#loginSubmit');
-            await page.waitForTimeout(1800);
-            if(!(await page.locator('#loginError').isVisible()))throw new Error('local: login inválido não exibiu erro');
-
-            await page.setViewportSize({width:390,height:844});
-            await page.reload({waitUntil:'networkidle'});
-            await page.locator('#loginGate').waitFor({state:'visible'});
-            if(await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+2))throw new Error('local: overflow horizontal mobile');
-            const box=await page.locator('.login-card').boundingBox();
-            if(!box||box.x<0||box.x+box.width>390.5)throw new Error('local: card fora da tela mobile');
-            results.push('local desktop/mobile PASS');
-            await page.close();
-          }
-
-          await runLocal();
-          console.log('=== BROWSER RESULTS ===');
-          results.forEach(x=>console.log(x));
+          console.log('pre-warm light palette PASS');
+          console.log('instant theme switch PASS');
+          console.log('desktop/mobile PASS');
           await browser.close();
           JS
           node control-ds-smoke.mjs
