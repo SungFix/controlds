@@ -86,3 +86,77 @@
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",start,{once:true});
   else start();
 })();
+
+(function initThemeSyncFallback(){
+  "use strict";
+  if(String(window.ControlTheme?.set||"").includes("startViewTransition"))return;
+
+  const root=document.documentElement;
+  const KEY="control-ds-theme";
+  const DURATION=240;
+  let timer=0;
+  let running=false;
+
+  if(!document.getElementById("eteThemeSyncRuntimeStyles")){
+    const style=document.createElement("style");
+    style.id="eteThemeSyncRuntimeStyles";
+    style.textContent=`:root{--ete-theme-d:${DURATION}ms;--ete-theme-e:cubic-bezier(.22,.72,.24,1)}html.ete-theme-fallback body,html.ete-theme-fallback body *,html.ete-theme-fallback body *::before,html.ete-theme-fallback body *::after{transition-property:background-color,color,border-color,fill,stroke,outline-color!important;transition-duration:var(--ete-theme-d)!important;transition-delay:0ms!important;transition-timing-function:var(--ete-theme-e)!important}html.ete-theme-view,html.ete-theme-view body,html.ete-theme-view body *,html.ete-theme-view body *::before,html.ete-theme-view body *::after{transition:none!important}::view-transition-group(root){animation-duration:var(--ete-theme-d)!important;animation-timing-function:var(--ete-theme-e)!important}::view-transition-old(root),::view-transition-new(root){animation-duration:var(--ete-theme-d)!important;animation-timing-function:var(--ete-theme-e)!important;mix-blend-mode:normal}::view-transition-old(root){animation-name:eteThemeOld!important}::view-transition-new(root){animation-name:eteThemeNew!important}@keyframes eteThemeOld{from{opacity:1}to{opacity:0}}@keyframes eteThemeNew{from{opacity:0}to{opacity:1}}`;
+    document.head.appendChild(style);
+  }
+
+  function current(){return root.dataset.theme==="light"?"light":"dark";}
+  function apply(theme,persist){
+    const next=theme==="light"?"light":"dark";
+    root.dataset.theme=next;
+    root.classList.toggle("theme-light",next==="light");
+    root.classList.toggle("theme-dark",next==="dark");
+    root.style.colorScheme=next;
+    if(persist!==false){try{localStorage.setItem(KEY,next)}catch(_){}}
+    const light=next==="light";
+    document.querySelectorAll(".control-theme-toggle").forEach(button=>{
+      button.innerHTML='<span aria-hidden="true">'+(light?'☾':'☀')+'</span><span class="theme-label">'+(light?'Tema escuro':'Tema claro')+'</span>';
+      button.dataset.themeState=next;
+      button.setAttribute("aria-pressed",String(light));
+      button.setAttribute("aria-label",light?"Mudar para tema escuro":"Mudar para tema claro");
+      button.title=light?"Mudar para tema escuro":"Mudar para tema claro";
+    });
+    try{window.dispatchEvent(new CustomEvent("control-theme-change",{detail:{theme:next}}))}catch(_){ }
+    return next;
+  }
+
+  function set(theme,options){
+    const target=theme==="light"?"light":"dark";
+    const persist=!options||options.persist!==false;
+    const reduce=window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    const animate=(!options||options.skipTransition!==true)&&target!==current()&&!reduce;
+    if(target===current())return apply(target,persist);
+    if(persist){try{localStorage.setItem(KEY,target)}catch(_){}}
+    if(animate&&typeof document.startViewTransition==="function"&&!running){
+      running=true;
+      root.classList.remove("theme-transitioning","ete-theme-fallback");
+      root.classList.add("ete-theme-view");
+      const vt=document.startViewTransition(()=>apply(target,false));
+      vt.finished.catch(()=>{}).finally(()=>{running=false;root.classList.remove("ete-theme-view")});
+      return target;
+    }
+    if(animate){
+      clearTimeout(timer);
+      root.classList.add("ete-theme-fallback");
+      void root.offsetWidth;
+      apply(target,false);
+      timer=setTimeout(()=>root.classList.remove("ete-theme-fallback"),DURATION+30);
+    }else apply(target,false);
+    return target;
+  }
+
+  function toggle(){return set(current()==="light"?"dark":"light")}
+  window.ControlTheme=Object.freeze({get:current,set,toggle});
+
+  document.addEventListener("click",event=>{
+    const button=event.target.closest?.(".control-theme-toggle");
+    if(!button)return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    toggle();
+  },true);
+})();
