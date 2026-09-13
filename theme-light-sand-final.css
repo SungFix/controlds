@@ -1,0 +1,22 @@
+/* Última barreira cromática do tema claro.
+   Prioridade alta para textos internos do Portal/Atestados que folhas antigas marcavam com !important. */
+html[data-theme="light"] body #eteCentralPortal,
+html[data-theme="light"] body #eteCentralPortal *{
+  color:var(--sand-7)!important;
+  border-color:var(--sand-4)!important;
+  outline-color:var(--sand-5)!important;
+  text-decoration-color:var(--sand-5)!important;
+  caret-color:var(--sand-7)!important;
+}
+html[data-theme="light"] body #eteCentralPortal :is(h1,h2,h3,h4,h5,h6,strong,b,label,th,.at-metric strong,.ete-system-card strong){
+  color:var(--sand-8)!important;
+}
+html[data-theme="light"] body #eteCentralPortal :is(p,small,.ete-portal-brand small,.ete-portal-hero p,.ete-portal-section-head small,.ete-system-card p,.ete-system-open,.at-app-top-title small,.at-page-head p,.at-card-head small,.at-empty-state span){
+  color:var(--sand-7)!important;
+}
+html[data-theme="light"] body #eteCentralPortal svg,
+html[data-theme="light"] body #eteCentralPortal svg *{
+  color:var(--sand-7)!important;
+  stroke:currentColor!important;
+}
+html[data-theme="light"] body #eteCentralPortal svg [fill]:not([fill="none"]){fill:currentColor!important}
