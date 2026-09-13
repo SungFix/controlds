@@ -45,6 +45,11 @@ await page.locator('.at-reason-list').waitFor({state:'visible'});
 await page.locator('input[name="atReason"][value="atestado_medico"]').check();
 await page.locator('.at-reason-trigger').click();
 
+await page.fill('#atDate','2026-08-10');
+await page.locator('#atDate').dispatchEvent('change');
+await page.fill('#atEndDate','2026-08-12');
+await page.locator('#atEndDate').dispatchEvent('change');
+
 await input.setInputFiles({name:'atestado-teste.jpg',mimeType:'image/jpeg',buffer:Buffer.from([255,216,255,217])});
 await page.locator('.at-image-preview').waitFor({state:'visible'});
 if(!/atestado-teste\.jpg/.test(await page.locator('.at-image-preview-name').textContent()||''))throw new Error('Preview não mostrou o nome do arquivo');
@@ -56,6 +61,7 @@ if(result.upload.type!=='image/jpeg')throw new Error('MIME do upload incorreto')
 if(result.upload.size!==4)throw new Error('Tamanho do arquivo mock incorreto');
 if(result.insert.image_path!==result.upload.path)throw new Error('Caminho da imagem não foi salvo junto ao registro');
 if(result.insert.student_name!=='Aluno Imagem'||result.insert.class_name!=='1º DS A')throw new Error('Upload quebrou vínculo visual do aluno/turma');
+if(result.insert.absence_date!=='2026-08-10'||result.insert.absence_end_date!=='2026-08-12')throw new Error('Upload com imagem não preservou o período completo do atestado');
 if(!result.upload.path.startsWith('audit-adm/'))throw new Error('Caminho do Storage não está isolado pelo usuário');
 
 await page.setViewportSize({width:430,height:900});
