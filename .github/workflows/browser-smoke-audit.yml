@@ -36,6 +36,19 @@ jobs:
           const browser=await chromium.launch({headless:true});
           const results=[];
 
+          const SAND={
+            s0:'rgb(255, 250, 242)',
+            s1:'rgb(248, 239, 226)',
+            s2:'rgb(240, 226, 208)',
+            s3:'rgb(229, 210, 186)',
+            s4:'rgb(213, 191, 165)',
+            s5:'rgb(185, 154, 122)',
+            s6:'rgb(146, 115, 86)',
+            s7:'rgb(110, 84, 63)',
+            s8:'rgb(75, 57, 43)'
+          };
+          const allowed=new Set(Object.values(SAND));
+
           async function themeSnapshot(page){
             return page.evaluate(()=>{
               const root=document.documentElement;
@@ -68,6 +81,65 @@ jobs:
             });
           }
 
+          async function installThemeAuditFixture(page){
+            await page.evaluate(()=>{
+              document.getElementById('themeAuditFixture')?.remove();
+              const host=document.createElement('div');
+              host.id='themeAuditFixture';
+              host.style.cssText='position:fixed;left:-10000px;top:0;width:1200px;height:900px;pointer-events:none;';
+              host.innerHTML=`
+                <div class="shell"><aside class="sidebar"><div class="brandmark"></div><span class="local-pill">Supabase</span></aside><main class="main"><div class="topbar"><span class="page-symbol"></span><span class="sync">Sincronizado</span></div><div class="content"><button class="btn primary">Novo pedido</button><div class="quick-card"><div class="left"><strong>Ação</strong><small>Teste</small></div></div></div></main></div>
+                <section id="eteCentralPortal" class="ete-portal"><div class="ete-system-card available"><span class="ete-system-icon"></span><span class="ete-system-status">Disponível</span></div><div class="ete-system-card available"><span class="ete-system-icon"></span><span class="ete-system-status">Disponível</span></div><div class="at-control-shell"><aside class="at-control-sidebar"><span class="at-control-brandmark">ETE</span><span class="at-control-side-dot"></span></aside><main class="at-app-main"><header class="at-app-topbar"><button class="at-app-theme">Tema</button><span class="at-app-sync"><i></i>Sincronizado</span></header><div class="at-app-content"><button class="at-btn primary">Novo registro</button><article class="at-metric"><div><strong>0</strong></div></article><div class="at-inline-search"><input class="at-input"></div></div></main></div></section>`;
+              document.body.appendChild(host);
+            });
+          }
+
+          async function assertSandOnly(page,label){
+            await installThemeAuditFixture(page);
+            const sample=await page.evaluate(()=>{
+              const one=(selector,pseudo='')=>{
+                const el=document.querySelector(selector);
+                if(!el)return null;
+                const s=getComputedStyle(el,pseudo||null);
+                return {backgroundColor:s.backgroundColor,color:s.color,borderColor:s.borderColor};
+              };
+              return {
+                body:one('body'),
+                main:one('#themeAuditFixture .main'),
+                sidebar:one('#themeAuditFixture .sidebar'),
+                pageSymbol:one('#themeAuditFixture .page-symbol'),
+                sync:one('#themeAuditFixture .sync'),
+                syncDot:one('#themeAuditFixture .sync','::before'),
+                quickCard:one('#themeAuditFixture .quick-card'),
+                primary:one('#themeAuditFixture .btn.primary'),
+                portal:one('#themeAuditFixture #eteCentralPortal.ete-portal'),
+                portalCard1:one('#themeAuditFixture .ete-system-card:nth-child(1)'),
+                portalCard2:one('#themeAuditFixture .ete-system-card:nth-child(2)'),
+                portalStatus:one('#themeAuditFixture .ete-system-status'),
+                portalDot:one('#themeAuditFixture .ete-system-status','::before'),
+                atSidebar:one('#themeAuditFixture .at-control-sidebar'),
+                atBrand:one('#themeAuditFixture .at-control-brandmark'),
+                atSideDot:one('#themeAuditFixture .at-control-side-dot'),
+                atTopbar:one('#themeAuditFixture .at-app-topbar'),
+                atSync:one('#themeAuditFixture .at-app-sync'),
+                atSyncDot:one('#themeAuditFixture .at-app-sync i'),
+                atPrimary:one('#themeAuditFixture .at-btn.primary'),
+                atMetric:one('#themeAuditFixture .at-metric'),
+                atMetricDot:one('#themeAuditFixture .at-metric','::after'),
+                atSearch:one('#themeAuditFixture .at-input')
+              };
+            });
+
+            const backgroundKeys=['body','main','sidebar','pageSymbol','sync','syncDot','quickCard','primary','portalCard1','portalCard2','portalStatus','portalDot','atSidebar','atBrand','atSideDot','atTopbar','atSync','atSyncDot','atPrimary','atMetric','atMetricDot','atSearch'];
+            for(const key of backgroundKeys){
+              const value=sample[key]?.backgroundColor;
+              if(!value) throw new Error(`${label}: seletor de auditoria ausente: ${key}`);
+              if(value!=='rgba(0, 0, 0, 0)'&&!allowed.has(value)) throw new Error(`${label}: ${key} ainda usa cor fora da família areia: ${value}`);
+            }
+            if(sample.portal.backgroundColor!=='rgba(0, 0, 0, 0)'&&!allowed.has(sample.portal.backgroundColor)) throw new Error(`${label}: Portal ainda usa fundo fora da família areia: ${sample.portal.backgroundColor}`);
+            results.push(`${label} sand-only computed colors PASS`);
+          }
+
           async function testThemeSwitch(page,label){
             const toggle=page.locator('.control-theme-toggle-floating').first();
             await toggle.waitFor({state:'visible',timeout:5000});
@@ -81,7 +153,7 @@ jobs:
             };
 
             await toggle.click();
-            await page.waitForTimeout(20);
+            await page.waitForTimeout(60);
             const light=await themeSnapshot(page);
             if(light.theme!=='light') throw new Error(`${label}: tema claro não foi aplicado imediatamente`);
             if(light.cardTransitionProperty!=='none') throw new Error(`${label}: ainda existe transição visual no card (${light.cardTransitionProperty})`);
@@ -90,16 +162,19 @@ jobs:
             if(Math.abs(light.bodyOpacity-1)>.01||light.bodyFilter!=='none') throw new Error(`${label}: troca de tema alterou opacidade ou filtro`);
 
             const expected={
-              uiBg:'#f5efe6',
-              uiSurface2:'#fffdf9',
-              uiText:'#1b1916',
-              uiBorder:'#d7cec1',
-              legacyBg:'#f5efe6',
-              legacyText:'#1b1916'
+              uiBg:'#f8efe2',
+              uiSurface2:'#fffaf2',
+              uiText:'#4b392b',
+              uiBorder:'#d5bfa5',
+              legacyBg:'#f8efe2',
+              legacyText:'#4b392b'
             };
             for(const [key,value] of Object.entries(expected)){
-              if(light[key].toLowerCase()!==value) throw new Error(`${label}: paleta clara incorreta em ${key}: ${light[key]}`);
+              if(light[key].toLowerCase()!==value) throw new Error(`${label}: paleta areia incorreta em ${key}: ${light[key]}`);
             }
+            if(light.themeColor.toLowerCase()!=='#f8efe2') throw new Error(`${label}: theme-color não está em areia: ${light.themeColor}`);
+
+            await assertSandOnly(page,label);
 
             await toggle.click();
             await page.waitForTimeout(20);
