@@ -15,12 +15,24 @@ window.ETE_CONFIG = {
   "use strict";
 
   const root = document.documentElement;
+  let initialTheme = "dark";
+  try {
+    const storedTheme = localStorage.getItem("control-ds-theme");
+    if (storedTheme === "light" || storedTheme === "dark") initialTheme = storedTheme;
+  } catch (_) {}
+
+  root.dataset.theme = initialTheme;
+  root.classList.toggle("theme-light", initialTheme === "light");
+  root.classList.toggle("theme-dark", initialTheme === "dark");
+  root.style.colorScheme = initialTheme;
+
   let released = false;
   root.classList.add("ete-first-paint");
 
   const guardStyle = document.createElement("style");
   guardStyle.id = "eteFirstPaintGuard";
-  guardStyle.textContent = "html.ete-first-paint{visibility:hidden!important;background:#080a0d!important}";
+  const firstPaintBackground = initialTheme === "light" ? "#f5efe6" : "#080a0d";
+  guardStyle.textContent = "html.ete-first-paint{visibility:hidden!important;background:" + firstPaintBackground + "!important}";
   document.head.appendChild(guardStyle);
 
   function release(){
@@ -80,8 +92,21 @@ window.ETE_CONFIG = {
   }
 
   function syncMetaThemeColor(theme){
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.content = theme === "light" ? LIGHT_THEME_COLOR : DARK_THEME_COLOR;
+    let schemeMeta = document.querySelector('meta[name="color-scheme"]');
+    if (!schemeMeta) {
+      schemeMeta = document.createElement("meta");
+      schemeMeta.name = "color-scheme";
+      document.head.appendChild(schemeMeta);
+    }
+    schemeMeta.content = "dark light";
+
+    let meta = document.querySelector('meta[name="theme-color"]');
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.name = "theme-color";
+      document.head.appendChild(meta);
+    }
+    meta.content = theme === "light" ? LIGHT_THEME_COLOR : DARK_THEME_COLOR;
   }
 
   function applyRootTheme(theme){
