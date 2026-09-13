@@ -87,77 +87,156 @@
   else start();
 })();
 
-(function initThemeSyncFallback(){
+(function initGuaranteedThemeTransition(){
   "use strict";
-  if(String(window.ControlTheme?.set||"").includes("startViewTransition"))return;
 
   const root=document.documentElement;
   const KEY="control-ds-theme";
   const DURATION=512;
-  let timer=0;
+  const HALF=DURATION/2;
   let running=false;
+  let activeAnimations=[];
 
-  if(!document.getElementById("eteThemeSyncRuntimeStyles")){
+  if(!document.getElementById("eteGuaranteedThemeStyles")){
     const style=document.createElement("style");
-    style.id="eteThemeSyncRuntimeStyles";
-    style.textContent=`:root{--ete-theme-d:${DURATION}ms;--ete-theme-e:cubic-bezier(.22,.72,.24,1)}html.ete-theme-fallback body,html.ete-theme-fallback body *,html.ete-theme-fallback body *::before,html.ete-theme-fallback body *::after{transition-property:background-color,color,border-color,fill,stroke,outline-color!important;transition-duration:var(--ete-theme-d)!important;transition-delay:0ms!important;transition-timing-function:var(--ete-theme-e)!important}html.ete-theme-view,html.ete-theme-view body,html.ete-theme-view body *,html.ete-theme-view body *::before,html.ete-theme-view body *::after{transition:none!important}::view-transition-group(root){animation-duration:var(--ete-theme-d)!important;animation-timing-function:var(--ete-theme-e)!important}::view-transition-image-pair(root){isolation:isolate}::view-transition-old(root),::view-transition-new(root){animation-duration:var(--ete-theme-d)!important;animation-timing-function:var(--ete-theme-e)!important;animation-fill-mode:both!important;mix-blend-mode:normal;transform-origin:center center;will-change:opacity,filter}::view-transition-old(root){animation-name:eteThemeOld!important}::view-transition-new(root){animation-name:eteThemeNew!important}@keyframes eteThemeOld{0%{opacity:1;filter:brightness(1) saturate(1)}45%{opacity:.7;filter:brightness(.96) saturate(.96)}100%{opacity:0;filter:brightness(.9) saturate(.9)}}@keyframes eteThemeNew{0%{opacity:0;filter:brightness(1.1) saturate(.92)}38%{opacity:.42;filter:brightness(1.055) saturate(.96)}100%{opacity:1;filter:brightness(1) saturate(1)}}html.ete-theme-fallback::after{content:"";position:fixed;inset:0;z-index:2147483646;pointer-events:none;background:rgba(128,142,152,.06);animation:eteThemeVeil var(--ete-theme-d) var(--ete-theme-e) both}@keyframes eteThemeVeil{0%{opacity:0}38%{opacity:1}100%{opacity:0}}`;
+    style.id="eteGuaranteedThemeStyles";
+    style.textContent=`
+      html.ete-theme-guaranteed body *,
+      html.ete-theme-guaranteed body *::before,
+      html.ete-theme-guaranteed body *::after{
+        transition:none!important;
+      }
+      html.ete-theme-guaranteed body{
+        transform:translateZ(0);
+        will-change:opacity,filter;
+      }
+    `;
     document.head.appendChild(style);
   }
 
-  function current(){return root.dataset.theme==="light"?"light":"dark";}
+  function current(){
+    return root.dataset.theme==="light"?"light":"dark";
+  }
+
+  function updateButtons(){
+    const light=current()==="light";
+    document.querySelectorAll(".control-theme-toggle").forEach(button=>{
+      button.innerHTML='<span aria-hidden="true">'+(light?'☾':'☀')+'</span><span class="theme-label">'+(light?'Tema escuro':'Tema claro')+'</span>';
+      button.dataset.themeState=light?"light":"dark";
+      button.setAttribute("aria-pressed",String(light));
+      button.setAttribute("aria-label",light?"Mudar para tema escuro":"Mudar para tema claro");
+      button.title=light?"Mudar para tema escuro":"Mudar para tema claro";
+    });
+  }
+
   function apply(theme,persist){
     const next=theme==="light"?"light":"dark";
     root.dataset.theme=next;
     root.classList.toggle("theme-light",next==="light");
     root.classList.toggle("theme-dark",next==="dark");
     root.style.colorScheme=next;
-    if(persist!==false){try{localStorage.setItem(KEY,next)}catch(_){}}
-    const light=next==="light";
-    document.querySelectorAll(".control-theme-toggle").forEach(button=>{
-      button.innerHTML='<span aria-hidden="true">'+(light?'☾':'☀')+'</span><span class="theme-label">'+(light?'Tema escuro':'Tema claro')+'</span>';
-      button.dataset.themeState=next;
-      button.setAttribute("aria-pressed",String(light));
-      button.setAttribute("aria-label",light?"Mudar para tema escuro":"Mudar para tema claro");
-      button.title=light?"Mudar para tema escuro":"Mudar para tema claro";
-    });
+    if(persist!==false){
+      try{localStorage.setItem(KEY,next)}catch(_){ }
+    }
+    updateButtons();
     try{window.dispatchEvent(new CustomEvent("control-theme-change",{detail:{theme:next}}))}catch(_){ }
     return next;
   }
 
-  function set(theme,options){
-    const target=theme==="light"?"light":"dark";
-    const persist=!options||options.persist!==false;
-    const reduce=window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
-    const animate=(!options||options.skipTransition!==true)&&target!==current()&&!reduce;
-    if(target===current())return apply(target,persist);
-    if(persist){try{localStorage.setItem(KEY,target)}catch(_){}}
-    if(animate&&typeof document.startViewTransition==="function"&&!running){
-      running=true;
-      root.classList.remove("theme-transitioning","ete-theme-fallback");
-      root.classList.add("ete-theme-view");
-      const vt=document.startViewTransition(()=>apply(target,false));
-      vt.finished.catch(()=>{}).finally(()=>{running=false;root.classList.remove("ete-theme-view")});
+  function cancelActiveAnimations(){
+    activeAnimations.forEach(animation=>{
+      try{animation.cancel()}catch(_){ }
+    });
+    activeAnimations=[];
+  }
+
+  async function animateTheme(target,persist){
+    if(running||target===current()){
+      if(target===current())apply(target,persist);
       return target;
     }
-    if(animate){
-      clearTimeout(timer);
-      root.classList.remove("ete-theme-view");
-      root.classList.add("ete-theme-fallback");
-      void root.offsetWidth;
-      apply(target,false);
-      timer=setTimeout(()=>root.classList.remove("ete-theme-fallback"),DURATION+40);
-    }else apply(target,false);
+
+    const body=document.body;
+    if(!body||typeof body.animate!=="function"){
+      return apply(target,persist);
+    }
+
+    running=true;
+    cancelActiveAnimations();
+    root.classList.remove("theme-transitioning","theme-view-transitioning","ete-theme-view","ete-theme-fallback");
+    root.classList.add("ete-theme-guaranteed");
+
+    if(persist!==false){
+      try{localStorage.setItem(KEY,target)}catch(_){ }
+    }
+
+    const outgoing=body.animate([
+      {opacity:1,filter:"brightness(1) saturate(1)"},
+      {opacity:.46,filter:"brightness(.86) saturate(.84)"}
+    ],{
+      duration:HALF,
+      easing:"cubic-bezier(.4,0,.6,1)",
+      fill:"forwards"
+    });
+    activeAnimations.push(outgoing);
+
+    try{await outgoing.finished}catch(_){ }
+
+    apply(target,false);
+
+    const incoming=body.animate([
+      {opacity:.46,filter:"brightness(1.14) saturate(.86)"},
+      {opacity:1,filter:"brightness(1) saturate(1)"}
+    ],{
+      duration:HALF,
+      easing:"cubic-bezier(.18,.74,.22,1)",
+      fill:"forwards"
+    });
+    activeAnimations.push(incoming);
+
+    try{await incoming.finished}catch(_){ }
+
+    cancelActiveAnimations();
+    root.classList.remove("ete-theme-guaranteed");
+    running=false;
     return target;
   }
 
-  function toggle(){return set(current()==="light"?"dark":"light")}
-  window.ControlTheme=Object.freeze({get:current,set,toggle});
+  function setTheme(theme,options){
+    const target=theme==="light"?"light":"dark";
+    const persist=!options||options.persist!==false;
+    const skip=!!(options&&options.skipTransition===true);
 
-  document.addEventListener("click",event=>{
+    if(skip||target===current()){
+      return apply(target,persist);
+    }
+
+    animateTheme(target,persist);
+    return target;
+  }
+
+  function toggleTheme(){
+    return setTheme(current()==="light"?"dark":"light");
+  }
+
+  window.ControlTheme=Object.freeze({
+    get:current,
+    set:setTheme,
+    toggle:toggleTheme
+  });
+
+  window.addEventListener("click",event=>{
     const button=event.target.closest?.(".control-theme-toggle");
     if(!button)return;
     event.preventDefault();
     event.stopImmediatePropagation();
-    toggle();
+    toggleTheme();
   },true);
+
+  window.addEventListener("storage",event=>{
+    if(event.key!==KEY)return;
+    if(event.newValue==="light"||event.newValue==="dark")setTheme(event.newValue,{persist:false});
+  });
+
+  updateButtons();
 })();
