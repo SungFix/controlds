@@ -16,6 +16,13 @@
       link.href="custom-select.css?v=1";
       document.head.appendChild(link);
     }
+    if(!document.getElementById("eteSelectMatteStyles")){
+      const matte=document.createElement("link");
+      matte.id="eteSelectMatteStyles";
+      matte.rel="stylesheet";
+      matte.href="select-matte.css?v=1";
+      document.head.appendChild(matte);
+    }
     if(!document.getElementById("eteCustomSelectScript")){
       const script=document.createElement("script");
       script.id="eteCustomSelectScript";
