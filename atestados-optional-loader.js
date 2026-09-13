@@ -21,7 +21,7 @@
     return new Promise((resolve,reject)=>{
       let script=document.getElementById(id);
       if(script){
-        if(script.dataset.loaded==="1"||script.readyState==="complete")return resolve();
+        if(script.dataset.loaded==="1"||script.readyState==="complete"||script.getAttribute("src")===src&&script.dataset.loading!=="1")return resolve();
         script.addEventListener("load",resolve,{once:true});
         script.addEventListener("error",reject,{once:true});
         return;
@@ -30,7 +30,8 @@
       script.id=id;
       script.src=src;
       script.async=false;
-      script.addEventListener("load",()=>{script.dataset.loaded="1";resolve();},{once:true});
+      script.dataset.loading="1";
+      script.addEventListener("load",()=>{script.dataset.loading="0";script.dataset.loaded="1";resolve();},{once:true});
       script.addEventListener("error",reject,{once:true});
       document.head.appendChild(script);
     });
@@ -44,6 +45,7 @@
       await ensureScript("controlAtestadosImageUploadScript","atestados-image-upload.js?v=2");
       await ensureScript("controlAtestadosImageAccessFixScript","atestados-image-access-fix.js?v=1");
       await ensureScript("controlAtestadosActionPolishScript","atestados-action-polish.js?v=1");
+      await ensureScript("controlAtestadosEditScript","atestados-edit.js?v=1");
     })().catch(error=>{
       console.error("Falha ao carregar recursos opcionais do Atestados:",error);
       loading=null;
