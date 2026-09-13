@@ -14,11 +14,23 @@
       palette.rel="stylesheet";
       document.head.appendChild(palette);
     }
-    if(palette.getAttribute("href")!=="theme-light-fixed-palette.css?v=3"){
-      palette.href="theme-light-fixed-palette.css?v=3";
+    if(palette.getAttribute("href")!=="theme-light-fixed-palette.css?v=4"){
+      palette.href="theme-light-fixed-palette.css?v=4";
     }
-    const styles=[...document.head.querySelectorAll('link[rel="stylesheet"]')];
-    if(styles.length&&styles[styles.length-1]!==palette) document.head.appendChild(palette);
+
+    let lock=document.getElementById("eteLightSandLockStyles");
+    if(!lock){
+      lock=document.createElement("link");
+      lock.id="eteLightSandLockStyles";
+      lock.rel="stylesheet";
+      document.head.appendChild(lock);
+    }
+    if(lock.getAttribute("href")!=="theme-light-sand-lock.css?v=1"){
+      lock.href="theme-light-sand-lock.css?v=1";
+    }
+
+    document.head.appendChild(palette);
+    document.head.appendChild(lock);
   }
 
   function watchLateStyles(){
@@ -27,7 +39,7 @@
       let stylesheetAdded=false;
       for(const record of records){
         for(const node of record.addedNodes){
-          if(node instanceof HTMLLinkElement&&node.rel==="stylesheet"&&node.id!=="eteLightFixedPaletteStyles"){
+          if(node instanceof HTMLLinkElement&&node.rel==="stylesheet"&&node.id!=="eteLightFixedPaletteStyles"&&node.id!=="eteLightSandLockStyles"){
             stylesheetAdded=true;
             break;
           }
