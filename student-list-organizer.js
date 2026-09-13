@@ -259,7 +259,25 @@
     renderStudents=wrapped;
   }
 
+  function ensureCollapsibleAssets(){
+    if(!document.getElementById("controlStudentCollapsibleListStyles")){
+      const link=document.createElement("link");
+      link.id="controlStudentCollapsibleListStyles";
+      link.rel="stylesheet";
+      link.href="student-collapsible-list.css?v=1";
+      document.head.appendChild(link);
+    }
+    if(!document.getElementById("controlStudentCollapsibleListScript")){
+      const script=document.createElement("script");
+      script.id="controlStudentCollapsibleListScript";
+      script.src="student-collapsible-list.js?v=1";
+      script.defer=true;
+      document.head.appendChild(script);
+    }
+  }
+
   function install(){
+    ensureCollapsibleAssets();
     mountControls();
     wrapRender();
     queueApply();
