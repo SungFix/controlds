@@ -14,9 +14,7 @@
       palette.rel="stylesheet";
       document.head.appendChild(palette);
     }
-    if(palette.getAttribute("href")!=="theme-light-fixed-palette.css?v=5"){
-      palette.href="theme-light-fixed-palette.css?v=5";
-    }
+    if(palette.getAttribute("href")!=="theme-light-fixed-palette.css?v=5") palette.href="theme-light-fixed-palette.css?v=5";
 
     let lock=document.getElementById("eteLightSandLockStyles");
     if(!lock){
@@ -25,9 +23,7 @@
       lock.rel="stylesheet";
       document.head.appendChild(lock);
     }
-    if(lock.getAttribute("href")!=="theme-light-sand-lock.css?v=2"){
-      lock.href="theme-light-sand-lock.css?v=2";
-    }
+    if(lock.getAttribute("href")!=="theme-light-sand-lock.css?v=2") lock.href="theme-light-sand-lock.css?v=2";
 
     let hardLock=document.getElementById("eteLightSandHardLockStyles");
     if(!hardLock){
@@ -36,13 +32,21 @@
       hardLock.rel="stylesheet";
       document.head.appendChild(hardLock);
     }
-    if(hardLock.getAttribute("href")!=="theme-light-sand-hardlock.css?v=1"){
-      hardLock.href="theme-light-sand-hardlock.css?v=1";
+    if(hardLock.getAttribute("href")!=="theme-light-sand-hardlock.css?v=1") hardLock.href="theme-light-sand-hardlock.css?v=1";
+
+    let finalLock=document.getElementById("eteLightSandFinalStyles");
+    if(!finalLock){
+      finalLock=document.createElement("link");
+      finalLock.id="eteLightSandFinalStyles";
+      finalLock.rel="stylesheet";
+      document.head.appendChild(finalLock);
     }
+    if(finalLock.getAttribute("href")!=="theme-light-sand-final.css?v=1") finalLock.href="theme-light-sand-final.css?v=1";
 
     document.head.appendChild(palette);
     document.head.appendChild(lock);
     document.head.appendChild(hardLock);
+    document.head.appendChild(finalLock);
   }
 
   function watchLateStyles(){
@@ -51,7 +55,7 @@
       let stylesheetAdded=false;
       for(const record of records){
         for(const node of record.addedNodes){
-          if(node instanceof HTMLLinkElement&&node.rel==="stylesheet"&&node.id!=="eteLightFixedPaletteStyles"&&node.id!=="eteLightSandLockStyles"&&node.id!=="eteLightSandHardLockStyles"){
+          if(node instanceof HTMLLinkElement&&node.rel==="stylesheet"&&!['eteLightFixedPaletteStyles','eteLightSandLockStyles','eteLightSandHardLockStyles','eteLightSandFinalStyles'].includes(node.id)){
             stylesheetAdded=true;
             break;
           }
