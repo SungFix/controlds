@@ -1,41 +1,13 @@
-/* Control Ds — transição de tema inspirada no sistema do Epoch Education */
-:root{
-  --control-theme-transition-duration:430ms;
-  --control-theme-transition-cleanup:520ms;
-  --control-theme-transition-easing:cubic-bezier(.2,.75,.25,1);
-}
-
-/* O Epoch troca o tema imediatamente e deixa os elementos interpolarem
-   as cores durante a janela de transição. Não há véu, fade da página,
-   filtro de brilho ou alteração artificial de opacidade. */
+/* Troca de tema sem transição: clara/escura muda de forma imediata. */
 html.theme-transitioning body,
 html.theme-transitioning body *,
 html.theme-transitioning body *::before,
 html.theme-transitioning body *::after{
-  transition-property:background-color,color,border-color,outline-color,box-shadow,fill,stroke!important;
-  transition-duration:var(--control-theme-transition-duration)!important;
-  transition-delay:0ms!important;
-  transition-timing-function:var(--control-theme-transition-easing)!important;
+  transition:none!important;
+  animation:none!important;
 }
 
 .control-theme-toggle.theme-toggle-animating{
-  animation:controlThemeTogglePulse 410ms cubic-bezier(.16,1,.3,1);
-}
-
-@keyframes controlThemeTogglePulse{
-  0%{transform:scale(1)}
-  45%{transform:scale(.93)}
-  100%{transform:scale(1)}
-}
-
-@media (prefers-reduced-motion:reduce){
-  html.theme-transitioning body,
-  html.theme-transitioning body *,
-  html.theme-transitioning body *::before,
-  html.theme-transitioning body *::after{
-    transition:none!important;
-  }
-  .control-theme-toggle.theme-toggle-animating{
-    animation:none!important;
-  }
+  animation:none!important;
+  transition:none!important;
 }
