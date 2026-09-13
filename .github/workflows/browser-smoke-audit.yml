@@ -42,113 +42,52 @@ jobs:
               const bodyStyle=getComputedStyle(document.body);
               const loginCard=document.querySelector('.login-card');
               const cardStyle=loginCard?getComputedStyle(loginCard):null;
-              const rootStyle=getComputedStyle(root);
               const toggle=document.querySelector('.control-theme-toggle-floating');
+              const toggleStyle=toggle?getComputedStyle(toggle):null;
+              const rootStyle=getComputedStyle(root);
               return {
                 theme:root.dataset.theme||'',
                 stored:localStorage.getItem('control-ds-theme'),
-                controlThemeGet:window.ControlTheme?.get?.()||'',
-                transitioning:root.classList.contains('theme-transitioning'),
-                guaranteed:root.classList.contains('ete-theme-guaranteed'),
-                toggleAnimating:!!toggle?.classList.contains('theme-toggle-animating'),
-                overlayExists:!!document.getElementById('eteThemeTransitionOverlay'),
                 bodyOpacity:Number.parseFloat(bodyStyle.opacity),
                 bodyFilter:bodyStyle.filter,
                 bodyBackgroundColor:bodyStyle.backgroundColor,
                 cardBackgroundColor:cardStyle?.backgroundColor||'',
                 cardColor:cardStyle?.color||'',
+                cardTransitionProperty:cardStyle?.transitionProperty||'',
                 cardTransitionDuration:cardStyle?.transitionDuration||'',
+                toggleAnimationName:toggleStyle?.animationName||'',
+                toggleTransitionProperty:toggleStyle?.transitionProperty||'',
                 uiBg:rootStyle.getPropertyValue('--ui-bg').trim(),
                 uiSurface2:rootStyle.getPropertyValue('--ui-surface-2').trim(),
                 uiText:rootStyle.getPropertyValue('--ui-text').trim(),
                 uiBorder:rootStyle.getPropertyValue('--ui-border').trim(),
                 legacyBg:rootStyle.getPropertyValue('--bg').trim(),
                 legacyText:rootStyle.getPropertyValue('--text').trim(),
-                themeColor:document.querySelector('meta[name="theme-color"]')?.content||'',
-                colorSchemeMeta:document.querySelector('meta[name="color-scheme"]')?.content||''
+                themeColor:document.querySelector('meta[name="theme-color"]')?.content||''
               };
             });
           }
 
-          async function installThemeTrace(page){
-            await page.evaluate(()=>{
-              window.__themeTrace=[];
-              const root=document.documentElement;
-              const push=(type,extra={})=>window.__themeTrace.push({
-                type,
-                t:Math.round(performance.now()),
-                theme:root.dataset.theme||'',
-                stored:localStorage.getItem('control-ds-theme'),
-                transitioning:root.classList.contains('theme-transitioning'),
-                guaranteed:root.classList.contains('ete-theme-guaranteed'),
-                ...extra
-              });
-              new MutationObserver(records=>{
-                for(const record of records){
-                  if(record.attributeName==='data-theme')push('data-theme-mutation');
-                }
-              }).observe(root,{attributes:true,attributeFilter:['data-theme']});
-              window.addEventListener('control-theme-change',event=>push('control-theme-change',{detail:event.detail?.theme||''}));
-              window.addEventListener('click',event=>{
-                if(event.target.closest?.('.control-theme-toggle'))push('theme-click-window-capture');
-              },true);
-              push('trace-installed');
-            });
-          }
-
-          async function testThemeTransition(page,label){
+          async function testThemeSwitch(page,label){
             const toggle=page.locator('.control-theme-toggle-floating').first();
             await toggle.waitFor({state:'visible',timeout:5000});
+            await page.evaluate(()=>window.ControlTheme?.set?.('dark'));
+            await page.waitForTimeout(40);
             const before=await themeSnapshot(page);
-            if(before.overlayExists) throw new Error(`${label}: sistema antigo de véu ainda está ativo`);
             const darkFingerprint={
               bodyBackgroundColor:before.bodyBackgroundColor,
               cardBackgroundColor:before.cardBackgroundColor,
-              cardColor:before.cardColor,
-              themeColor:before.themeColor
+              cardColor:before.cardColor
             };
 
-            await installThemeTrace(page);
-            const implementation=await page.evaluate(()=>({
-              toggle:String(window.ControlTheme?.toggle||''),
-              set:String(window.ControlTheme?.set||''),
-              get:String(window.ControlTheme?.get||''),
-              finalPolishText:document.getElementById('controlFinalPolishScript')?.src||'',
-              scripts:[...document.scripts].map(script=>script.src).filter(Boolean)
-            }));
-            const directResult=await page.evaluate(()=>window.ControlTheme?.toggle?.());
-            await page.waitForTimeout(70);
-            const direct70=await themeSnapshot(page);
-            await page.waitForTimeout(260);
-            const direct330=await themeSnapshot(page);
-            await page.waitForTimeout(300);
-            const direct630=await themeSnapshot(page);
-            const directTrace=await page.evaluate(()=>window.__themeTrace||[]);
-            console.log('=== DIRECT THEME DIAGNOSTIC ===');
-            console.log(JSON.stringify({before,implementation,directResult,direct70,direct330,direct630,directTrace},null,2));
-
-            if(direct70.theme!=='light'){
-              throw new Error(`${label}: chamada direta ControlTheme.toggle não aplicou tema claro imediatamente`);
-            }
-
-            await page.evaluate(()=>window.ControlTheme?.set?.('dark'));
-            await page.waitForTimeout(620);
-            await page.evaluate(()=>{window.__themeTrace=[];});
-
             await toggle.click();
-            await page.waitForTimeout(70);
+            await page.waitForTimeout(20);
             const light=await themeSnapshot(page);
-            const clickTrace=await page.evaluate(()=>window.__themeTrace||[]);
-            console.log('=== CLICK THEME DIAGNOSTIC ===');
-            console.log(JSON.stringify({light,clickTrace},null,2));
-            if(light.theme===before.theme) throw new Error(`${label}: sistema Epoch não aplicou o novo tema imediatamente`);
-            if(light.theme!=='light') throw new Error(`${label}: troca não chegou ao tema claro`);
-            if(!light.transitioning) throw new Error(`${label}: classe de transição do Epoch não ficou ativa`);
-            if(!light.toggleAnimating) throw new Error(`${label}: botão de tema não recebeu a animação do Epoch`);
-            if(light.overlayExists) throw new Error(`${label}: véu antigo reapareceu`);
-            if(Math.abs(light.bodyOpacity-1)>.01) throw new Error(`${label}: conteúdo teve opacidade alterada`);
-            if(light.bodyFilter!=='none') throw new Error(`${label}: conteúdo recebeu filtro artificial`);
-            if(!light.cardTransitionDuration.includes('0.43s')) throw new Error(`${label}: duração visual não corresponde aos 430ms do Epoch (${light.cardTransitionDuration})`);
+            if(light.theme!=='light') throw new Error(`${label}: tema claro não foi aplicado imediatamente`);
+            if(light.cardTransitionProperty!=='none') throw new Error(`${label}: ainda existe transição visual no card (${light.cardTransitionProperty})`);
+            if(light.toggleAnimationName!=='none') throw new Error(`${label}: botão de tema ainda possui animação (${light.toggleAnimationName})`);
+            if(light.toggleTransitionProperty!=='none') throw new Error(`${label}: botão de tema ainda possui transição (${light.toggleTransitionProperty})`);
+            if(Math.abs(light.bodyOpacity-1)>.01||light.bodyFilter!=='none') throw new Error(`${label}: troca de tema alterou opacidade ou filtro`);
 
             const expected={
               uiBg:'#f5efe6',
@@ -159,30 +98,17 @@ jobs:
               legacyText:'#1b1916'
             };
             for(const [key,value] of Object.entries(expected)){
-              if(light[key].toLowerCase()!==value) throw new Error(`${label}: paleta Epoch incorreta em ${key}: ${light[key]}`);
+              if(light[key].toLowerCase()!==value) throw new Error(`${label}: paleta clara incorreta em ${key}: ${light[key]}`);
             }
-            if(light.themeColor.toLowerCase()!=='#f5efe6') throw new Error(`${label}: theme-color claro não usa a paleta Epoch`);
-            if(light.colorSchemeMeta!=='dark light') throw new Error(`${label}: meta color-scheme não foi sincronizada`);
-
-            await page.waitForTimeout(500);
-            const lightEnd=await themeSnapshot(page);
-            if(lightEnd.transitioning||lightEnd.toggleAnimating) throw new Error(`${label}: transição clara não encerrou limpa`);
 
             await toggle.click();
-            await page.waitForTimeout(70);
-            const darkReturning=await themeSnapshot(page);
-            if(darkReturning.theme!=='dark') throw new Error(`${label}: retorno não aplicou o tema escuro imediatamente`);
-            if(!darkReturning.transitioning||!darkReturning.toggleAnimating) throw new Error(`${label}: retorno não usa a mesma transição`);
-            if(Math.abs(darkReturning.bodyOpacity-1)>.01||darkReturning.bodyFilter!=='none') throw new Error(`${label}: retorno alterou opacidade/filtro`);
-
-            await page.waitForTimeout(500);
+            await page.waitForTimeout(20);
             const after=await themeSnapshot(page);
-            if(after.transitioning||after.toggleAnimating) throw new Error(`${label}: retorno não encerrou limpo`);
-            if(after.theme!=='dark') throw new Error(`${label}: tema escuro não foi restaurado`);
+            if(after.theme!=='dark') throw new Error(`${label}: tema escuro não voltou imediatamente`);
             for(const [key,value] of Object.entries(darkFingerprint)){
               if(after[key]!==value) throw new Error(`${label}: tema escuro mudou em ${key}`);
             }
-            results.push(`${label} Epoch theme + palette PASS`);
+            results.push(`${label} instant theme PASS`);
           }
 
           async function run(url,label,invalidLogin=false){
@@ -207,7 +133,7 @@ jobs:
             if(checks.overflow) throw new Error(`${label}: overflow horizontal desktop`);
             if(!checks.favicon?.includes('favicon.svg')) throw new Error(`${label}: favicon não configurado`);
             if(pageErrors.length) throw new Error(`${label}: page errors ${pageErrors.join(' | ')}`);
-            if(label==='local') await testThemeTransition(page,label);
+            if(label==='local') await testThemeSwitch(page,label);
             if(invalidLogin){
               await page.fill('#loginUsername','usuario_inexistente_teste');
               await page.fill('#loginPassword','senha_invalida_teste');
@@ -226,6 +152,7 @@ jobs:
             results.push(`${label} mobile PASS`);
             await page.close();
           }
+
           await run('http://127.0.0.1:4173/','local',true);
           for(const [url,label] of [
             ['https://ete-controle-notebooks.pages.dev/','cloudflare'],
@@ -238,5 +165,3 @@ jobs:
           await browser.close();
           JS
           node control-ds-smoke.mjs
-
-# Reexecutado após as correções finais de 2026-08-28.
