@@ -1,5 +1,5 @@
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; connect-src 'self' https://fisgkrmporzovogpmfpg.supabase.co wss://fisgkrmporzovogpmfpg.supabase.co; img-src 'self' data:; font-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; connect-src 'self' https://fisgkrmporzovogpmfpg.supabase.co wss://fisgkrmporzovogpmfpg.supabase.co; img-src 'self' data: blob: https://fisgkrmporzovogpmfpg.supabase.co; font-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
@@ -16,6 +16,18 @@
   Cache-Control: no-cache, max-age=0, must-revalidate
 
 /config.js
+  Cache-Control: no-store, max-age=0
+
+/login-simple-v2.css
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/topbar-final-override.css
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/history-filter-polish.js
+  Cache-Control: no-store, max-age=0
+
+/relational-frontend-v2.js
   Cache-Control: no-store, max-age=0
 
 /portal.js
@@ -47,6 +59,15 @@
 
 /atestados-room-picker.js
   Cache-Control: no-store, max-age=0
+
+/atestados-date-picker.js
+  Cache-Control: no-store, max-age=0
+
+/atestados-image-upload.js
+  Cache-Control: no-store, max-age=0
+
+/atestados-image-upload.css
+  Cache-Control: no-cache, max-age=0, must-revalidate
 
 /atestados-figma-features.css
   Cache-Control: no-store, max-age=0
