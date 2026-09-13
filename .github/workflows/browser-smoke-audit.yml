@@ -41,18 +41,6 @@ jobs:
             '185,154,122','146,115,86','110,84,63','75,57,43'
           ]);
 
-          function colorIsAllowed(value){
-            const text=String(value||'').trim();
-            if(!text||text==='none'||text==='normal'||text==='transparent')return true;
-            const matches=[...text.matchAll(/rgba?\(([^)]+)\)/g)];
-            if(!matches.length)return true;
-            return matches.every(match=>{
-              const nums=match[1].split(',').map(v=>Number.parseFloat(v.trim()));
-              if(nums.length>=4&&nums[3]===0)return true;
-              return allowedChannels.has(nums.slice(0,3).map(v=>Math.round(v)).join(','));
-            });
-          }
-
           async function setLight(page){
             await page.evaluate(()=>window.ControlTheme?.set?.('light'));
             await page.waitForTimeout(120);
@@ -73,11 +61,11 @@ jobs:
                   <aside class="sidebar">
                     <div class="brand"><div class="brandmark"></div><span><strong>ETE</strong><small>Controle</small></span></div>
                     <span class="section-label">Operação</span>
-                    <nav class="nav"><button class="active"><span class="navicon"></span>Início</button><button><span class="navicon"></span>Agenda</button></nav>
+                    <nav class="nav"><button class="active"><span class="navicon"><svg viewBox="0 0 24 24"><path d="M4 12h16"/></svg></span>Início</button><button><span class="navicon"><svg viewBox="0 0 24 24"><path d="M12 4v16"/></svg></span>Agenda</button></nav>
                     <div class="side-status"><span class="local-pill">Supabase conectado</span></div>
                   </aside>
                   <main class="main">
-                    <header class="topbar"><span class="page-symbol"></span><span class="sync">Sincronizado</span><button class="user">Usuário</button></header>
+                    <header class="topbar"><span class="page-symbol"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5z"/></svg></span><span class="sync">Sincronizado</span><button class="user">Usuário</button></header>
                     <div class="content">
                       <button class="btn primary">Novo pedido</button><button class="btn secondary">Ver agenda</button>
                       <div class="hero-stat"><strong>0</strong><div class="hero-bars"><span></span><span></span><span></span><span></span></div></div>
@@ -89,9 +77,9 @@ jobs:
                 <section id="eteCentralPortal" class="ete-portal">
                   <div class="ete-portal-shell"><header class="ete-portal-topbar"><span class="ete-portal-mark">ETE</span><span class="ete-portal-user">ADM</span><button class="ete-portal-theme">Tema</button><button class="ete-portal-exit">Sair</button></header>
                     <main class="ete-portal-home"><div class="ete-portal-hero"><span class="ete-portal-kicker">Central</span><h1>Escolha</h1></div>
-                      <div class="ete-portal-grid"><button class="ete-system-card available"><span class="ete-system-icon"></span><span class="ete-system-status">Disponível</span><strong>Control Ds</strong></button><button class="ete-system-card available"><span class="ete-system-icon"></span><span class="ete-system-status">Disponível</span><strong>Atestados</strong></button></div>
+                      <div class="ete-portal-grid"><button class="ete-system-card available"><span class="ete-system-icon"><svg viewBox="0 0 24 24"><path d="M4 7h16v10H4z"/></svg></span><span class="ete-system-status">Disponível</span><strong>Control Ds</strong></button><button class="ete-system-card available"><span class="ete-system-icon"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/></svg></span><span class="ete-system-status">Disponível</span><strong>Atestados</strong></button></div>
                     </main>
-                    <div class="at-control-shell"><aside class="at-control-sidebar"><div class="at-control-brand"><span class="at-control-brandmark">ETE</span></div><button class="at-nav-item active"><span class="at-control-navicon"></span>Visão geral</button><span class="at-control-side-dot"></span></aside>
+                    <div class="at-control-shell"><aside class="at-control-sidebar"><div class="at-control-brand"><span class="at-control-brandmark">ETE</span></div><button class="at-nav-item active"><span class="at-control-navicon"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5z"/></svg></span>Visão geral</button><span class="at-control-side-dot"></span></aside>
                       <main class="at-app-main"><header class="at-app-topbar"><button class="at-app-theme">Tema</button><span class="at-app-sync"><i></i>Sincronizado</span><button class="at-app-exit">Sair</button></header>
                         <div class="at-app-content"><button class="at-btn primary">Novo registro</button><span class="at-status">Atualizado</span>
                           <article class="at-metric"><div><span>Registros</span><strong>0</strong></div></article>
@@ -110,7 +98,8 @@ jobs:
             const violations=await page.evaluate(()=>{
               const root=document.getElementById('themeAuditFixture');
               const nodes=[root,...root.querySelectorAll('*')];
-              const checks=['color','backgroundColor','borderTopColor','borderRightColor','borderBottomColor','borderLeftColor','outlineColor','textDecorationColor','caretColor','fill','stroke','boxShadow','textShadow','backgroundImage'];
+              const commonChecks=['color','backgroundColor','borderTopColor','borderRightColor','borderBottomColor','borderLeftColor','outlineColor','textDecorationColor','caretColor','boxShadow','textShadow','backgroundImage'];
+              const svgTags=new Set(['SVG','PATH','CIRCLE','RECT','LINE','POLYLINE','POLYGON','ELLIPSE','G','USE']);
               const palette=new Set(['255,250,242','248,239,226','240,226,208','229,210,186','213,191,165','185,154,122','146,115,86','110,84,63','75,57,43']);
               const ok=value=>{
                 const text=String(value||'').trim();
@@ -126,6 +115,7 @@ jobs:
               const out=[];
               const inspect=(el,pseudo='')=>{
                 const style=getComputedStyle(el,pseudo||null);
+                const checks=pseudo?commonChecks:(svgTags.has(el.tagName)?[...commonChecks,'fill','stroke']:commonChecks);
                 for(const prop of checks){
                   const value=style[prop];
                   if(!ok(value)){
