@@ -29,8 +29,20 @@
       lock.href="theme-light-sand-lock.css?v=2";
     }
 
+    let hardLock=document.getElementById("eteLightSandHardLockStyles");
+    if(!hardLock){
+      hardLock=document.createElement("link");
+      hardLock.id="eteLightSandHardLockStyles";
+      hardLock.rel="stylesheet";
+      document.head.appendChild(hardLock);
+    }
+    if(hardLock.getAttribute("href")!=="theme-light-sand-hardlock.css?v=1"){
+      hardLock.href="theme-light-sand-hardlock.css?v=1";
+    }
+
     document.head.appendChild(palette);
     document.head.appendChild(lock);
+    document.head.appendChild(hardLock);
   }
 
   function watchLateStyles(){
@@ -39,7 +51,7 @@
       let stylesheetAdded=false;
       for(const record of records){
         for(const node of record.addedNodes){
-          if(node instanceof HTMLLinkElement&&node.rel==="stylesheet"&&node.id!=="eteLightFixedPaletteStyles"&&node.id!=="eteLightSandLockStyles"){
+          if(node instanceof HTMLLinkElement&&node.rel==="stylesheet"&&node.id!=="eteLightFixedPaletteStyles"&&node.id!=="eteLightSandLockStyles"&&node.id!=="eteLightSandHardLockStyles"){
             stylesheetAdded=true;
             break;
           }
