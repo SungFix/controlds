@@ -52,6 +52,9 @@ window.ETE_CONFIG = {
   "use strict";
 
   const STORAGE_KEY = "control-ds-theme";
+  const THEME_TRANSITION_MS = 520;
+  const LIGHT_THEME_COLOR = "#f5efe6";
+  const DARK_THEME_COLOR = "#080a0d";
   const root = document.documentElement;
   let observerQueued = false;
   let themeTransitionTimer = 0;
@@ -68,12 +71,26 @@ window.ETE_CONFIG = {
     return "dark";
   }
 
+  function prefersReducedMotion(){
+    try {
+      return !!window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function syncMetaThemeColor(theme){
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = theme === "light" ? LIGHT_THEME_COLOR : DARK_THEME_COLOR;
+  }
+
   function applyRootTheme(theme){
     const next = normalizeTheme(theme);
     if (root.dataset.theme !== next) root.dataset.theme = next;
     root.classList.toggle("theme-light", next === "light");
     root.classList.toggle("theme-dark", next === "dark");
     root.style.colorScheme = next;
+    syncMetaThemeColor(next);
     return next;
   }
 
@@ -110,7 +127,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=12");
     ensureStylesheet("controlLightPermissionsStyles", "theme-light-permissions.css?v=3");
     ensureStylesheet("controlPermissionCardsStyles", "permission-cards.css?v=2");
-    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=12");
+    ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=13");
     ensureStylesheet("controlHeaderPolishStyles", "header-polish.css?v=4");
     ensureStylesheet("controlMobileMenuStyles", "mobile-menu-enhance.css?v=3");
     ensureStylesheet("controlMobilePolishStyles", "mobile-polish.css?v=4");
@@ -139,7 +156,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlPortalAdminV2Styles", "portal-admin-v2.css?v=1");
     ensureStylesheet("controlPortalAdminIconFixStyles", "portal-admin-icon-fix.css?v=1");
     ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=3");
-    ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=1");
+    ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=2");
 
     ensureScript("controlLoginUsabilityScript", "login-usability.js?v=1");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
@@ -153,7 +170,7 @@ window.ETE_CONFIG = {
     ensureScript("controlPermissionDeleteScript", "permission-delete-enhance.js?v=2");
     ensureScript("controlComputerDeleteScript", "computer-delete-enhance.js?v=4");
     ensureScript("controlUxPrimeScript", "ux-prime.js?v=3");
-    ensureScript("controlFinalPolishScript", "final-polish.js?v=1");
+    ensureScript("controlFinalPolishScript", "final-polish.js?v=2");
     ensureScript("controlNavigationSimplifyScript", "navigation-simplify.js?v=1");
     ensureScript("controlStudentUseChoiceScript", "student-use-choice.js?v=2");
     ensureScript("controlUserProfileScript", "user-profile.js?v=1");
@@ -186,25 +203,38 @@ window.ETE_CONFIG = {
     button.title = light ? "Mudar para tema escuro" : "Mudar para tema claro";
   }
 
+  function clearThemeTransition(){
+    clearTimeout(themeTransitionTimer);
+    root.classList.remove("theme-transitioning");
+    document.querySelectorAll(".control-theme-toggle").forEach(function(button){
+      button.classList.remove("theme-toggle-animating");
+    });
+  }
+
+  function startThemeTransition(){
+    clearThemeTransition();
+    root.classList.add("theme-transitioning");
+    document.querySelectorAll(".control-theme-toggle").forEach(function(button){
+      button.classList.add("theme-toggle-animating");
+    });
+    void root.offsetWidth;
+    themeTransitionTimer = window.setTimeout(clearThemeTransition, THEME_TRANSITION_MS);
+  }
+
   function setTheme(theme, options){
     const target = normalizeTheme(theme);
     const skipTransition = !!(options && options.skipTransition);
-    const shouldAnimate = !skipTransition && root.dataset.theme !== target;
-    if (shouldAnimate) {
-      clearTimeout(themeTransitionTimer);
-      root.classList.add("theme-transitioning");
-      void root.offsetWidth;
-    }
+    const shouldAnimate = !skipTransition && !prefersReducedMotion() && root.dataset.theme !== target;
+
+    if (shouldAnimate) startThemeTransition();
+    else clearThemeTransition();
+
     const next = applyRootTheme(target);
-    if (shouldAnimate) {
-      themeTransitionTimer = setTimeout(function(){
-        root.classList.remove("theme-transitioning");
-      }, 300);
-    }
     const persist = !options || options.persist !== false;
     if (persist) {
       try { localStorage.setItem(STORAGE_KEY, next); } catch (_) {}
     }
+
     document.querySelectorAll(".control-theme-toggle").forEach(updateButton);
     try { window.dispatchEvent(new CustomEvent("control-theme-change", { detail: { theme: next } })); } catch (_) {}
     return next;
@@ -212,7 +242,7 @@ window.ETE_CONFIG = {
 
   function toggleTheme(){
     const target = root.dataset.theme === "light" ? "dark" : "light";
-    setTheme(target);
+    return setTheme(target);
   }
 
   function makeButton(extraClass){
@@ -297,7 +327,7 @@ window.ETE_CONFIG = {
     if (event.newValue === "light" || event.newValue === "dark") setTheme(event.newValue, { persist:false });
   });
 
-  window.addEventListener("pageshow", function(){ setTheme(readStoredTheme(), { persist:false }); mountThemeControls(); });
+  window.addEventListener("pageshow", function(){ setTheme(readStoredTheme(), { persist:false, skipTransition:true }); mountThemeControls(); });
   window.addEventListener("load", mountThemeControls, { once:true });
 
   window.ControlTheme = Object.freeze({
