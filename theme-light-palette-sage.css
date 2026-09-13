@@ -1,3 +1,10 @@
-/* Paleta quente desativada.
-   O tema claro volta a herdar a paleta original anterior a 2026-09-11,
-   definida por theme-light.css e pelas camadas de refinamento existentes. */
+/* Ajuste pontual do fundo do tema claro.
+   Mantém a paleta original dos componentes e altera somente o grande background da página. */
+html[data-theme="light"] body{
+  background:#f3f0e8!important;
+}
+
+html[data-theme="light"] .main,
+html[data-theme="light"] .content{
+  background:transparent!important;
+}
