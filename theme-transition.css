@@ -1,6 +1,6 @@
 /* Control Ds — transição de tema sincronizada e leve */
 :root{
-  --control-theme-transition-duration:240ms;
+  --control-theme-transition-duration:512ms;
   --control-theme-transition-easing:cubic-bezier(.22,.72,.24,1);
 }
 
