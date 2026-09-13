@@ -36,18 +36,16 @@ jobs:
           const browser=await chromium.launch({headless:true});
           const results=[];
 
-          const allowedChannels=new Set([
-            '255,250,242','248,239,226','240,226,208','229,210,186','213,191,165',
-            '185,154,122','146,115,86','110,84,63','75,57,43'
-          ]);
-
           async function setLight(page){
             await page.evaluate(()=>window.ControlTheme?.set?.('light'));
-            await page.waitForTimeout(120);
             await page.waitForFunction(()=>{
-              const link=document.getElementById('eteLightSandHardLockStyles');
-              return document.documentElement.dataset.theme==='light'&&!!link&&!!link.sheet;
-            },null,{timeout:5000});
+              const hard=document.getElementById('eteLightSandHardLockStyles');
+              const final=document.getElementById('eteLightSandFinalStyles');
+              return document.documentElement.dataset.theme==='light' &&
+                !!hard?.sheet && !!final?.sheet &&
+                String(final.getAttribute('href')||'').includes('theme-light-sand-final.css?v=3');
+            },null,{timeout:7000});
+            await page.waitForTimeout(80);
           }
 
           async function installFixture(page){
@@ -91,6 +89,7 @@ jobs:
                 </section>`;
               document.body.appendChild(host);
             });
+            await page.waitForTimeout(30);
           }
 
           async function fullColorAudit(page,label){
@@ -119,7 +118,11 @@ jobs:
                 for(const prop of checks){
                   const value=style[prop];
                   if(!ok(value)){
-                    out.push({tag:el.tagName,id:el.id||'',className:typeof el.className==='string'?el.className:'',pseudo,prop,value});
+                    out.push({
+                      tag:el.tagName,id:el.id||'',className:typeof el.className==='string'?el.className:'',pseudo,prop,value,
+                      text:String(el.textContent||'').trim().slice(0,60),
+                      parent:el.parentElement ? `${el.parentElement.tagName}.${String(el.parentElement.className||'').replace(/\s+/g,'.')}` : ''
+                    });
                     if(out.length>=40)return false;
                   }
                 }
@@ -163,11 +166,17 @@ jobs:
             await setLight(page);
             const light=await page.evaluate(()=>{
               const s=getComputedStyle(document.documentElement);
-              return {theme:document.documentElement.dataset.theme,bg:s.getPropertyValue('--ui-bg').trim(),text:s.getPropertyValue('--ui-text').trim(),border:s.getPropertyValue('--ui-border').trim(),hardLock:document.getElementById('eteLightSandHardLockStyles')?.getAttribute('href')||''};
+              return {
+                theme:document.documentElement.dataset.theme,
+                bg:s.getPropertyValue('--ui-bg').trim(),text:s.getPropertyValue('--ui-text').trim(),border:s.getPropertyValue('--ui-border').trim(),
+                hardLock:document.getElementById('eteLightSandHardLockStyles')?.getAttribute('href')||'',
+                finalLock:document.getElementById('eteLightSandFinalStyles')?.getAttribute('href')||''
+              };
             });
             if(light.theme!=='light')throw new Error('local: tema claro não aplicou');
             if(light.bg!=='#f8efe2'||light.text!=='#4b392b'||light.border!=='#d5bfa5')throw new Error(`local: variáveis fora da paleta areia ${JSON.stringify(light)}`);
             if(!light.hardLock.includes('theme-light-sand-hardlock.css'))throw new Error('local: hard lock não carregado');
+            if(!light.finalLock.includes('theme-light-sand-final.css?v=3'))throw new Error(`local: final lock v3 não carregado (${light.finalLock})`);
 
             await fullColorAudit(page,'local');
 
