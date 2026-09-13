@@ -156,6 +156,26 @@
     }
   }
 
+  async function askDelete(item){
+    const description=String(item?.text || "este evento");
+    try{
+      if(window.ControlActionModal?.confirm){
+        return await window.ControlActionModal.confirm({
+          title:"Apagar evento",
+          subtitle:"Somente este item será removido do histórico.",
+          message:description,
+          warning:"Essa ação não pode ser desfeita.",
+          variant:"warning",
+          confirmText:"Apagar evento",
+          cancelText:"Manter evento"
+        });
+      }
+    }catch(error){
+      console.warn("Falha ao abrir confirmação do histórico:",error);
+    }
+    return window.confirm('Apagar somente este evento do histórico?\n\n"'+description+'"');
+  }
+
   async function removeOne(id,button){
     if(typeof canClearHistory!=="function" || !canClearHistory()){
       if(typeof toast==="function") toast("Seu perfil não pode apagar o histórico.");
@@ -170,11 +190,9 @@
       return;
     }
 
-    const description=String(item.text || "este evento");
-    const confirmed=window.confirm('Apagar somente este evento do histórico?\n\n"'+description+'"');
-    if(!confirmed) return;
+    if(!(await askDelete(item))) return;
 
-    if(button){button.disabled=true;button.classList.add("is-loading");}
+    if(button){button.disabled=true;button.classList.add("is-loading");button.setAttribute("aria-busy","true");}
 
     try{
       if(typeof v46Rpc!=="function") throw new Error("RPC V46 indisponível.");
@@ -189,7 +207,7 @@
       }
       if(typeof toast==="function") toast("Não foi possível apagar o evento.");
       console.error("Falha ao apagar evento individual do histórico:",error);
-      if(button){button.disabled=false;button.classList.remove("is-loading");}
+      if(button){button.disabled=false;button.classList.remove("is-loading");button.removeAttribute("aria-busy");}
     }
   }
 
