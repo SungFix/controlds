@@ -237,12 +237,16 @@ window.ETE_CONFIG = {
   }
 
   function startThemeTransition(){
-    clearThemeTransition();
+    clearTimeout(themeTransitionTimer);
+    root.classList.remove("theme-transitioning");
+    document.querySelectorAll(".control-theme-toggle").forEach(function(button){
+      button.classList.remove("theme-toggle-animating");
+    });
+    void root.offsetWidth;
     root.classList.add("theme-transitioning");
     document.querySelectorAll(".control-theme-toggle").forEach(function(button){
       button.classList.add("theme-toggle-animating");
     });
-    void root.offsetWidth;
     themeTransitionTimer = window.setTimeout(clearThemeTransition, THEME_TRANSITION_MS);
   }
 
@@ -250,16 +254,16 @@ window.ETE_CONFIG = {
     const target = normalizeTheme(theme);
     const skipTransition = !!(options && options.skipTransition);
     const shouldAnimate = !skipTransition && !prefersReducedMotion() && root.dataset.theme !== target;
+    const persist = !options || options.persist !== false;
+
+    if (persist) {
+      try { localStorage.setItem(STORAGE_KEY, target); } catch (_) {}
+    }
 
     if (shouldAnimate) startThemeTransition();
     else clearThemeTransition();
 
     const next = applyRootTheme(target);
-    const persist = !options || options.persist !== false;
-    if (persist) {
-      try { localStorage.setItem(STORAGE_KEY, next); } catch (_) {}
-    }
-
     document.querySelectorAll(".control-theme-toggle").forEach(updateButton);
     try { window.dispatchEvent(new CustomEvent("control-theme-change", { detail: { theme: next } })); } catch (_) {}
     return next;
@@ -317,7 +321,6 @@ window.ETE_CONFIG = {
   function mountThemeControls(){
     observerQueued = false;
     ensureThemeStyles();
-    applyRootTheme(readStoredTheme());
     mountHeaderButton();
     mountFloatingButton();
     document.querySelectorAll(".control-theme-toggle").forEach(updateButton);
