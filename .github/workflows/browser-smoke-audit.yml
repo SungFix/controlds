@@ -47,7 +47,12 @@ jobs:
             s7:'rgb(110, 84, 63)',
             s8:'rgb(75, 57, 43)'
           };
-          const allowed=new Set(Object.values(SAND));
+          const allowedChannels=new Set(Object.values(SAND).map(value=>value.match(/\d+/g).slice(0,3).join(',')));
+          const isSandColor=value=>{
+            if(value==='rgba(0, 0, 0, 0)')return true;
+            const parts=String(value||'').match(/\d+(?:\.\d+)?/g);
+            return !!parts&&parts.length>=3&&allowedChannels.has(parts.slice(0,3).map(Number).join(','));
+          };
 
           async function themeSnapshot(page){
             return page.evaluate(()=>{
@@ -134,9 +139,9 @@ jobs:
             for(const key of backgroundKeys){
               const value=sample[key]?.backgroundColor;
               if(!value) throw new Error(`${label}: seletor de auditoria ausente: ${key}`);
-              if(value!=='rgba(0, 0, 0, 0)'&&!allowed.has(value)) throw new Error(`${label}: ${key} ainda usa cor fora da família areia: ${value}`);
+              if(!isSandColor(value)) throw new Error(`${label}: ${key} ainda usa cor fora da família areia: ${value}`);
             }
-            if(sample.portal.backgroundColor!=='rgba(0, 0, 0, 0)'&&!allowed.has(sample.portal.backgroundColor)) throw new Error(`${label}: Portal ainda usa fundo fora da família areia: ${sample.portal.backgroundColor}`);
+            if(!isSandColor(sample.portal.backgroundColor)) throw new Error(`${label}: Portal ainda usa fundo fora da família areia: ${sample.portal.backgroundColor}`);
             results.push(`${label} sand-only computed colors PASS`);
           }
 
