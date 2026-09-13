@@ -12,7 +12,7 @@
     const link=document.createElement("link");
     link.id="controlStudentDetailsBorderlessStyles";
     link.rel="stylesheet";
-    link.href="student-details-borderless.css?v=1";
+    link.href="student-details-borderless.css?v=2";
     document.head.appendChild(link);
   }
 
