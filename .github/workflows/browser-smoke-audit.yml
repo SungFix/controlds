@@ -46,6 +46,8 @@ jobs:
               const toggle=document.querySelector('.control-theme-toggle-floating');
               return {
                 theme:root.dataset.theme||'',
+                stored:localStorage.getItem('control-ds-theme'),
+                controlThemeGet:window.ControlTheme?.get?.()||'',
                 transitioning:root.classList.contains('theme-transitioning'),
                 toggleAnimating:!!toggle?.classList.contains('theme-toggle-animating'),
                 overlayExists:!!document.getElementById('eteThemeTransitionOverlay'),
@@ -67,6 +69,31 @@ jobs:
             });
           }
 
+          async function installThemeTrace(page){
+            await page.evaluate(()=>{
+              window.__themeTrace=[];
+              const root=document.documentElement;
+              const push=(type,extra={})=>window.__themeTrace.push({
+                type,
+                t:Math.round(performance.now()),
+                theme:root.dataset.theme||'',
+                stored:localStorage.getItem('control-ds-theme'),
+                transitioning:root.classList.contains('theme-transitioning'),
+                ...extra
+              });
+              new MutationObserver(records=>{
+                for(const record of records){
+                  if(record.attributeName==='data-theme')push('data-theme-mutation');
+                }
+              }).observe(root,{attributes:true,attributeFilter:['data-theme']});
+              window.addEventListener('control-theme-change',event=>push('control-theme-change',{detail:event.detail?.theme||''}));
+              window.addEventListener('click',event=>{
+                if(event.target.closest?.('.control-theme-toggle'))push('theme-click-window-capture');
+              },true);
+              push('trace-installed');
+            });
+          }
+
           async function testThemeTransition(page,label){
             const toggle=page.locator('.control-theme-toggle-floating').first();
             await toggle.waitFor({state:'visible',timeout:5000});
@@ -79,9 +106,28 @@ jobs:
               themeColor:before.themeColor
             };
 
+            await installThemeTrace(page);
+            const directResult=await page.evaluate(()=>window.ControlTheme?.toggle?.());
+            await page.waitForTimeout(70);
+            const directAfter=await themeSnapshot(page);
+            const directTrace=await page.evaluate(()=>window.__themeTrace||[]);
+            console.log('=== DIRECT THEME DIAGNOSTIC ===');
+            console.log(JSON.stringify({before,directResult,directAfter,directTrace},null,2));
+
+            if(directAfter.theme!=='light'){
+              throw new Error(`${label}: chamada direta ControlTheme.toggle não manteve o tema claro`);
+            }
+
+            await page.evaluate(()=>window.ControlTheme?.set?.('dark'));
+            await page.waitForTimeout(620);
+            await page.evaluate(()=>{window.__themeTrace=[];});
+
             await toggle.click();
             await page.waitForTimeout(70);
             const light=await themeSnapshot(page);
+            const clickTrace=await page.evaluate(()=>window.__themeTrace||[]);
+            console.log('=== CLICK THEME DIAGNOSTIC ===');
+            console.log(JSON.stringify({light,clickTrace},null,2));
             if(light.theme===before.theme) throw new Error(`${label}: sistema Epoch não aplicou o novo tema imediatamente`);
             if(light.theme!=='light') throw new Error(`${label}: troca não chegou ao tema claro`);
             if(!light.transitioning) throw new Error(`${label}: classe de transição do Epoch não ficou ativa`);
