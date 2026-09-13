@@ -1,7 +1,7 @@
 (function initStudentListOrganizer(){
   "use strict";
 
-  const state={course:"all",year:"all",room:"all",sort:"az",limit:"40"};
+  const state={course:"all",year:"all",room:"all",sort:"az",limit:"all"};
   let mounted=false;
   let applyQueued=false;
 
@@ -99,7 +99,7 @@
     if(state.year!=="all")count++;
     if(state.room!=="all")count++;
     if(state.sort!=="az")count++;
-    if(state.limit!=="40")count++;
+    if(state.limit!=="all")count++;
     return count;
   }
 
@@ -165,13 +165,14 @@
   }
 
   function resetFilters(){
-    Object.assign(state,{course:"all",year:"all",room:"all",sort:"az",limit:"40"});
+    Object.assign(state,{course:"all",year:"all",room:"all",sort:"az",limit:"all"});
     document.querySelectorAll("[data-student-filter]").forEach(select=>{
       const key=select.dataset.studentFilter;
       if(key in state)select.value=state[key];
     });
     const rows=document.getElementById("studentRows");
     if(rows)rows.scrollTop=0;
+    window.ETECustomSelect?.sync?.();
     queueApply();
   }
 
@@ -219,7 +220,7 @@
             <select data-student-filter="sort"><option value="az">A → Z</option><option value="za">Z → A</option><option value="recent">Recentes</option></select>
           </label>
           <label class="student-filter-field">Número de registros
-            <select data-student-filter="limit"><option value="20">20</option><option value="40" selected>40</option><option value="80">80</option><option value="all">Todos</option></select>
+            <select data-student-filter="limit"><option value="all" selected>Mostrar todos</option><option value="20">20</option><option value="40">40</option><option value="80">80</option></select>
           </label>
         </div>
         <div class="student-filter-footer"><button type="button" class="student-filter-reset" id="studentFilterReset">Limpar filtros</button><small>“Recentes” considera o último uso registrado.</small></div>
