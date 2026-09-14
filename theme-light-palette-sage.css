@@ -3,25 +3,102 @@
    bordas #dce4e8/#dde6ea, texto #203039/#26363e e secundarios #647680/#667883.
    O Atestados nao e alterado por esta camada. */
 
-/* Login continua temporariamente sem paleta personalizada. */
-html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked *,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked *::before,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked *::after{
-  color:revert!important;
-  background:revert!important;
-  border-color:revert!important;
-  outline-color:revert!important;
-  box-shadow:none!important;
-  text-shadow:none!important;
-  caret-color:auto!important;
-  accent-color:auto!important;
+/* =========================
+   LOGIN
+   Mesma familia clara usada no Atestados, preservando todo o layout existente.
+   ========================= */
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate{
+  background:#f8fafb!important;
+  color:#203039!important;
 }
-
-html[data-theme="light"] body.auth-locked .control-theme-toggle{
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate::before{
+  opacity:.22!important;
+  background-image:linear-gradient(rgba(100,118,128,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(100,118,128,.08) 1px,transparent 1px)!important;
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card{
+  background:#fff!important;
+  border-color:#dce4e8!important;
+  color:#203039!important;
+  box-shadow:0 28px 70px rgba(32,48,57,.12)!important;
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card::before{
+  background:#dce4e8!important;
+  opacity:1!important;
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card .login-brand{
+  background:#f4f7f9!important;
+  border-right-color:#dce4e8!important;
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card .login-brand::after{
+  background:#fff!important;
+  border-color:#dce4e8!important;
+  color:#647680!important;
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card .login-mark{
+  background:#fff!important;
+  border-color:#cbd8df!important;
+  color:#26363e!important;
+  box-shadow:0 10px 26px rgba(32,48,57,.08)!important;
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card .login-brand strong,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card #loginTitle{color:#203039!important}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card .login-brand small,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card #loginTitle + p{color:#647680!important}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card #loginTitle::before{color:#667883!important}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-grid label{color:#203039!important}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-grid input{
+  background:#fff!important;
+  border-color:#dce4e8!important;
+  color:#203039!important;
+  box-shadow:none!important;
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-grid input::placeholder{color:#7b8b94!important}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-grid input:hover{border-color:#cbd8df!important}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-grid input:focus{
+  background:#fff!important;
+  border-color:#9aadb7!important;
+  box-shadow:0 0 0 3px rgba(126,153,170,.12)!important;
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-grid input:-webkit-autofill,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-grid input:-webkit-autofill:hover,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-grid input:-webkit-autofill:focus{
+  -webkit-text-fill-color:#203039!important;
+  -webkit-box-shadow:0 0 0 1000px #fff inset!important;
+  box-shadow:0 0 0 1000px #fff inset!important;
+  border-color:#dce4e8!important;
+  caret-color:#203039!important;
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit{
+  background:#26363e!important;
+  border-color:#26363e!important;
+  color:#fff!important;
+  box-shadow:0 8px 18px rgba(32,48,57,.12)!important;
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit:hover:not(:disabled){
+  background:#344851!important;
+  border-color:#344851!important;
+  box-shadow:0 9px 20px rgba(32,48,57,.16)!important;
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-error{
+  background:#faeeee!important;
+  border-color:#e7cbd0!important;
+  color:#9a5d65!important;
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-note{
+  border-top-color:#dde6ea!important;
+  border-left-color:#cbd8df!important;
+  color:#647680!important;
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .control-theme-toggle{
   visibility:visible!important;
   opacity:1!important;
   pointer-events:auto!important;
+  background:#fff!important;
+  border-color:#dce4e8!important;
+  color:#26363e!important;
+}
+@media(max-width:760px){
+  html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card .login-brand{border-bottom-color:#dce4e8!important}
 }
 
 /* =========================
