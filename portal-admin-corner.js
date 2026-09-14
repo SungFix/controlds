@@ -10,6 +10,10 @@
       && document.body.classList.contains("portal-open");
   }
 
+  function isNotebookViewport(){
+    return window.innerWidth>=1024 && window.innerWidth<=1600;
+  }
+
   function placeButton(){
     queued=false;
     const portal=document.getElementById("eteCentralPortal");
@@ -27,11 +31,13 @@
 
     if(!visible)return;
 
+    const notebook=isNotebookViewport();
+
     button.style.setProperty("position","fixed","important");
-    button.style.setProperty("top","8px","important");
+    button.style.setProperty("top",notebook?"auto":"8px","important");
     button.style.setProperty("left","8px","important");
     button.style.setProperty("right","auto","important");
-    button.style.setProperty("bottom","auto","important");
+    button.style.setProperty("bottom",notebook?"8px":"auto","important");
     button.style.setProperty("margin","0","important");
     button.style.setProperty("transform","none","important");
     button.style.setProperty("z-index","2147483643","important");
@@ -47,6 +53,7 @@
     button.style.setProperty("border-radius","13px","important");
     button.dataset.cornerFixed="true";
     button.dataset.iconOnly="true";
+    button.dataset.notebookCorner=notebook?"bottom-left":"top-left";
   }
 
   function queuePlace(){
@@ -67,6 +74,7 @@
     });
     window.addEventListener("pageshow",placeButton);
     window.addEventListener("popstate",placeButton);
+    window.addEventListener("resize",queuePlace,{passive:true});
     setTimeout(placeButton,80);
     setTimeout(placeButton,300);
     setTimeout(placeButton,800);
