@@ -106,4 +106,10 @@
 
 @media(min-width:821px){
   .mobile-menu-backdrop{display:none !important}
+
+  /* Apenas estende a lateral até o fim da tela; não altera largura ou fluxo. */
+  .sidebar{
+    min-height:100vh !important;
+    min-height:100dvh !important;
+  }
 }
