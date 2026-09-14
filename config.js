@@ -31,7 +31,7 @@ window.ETE_CONFIG = {
 
   const guardStyle = document.createElement("style");
   guardStyle.id = "eteFirstPaintGuard";
-  const firstPaintBackground = initialTheme === "light" ? "#f5efe6" : "#080a0d";
+  const firstPaintBackground = initialTheme === "light" ? "#F3F7FA" : "#080a0d";
   guardStyle.textContent = "html.ete-first-paint{visibility:hidden!important;background:" + firstPaintBackground + "!important}";
   document.head.appendChild(guardStyle);
 
@@ -65,7 +65,7 @@ window.ETE_CONFIG = {
 
   const STORAGE_KEY = "control-ds-theme";
   const THEME_TRANSITION_MS = 520;
-  const LIGHT_THEME_COLOR = "#f5efe6";
+  const LIGHT_THEME_COLOR = "#F3F7FA";
   const DARK_THEME_COLOR = "#080a0d";
   const root = document.documentElement;
   let observerQueued = false;
@@ -181,7 +181,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlPortalAdminV2Styles", "portal-admin-v2.css?v=1");
     ensureStylesheet("controlPortalAdminIconFixStyles", "portal-admin-icon-fix.css?v=1");
     ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=3");
-    ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=2");
+    ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=3");
 
     ensureScript("controlLoginUsabilityScript", "login-usability.js?v=1");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
