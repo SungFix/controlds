@@ -16,103 +16,103 @@
   Cache-Control: no-cache, max-age=0, must-revalidate
 
 /config.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: no-cache, max-age=0, must-revalidate
 
 /login-simple-v2.css
   Cache-Control: no-cache, max-age=0, must-revalidate
 
 /topbar-final-override.css
-  Cache-Control: no-cache, max-age=0, must-revalidate
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /history-filter-polish.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /relational-frontend-v2.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /final-polish.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /theme-light-fixed-palette.css
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /theme-light-sand-lock.css
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /theme-light-sand-hardlock.css
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /theme-light-sand-final.css
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /theme-light-palette-sage.css
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /custom-select.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /custom-select.css
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /student-list-organizer.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /student-list-organizer.css
-  Cache-Control: no-cache, max-age=0, must-revalidate
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /student-collapsible-list.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /student-collapsible-list.css
-  Cache-Control: no-cache, max-age=0, must-revalidate
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /student-reputation.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /student-reputation.css
-  Cache-Control: no-cache, max-age=0, must-revalidate
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /portal.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /portal-admin.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /portal-admin-v2.css
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /portal-admin-icon-fix.css
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /user-capabilities.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /professor-director-parity.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /admin-function-auth-fix.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /portal-admin-corner.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /atestados.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /atestados-room-picker.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /atestados-date-picker.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /atestados-image-upload.js
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /atestados-image-upload.css
-  Cache-Control: no-cache, max-age=0, must-revalidate
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /atestados-figma-features.css
-  Cache-Control: no-store, max-age=0
+  Cache-Control: public, max-age=3600, must-revalidate
 
 /manifest.webmanifest
   Cache-Control: no-cache, max-age=0, must-revalidate
