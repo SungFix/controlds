@@ -117,7 +117,7 @@
 @media(min-width:821px){
   .mobile-menu-backdrop{display:none !important}
 
-  /* Sidebar fixa sem sobrepor o conteúdo principal. */
+  /* Sidebar fixa e compacta, sem sobrepor o conteúdo principal. */
   .shell{
     display:block !important;
     min-height:100vh !important;
@@ -128,7 +128,7 @@
     top:0 !important;
     left:0 !important;
     bottom:0 !important;
-    width:248px !important;
+    width:220px !important;
     height:100dvh !important;
     min-height:100dvh !important;
     overflow-y:auto !important;
@@ -138,8 +138,8 @@
   }
 
   .main{
-    width:calc(100% - 248px) !important;
-    margin-left:248px !important;
+    width:calc(100% - 220px) !important;
+    margin-left:220px !important;
     min-width:0 !important;
   }
 }
