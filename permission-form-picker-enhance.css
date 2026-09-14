@@ -214,3 +214,151 @@ html[data-theme="light"] #permissionModal #permissionClassPopup .group-course-ti
   #permissionModal #permissionSavedStudentPopup,
   #permissionModal #permissionClassPopup{z-index:80 !important}
 }
+
+/* Refinamento final — seletor de aluno mais legível e com hierarquia visual clara. */
+#permissionModal #permissionForm .saved-student-box.registered-flow-official{
+  padding:17px !important;
+  border:1px solid #35404a !important;
+  border-radius:16px !important;
+  background:#11171d !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025) !important;
+}
+
+#permissionModal #permissionForm .registered-flow-official .saved-title{
+  margin-bottom:11px !important;
+}
+
+#permissionModal #permissionForm .registered-flow-official .saved-title strong{
+  color:#f3f6f8 !important;
+  font-size:12px !important;
+  line-height:1.2 !important;
+  font-weight:850 !important;
+  letter-spacing:.01em !important;
+}
+
+#permissionModal #permissionForm #permissionSavedStudentTrigger{
+  min-height:66px !important;
+  padding:12px 12px 12px 15px !important;
+  border:1px solid #394550 !important;
+  border-radius:14px !important;
+  background:#1a222a !important;
+  color:#f4f7f9 !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 6px 18px rgba(0,0,0,.12) !important;
+  transition:background .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease !important;
+}
+
+#permissionModal #permissionForm #permissionSavedStudentTrigger .student-picker-main{
+  display:flex !important;
+  min-width:0 !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+  gap:5px !important;
+  text-align:left !important;
+}
+
+#permissionModal #permissionForm #permissionSavedStudentName{
+  color:#f7f9fb !important;
+  font-size:13px !important;
+  line-height:1.25 !important;
+  font-weight:820 !important;
+  letter-spacing:0 !important;
+}
+
+#permissionModal #permissionForm #permissionSavedStudentMeta{
+  color:#a4b0bb !important;
+  font-size:10px !important;
+  line-height:1.35 !important;
+  font-weight:560 !important;
+}
+
+#permissionModal #permissionForm #permissionSavedStudentTrigger .student-picker-chevron{
+  width:34px !important;
+  height:34px !important;
+  min-width:34px !important;
+  display:grid !important;
+  place-items:center !important;
+  border:1px solid #313c46 !important;
+  border-radius:10px !important;
+  background:#151c23 !important;
+  color:#b7c1ca !important;
+}
+
+#permissionModal #permissionForm #permissionSavedStudentTrigger .student-picker-chevron svg{
+  width:16px !important;
+  height:16px !important;
+  stroke:currentColor !important;
+  stroke-width:2 !important;
+  fill:none !important;
+}
+
+#permissionModal #permissionForm #permissionSavedStudentTrigger:hover{
+  border-color:#53616d !important;
+  background:#202a33 !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 8px 22px rgba(0,0,0,.16) !important;
+}
+
+#permissionModal #permissionForm #permissionSavedStudentTrigger:focus-visible,
+#permissionModal #permissionForm #permissionSavedStudentTrigger.open{
+  outline:none !important;
+  border-color:#70899b !important;
+  background:#202a33 !important;
+  box-shadow:0 0 0 3px rgba(112,137,155,.17),0 8px 22px rgba(0,0,0,.16) !important;
+}
+
+#permissionModal #permissionForm #permissionSavedStudentTrigger:active{
+  transform:translateY(1px) !important;
+}
+
+html[data-theme="light"] #permissionModal #permissionForm .saved-student-box.registered-flow-official{
+  border-color:#dce4e8 !important;
+  background:#f8fafb !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8) !important;
+}
+
+html[data-theme="light"] #permissionModal #permissionForm .registered-flow-official .saved-title strong{
+  color:#203039 !important;
+}
+
+html[data-theme="light"] #permissionModal #permissionForm #permissionSavedStudentTrigger{
+  border-color:#d4e0e5 !important;
+  background:#ffffff !important;
+  color:#203039 !important;
+  box-shadow:0 5px 16px rgba(32,48,57,.055) !important;
+}
+
+html[data-theme="light"] #permissionModal #permissionForm #permissionSavedStudentName{
+  color:#203039 !important;
+}
+
+html[data-theme="light"] #permissionModal #permissionForm #permissionSavedStudentMeta{
+  color:#647680 !important;
+}
+
+html[data-theme="light"] #permissionModal #permissionForm #permissionSavedStudentTrigger .student-picker-chevron{
+  border-color:#dce4e8 !important;
+  background:#f4f7f9 !important;
+  color:#667883 !important;
+}
+
+html[data-theme="light"] #permissionModal #permissionForm #permissionSavedStudentTrigger:hover,
+html[data-theme="light"] #permissionModal #permissionForm #permissionSavedStudentTrigger:focus-visible,
+html[data-theme="light"] #permissionModal #permissionForm #permissionSavedStudentTrigger.open{
+  border-color:#c4d3da !important;
+  background:#f4f7f9 !important;
+}
+
+@media(max-width:720px){
+  #permissionModal #permissionForm .saved-student-box.registered-flow-official{
+    padding:13px !important;
+  }
+  #permissionModal #permissionForm #permissionSavedStudentTrigger{
+    min-height:60px !important;
+    padding:10px 10px 10px 13px !important;
+  }
+  #permissionModal #permissionForm #permissionSavedStudentName{
+    font-size:12px !important;
+  }
+  #permissionModal #permissionForm #permissionSavedStudentMeta{
+    font-size:9.5px !important;
+  }
+}
