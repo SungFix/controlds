@@ -3,10 +3,12 @@
    customizadas depois do login para que o tema claro seja reconstruido do zero.
    A tela de login fica fora deste reset. */
 
-html[data-theme="light"] body:not(.auth-locked),
-html[data-theme="light"] body:not(.auth-locked) *,
-html[data-theme="light"] body:not(.auth-locked) *::before,
-html[data-theme="light"] body:not(.auth-locked) *::after{
+/* A especificidade elevada e intencional impede que estilos claros antigos,
+   inclusive estilos injetados depois do login, voltem a colorir a interface. */
+html[data-theme="light"] body:not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked),
+html[data-theme="light"] body:not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked) *,
+html[data-theme="light"] body:not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked) *::before,
+html[data-theme="light"] body:not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked) *::after{
   color:revert!important;
   background:revert!important;
   border-color:revert!important;
@@ -17,9 +19,8 @@ html[data-theme="light"] body:not(.auth-locked) *::after{
   accent-color:auto!important;
 }
 
-/* Mantem apenas o comportamento/posicionamento dos controles de tema.
-   As cores deles tambem ficam neutras durante esta fase. */
-html[data-theme="light"] body:not(.auth-locked) .control-theme-toggle{
+/* Os controles continuam presentes e clicaveis; somente a paleta visual foi zerada. */
+html[data-theme="light"] body:not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked) .control-theme-toggle{
   visibility:visible!important;
   opacity:1!important;
   pointer-events:auto!important;
