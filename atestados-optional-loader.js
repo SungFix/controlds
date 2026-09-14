@@ -24,6 +24,13 @@
     document.head.appendChild(palette);
   }
 
+  function refreshAtestadosLightPolishOrder(){
+    const polish=document.getElementById("controlAtestadosLightPolishStyles");
+    if(!polish)return;
+    if(polish.getAttribute("href")!=="atestados-light-polish.css?v=1")polish.href="atestados-light-polish.css?v=1";
+    document.head.appendChild(polish);
+  }
+
   function ensureScript(id,src){
     return new Promise((resolve,reject)=>{
       let script=document.getElementById(id);
@@ -48,13 +55,16 @@
     if(loading)return loading;
     loading=(async()=>{
       ensureStyle("controlAtestadosImageUploadStyles","atestados-image-upload.css?v=2");
+      ensureStyle("controlAtestadosLightPolishStyles","atestados-light-polish.css?v=1");
       refreshLightPaletteOrder();
+      refreshAtestadosLightPolishOrder();
       await ensureScript("controlAtestadosImageRangeFixScript","atestados-image-range-fix.js?v=1");
       await ensureScript("controlAtestadosImageUploadScript","atestados-image-upload.js?v=2");
       await ensureScript("controlAtestadosImageAccessFixScript","atestados-image-access-fix.js?v=1");
       await ensureScript("controlAtestadosActionPolishScript","atestados-action-polish.js?v=1");
       await ensureScript("controlAtestadosEditScript","atestados-edit.js?v=1");
       refreshLightPaletteOrder();
+      refreshAtestadosLightPolishOrder();
     })().catch(error=>{
       console.error("Falha ao carregar recursos opcionais do Atestados:",error);
       loading=null;
