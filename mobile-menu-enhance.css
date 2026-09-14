@@ -117,17 +117,19 @@
 @media(min-width:821px){
   .mobile-menu-backdrop{display:none !important}
 
-  /* Sidebar fixa e compacta, sem sobrepor o conteúdo principal. */
+  /* Desktop/notebook: layout natural em duas colunas, sem sobreposição. */
   .shell{
-    display:block !important;
+    display:grid !important;
+    grid-template-columns:220px minmax(0,1fr) !important;
     min-height:100vh !important;
+    align-items:start !important;
   }
 
   .sidebar{
-    position:fixed !important;
+    position:sticky !important;
     top:0 !important;
-    left:0 !important;
-    bottom:0 !important;
+    left:auto !important;
+    bottom:auto !important;
     width:220px !important;
     height:100dvh !important;
     min-height:100dvh !important;
@@ -138,8 +140,9 @@
   }
 
   .main{
-    width:calc(100% - 220px) !important;
-    margin-left:220px !important;
+    grid-column:2 !important;
+    width:auto !important;
+    margin-left:0 !important;
     min-width:0 !important;
   }
 }
