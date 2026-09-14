@@ -62,10 +62,42 @@
     requestAnimationFrame(placeButton);
   }
 
+  function nodeMayAffectButton(node){
+    if(!node||node.nodeType!==1)return false;
+    if(node.id==="eteCentralPortal"||node.id==="etePortalAdminButton")return true;
+    return !!node.querySelector?.("#eteCentralPortal,#etePortalAdminButton");
+  }
+
+  function handleMutations(mutations){
+    for(const mutation of mutations){
+      if(mutation.type==="attributes"){
+        const target=mutation.target;
+        if(target===document.body||target.id==="eteCentralPortal"||target.id==="etePortalAdminButton"){
+          queuePlace();
+          return;
+        }
+        continue;
+      }
+
+      if(mutation.type==="childList"){
+        if(mutation.target===document.body||mutation.target.id==="eteCentralPortal"){
+          queuePlace();
+          return;
+        }
+        for(const node of mutation.addedNodes){
+          if(nodeMayAffectButton(node)){
+            queuePlace();
+            return;
+          }
+        }
+      }
+    }
+  }
+
   function install(){
     placeButton();
     if(!document.body)return;
-    const observer=new MutationObserver(queuePlace);
+    const observer=new MutationObserver(handleMutations);
     observer.observe(document.body,{
       childList:true,
       subtree:true,
