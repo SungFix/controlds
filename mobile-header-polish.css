@@ -240,3 +240,434 @@
     flex-basis:28px !important;
   }
 }
+
+/* Acabamento mobile final — apenas aparência e responsividade. */
+@media(max-width:760px){
+  body:not(.auth-locked) .topbar{
+    min-height:64px !important;
+    padding:8px 10px !important;
+    border-bottom-width:1px !important;
+    backdrop-filter:blur(16px) !important;
+    -webkit-backdrop-filter:blur(16px) !important;
+  }
+
+  body:not(.auth-locked) .page-symbol{
+    width:38px !important;
+    height:38px !important;
+    flex-basis:38px !important;
+    border-radius:11px !important;
+  }
+
+  body:not(.auth-locked) .topbar-copy h2,
+  body:not(.auth-locked) .top-title strong{
+    font-size:16px !important;
+    letter-spacing:-.02em !important;
+  }
+
+  body:not(.auth-locked) .content{
+    padding:16px 11px calc(28px + env(safe-area-inset-bottom)) !important;
+  }
+
+  body:not(.auth-locked) .pagehead{
+    gap:10px !important;
+    margin-bottom:14px !important;
+  }
+
+  body:not(.auth-locked) .pagehead h1{
+    font-size:25px !important;
+    letter-spacing:-.035em !important;
+  }
+
+  body:not(.auth-locked) .pagehead p{
+    margin-top:5px !important;
+    font-size:11.5px !important;
+    line-height:1.45 !important;
+  }
+
+  body:not(.auth-locked) .pagehead .actions{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:7px !important;
+  }
+
+  body:not(.auth-locked) .pagehead .actions .btn{
+    min-height:44px !important;
+    padding:9px 10px !important;
+    border-radius:12px !important;
+  }
+
+  body:not(.auth-locked) .overview-strip,
+  body:not(.auth-locked) .request-overview,
+  body:not(.auth-locked) .history-overview,
+  body:not(.auth-locked) .permission-overview,
+  body:not(.auth-locked) .computer-overview{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:8px !important;
+  }
+
+  body:not(.auth-locked) .mini-stat,
+  body:not(.auth-locked) .request-stat,
+  body:not(.auth-locked) .history-stat,
+  body:not(.auth-locked) .permission-stat,
+  body:not(.auth-locked) .computer-stat{
+    min-height:98px !important;
+    padding:13px !important;
+    border-radius:14px !important;
+  }
+
+  body:not(.auth-locked) .mini-stat .value,
+  body:not(.auth-locked) .request-stat strong,
+  body:not(.auth-locked) .history-stat strong,
+  body:not(.auth-locked) .permission-stat strong,
+  body:not(.auth-locked) .computer-stat strong{
+    font-size:27px !important;
+    line-height:1 !important;
+  }
+
+  body:not(.auth-locked) .panel,
+  body:not(.auth-locked) .request-card,
+  body:not(.auth-locked) .permission-card,
+  body:not(.auth-locked) .computer-card,
+  body:not(.auth-locked) .computer-item{
+    border-radius:15px !important;
+  }
+
+  body:not(.auth-locked) .panelhead{
+    min-height:54px !important;
+    padding:10px 13px !important;
+  }
+
+  body:not(.auth-locked) .quick-card{
+    min-height:62px !important;
+    padding:11px 12px !important;
+    border-radius:13px !important;
+  }
+
+  body:not(.auth-locked) .toolbar,
+  body:not(.auth-locked) .request-toolbar,
+  body:not(.auth-locked) .history-tools,
+  body:not(.auth-locked) .permission-toolbar,
+  body:not(.auth-locked) .computer-toolbar{
+    gap:7px !important;
+    margin-bottom:10px !important;
+  }
+
+  body:not(.auth-locked) input,
+  body:not(.auth-locked) textarea,
+  body:not(.auth-locked) select,
+  body:not(.auth-locked) .filter-select,
+  body:not(.auth-locked) .request-sort{
+    border-radius:13px !important;
+  }
+
+  body .ete-portal:not(.module-open) .ete-portal-shell{
+    width:calc(100% - 22px) !important;
+    padding:11px 0 calc(34px + env(safe-area-inset-bottom)) !important;
+  }
+
+  body .ete-portal:not(.module-open) .ete-portal-topbar{
+    margin-bottom:28px !important;
+    padding:9px 10px !important;
+    border-radius:14px !important;
+  }
+
+  body .ete-portal:not(.module-open) .ete-portal-mark{
+    width:40px !important;
+    height:40px !important;
+    border-radius:11px !important;
+  }
+
+  body .ete-portal:not(.module-open) .ete-portal-brand{gap:9px !important}
+  body .ete-portal:not(.module-open) .ete-portal-brand strong{font-size:15px !important}
+  body .ete-portal:not(.module-open) .ete-portal-brand small{font-size:9px !important}
+  body .ete-portal:not(.module-open) .ete-portal-actions{gap:6px !important}
+
+  body .ete-portal:not(.module-open) .ete-portal-theme,
+  body .ete-portal:not(.module-open) .ete-portal-exit{
+    min-height:38px !important;
+    padding:0 10px !important;
+    border-radius:10px !important;
+    font-size:10px !important;
+  }
+
+  body .ete-portal:not(.module-open) .ete-portal-hero{
+    margin-bottom:26px !important;
+  }
+
+  body .ete-portal:not(.module-open) .ete-portal-kicker{
+    margin-bottom:9px !important;
+    font-size:9px !important;
+  }
+
+  body .ete-portal:not(.module-open) .ete-portal-hero h1{
+    font-size:34px !important;
+    line-height:1.03 !important;
+    letter-spacing:-.045em !important;
+  }
+
+  body .ete-portal:not(.module-open) .ete-portal-hero p{
+    margin-top:12px !important;
+    font-size:13px !important;
+    line-height:1.55 !important;
+  }
+
+  body .ete-portal:not(.module-open) .ete-portal-points{
+    flex-wrap:nowrap !important;
+    overflow-x:auto !important;
+    margin:16px -11px 0 !important;
+    padding:0 11px 4px !important;
+    scrollbar-width:none !important;
+    -webkit-overflow-scrolling:touch !important;
+  }
+
+  body .ete-portal:not(.module-open) .ete-portal-points::-webkit-scrollbar{display:none !important}
+  body .ete-portal:not(.module-open) .ete-portal-points span{flex:0 0 auto !important}
+
+  body .ete-portal:not(.module-open) .ete-portal-grid{gap:11px !important}
+  body .ete-portal:not(.module-open) .ete-system-card{
+    min-height:190px !important;
+    padding:17px !important;
+    gap:20px !important;
+    border-radius:16px !important;
+    box-shadow:0 10px 28px rgba(0,0,0,.12) !important;
+  }
+
+  body .ete-portal:not(.module-open) .ete-system-icon{
+    width:46px !important;
+    height:46px !important;
+    border-radius:13px !important;
+    font-size:19px !important;
+  }
+
+  body .ete-portal:not(.module-open) .ete-system-status{
+    padding:6px 9px 6px 18px !important;
+    font-size:9px !important;
+  }
+
+  body .ete-portal:not(.module-open) .ete-system-card strong{font-size:22px !important}
+  body .ete-portal:not(.module-open) .ete-system-card p{
+    margin-top:7px !important;
+    font-size:12px !important;
+    line-height:1.5 !important;
+  }
+
+  body .ete-portal:not(.module-open) .ete-system-open{
+    padding-top:13px !important;
+    font-size:11px !important;
+  }
+
+  body .ete-portal.module-open .at-control-sidebar{
+    padding:10px !important;
+  }
+
+  body .ete-portal.module-open .at-control-brand{
+    gap:9px !important;
+    padding:3px 4px 10px !important;
+  }
+
+  body .ete-portal.module-open .at-control-brandmark{
+    width:42px !important;
+    height:42px !important;
+    flex-basis:42px !important;
+    border-radius:11px !important;
+  }
+
+  body .ete-portal.module-open .at-control-brand strong{font-size:16px !important}
+  body .ete-portal.module-open .at-control-brand small{font-size:9px !important}
+
+  body .ete-portal.module-open .at-control-sidebar .at-nav{
+    gap:6px !important;
+    margin-top:8px !important;
+  }
+
+  body .ete-portal.module-open .at-control-sidebar .at-nav-item{
+    min-height:44px !important;
+    padding:0 7px !important;
+    border-radius:11px !important;
+    font-size:9px !important;
+  }
+
+  body .ete-portal.module-open .at-app-topbar{
+    min-height:62px !important;
+    padding:8px 10px !important;
+  }
+
+  body .ete-portal.module-open .at-app-home,
+  body .ete-portal.module-open .at-app-theme,
+  body .ete-portal.module-open .at-app-user,
+  body .ete-portal.module-open .at-app-exit{
+    width:38px !important;
+    min-width:38px !important;
+    height:38px !important;
+    min-height:38px !important;
+    border-radius:10px !important;
+  }
+
+  body .ete-portal.module-open .at-app-content{
+    padding:16px 11px calc(28px + env(safe-area-inset-bottom)) !important;
+  }
+
+  body .ete-portal.module-open .at-app-content .at-page-head{
+    gap:10px !important;
+    margin-bottom:14px !important;
+  }
+
+  body .ete-portal.module-open .at-app-content .at-page-head h1{
+    font-size:26px !important;
+    letter-spacing:-.035em !important;
+  }
+
+  body .ete-portal.module-open .at-app-content .at-page-head p{
+    margin-top:5px !important;
+    font-size:11px !important;
+    line-height:1.45 !important;
+  }
+
+  body .ete-portal.module-open .at-app-content .at-head-actions{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:7px !important;
+  }
+
+  body .ete-portal.module-open .at-app-content .at-head-actions .at-btn{
+    width:100% !important;
+    min-height:44px !important;
+    padding:0 10px !important;
+    border-radius:12px !important;
+  }
+
+  body .ete-portal.module-open .at-app-content .at-metrics{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:8px !important;
+    margin-bottom:12px !important;
+  }
+
+  body .ete-portal.module-open .at-app-content .at-metric{
+    min-height:104px !important;
+    padding:13px !important;
+    border-radius:14px !important;
+  }
+
+  body .ete-portal.module-open .at-app-content .at-metric>div{min-height:78px !important}
+  body .ete-portal.module-open .at-app-content .at-metric strong{
+    margin-top:15px !important;
+    font-size:28px !important;
+  }
+
+  body .ete-portal.module-open .at-app-content .at-metric span:not(.at-metric-marker){font-size:9px !important}
+  body .ete-portal.module-open .at-app-content .at-metric small{font-size:8.5px !important}
+
+  body .ete-portal.module-open .at-app-content .at-card{
+    border-radius:15px !important;
+    box-shadow:0 10px 26px rgba(0,0,0,.10) !important;
+  }
+
+  body .ete-portal.module-open .at-app-content .at-card-head{
+    min-height:54px !important;
+    padding:9px 13px !important;
+  }
+
+  body .ete-portal.module-open .at-app-content .at-inline-search,
+  body .ete-portal.module-open .at-app-content .at-toolbar{
+    padding:10px 12px !important;
+    gap:7px !important;
+  }
+
+  body .ete-portal.module-open .at-app-content .at-input,
+  body .ete-portal.module-open .at-app-content .at-select,
+  body .ete-portal.module-open .at-app-content .at-textarea,
+  body .ete-portal.module-open .at-app-content .at-room-trigger{
+    min-height:48px !important;
+    border-radius:12px !important;
+    font-size:16px !important;
+  }
+
+  body.auth-locked .login-gate{
+    padding:10px !important;
+  }
+
+  body.auth-locked .login-gate .login-card{
+    width:min(430px,100%) !important;
+    border-radius:20px !important;
+    box-shadow:0 22px 54px rgba(0,0,0,.30) !important;
+  }
+
+  body.auth-locked .login-gate .login-card .login-brand{
+    padding:15px 17px !important;
+    gap:11px !important;
+  }
+
+  body.auth-locked .login-gate .login-card .login-mark{
+    width:48px !important;
+    height:48px !important;
+    flex-basis:48px !important;
+    border-radius:14px !important;
+  }
+
+  body.auth-locked .login-gate .login-card #loginTitle,
+  body.auth-locked .login-gate .login-card #loginTitle + p,
+  body.auth-locked .login-gate .login-card .login-grid,
+  body.auth-locked .login-gate .login-card .login-error,
+  body.auth-locked .login-gate .login-card .login-note{
+    margin-left:17px !important;
+    margin-right:17px !important;
+  }
+
+  body.auth-locked .login-gate .login-card #loginTitle{
+    margin-top:21px !important;
+    font-size:24px !important;
+  }
+
+  body.auth-locked .login-gate .login-card #loginTitle + p{
+    margin-bottom:16px !important;
+    font-size:10.5px !important;
+  }
+
+  body.auth-locked .login-gate .login-grid{gap:12px !important}
+  body.auth-locked .login-gate .login-grid input,
+  body.auth-locked .login-gate .login-card #loginSubmit{
+    min-height:50px !important;
+    border-radius:12px !important;
+    font-size:16px !important;
+  }
+
+  body.auth-locked .login-gate .login-card #loginSubmit{font-size:11px !important}
+  body.auth-locked .login-gate .login-note{
+    margin-top:13px !important;
+    margin-bottom:17px !important;
+    padding-top:11px !important;
+  }
+}
+
+@media(max-width:390px){
+  body:not(.auth-locked) .pagehead .actions,
+  body .ete-portal.module-open .at-app-content .at-head-actions{
+    grid-template-columns:1fr !important;
+  }
+
+  body:not(.auth-locked) .overview-strip,
+  body:not(.auth-locked) .request-overview,
+  body:not(.auth-locked) .history-overview,
+  body:not(.auth-locked) .permission-overview,
+  body:not(.auth-locked) .computer-overview,
+  body .ete-portal.module-open .at-app-content .at-metrics{
+    grid-template-columns:1fr 1fr !important;
+  }
+
+  body .ete-portal:not(.module-open) .ete-portal-brand small{display:none !important}
+  body .ete-portal:not(.module-open) .ete-portal-theme,
+  body .ete-portal:not(.module-open) .ete-portal-exit{
+    padding:0 8px !important;
+    font-size:9px !important;
+  }
+}
+
+@media(max-width:340px){
+  body:not(.auth-locked) .overview-strip,
+  body:not(.auth-locked) .request-overview,
+  body:not(.auth-locked) .history-overview,
+  body:not(.auth-locked) .permission-overview,
+  body:not(.auth-locked) .computer-overview,
+  body .ete-portal.module-open .at-app-content .at-metrics{
+    grid-template-columns:1fr !important;
+  }
+}
