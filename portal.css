@@ -18,10 +18,10 @@ html[data-theme="light"] .ete-portal{background:radial-gradient(circle at 12% 0%
 
 /* Mobile: somente o Portal rola. Evita a barra do documento + a barra interna lado a lado. */
 @media(max-width:760px){
-  html:has(body.portal-open),
-  html:has(body.ete-exit-open),
   body.portal-open,
   body.ete-exit-open{
+    position:fixed !important;
+    inset:0 !important;
     width:100% !important;
     height:100% !important;
     overflow:hidden !important;
