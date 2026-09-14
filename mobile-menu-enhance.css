@@ -2,16 +2,6 @@
 .mobile-menu-backdrop{display:none}
 
 @media(max-width:820px){
-  .shell{
-    display:block !important;
-  }
-
-  .main{
-    width:100% !important;
-    margin-left:0 !important;
-    min-width:0 !important;
-  }
-
   .sidebar{
     position:fixed !important;
     top:0 !important;
@@ -116,33 +106,4 @@
 
 @media(min-width:821px){
   .mobile-menu-backdrop{display:none !important}
-
-  /* Desktop/notebook: layout natural em duas colunas, sem sobreposição. */
-  .shell{
-    display:grid !important;
-    grid-template-columns:220px minmax(0,1fr) !important;
-    min-height:100vh !important;
-    align-items:start !important;
-  }
-
-  .sidebar{
-    position:sticky !important;
-    top:0 !important;
-    left:auto !important;
-    bottom:auto !important;
-    width:220px !important;
-    height:100dvh !important;
-    min-height:100dvh !important;
-    overflow-y:auto !important;
-    overflow-x:hidden !important;
-    overscroll-behavior:contain;
-    z-index:30;
-  }
-
-  .main{
-    grid-column:2 !important;
-    width:auto !important;
-    margin-left:0 !important;
-    min-width:0 !important;
-  }
 }
