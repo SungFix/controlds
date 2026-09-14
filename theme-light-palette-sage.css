@@ -1,14 +1,13 @@
-/* Control Ds — tema claro temporariamente sem paleta.
-   Mantem o seletor de tema e toda a estrutura funcional, mas remove as cores
-   customizadas depois do login para que o tema claro seja reconstruido do zero.
-   A tela de login fica fora deste reset. */
+/* Control Ds — reset temporario do tema claro.
+   Remove a paleta visual personalizada em toda a interface, inclusive login,
+   Portal ETE, Control Ds e Atestados, para permitir reconstruir o tema do zero.
+   Estrutura, navegacao e controles continuam intactos. */
 
-/* A especificidade elevada e intencional impede que estilos claros antigos,
-   inclusive estilos injetados depois do login, voltem a colorir a interface. */
-html[data-theme="light"] body:not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked),
-html[data-theme="light"] body:not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked) *,
-html[data-theme="light"] body:not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked) *::before,
-html[data-theme="light"] body:not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked) *::after{
+/* Especificidade alta para neutralizar as camadas claras antigas sem alterar layout. */
+html[data-theme="light"][data-theme="light"][data-theme="light"] body,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body *,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body *::before,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body *::after{
   color:revert!important;
   background:revert!important;
   border-color:revert!important;
@@ -19,8 +18,9 @@ html[data-theme="light"] body:not(.auth-locked):not(.auth-locked):not(.auth-lock
   accent-color:auto!important;
 }
 
-/* Os controles continuam presentes e clicaveis; somente a paleta visual foi zerada. */
-html[data-theme="light"] body:not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked):not(.auth-locked) .control-theme-toggle{
+/* Mantem os controles de troca de tema acessiveis durante o reset. */
+html[data-theme="light"][data-theme="light"][data-theme="light"] .control-theme-toggle,
+html[data-theme="light"][data-theme="light"][data-theme="light"] .ete-portal-theme{
   visibility:visible!important;
   opacity:1!important;
   pointer-events:auto!important;
