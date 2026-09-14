@@ -2,6 +2,16 @@
 .mobile-menu-backdrop{display:none}
 
 @media(max-width:820px){
+  .shell{
+    display:block !important;
+  }
+
+  .main{
+    width:100% !important;
+    margin-left:0 !important;
+    min-width:0 !important;
+  }
+
   .sidebar{
     position:fixed !important;
     top:0 !important;
@@ -107,9 +117,10 @@
 @media(min-width:821px){
   .mobile-menu-backdrop{display:none !important}
 
-  /* Mantém a navegação lateral cobrindo todo o viewport durante a rolagem. */
+  /* Sidebar fixa sem sobrepor o conteúdo principal. */
   .shell{
-    grid-template-columns:248px minmax(0,1fr) !important;
+    display:block !important;
+    min-height:100vh !important;
   }
 
   .sidebar{
@@ -127,7 +138,8 @@
   }
 
   .main{
-    grid-column:2 !important;
+    width:calc(100% - 248px) !important;
+    margin-left:248px !important;
     min-width:0 !important;
   }
 }
