@@ -1,13 +1,13 @@
-/* Control Ds — reset temporario do tema claro.
-   Remove a paleta visual personalizada em toda a interface, inclusive login,
-   Portal ETE, Control Ds e Atestados, para permitir reconstruir o tema do zero.
-   Estrutura, navegacao e controles continuam intactos. */
+/* Tema claro — alinhado ao visual correto do Atestados.
+   Referencia do Atestados: fundo #f8fafb, lateral #f4f7f9, cartoes #fff,
+   bordas #dce4e8/#dde6ea, texto #203039/#26363e e secundarios #647680/#667883.
+   O Atestados nao e alterado por esta camada. */
 
-/* Especificidade alta para neutralizar as camadas claras antigas sem alterar layout. */
-html[data-theme="light"][data-theme="light"][data-theme="light"] body,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body *,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body *::before,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body *::after{
+/* Login continua temporariamente sem paleta personalizada. */
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked *,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked *::before,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked *::after{
   color:revert!important;
   background:revert!important;
   border-color:revert!important;
@@ -18,10 +18,155 @@ html[data-theme="light"][data-theme="light"][data-theme="light"] body *::after{
   accent-color:auto!important;
 }
 
-/* Mantem os controles de troca de tema acessiveis durante o reset. */
-html[data-theme="light"][data-theme="light"][data-theme="light"] .control-theme-toggle,
-html[data-theme="light"][data-theme="light"][data-theme="light"] .ete-portal-theme{
+html[data-theme="light"] body.auth-locked .control-theme-toggle{
   visibility:visible!important;
   opacity:1!important;
   pointer-events:auto!important;
 }
+
+/* =========================
+   CONTROL DS
+   ========================= */
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open){
+  --bg:#f8fafb;
+  --bg-2:#f4f7f9;
+  --sidebar:#f4f7f9;
+  --panel:#ffffff;
+  --panel-2:#f4f7f9;
+  --line:#dce4e8;
+  --line-soft:#dde6ea;
+  --text:#203039;
+  --muted:#647680;
+  --muted-2:#667883;
+  --blue:#7e99aa;
+  background:#f8fafb!important;
+  color:#203039!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .shell,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .main,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .content{background:#f8fafb!important;color:#203039!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .sidebar{background:#f4f7f9!important;border-color:#dce4e8!important;color:#203039!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .brand{border-color:#dde6ea!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .brandmark:after{background:#fff!important;color:#26363e!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .brand strong{color:#203039!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .brand small,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .side-status p,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .section-label{color:#647680!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .side-status{border-color:#dde6ea!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .nav button{background:transparent!important;color:#667883!important;border-color:transparent!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .nav button:hover{background:#eef3f6!important;color:#293a43!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .nav button.active{background:#e8eff3!important;color:#203039!important;border-color:#cfdbe1!important;box-shadow:inset 3px 0 0 #7e99aa!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .navicon{background:#fff!important;border-color:#dce4e8!important;color:#667883!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .nav button.active .navicon{background:#fff!important;border-color:#cfdbe1!important;color:#26363e!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .local-pill,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .sync,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .user{background:#fff!important;border-color:#dce4e8!important;color:#26363e!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .topbar{background:rgba(255,255,255,.96)!important;border-color:#dce4e8!important;color:#203039!important;box-shadow:none!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .top-title small{color:#647680!important}
+
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .hero-stat,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .mini-stat,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .panel,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .computer-card,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .quick-card,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .summary-card,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .request-card,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .request-main,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .request-side,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .history-stat,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .request-stat,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .time-card,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .time-info{background:#fff!important;border-color:#dce4e8!important;color:#203039!important;box-shadow:0 14px 32px rgba(32,48,57,.06)!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .panelhead,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .request-card-top,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .request-tabs{background:#f4f7f9!important;border-color:#dde6ea!important;color:#203039!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .row,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .history-line,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .history-event,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .summary-item{border-color:#dde6ea!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .row:hover,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .history-event:hover,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .request-tab:hover{background:#eef3f6!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .mini-stat .label,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .mini-stat .hint,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .who small,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .meta,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .computer-card .desc,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .history-line time,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .history-line small,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .history-time,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .request-tab,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .request-subid,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .form-section p,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) label{color:#647680!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .meta b,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .who strong,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .history-main strong,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .request-student{color:#203039!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .chip,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .history-icon,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .history-kind,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .summary-note{background:#f4f7f9!important;border-color:#dce4e8!important;color:#26363e!important}
+
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) input,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) textarea,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) select,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .filter-select,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .request-sort,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .time-trigger,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .time-popup,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .time-search{background:#fff!important;color:#203039!important;border-color:#dce4e8!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) input::placeholder,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) textarea::placeholder{color:#7b8b94!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) input:focus,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) textarea:focus,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) select:focus{border-color:#9aadb7!important;box-shadow:0 0 0 3px rgba(126,153,170,.12)!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .btn{background:#fff!important;border-color:#dce4e8!important;color:#26363e!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .btn:hover{background:#eef3f6!important;border-color:#cbd8df!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .btn.primary{background:#26363e!important;border-color:#26363e!important;color:#fff!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .btn.primary:hover{background:#344851!important;border-color:#344851!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) dialog,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .toast{background:#fff!important;border-color:#dce4e8!important;color:#203039!important}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .close,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .theme-toggle,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .control-theme-toggle{background:#fff!important;border-color:#dce4e8!important;color:#26363e!important}
+
+/* =========================
+   PORTAL ETE
+   Nao atinge .module-open, portanto o Atestados permanece exatamente como esta.
+   ========================= */
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open){background:#f8fafb!important;color:#203039!important}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open)::before{opacity:.22!important;background-image:linear-gradient(rgba(100,118,128,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(100,118,128,.08) 1px,transparent 1px)!important}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-topbar,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-card,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-module-panel{background:#fff!important;border-color:#dce4e8!important;color:#203039!important;box-shadow:0 14px 32px rgba(32,48,57,.06)!important}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-mark,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-user,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-theme,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-exit,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-back,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-icon,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-status,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-points span,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-module-note{background:#f4f7f9!important;border-color:#dce4e8!important;color:#26363e!important}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-brand strong,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-hero h1,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-section-head>span,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-card strong,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-open span:last-child{color:#203039!important}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-brand small,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-hero p,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-section-head small,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-card p,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-open,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-module-panel p,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-module-note{color:#647680!important}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-kicker{color:#667883!important}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-card:hover{background:#eef3f6!important;border-color:#cbd8df!important;box-shadow:0 18px 40px rgba(32,48,57,.09)!important}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-open{border-color:#dde6ea!important}
+
+html[data-theme="light"] body:not(.auth-locked) .ete-exit-card{background:#fff!important;color:#203039!important;border-color:#dce4e8!important}
+html[data-theme="light"] body:not(.auth-locked) .ete-exit-close,
+html[data-theme="light"] body:not(.auth-locked) .ete-exit-option{background:#f4f7f9!important;border-color:#dce4e8!important;color:#26363e!important}
+html[data-theme="light"] body:not(.auth-locked) .ete-exit-option:hover{background:#eef3f6!important;border-color:#cbd8df!important}
+html[data-theme="light"] body:not(.auth-locked) .ete-exit-option small{color:#647680!important}
