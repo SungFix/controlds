@@ -1,0 +1,175 @@
+/* Atestados — correções finais do tema claro.
+   Corrige heranças escuras e inconsistências sem trocar a paleta do módulo. */
+
+html[data-theme="light"] .ete-atestados{
+  --at-border:#dce4e8!important;
+  --at-panel:#ffffff!important;
+  --at-panel2:#f4f7f9!important;
+  --at-text:#203039!important;
+  --at-muted:#647680!important;
+  --at-soft:#667883!important;
+  color:#203039!important;
+}
+
+/* Preserva estados semânticos do status, que não podem ser neutralizados pelo polish. */
+html[data-theme="light"] .at-app-content .at-status.error,
+html[data-theme="light"] .at-app-content .at-status[data-state="error"]{
+  color:#e18f97!important;
+}
+html[data-theme="light"] .at-app-content .at-status.error::before,
+html[data-theme="light"] .at-app-content .at-status[data-state="error"]::before{
+  background:#d96c76!important;
+}
+
+/* Componentes que dependem das variáveis internas e antes podiam herdar superfícies escuras. */
+html[data-theme="light"] .at-app-content .at-period-badge,
+html[data-theme="light"] .at-app-content .at-choice-card,
+html[data-theme="light"] .at-app-content .at-reason-option,
+html[data-theme="light"] .at-app-content .at-time-grid,
+html[data-theme="light"] .at-app-content .at-report-filterbar,
+html[data-theme="light"] .at-app-content .at-report-table-card{
+  background:#f4f7f9!important;
+  border-color:#dce4e8!important;
+  color:#203039!important;
+}
+
+html[data-theme="light"] .at-app-content .at-choice-card strong,
+html[data-theme="light"] .at-app-content .at-reason-option strong,
+html[data-theme="light"] .at-app-content .at-class-chart-row strong,
+html[data-theme="light"] .at-app-content .at-class-chart-row b{
+  color:#203039!important;
+}
+
+html[data-theme="light"] .at-app-content .at-choice-card small,
+html[data-theme="light"] .at-app-content .at-reason-option small,
+html[data-theme="light"] .at-app-content .at-field-help,
+html[data-theme="light"] .at-app-content .at-class-chart-row small{
+  color:#647680!important;
+}
+
+html[data-theme="light"] .at-app-content .at-choice-card:hover,
+html[data-theme="light"] .at-app-content .at-reason-option:hover{
+  background:#f8fafb!important;
+  border-color:#d2dde3!important;
+}
+
+html[data-theme="light"] .at-app-content .at-choice-card:has(input:checked),
+html[data-theme="light"] .at-app-content .at-reason-option:has(input:checked){
+  background:#eef3f6!important;
+  border-color:#d2dde3!important;
+}
+
+/* Seletor de justificativa. */
+html[data-theme="light"] .at-app-content .at-reason-trigger{
+  background:#ffffff!important;
+  border-color:#dce4e8!important;
+  color:#647680!important;
+}
+html[data-theme="light"] .at-app-content .at-reason-trigger.has-value{
+  color:#203039!important;
+}
+html[data-theme="light"] .at-app-content .at-reason-trigger:hover,
+html[data-theme="light"] .at-app-content .at-reason-trigger[aria-expanded="true"]{
+  background:#f8fafb!important;
+  border-color:#667883!important;
+  color:#203039!important;
+  box-shadow:0 0 0 3px rgba(102,120,131,.12)!important;
+}
+html[data-theme="light"] .at-app-content .at-reason-list{
+  background:#ffffff!important;
+  border-color:#dce4e8!important;
+}
+
+/* Seletor de turma. */
+html[data-theme="light"] .at-app-content .at-room-groups{
+  background:#ffffff!important;
+  border-color:#dce4e8!important;
+  box-shadow:0 18px 38px rgba(32,48,57,.11)!important;
+}
+html[data-theme="light"] .at-app-content .at-room-group + .at-room-group{
+  border-top-color:#e3eaed!important;
+}
+html[data-theme="light"] .at-app-content .at-room-group-title{
+  color:#667883!important;
+}
+html[data-theme="light"] .at-app-content .at-room-option span{
+  color:#647680!important;
+}
+html[data-theme="light"] .at-app-content .at-room-option span:hover{
+  background:#f8fafb!important;
+  color:#203039!important;
+}
+html[data-theme="light"] .at-app-content .at-room-option input:checked + span{
+  background:#eef3f6!important;
+  color:#203039!important;
+}
+html[data-theme="light"] .at-app-content .at-room-option input:checked + span::after{
+  color:#667883!important;
+}
+
+/* Relatórios: remove resíduos da antiga paleta bege injetada pelo JS. */
+html[data-theme="light"] .at-app-content .at-report-pie-item{
+  background:#f4f7f9!important;
+  border-color:#dce4e8!important;
+}
+html[data-theme="light"] .at-app-content .at-report-pie-copy strong,
+html[data-theme="light"] .at-app-content .at-report-pie-item > b,
+html[data-theme="light"] .at-app-content .at-report-pie-total strong{
+  color:#203039!important;
+}
+html[data-theme="light"] .at-app-content .at-report-pie-copy small,
+html[data-theme="light"] .at-app-content .at-report-pie-total{
+  color:#647680!important;
+}
+html[data-theme="light"] .at-app-content .at-report-pie-graphic{
+  border-color:#dce4e8!important;
+  box-shadow:0 10px 24px rgba(32,48,57,.08),inset 0 0 0 1px #ffffff!important;
+}
+html[data-theme="light"] .at-app-content .at-class-chart-track{
+  background:#eef3f6!important;
+}
+
+/* Ícones, badges auxiliares e ações que ainda mantinham aparência escura. */
+html[data-theme="light"] .at-app-content .at-head-icon{
+  background:#f4f7f9!important;
+  border-color:#d2dde3!important;
+  color:#667883!important;
+}
+html[data-theme="light"] .at-app-content .at-rate{
+  background:#f8fafb!important;
+  border:1px solid #dce4e8!important;
+  color:#5e9b75!important;
+}
+html[data-theme="light"] .at-app-content .at-icon-danger{
+  background:#ffffff!important;
+  border-color:#dce4e8!important;
+  color:#a9666d!important;
+}
+html[data-theme="light"] .at-app-content .at-icon-danger:hover,
+html[data-theme="light"] .at-app-content .at-icon-danger:focus-visible{
+  background:#f4f7f9!important;
+  border-color:#d2dde3!important;
+  outline:none!important;
+  box-shadow:0 0 0 3px rgba(169,102,109,.10)!important;
+}
+
+/* Controles nativos e foco consistente. */
+html[data-theme="light"] .at-app-content .at-choice-card input,
+html[data-theme="light"] .at-app-content .at-reason-option input{
+  accent-color:#667883!important;
+}
+html[data-theme="light"] .at-app-content .at-room-option input:focus-visible + span,
+html[data-theme="light"] .at-app-content .at-choice-card:has(input:focus-visible),
+html[data-theme="light"] .at-app-content .at-reason-option:has(input:focus-visible){
+  outline:none!important;
+  border-color:#667883!important;
+  box-shadow:0 0 0 3px rgba(102,120,131,.12)!important;
+}
+
+@media(max-width:760px){
+  html[data-theme="light"] .at-app-content .at-report-pie-item,
+  html[data-theme="light"] .at-app-content .at-choice-card,
+  html[data-theme="light"] .at-app-content .at-time-grid{
+    box-shadow:none!important;
+  }
+}
