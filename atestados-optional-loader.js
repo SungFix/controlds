@@ -17,6 +17,13 @@
     }
   }
 
+  function refreshLightPaletteOrder(){
+    const palette=document.getElementById("controlLightPaletteSageStyles");
+    if(!palette)return;
+    if(palette.getAttribute("href")!=="theme-light-palette-sage.css?v=4")palette.href="theme-light-palette-sage.css?v=4";
+    document.head.appendChild(palette);
+  }
+
   function ensureScript(id,src){
     return new Promise((resolve,reject)=>{
       let script=document.getElementById(id);
@@ -41,11 +48,13 @@
     if(loading)return loading;
     loading=(async()=>{
       ensureStyle("controlAtestadosImageUploadStyles","atestados-image-upload.css?v=2");
+      refreshLightPaletteOrder();
       await ensureScript("controlAtestadosImageRangeFixScript","atestados-image-range-fix.js?v=1");
       await ensureScript("controlAtestadosImageUploadScript","atestados-image-upload.js?v=2");
       await ensureScript("controlAtestadosImageAccessFixScript","atestados-image-access-fix.js?v=1");
       await ensureScript("controlAtestadosActionPolishScript","atestados-action-polish.js?v=1");
       await ensureScript("controlAtestadosEditScript","atestados-edit.js?v=1");
+      refreshLightPaletteOrder();
     })().catch(error=>{
       console.error("Falha ao carregar recursos opcionais do Atestados:",error);
       loading=null;
