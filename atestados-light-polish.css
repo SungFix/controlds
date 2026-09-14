@@ -1,0 +1,310 @@
+/* Atestados — refinamento visual exclusivo do tema claro.
+   Mantém a paleta já usada pelo módulo; altera apenas hierarquia, contraste,
+   profundidade, estados de interação e legibilidade. */
+
+html[data-theme="light"] .ete-atestados{
+  color:#203039!important;
+}
+
+html[data-theme="light"] .at-control-sidebar{
+  box-shadow:10px 0 28px rgba(32,48,57,.035)!important;
+}
+
+html[data-theme="light"] .at-control-section-label{
+  color:#667883!important;
+}
+
+html[data-theme="light"] .at-control-navicon{
+  background:#fff!important;
+  border-color:#dce4e8!important;
+  color:#667883!important;
+}
+
+html[data-theme="light"] .at-control-sidebar .at-nav-item{
+  border-color:transparent!important;
+}
+
+html[data-theme="light"] .at-control-sidebar .at-nav-item:hover{
+  border-color:#dde6ea!important;
+}
+
+html[data-theme="light"] .at-control-sidebar .at-nav-item.active{
+  box-shadow:inset 3px 0 0 #667883,0 5px 14px rgba(32,48,57,.045)!important;
+}
+
+html[data-theme="light"] .at-control-sidebar .at-nav-item.active .at-control-navicon{
+  background:#f4f7f9!important;
+  border-color:#d2dde3!important;
+  color:#26363e!important;
+}
+
+html[data-theme="light"] .at-control-side-card{
+  border-color:#dde6ea!important;
+  color:#26363e!important;
+}
+
+html[data-theme="light"] .at-app-topbar{
+  box-shadow:0 1px 0 #dce4e8,0 10px 28px rgba(32,48,57,.035)!important;
+}
+
+html[data-theme="light"] .at-app-home,
+html[data-theme="light"] .at-app-theme,
+html[data-theme="light"] .at-app-user,
+html[data-theme="light"] .at-app-exit{
+  box-shadow:0 3px 10px rgba(32,48,57,.04)!important;
+}
+
+html[data-theme="light"] .at-app-home:hover,
+html[data-theme="light"] .at-app-theme:hover,
+html[data-theme="light"] .at-app-user:hover,
+html[data-theme="light"] .at-app-exit:hover{
+  background:#f4f7f9!important;
+  border-color:#dce4e8!important;
+  color:#203039!important;
+}
+
+html[data-theme="light"] .at-app-home:focus-visible,
+html[data-theme="light"] .at-app-theme:focus-visible,
+html[data-theme="light"] .at-app-user:focus-visible,
+html[data-theme="light"] .at-app-exit:focus-visible,
+html[data-theme="light"] .at-app-content .at-btn:focus-visible,
+html[data-theme="light"] .at-app-content .at-filter-tabs button:focus-visible{
+  outline:none!important;
+  border-color:#667883!important;
+  box-shadow:0 0 0 3px rgba(102,120,131,.14)!important;
+}
+
+html[data-theme="light"] .at-app-content .at-page-head{
+  padding-bottom:2px!important;
+}
+
+html[data-theme="light"] .at-app-content .at-page-head p{
+  color:#647680!important;
+}
+
+html[data-theme="light"] .at-app-content .at-status{
+  background:#fff!important;
+  border-color:#dce4e8!important;
+  color:#647680!important;
+  box-shadow:0 3px 10px rgba(32,48,57,.035)!important;
+}
+
+html[data-theme="light"] .at-app-content .at-btn{
+  background:#f4f7f9!important;
+  border-color:#dce4e8!important;
+  color:#26363e!important;
+  box-shadow:0 3px 10px rgba(32,48,57,.035)!important;
+}
+
+html[data-theme="light"] .at-app-content .at-btn:hover{
+  background:#eef3f6!important;
+  border-color:#d2dde3!important;
+  color:#203039!important;
+}
+
+html[data-theme="light"] .at-app-content .at-btn.primary{
+  background:#26363e!important;
+  border-color:#26363e!important;
+  color:#fff!important;
+  box-shadow:0 6px 16px rgba(32,48,57,.10)!important;
+}
+
+html[data-theme="light"] .at-app-content .at-btn.primary:hover{
+  background:#203039!important;
+  border-color:#203039!important;
+}
+
+html[data-theme="light"] .at-app-content .at-metric{
+  box-shadow:0 10px 28px rgba(32,48,57,.055)!important;
+}
+
+html[data-theme="light"] .at-app-content .at-metric span:not(.at-metric-marker){
+  color:#26363e!important;
+}
+
+html[data-theme="light"] .at-app-content .at-metric strong{
+  color:#203039!important;
+}
+
+html[data-theme="light"] .at-app-content .at-metric small{
+  color:#647680!important;
+}
+
+html[data-theme="light"] .at-app-content .at-card{
+  box-shadow:0 10px 28px rgba(32,48,57,.045)!important;
+}
+
+html[data-theme="light"] .at-app-content .at-card-head{
+  background:#f8fafb!important;
+  border-color:#e3eaed!important;
+}
+
+html[data-theme="light"] .at-app-content .at-card-head strong,
+html[data-theme="light"] .at-app-content .at-records-top h2,
+html[data-theme="light"] .at-app-content .at-form-intro h2{
+  color:#203039!important;
+}
+
+html[data-theme="light"] .at-app-content .at-card-head small,
+html[data-theme="light"] .at-app-content .at-card-kicker,
+html[data-theme="light"] .at-app-content .at-records-top p,
+html[data-theme="light"] .at-app-content .at-form-intro>p,
+html[data-theme="light"] .at-app-content .at-empty-state span{
+  color:#647680!important;
+}
+
+html[data-theme="light"] .at-app-content .at-overview-toolbar{
+  border-color:#e3eaed!important;
+  background:#fff!important;
+}
+
+html[data-theme="light"] .at-app-content .at-filter-tabs button{
+  background:#fff!important;
+  border-color:#dde6ea!important;
+  color:#647680!important;
+}
+
+html[data-theme="light"] .at-app-content .at-filter-tabs button:hover{
+  background:#f4f7f9!important;
+  border-color:#d2dde3!important;
+  color:#26363e!important;
+}
+
+html[data-theme="light"] .at-app-content .at-filter-tabs button.active{
+  background:#eef3f6!important;
+  border-color:#d2dde3!important;
+  color:#203039!important;
+  box-shadow:inset 0 0 0 1px #dde6ea!important;
+}
+
+html[data-theme="light"] .at-app-content .at-inline-search,
+html[data-theme="light"] .at-app-content .at-toolbar,
+html[data-theme="light"] .at-app-content .at-records-summary{
+  background:#f8fafb!important;
+  border-color:#e3eaed!important;
+}
+
+html[data-theme="light"] .at-app-content .at-input,
+html[data-theme="light"] .at-app-content .at-select,
+html[data-theme="light"] .at-app-content .at-textarea,
+html[data-theme="light"] .at-app-content .at-room-trigger{
+  box-shadow:inset 0 1px 0 #fff!important;
+}
+
+html[data-theme="light"] .at-app-content .at-input::placeholder,
+html[data-theme="light"] .at-app-content .at-textarea::placeholder{
+  color:#667883!important;
+}
+
+html[data-theme="light"] .at-app-content .at-input:hover,
+html[data-theme="light"] .at-app-content .at-select:hover,
+html[data-theme="light"] .at-app-content .at-textarea:hover,
+html[data-theme="light"] .at-app-content .at-room-trigger:hover{
+  border-color:#d2dde3!important;
+  background:#f8fafb!important;
+}
+
+html[data-theme="light"] .at-app-content .at-input:focus,
+html[data-theme="light"] .at-app-content .at-select:focus,
+html[data-theme="light"] .at-app-content .at-textarea:focus,
+html[data-theme="light"] .at-app-content .at-room-trigger:focus-visible{
+  border-color:#667883!important;
+  box-shadow:0 0 0 3px rgba(102,120,131,.12)!important;
+}
+
+html[data-theme="light"] .at-app-content .at-table th{
+  background:#f4f7f9!important;
+  color:#667883!important;
+  border-color:#dde6ea!important;
+}
+
+html[data-theme="light"] .at-app-content .at-table td{
+  color:#26363e!important;
+  border-color:#e3eaed!important;
+}
+
+html[data-theme="light"] .at-app-content .at-table tbody tr:hover{
+  background:#f8fafb!important;
+}
+
+html[data-theme="light"] .at-app-content .at-student-cell strong,
+html[data-theme="light"] .at-app-content .at-recent-row strong,
+html[data-theme="light"] .at-app-content .at-course-row strong,
+html[data-theme="light"] .at-app-content .at-empty-state strong{
+  color:#203039!important;
+}
+
+html[data-theme="light"] .at-app-content .at-student-cell small,
+html[data-theme="light"] .at-app-content .at-recent-row small,
+html[data-theme="light"] .at-app-content .at-course-row small,
+html[data-theme="light"] .at-app-content .at-guide-list p{
+  color:#647680!important;
+}
+
+html[data-theme="light"] .at-app-content .at-avatar{
+  background:#f4f7f9!important;
+  border-color:#d2dde3!important;
+  color:#26363e!important;
+}
+
+html[data-theme="light"] .at-app-content .at-badge{
+  background:#f4f7f9!important;
+  border-color:#d2dde3!important;
+  color:#647680!important;
+}
+
+html[data-theme="light"] .at-app-content .at-mini-track{
+  background:#eef3f6!important;
+}
+
+html[data-theme="light"] .at-app-content .at-highlight{
+  background:#f8fafb!important;
+}
+
+html[data-theme="light"] .at-app-content .at-form-intro,
+html[data-theme="light"] .at-app-content .at-form-card{
+  box-shadow:0 10px 28px rgba(32,48,57,.045)!important;
+}
+
+html[data-theme="light"] .at-app-content .at-form-note{
+  background:#f8fafb!important;
+  border-color:#dde6ea!important;
+}
+
+html[data-theme="light"] .at-app-content .at-form-note strong{
+  color:#203039!important;
+}
+
+html[data-theme="light"] .at-app-content .at-form-note span,
+html[data-theme="light"] .at-app-content .at-form-steps span{
+  color:#647680!important;
+}
+
+html[data-theme="light"] .at-app-content .at-form-steps b,
+html[data-theme="light"] .at-app-content .at-guide-list p span{
+  background:#f4f7f9!important;
+  color:#667883!important;
+}
+
+html[data-theme="light"] .at-app-content .at-records-summary,
+html[data-theme="light"] .at-app-content .at-records-summary b{
+  color:#647680!important;
+}
+
+html[data-theme="light"] .at-app-content .at-records-summary b{
+  color:#26363e!important;
+}
+
+@media(max-width:760px){
+  html[data-theme="light"] .at-control-sidebar{
+    box-shadow:0 8px 22px rgba(32,48,57,.035)!important;
+    border-bottom-color:#dce4e8!important;
+  }
+
+  html[data-theme="light"] .at-app-content .at-card,
+  html[data-theme="light"] .at-app-content .at-metric,
+  html[data-theme="light"] .at-app-content .at-form-intro,
+  html[data-theme="light"] .at-app-content .at-form-card{
+    box-shadow:0 6px 18px rgba(32,48,57,.04)!important;
+  }
+}
