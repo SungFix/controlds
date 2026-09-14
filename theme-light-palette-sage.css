@@ -1,10 +1,157 @@
-/* Ajuste pontual do fundo do tema claro.
-   Mantém a paleta original dos componentes e altera somente o grande background da página. */
+/* Control Ds — paleta clara Nordic Soft
+   Base visual: Ice, Fog, Stone Blue, Slate e Deep Slate.
+   Mantem as cores semanticas de sucesso, alerta e erro definidas no tema base. */
+html[data-theme="light"]{
+  --bg:#DDE7EF;
+  --bg-2:#A7BACD;
+  --sidebar:#F3F7FA;
+  --panel:#F3F7FA;
+  --panel-2:#DDE7EF;
+  --line:#A7BACD;
+  --line-soft:#DDE7EF;
+  --text:#3E4C59;
+  --muted:#6F8191;
+  --muted-2:#6F8191;
+  --blue:#6F8191;
+  --shadow:0 12px 30px rgba(62,76,89,.10);
+}
+
 html[data-theme="light"] body{
-  background:#f3f0e8!important;
+  color:var(--text);
+  background:linear-gradient(180deg,#F3F7FA 0%,#DDE7EF 100%)!important;
 }
 
 html[data-theme="light"] .main,
 html[data-theme="light"] .content{
   background:transparent!important;
 }
+
+html[data-theme="light"] .sidebar{
+  background:linear-gradient(180deg,#F3F7FA,#DDE7EF)!important;
+  border-color:#A7BACD!important;
+}
+html[data-theme="light"] .brandmark:after{background:#F3F7FA!important;color:#3E4C59!important}
+html[data-theme="light"] .section-label,
+html[data-theme="light"] .side-status p{color:#6F8191!important}
+html[data-theme="light"] .nav button{color:#6F8191!important}
+html[data-theme="light"] .nav button:hover{background:#DDE7EF!important;color:#3E4C59!important}
+html[data-theme="light"] .nav button.active{color:#3E4C59!important;background:#DDE7EF!important;border-color:#A7BACD!important;box-shadow:inset 3px 0 0 #6F8191!important}
+html[data-theme="light"] .navicon{background:#F3F7FA!important;border-color:#A7BACD!important;color:#6F8191!important}
+html[data-theme="light"] .nav button.active .navicon{background:#F3F7FA!important;color:#3E4C59!important;border-color:#A7BACD!important}
+html[data-theme="light"] .local-pill,
+html[data-theme="light"] .sync,
+html[data-theme="light"] .user{background:#DDE7EF!important;border-color:#A7BACD!important;color:#3E4C59!important}
+html[data-theme="light"] .topbar{background:rgba(243,247,250,.96)!important;border-color:#A7BACD!important;box-shadow:0 5px 18px rgba(62,76,89,.06)!important}
+
+html[data-theme="light"] .btn{background:#F3F7FA!important;border-color:#A7BACD!important;color:#3E4C59!important}
+html[data-theme="light"] .btn:hover{background:#DDE7EF!important;border-color:#6F8191!important}
+html[data-theme="light"] .btn.primary{background:#3E4C59!important;color:#F3F7FA!important;border-color:#3E4C59!important}
+html[data-theme="light"] .btn.primary:hover{background:#6F8191!important;border-color:#6F8191!important}
+html[data-theme="light"] .btn.secondary{background:#DDE7EF!important}
+
+html[data-theme="light"] .hero-stat,
+html[data-theme="light"] .mini-stat,
+html[data-theme="light"] .panel,
+html[data-theme="light"] .computer-card,
+html[data-theme="light"] .quick-card,
+html[data-theme="light"] .summary-card,
+html[data-theme="light"] .request-info-box{background:#F3F7FA!important;border-color:#A7BACD!important;box-shadow:var(--shadow)}
+html[data-theme="light"] .hero-stat,
+html[data-theme="light"] .mini-stat,
+html[data-theme="light"] .history-stat,
+html[data-theme="light"] .request-stat,
+html[data-theme="light"] .request-card,
+html[data-theme="light"] .request-main,
+html[data-theme="light"] .request-side,
+html[data-theme="light"] .time-card,
+html[data-theme="light"] .time-info{background:linear-gradient(180deg,#F3F7FA,#DDE7EF)!important;border-color:#A7BACD!important}
+html[data-theme="light"] .panelhead,
+html[data-theme="light"] .request-card-top,
+html[data-theme="light"] .request-tabs{background:#DDE7EF!important;border-color:#A7BACD!important}
+html[data-theme="light"] .row,
+html[data-theme="light"] .history-line,
+html[data-theme="light"] .history-event,
+html[data-theme="light"] .summary-item,
+html[data-theme="light"] .modalactions{border-color:#DDE7EF!important}
+html[data-theme="light"] .row:hover,
+html[data-theme="light"] .history-event:hover,
+html[data-theme="light"] .request-tab:hover{background:#DDE7EF!important}
+html[data-theme="light"] .hero-bars span{background:#A7BACD!important}
+html[data-theme="light"] .hero-bars span:nth-child(4){background:#6F8191!important}
+
+html[data-theme="light"] .mini-stat .label,
+html[data-theme="light"] .mini-stat .hint,
+html[data-theme="light"] .who small,
+html[data-theme="light"] .meta,
+html[data-theme="light"] .computer-card .desc,
+html[data-theme="light"] .history-line time,
+html[data-theme="light"] .history-line small,
+html[data-theme="light"] .history-stat .label,
+html[data-theme="light"] .request-stat .label,
+html[data-theme="light"] .history-stat small,
+html[data-theme="light"] .request-stat small,
+html[data-theme="light"] .history-main small,
+html[data-theme="light"] .history-time,
+html[data-theme="light"] .history-empty,
+html[data-theme="light"] .request-tab,
+html[data-theme="light"] .request-subid,
+html[data-theme="light"] .modalhead p,
+html[data-theme="light"] .form-section p,
+html[data-theme="light"] label{color:#6F8191!important}
+html[data-theme="light"] .meta b,
+html[data-theme="light"] .history-main strong,
+html[data-theme="light"] .history-empty strong,
+html[data-theme="light"] .request-student{color:#3E4C59!important}
+html[data-theme="light"] .chip,
+html[data-theme="light"] .history-icon,
+html[data-theme="light"] .history-kind,
+html[data-theme="light"] .summary-note{background:#DDE7EF!important;border-color:#A7BACD!important;color:#3E4C59!important}
+
+html[data-theme="light"] input,
+html[data-theme="light"] textarea,
+html[data-theme="light"] select,
+html[data-theme="light"] .filter-select,
+html[data-theme="light"] .request-sort,
+html[data-theme="light"] .history-tools input,
+html[data-theme="light"] .history-tools select,
+html[data-theme="light"] .time-trigger,
+html[data-theme="light"] .time-popup,
+html[data-theme="light"] .time-search{
+  background:#F3F7FA!important;
+  color:#3E4C59!important;
+  border-color:#A7BACD!important;
+}
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder{color:#6F8191!important}
+html[data-theme="light"] input:focus,
+html[data-theme="light"] textarea:focus,
+html[data-theme="light"] select:focus,
+html[data-theme="light"] .history-tools input:focus,
+html[data-theme="light"] .history-tools select:focus{
+  border-color:#6F8191!important;
+  box-shadow:0 0 0 3px rgba(111,129,145,.14)!important;
+}
+
+html[data-theme="light"] dialog,
+html[data-theme="light"] .toast{background:#F3F7FA!important;border-color:#A7BACD!important;color:#3E4C59!important}
+html[data-theme="light"] .close,
+html[data-theme="light"] .theme-toggle{background:#DDE7EF!important;border-color:#A7BACD!important;color:#3E4C59!important}
+html[data-theme="light"] .close:hover,
+html[data-theme="light"] .theme-toggle:hover{background:#A7BACD!important}
+html[data-theme="light"] .time-option{color:#3E4C59!important}
+html[data-theme="light"] .time-option:hover,
+html[data-theme="light"] .time-option.active{background:#DDE7EF!important;border-color:#A7BACD!important;color:#3E4C59!important}
+
+html[data-theme="light"] .login-gate{background:linear-gradient(180deg,#F3F7FA,#DDE7EF)!important}
+html[data-theme="light"] .login-card{background:#F3F7FA!important;border-color:#A7BACD!important;box-shadow:0 28px 80px rgba(62,76,89,.14)!important}
+html[data-theme="light"] .login-card .login-brand{background:linear-gradient(180deg,#F3F7FA,#DDE7EF)!important;border-color:#A7BACD!important}
+html[data-theme="light"] .login-card .login-brand strong,
+html[data-theme="light"] .login-card h1{color:#3E4C59!important}
+html[data-theme="light"] .login-card .login-brand small,
+html[data-theme="light"] .login-card>p,
+html[data-theme="light"] .login-grid label,
+html[data-theme="light"] .login-note{color:#6F8191!important}
+html[data-theme="light"] .login-grid input{background:#F3F7FA!important;color:#3E4C59!important;border-color:#A7BACD!important}
+html[data-theme="light"] .login-grid input:focus{background:#F3F7FA!important;border-color:#6F8191!important;box-shadow:0 0 0 3px rgba(111,129,145,.14)!important}
+html[data-theme="light"] .login-card #loginSubmit{background:#3E4C59!important;border-color:#3E4C59!important;color:#F3F7FA!important}
+html[data-theme="light"] .login-card #loginSubmit:hover{background:#6F8191!important;border-color:#6F8191!important}
