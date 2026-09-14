@@ -15,3 +15,29 @@ body.portal-open .control-theme-toggle-floating{display:none!important}
 .ete-exit-layer{position:fixed;inset:0;z-index:2147483646;display:grid;place-items:center;padding:20px;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}.ete-exit-layer[hidden]{display:none!important}.ete-exit-backdrop{position:absolute;inset:0;background:rgba(3,5,7,.72);backdrop-filter:blur(8px)}.ete-exit-card{position:relative;width:min(540px,100%);padding:28px;border:1px solid #3b4652;border-radius:20px;background:linear-gradient(180deg,#15191e,#101317);color:#eef1f4;box-shadow:0 30px 90px rgba(0,0,0,.5)}.ete-exit-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:22px}.ete-exit-head .ete-portal-kicker{margin-bottom:8px;font-size:12px}.ete-exit-head h2{margin:0;font-size:30px;letter-spacing:-.03em}.ete-exit-close{width:42px;height:42px;border:1px solid #3c4651;border-radius:11px;background:#181c21;color:#c2cad2;font-size:23px;line-height:1;cursor:pointer}.ete-exit-options{display:grid;gap:12px}.ete-exit-option{width:100%;min-height:104px;padding:18px;border:1px solid #36404a;border-radius:15px;background:#14181d;color:#f3f5f7;display:flex;align-items:center;gap:17px;text-align:left;cursor:pointer;transition:.14s ease}.ete-exit-option:hover{background:#1a1f25;border-color:#53606d;transform:translateY(-1px)}.ete-exit-option-icon{width:54px;height:54px;flex:0 0 54px;border:1px solid #3d4c5a;border-radius:13px;background:#19232d;display:grid;place-items:center;color:#a9cff8;font-size:22px;font-weight:900}.ete-exit-option strong{display:block;font-size:19px;line-height:1.25}.ete-exit-option small{display:block;margin-top:7px;color:#aab4be;font-size:14px;line-height:1.45}.ete-exit-option.danger .ete-exit-option-icon{background:#261719;border-color:#5b3036;color:#f39aa3}.ete-exit-option.danger:hover{border-color:#613942}
 html[data-theme="light"] .ete-portal{background:radial-gradient(circle at 12% 0%,rgba(92,124,160,.10),transparent 34%),linear-gradient(180deg,#f7f9fb,#eef2f5);color:#192126}html[data-theme="light"] .ete-portal-topbar,html[data-theme="light"] .ete-portal-mark,html[data-theme="light"] .ete-portal-user,html[data-theme="light"] .ete-portal-theme,html[data-theme="light"] .ete-portal-exit,html[data-theme="light"] .ete-portal-back,html[data-theme="light"] .ete-system-card,html[data-theme="light"] .ete-module-panel{background:#fff;border-color:#d6e0e6;color:#233139}html[data-theme="light"] .ete-system-icon,html[data-theme="light"] .ete-system-status,html[data-theme="light"] .ete-portal-points span,html[data-theme="light"] .ete-module-note{background:#f7fafb;border-color:#d6e0e6;color:#40545f}html[data-theme="light"] .ete-portal-brand small,html[data-theme="light"] .ete-portal-hero p,html[data-theme="light"] .ete-portal-user,html[data-theme="light"] .ete-system-card p,html[data-theme="light"] .ete-system-open,html[data-theme="light"] .ete-module-panel p,html[data-theme="light"] .ete-module-note{color:#4e626d}html[data-theme="light"] .ete-exit-backdrop{background:rgba(28,38,44,.32)}html[data-theme="light"] .ete-exit-card{background:#fff;color:#213039;border-color:#c5d2da}html[data-theme="light"] .ete-exit-close,html[data-theme="light"] .ete-exit-option{background:#f8fafb;border-color:#cdd9e0;color:#24323a}html[data-theme="light"] .ete-exit-option small{color:#536873}
 @media(max-width:760px){.ete-portal-shell{width:min(100% - 28px,1180px);padding-top:14px}.ete-portal-topbar{margin-bottom:44px;padding:11px 12px}.ete-portal-user{display:none}.ete-portal-theme,.ete-portal-exit{padding:0 11px;min-height:40px;font-size:11px}.ete-portal-grid{grid-template-columns:1fr}.ete-system-card{min-height:230px;padding:21px}.ete-portal-hero h1{font-size:40px}.ete-portal-hero p{font-size:14px}.ete-system-card strong{font-size:24px}.ete-system-card p{font-size:13px}.ete-system-open{font-size:12px}.ete-exit-card{padding:22px;width:min(500px,100%)}.ete-exit-head h2{font-size:27px}.ete-exit-option{min-height:96px;padding:16px}.ete-exit-option strong{font-size:18px}.ete-exit-option small{font-size:13px}}
+
+/* Mobile: somente o Portal rola. Evita a barra do documento + a barra interna lado a lado. */
+@media(max-width:760px){
+  html:has(body.portal-open),
+  html:has(body.ete-exit-open),
+  body.portal-open,
+  body.ete-exit-open{
+    width:100% !important;
+    height:100% !important;
+    overflow:hidden !important;
+    overscroll-behavior:none !important;
+  }
+
+  .ete-portal{
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    overscroll-behavior:contain !important;
+    -webkit-overflow-scrolling:touch !important;
+    scrollbar-gutter:auto !important;
+  }
+
+  .ete-portal-shell,
+  .ete-portal-home{
+    overflow:visible !important;
+  }
+}
