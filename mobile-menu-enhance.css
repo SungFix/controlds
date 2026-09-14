@@ -107,9 +107,15 @@
 @media(min-width:821px){
   .mobile-menu-backdrop{display:none !important}
 
-  /* Apenas estende a lateral até o fim da tela; não altera largura ou fluxo. */
-  .sidebar{
-    min-height:100vh !important;
-    min-height:100dvh !important;
+  /* Prolonga apenas o fundo visual da coluna lateral, sem alterar largura ou fluxo. */
+  .shell{
+    background:
+      linear-gradient(to right,
+        var(--ui-sidebar,var(--sidebar)) 0,
+        var(--ui-sidebar,var(--sidebar)) 279px,
+        var(--line) 279px,
+        var(--line) 280px,
+        transparent 280px
+      ) !important;
   }
 }
