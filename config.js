@@ -31,7 +31,7 @@ window.ETE_CONFIG = {
 
   const guardStyle = document.createElement("style");
   guardStyle.id = "eteFirstPaintGuard";
-  const firstPaintBackground = initialTheme === "light" ? "#F3F7FA" : "#080a0d";
+  const firstPaintBackground = initialTheme === "light" ? "#f8fafb" : "#080a0d";
   guardStyle.textContent = "html.ete-first-paint{visibility:hidden!important;background:" + firstPaintBackground + "!important}";
   document.head.appendChild(guardStyle);
 
@@ -42,13 +42,46 @@ window.ETE_CONFIG = {
     guardStyle.remove();
   }
 
+  function releaseAfterPaint(){
+    requestAnimationFrame(function(){
+      requestAnimationFrame(release);
+    });
+  }
+
+  function waitForStylesheet(link){
+    return new Promise(function(resolve){
+      if (!link) {
+        resolve();
+        return;
+      }
+      try {
+        if (link.sheet) {
+          resolve();
+          return;
+        }
+      } catch (_) {}
+      const done = function(){ resolve(); };
+      link.addEventListener("load", done, { once:true });
+      link.addEventListener("error", done, { once:true });
+    });
+  }
+
   function finalizeLoginStyles(){
     const loginStyle = document.querySelector('link[href^="login-simple-v2.css"]');
-    if (loginStyle && loginStyle.parentNode === document.head) {
-      if (loginStyle.getAttribute("href") !== "login-simple-v2.css?v=7") loginStyle.href = "login-simple-v2.css?v=7";
-      document.head.appendChild(loginStyle);
+    if (loginStyle && loginStyle.getAttribute("href") !== "login-simple-v2.css?v=8") {
+      loginStyle.href = "login-simple-v2.css?v=8";
     }
-    requestAnimationFrame(release);
+
+    const paletteStyle = document.getElementById("controlLightPaletteSageStyles");
+    Promise.all([
+      waitForStylesheet(loginStyle),
+      waitForStylesheet(paletteStyle)
+    ]).then(function(){
+      if (paletteStyle && paletteStyle.parentNode === document.head) {
+        document.head.appendChild(paletteStyle);
+      }
+      releaseAfterPaint();
+    });
   }
 
   if (document.readyState === "loading") {
@@ -57,7 +90,7 @@ window.ETE_CONFIG = {
     finalizeLoginStyles();
   }
 
-  setTimeout(release, 1500);
+  setTimeout(release, 2200);
 })();
 
 (function initControlTheme(){
@@ -181,7 +214,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlPortalAdminV2Styles", "portal-admin-v2.css?v=1");
     ensureStylesheet("controlPortalAdminIconFixStyles", "portal-admin-icon-fix.css?v=1");
     ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=3");
-    ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=3");
+    ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=4");
 
     ensureScript("controlLoginUsabilityScript", "login-usability.js?v=1");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
