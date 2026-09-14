@@ -182,20 +182,22 @@ html[data-theme="light"] .permission-card:hover{
   box-shadow:0 10px 26px rgba(36,55,66,.08) !important;
 }
 
-/* Faixa de indicadores da aba Autorizações: igual aos cards claros de Notebooks. */
-html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked):not(.portal-open) .permission-overview .permission-stat{
+/* Faixa de indicadores da aba Autorizações: igual aos cards claros de Notebooks.
+   Funciona também quando o Control Ds foi aberto pelo Portal ETE. */
+html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) #page-permissions .permission-overview .permission-stat{
   background:#ffffff !important;
+  background-image:none !important;
   border-color:#dce4e8 !important;
   color:#203039 !important;
   box-shadow:0 14px 32px rgba(32,48,57,.06) !important;
 }
-html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked):not(.portal-open) .permission-overview .permission-stat .label,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked):not(.portal-open) .permission-overview .permission-stat .hint,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked):not(.portal-open) .permission-overview .permission-stat small{
+html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) #page-permissions .permission-overview .permission-stat .label,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) #page-permissions .permission-overview .permission-stat .hint,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) #page-permissions .permission-overview .permission-stat small{
   color:#647680 !important;
 }
-html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked):not(.portal-open) .permission-overview .permission-stat .value,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked):not(.portal-open) .permission-overview .permission-stat strong{
+html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) #page-permissions .permission-overview .permission-stat .value,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) #page-permissions .permission-overview .permission-stat strong{
   color:#203039 !important;
 }
 
