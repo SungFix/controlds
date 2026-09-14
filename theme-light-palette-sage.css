@@ -142,16 +142,93 @@ html[data-theme="light"] .time-option{color:#3E4C59!important}
 html[data-theme="light"] .time-option:hover,
 html[data-theme="light"] .time-option.active{background:#DDE7EF!important;border-color:#A7BACD!important;color:#3E4C59!important}
 
-html[data-theme="light"] .login-gate{background:linear-gradient(180deg,#F3F7FA,#DDE7EF)!important}
-html[data-theme="light"] .login-card{background:#F3F7FA!important;border-color:#A7BACD!important;box-shadow:0 28px 80px rgba(62,76,89,.14)!important}
-html[data-theme="light"] .login-card .login-brand{background:linear-gradient(180deg,#F3F7FA,#DDE7EF)!important;border-color:#A7BACD!important}
-html[data-theme="light"] .login-card .login-brand strong,
-html[data-theme="light"] .login-card h1{color:#3E4C59!important}
-html[data-theme="light"] .login-card .login-brand small,
-html[data-theme="light"] .login-card>p,
-html[data-theme="light"] .login-grid label,
-html[data-theme="light"] .login-note{color:#6F8191!important}
-html[data-theme="light"] .login-grid input{background:#F3F7FA!important;color:#3E4C59!important;border-color:#A7BACD!important}
-html[data-theme="light"] .login-grid input:focus{background:#F3F7FA!important;border-color:#6F8191!important;box-shadow:0 0 0 3px rgba(111,129,145,.14)!important}
-html[data-theme="light"] .login-card #loginSubmit{background:#3E4C59!important;border-color:#3E4C59!important;color:#F3F7FA!important}
-html[data-theme="light"] .login-card #loginSubmit:hover{background:#6F8191!important;border-color:#6F8191!important}
+/* Login claro: trava final com especificidade maior que login-simple-v2.css. */
+html[data-theme="light"] body.auth-locked .login-gate{
+  background:#DDE7EF!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate::before{
+  opacity:1!important;
+  background:none!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card{
+  background:#F3F7FA!important;
+  border-color:#A7BACD!important;
+  color:#3E4C59!important;
+  box-shadow:0 28px 70px rgba(62,76,89,.14)!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-brand{
+  border-right-color:#A7BACD!important;
+  background:#DDE7EF!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-brand::after{
+  border-color:#A7BACD!important;
+  background:#A7BACD!important;
+  color:#3E4C59!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-mark{
+  background:
+    linear-gradient(#F3F7FA,#F3F7FA) padding-box,
+    linear-gradient(135deg,#b69a5d 0 25%,#5e9b75 25% 50%,#a9666d 50% 75%,#5f7fae 75%) border-box!important;
+  color:#3E4C59!important;
+  box-shadow:0 10px 26px rgba(62,76,89,.12)!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-brand strong,
+html[data-theme="light"] body.auth-locked .login-gate .login-card #loginTitle{
+  color:#3E4C59!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-brand small,
+html[data-theme="light"] body.auth-locked .login-gate .login-card #loginTitle + p,
+html[data-theme="light"] body.auth-locked .login-gate .login-grid label,
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-note{
+  color:#6F8191!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card #loginTitle::before{
+  color:#6F8191!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input{
+  background:#F3F7FA!important;
+  border-color:#A7BACD!important;
+  color:#3E4C59!important;
+  box-shadow:none!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input::placeholder{
+  color:#6F8191!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input:hover{
+  border-color:#6F8191!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input:focus{
+  background:#F3F7FA!important;
+  border-color:#6F8191!important;
+  box-shadow:0 0 0 3px rgba(167,186,205,.45)!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input:-webkit-autofill,
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input:-webkit-autofill:hover,
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input:-webkit-autofill:focus{
+  -webkit-text-fill-color:#3E4C59!important;
+  -webkit-box-shadow:0 0 0 1000px #F3F7FA inset!important;
+  box-shadow:0 0 0 1000px #F3F7FA inset!important;
+  border-color:#A7BACD!important;
+  caret-color:#3E4C59!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit{
+  background:#3E4C59!important;
+  border-color:#3E4C59!important;
+  color:#F3F7FA!important;
+  box-shadow:0 8px 18px rgba(62,76,89,.14)!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit:hover:not(:disabled){
+  background:#6F8191!important;
+  border-color:#6F8191!important;
+  color:#F3F7FA!important;
+  box-shadow:0 9px 20px rgba(62,76,89,.16)!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-note{
+  border-top-color:#A7BACD!important;
+  border-left-color:#A7BACD!important;
+}
+@media(max-width:760px){
+  html[data-theme="light"] body.auth-locked .login-gate .login-card .login-brand{
+    border-bottom-color:#A7BACD!important;
+  }
+}
