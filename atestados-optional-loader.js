@@ -38,10 +38,18 @@
     document.head.appendChild(fixes);
   }
 
+  function refreshAtestadosFormVisibilityOrder(){
+    const visibility=document.getElementById("controlAtestadosFormVisibilityStyles");
+    if(!visibility)return;
+    if(visibility.getAttribute("href")!=="atestados-form-visibility.css?v=1")visibility.href="atestados-form-visibility.css?v=1";
+    document.head.appendChild(visibility);
+  }
+
   function refreshLightLayers(){
     refreshLightPaletteOrder();
     refreshAtestadosLightPolishOrder();
     refreshAtestadosLightFixesOrder();
+    refreshAtestadosFormVisibilityOrder();
   }
 
   function ensureScript(id,src){
@@ -70,6 +78,7 @@
       ensureStyle("controlAtestadosImageUploadStyles","atestados-image-upload.css?v=2");
       ensureStyle("controlAtestadosLightPolishStyles","atestados-light-polish.css?v=1");
       ensureStyle("controlAtestadosLightFixesStyles","atestados-light-fixes.css?v=1");
+      ensureStyle("controlAtestadosFormVisibilityStyles","atestados-form-visibility.css?v=1");
       refreshLightLayers();
       await ensureScript("controlAtestadosImageRangeFixScript","atestados-image-range-fix.js?v=1");
       await ensureScript("controlAtestadosImageUploadScript","atestados-image-upload.js?v=2");
