@@ -1,0 +1,307 @@
+/* Atestados — legibilidade do formulario de cadastro */
+.ete-atestados .at-form-card{
+  border-color:#34404a!important;
+  background:#11161b!important;
+}
+
+.ete-atestados #atForm{
+  gap:18px 14px!important;
+}
+
+.ete-atestados #atForm .at-field{
+  gap:8px!important;
+}
+
+.ete-atestados #atForm .at-field>label,
+.ete-atestados #atForm .at-room-picker>label,
+.ete-atestados #atForm .at-reason-picker>label{
+  color:#b9c9d4!important;
+  font-size:12px!important;
+  font-weight:850!important;
+  line-height:1.35!important;
+  letter-spacing:.01em!important;
+}
+
+.ete-atestados #atForm .at-input,
+.ete-atestados #atForm .at-select,
+.ete-atestados #atForm .at-room-trigger,
+.ete-atestados #atForm .at-reason-trigger{
+  min-height:52px!important;
+  border-color:#3b4853!important;
+  background:#0f1419!important;
+  color:#f3f6f8!important;
+  font-size:12px!important;
+}
+
+.ete-atestados #atForm .at-input::placeholder,
+.ete-atestados #atForm .at-textarea::placeholder{
+  color:#7f8c96!important;
+  opacity:1!important;
+}
+
+.ete-atestados #atForm .at-input:hover,
+.ete-atestados #atForm .at-select:hover,
+.ete-atestados #atForm .at-room-trigger:hover,
+.ete-atestados #atForm .at-reason-trigger:hover{
+  border-color:#566b79!important;
+}
+
+.ete-atestados #atForm .at-input:focus,
+.ete-atestados #atForm .at-select:focus,
+.ete-atestados #atForm .at-room-trigger:focus-visible,
+.ete-atestados #atForm .at-reason-trigger:focus-visible,
+.ete-atestados #atForm .at-reason-trigger[aria-expanded="true"]{
+  border-color:#7695aa!important;
+  box-shadow:0 0 0 3px rgba(118,149,170,.13)!important;
+}
+
+.ete-atestados #atForm .at-field-help,
+.ete-atestados #atForm .at-date-range-note,
+.ete-atestados #atForm .at-room-help{
+  color:#8495a0!important;
+  font-size:9.5px!important;
+  line-height:1.55!important;
+}
+
+.ete-atestados #atForm .at-choice-grid{
+  gap:10px!important;
+}
+
+.ete-atestados #atForm .at-choice-card{
+  min-height:64px!important;
+  padding:13px 14px!important;
+  align-items:center!important;
+  border-color:#343f48!important;
+  background:#151a1f!important;
+}
+
+.ete-atestados #atForm .at-choice-card:hover{
+  border-color:#536b7b!important;
+  background:#182027!important;
+}
+
+.ete-atestados #atForm .at-choice-card:has(input:checked){
+  border-color:#7797ad!important;
+  background:#172630!important;
+  box-shadow:inset 0 0 0 1px rgba(132,174,203,.09)!important;
+}
+
+.ete-atestados #atForm .at-choice-card input{
+  width:17px!important;
+  height:17px!important;
+  min-width:17px!important;
+  min-height:17px!important;
+  flex-basis:17px!important;
+  accent-color:#8fb5d0!important;
+}
+
+.ete-atestados #atForm .at-choice-card strong{
+  color:#eef3f6!important;
+  font-size:11px!important;
+  line-height:1.35!important;
+}
+
+.ete-atestados #atForm .at-choice-card small{
+  margin-top:4px!important;
+  color:#91a0aa!important;
+  font-size:9.2px!important;
+  line-height:1.45!important;
+}
+
+.ete-atestados #atForm .at-reason-trigger{
+  padding:0 16px!important;
+  color:#9eabb4!important;
+}
+
+.ete-atestados #atForm .at-reason-trigger.has-value{
+  color:#f1f5f7!important;
+}
+
+.ete-atestados #atForm .at-reason-trigger-arrow{
+  color:#a4b4bf!important;
+}
+
+.ete-atestados #atForm .at-reason-list{
+  border-color:#3a4650!important;
+  background:#12181d!important;
+}
+
+.ete-atestados #atForm .at-reason-option{
+  min-height:48px!important;
+  padding:11px 13px!important;
+}
+
+.ete-atestados #atForm .at-reason-option strong{
+  color:#e9eef1!important;
+  font-size:10.8px!important;
+}
+
+.ete-atestados #atForm .at-reason-option:hover{
+  background:#182129!important;
+}
+
+.ete-atestados #atForm .at-image-upload-field{
+  gap:10px!important;
+  padding:16px!important;
+  border-color:#35434e!important;
+  background:#12181e!important;
+}
+
+.ete-atestados #atForm .at-image-upload-head strong{
+  color:#eef3f6!important;
+  font-size:11.5px!important;
+}
+
+.ete-atestados #atForm .at-image-upload-head small{
+  color:#91a0aa!important;
+  font-size:9.2px!important;
+}
+
+.ete-atestados #atForm .at-image-upload-head>span{
+  min-height:24px!important;
+  border-color:#4a5b67!important;
+  color:#aab8c1!important;
+  font-size:8px!important;
+}
+
+.ete-atestados #atForm .at-image-drop{
+  min-height:92px!important;
+  border-color:#536673!important;
+  background:#0d1419!important;
+}
+
+.ete-atestados #atForm .at-image-drop:hover{
+  border-color:#7b9aaf!important;
+  background:#121d24!important;
+}
+
+.ete-atestados #atForm .at-image-drop-copy strong{
+  color:#f2f6f8!important;
+  font-size:11.5px!important;
+}
+
+.ete-atestados #atForm .at-image-drop-copy small{
+  color:#91a2ad!important;
+  font-size:9.2px!important;
+}
+
+.ete-atestados #atForm .at-image-drop-action{
+  min-height:38px!important;
+  padding:0 13px!important;
+  border-color:#526673!important;
+  background:#18252e!important;
+  color:#d1e0e9!important;
+  font-size:9.5px!important;
+}
+
+.ete-atestados #atForm .at-image-upload-help{
+  color:#8495a0!important;
+  font-size:9px!important;
+}
+
+.ete-atestados #atForm .at-form-actions{
+  gap:12px!important;
+  padding-top:18px!important;
+  border-top-color:#28333c!important;
+}
+
+.ete-atestados #atForm .at-form-actions .at-btn{
+  min-height:48px!important;
+  font-size:11px!important;
+}
+
+html[data-theme="light"] .ete-atestados .at-form-card,
+html.theme-light .ete-atestados .at-form-card{
+  border-color:#cbd8de!important;
+  background:#fff!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm .at-field>label,
+html[data-theme="light"] .ete-atestados #atForm .at-room-picker>label,
+html[data-theme="light"] .ete-atestados #atForm .at-reason-picker>label,
+html.theme-light .ete-atestados #atForm .at-field>label,
+html.theme-light .ete-atestados #atForm .at-room-picker>label,
+html.theme-light .ete-atestados #atForm .at-reason-picker>label{
+  color:#314650!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm .at-input,
+html[data-theme="light"] .ete-atestados #atForm .at-select,
+html[data-theme="light"] .ete-atestados #atForm .at-room-trigger,
+html[data-theme="light"] .ete-atestados #atForm .at-reason-trigger,
+html.theme-light .ete-atestados #atForm .at-input,
+html.theme-light .ete-atestados #atForm .at-select,
+html.theme-light .ete-atestados #atForm .at-room-trigger,
+html.theme-light .ete-atestados #atForm .at-reason-trigger{
+  border-color:#bfced5!important;
+  background:#fbfcfd!important;
+  color:#20333d!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm .at-field-help,
+html[data-theme="light"] .ete-atestados #atForm .at-date-range-note,
+html[data-theme="light"] .ete-atestados #atForm .at-room-help,
+html[data-theme="light"] .ete-atestados #atForm .at-image-upload-help,
+html.theme-light .ete-atestados #atForm .at-field-help,
+html.theme-light .ete-atestados #atForm .at-date-range-note,
+html.theme-light .ete-atestados #atForm .at-room-help,
+html.theme-light .ete-atestados #atForm .at-image-upload-help{
+  color:#657983!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm .at-choice-card,
+html.theme-light .ete-atestados #atForm .at-choice-card{
+  border-color:#c9d5db!important;
+  background:#f7f9fa!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm .at-choice-card:hover,
+html.theme-light .ete-atestados #atForm .at-choice-card:hover{
+  border-color:#91a9b7!important;
+  background:#f0f5f7!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm .at-choice-card:has(input:checked),
+html.theme-light .ete-atestados #atForm .at-choice-card:has(input:checked){
+  border-color:#7897ad!important;
+  background:#eaf2f6!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm .at-choice-card strong,
+html.theme-light .ete-atestados #atForm .at-choice-card strong{
+  color:#243942!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm .at-choice-card small,
+html.theme-light .ete-atestados #atForm .at-choice-card small{
+  color:#667984!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm .at-image-upload-field,
+html.theme-light .ete-atestados #atForm .at-image-upload-field{
+  border-color:#cbd8de!important;
+  background:#f7fafb!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm .at-image-drop,
+html.theme-light .ete-atestados #atForm .at-image-drop{
+  border-color:#aebfc8!important;
+  background:#fff!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm .at-image-drop-copy strong,
+html.theme-light .ete-atestados #atForm .at-image-drop-copy strong{
+  color:#263a43!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm .at-image-drop-copy small,
+html.theme-light .ete-atestados #atForm .at-image-drop-copy small{
+  color:#647985!important;
+}
+
+@media(max-width:700px){
+  .ete-atestados #atForm{gap:16px!important}
+  .ete-atestados #atForm .at-choice-card{min-height:60px!important}
+  .ete-atestados #atForm .at-image-upload-field{padding:13px!important}
+  .ete-atestados #atForm .at-image-drop{min-height:118px!important}
+}
