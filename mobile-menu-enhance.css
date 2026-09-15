@@ -107,7 +107,13 @@
 @media(min-width:821px){
   .mobile-menu-backdrop{display:none !important}
 
-  /* Sincroniza a sidebar fixa com a coluna original de 248px do layout. */
+  /* A coluna reservada e a sidebar usam exatamente os mesmos 248px. */
+  .shell{
+    display:grid !important;
+    grid-template-columns:248px minmax(0,1fr) !important;
+    min-width:0 !important;
+  }
+
   .sidebar{
     position:fixed !important;
     top:0 !important;
@@ -123,6 +129,8 @@
 
   .main{
     grid-column:2 !important;
+    width:auto !important;
     min-width:0 !important;
+    margin-left:0 !important;
   }
 }
