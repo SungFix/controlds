@@ -75,6 +75,7 @@
       await ensureScript("controlAtestadosImageUploadScript","atestados-image-upload.js?v=2");
       await ensureScript("controlAtestadosImageAccessFixScript","atestados-image-access-fix.js?v=1");
       await ensureScript("controlAtestadosActionPolishScript","atestados-action-polish.js?v=1");
+      await ensureScript("controlAtestadosNavIconsScript","atestados-nav-icons.js?v=1");
       await ensureScript("controlAtestadosEditScript","atestados-edit.js?v=1");
       refreshLightLayers();
     })().catch(error=>{
