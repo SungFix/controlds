@@ -107,30 +107,35 @@
 @media(min-width:821px){
   .mobile-menu-backdrop{display:none !important}
 
-  /* A coluna reservada e a sidebar usam exatamente os mesmos 248px. */
-  .shell{
-    display:grid !important;
-    grid-template-columns:248px minmax(0,1fr) !important;
+  /* Desktop/notebook: layout deterministico, sem depender do grid legado. */
+  html body .shell{
+    display:block !important;
     min-width:0 !important;
+    min-height:100vh !important;
   }
 
-  .sidebar{
+  html body .sidebar{
     position:fixed !important;
     top:0 !important;
     left:0 !important;
     bottom:0 !important;
-    width:248px !important;
+    width:260px !important;
+    min-width:260px !important;
+    max-width:260px !important;
     height:100dvh !important;
+    min-height:100dvh !important;
     max-height:none !important;
     overflow-y:auto !important;
     overflow-x:hidden !important;
     z-index:30 !important;
   }
 
-  .main{
-    grid-column:2 !important;
-    width:auto !important;
+  html body .main{
+    display:block !important;
+    width:calc(100% - 260px) !important;
+    max-width:calc(100% - 260px) !important;
     min-width:0 !important;
-    margin-left:0 !important;
+    margin-left:260px !important;
+    grid-column:auto !important;
   }
 }
