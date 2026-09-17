@@ -94,19 +94,42 @@
     return loading;
   }
 
+  function stopObserver(){
+    observer?.disconnect();
+    observer=null;
+  }
+
+  function activate(){
+    stopObserver();
+    loadOptional();
+  }
+
   function check(){
-    const module=document.querySelector("#eteAtestadosRoot .ete-atestados");
-    if(module){
-      loadOptional();
-      observer?.disconnect();
-      observer=null;
+    if(document.querySelector("#eteAtestadosRoot .ete-atestados"))activate();
+  }
+
+  function nodeMayContainModule(node){
+    if(!node||node.nodeType!==1)return false;
+    if(node.matches?.("#eteAtestadosRoot .ete-atestados"))return true;
+    if(node.id==="eteAtestadosRoot"&&node.querySelector?.(".ete-atestados"))return true;
+    return !!node.querySelector?.("#eteAtestadosRoot .ete-atestados");
+  }
+
+  function handleMutations(mutations){
+    for(const mutation of mutations){
+      for(const node of mutation.addedNodes){
+        if(nodeMayContainModule(node)){
+          activate();
+          return;
+        }
+      }
     }
   }
 
   function start(){
     check();
-    if(observer||!document.body)return;
-    observer=new MutationObserver(check);
+    if(observer||loading||!document.body)return;
+    observer=new MutationObserver(handleMutations);
     observer.observe(document.body,{childList:true,subtree:true});
   }
 
