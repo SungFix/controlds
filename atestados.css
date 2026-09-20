@@ -149,14 +149,14 @@ html[data-theme="light"] .ete-atestados{--at-border:#d6e0e5;--at-panel:#fff;--at
    SELECT CONTROLS v8 — Atestados
    ========================================================= */
 .ete-atestados{
-  --at-select-bg:#13181c;
-  --at-select-hover:#171d21;
-  --at-select-border:#353f47;
-  --at-select-border-hover:#4b565e;
-  --at-select-open:#636b72;
-  --at-select-text:#e2e6e9;
-  --at-select-muted:#8a949c;
-  --at-select-arrow:#8f989f;
+  --at-select-bg:#151a1f;
+  --at-select-hover:#1a2025;
+  --at-select-border:#333e47;
+  --at-select-border-hover:#4c5b65;
+  --at-select-open:#626970;
+  --at-select-text:#d7dfe4;
+  --at-select-muted:#8f9da6;
+  --at-select-arrow:#8f9da6;
 }
 
 .ete-atestados .at-select{
