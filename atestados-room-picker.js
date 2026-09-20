@@ -286,18 +286,17 @@
   }
 
   function handleMutations(records){
-    let queued=false;
+    const scopes=[];
     for(const record of records){
       for(const node of record.addedNodes){
         if(!(node instanceof Element))continue;
         const relevant=node.matches(".ete-atestados,.at-room-picker,.at-reason-list")
           || !!node.querySelector(".ete-atestados,.at-room-picker,.at-reason-list");
-        if(!relevant)continue;
-        if(queued)continue;
-        queued=true;
-        requestAnimationFrame(function(){enhanceScope(node)});
+        if(relevant)scopes.push(node);
       }
     }
+    if(!scopes.length)return;
+    requestAnimationFrame(function(){scopes.forEach(enhanceScope)});
   }
 
   const observer=new MutationObserver(handleMutations);
