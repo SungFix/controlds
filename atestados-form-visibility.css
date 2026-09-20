@@ -553,3 +553,72 @@ html.theme-light .ete-atestados #atForm :is(
     transition:none!important;
   }
 }
+
+
+/* =========================================================
+   SELECT CONTROLS v8.1 — precedência final no formulário
+   ========================================================= */
+.ete-atestados #atForm :is(.at-select,.at-room-trigger,.at-reason-trigger){
+  min-height:48px!important;
+  border-color:#353f47!important;
+  border-radius:11px!important;
+  background-color:#13181c!important;
+  color:#e2e6e9!important;
+  box-shadow:none!important;
+  font-size:10.5px!important;
+  font-weight:760!important;
+}
+
+.ete-atestados #atForm .at-select{
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  padding:0 42px 0 14px!important;
+  background-image:
+    linear-gradient(45deg,transparent 50%,#8f989f 50%),
+    linear-gradient(135deg,#8f989f 50%,transparent 50%)!important;
+  background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%!important;
+  background-size:5px 5px,5px 5px!important;
+  background-repeat:no-repeat!important;
+}
+
+.ete-atestados #atForm :is(.at-room-trigger,.at-reason-trigger){
+  padding-left:13px!important;
+  padding-right:13px!important;
+}
+
+.ete-atestados #atForm :is(.at-select,.at-room-trigger,.at-reason-trigger):hover{
+  background-color:#171d21!important;
+  border-color:#4b565e!important;
+}
+
+.ete-atestados #atForm .at-select:focus,
+.ete-atestados #atForm :is(.at-room-trigger,.at-reason-trigger):focus-visible,
+.ete-atestados #atForm :is(.at-room-trigger,.at-reason-trigger)[aria-expanded="true"]{
+  border-color:#636b72!important;
+  box-shadow:0 0 0 2px rgba(160,165,170,.07)!important;
+}
+
+.ete-atestados #atForm :is(.at-room-trigger-arrow,.at-reason-trigger-arrow){
+  color:#8f989f!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm :is(.at-select,.at-room-trigger,.at-reason-trigger),
+html.theme-light .ete-atestados #atForm :is(.at-select,.at-room-trigger,.at-reason-trigger){
+  background-color:#f4f6f7!important;
+  border-color:#d1d7db!important;
+  color:#34393d!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm :is(.at-select,.at-room-trigger,.at-reason-trigger):hover,
+html.theme-light .ete-atestados #atForm :is(.at-select,.at-room-trigger,.at-reason-trigger):hover{
+  background-color:#eceff1!important;
+  border-color:#b8c0c5!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm :is(.at-select,.at-room-trigger,.at-reason-trigger):focus,
+html[data-theme="light"] .ete-atestados #atForm :is(.at-room-trigger,.at-reason-trigger)[aria-expanded="true"],
+html.theme-light .ete-atestados #atForm :is(.at-select,.at-room-trigger,.at-reason-trigger):focus,
+html.theme-light .ete-atestados #atForm :is(.at-room-trigger,.at-reason-trigger)[aria-expanded="true"]{
+  border-color:#8f969b!important;
+  box-shadow:0 0 0 2px rgba(120,125,130,.06)!important;
+}
