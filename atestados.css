@@ -143,3 +143,69 @@ html[data-theme="light"] .ete-atestados{--at-border:#d6e0e5;--at-panel:#fff;--at
   color:#d69aa1!important;
   box-shadow:none!important;
 }
+
+
+/* =========================================================
+   SELECT CONTROLS v8 — Atestados
+   ========================================================= */
+.ete-atestados{
+  --at-select-bg:#13181c;
+  --at-select-hover:#171d21;
+  --at-select-border:#353f47;
+  --at-select-border-hover:#4b565e;
+  --at-select-open:#636b72;
+  --at-select-text:#e2e6e9;
+  --at-select-muted:#8a949c;
+  --at-select-arrow:#8f989f;
+}
+
+.ete-atestados .at-select{
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  min-height:48px!important;
+  height:48px!important;
+  padding:0 42px 0 14px!important;
+  border:1px solid var(--at-select-border)!important;
+  border-radius:11px!important;
+  background-color:var(--at-select-bg)!important;
+  background-image:
+    linear-gradient(45deg,transparent 50%,var(--at-select-arrow) 50%),
+    linear-gradient(135deg,var(--at-select-arrow) 50%,transparent 50%)!important;
+  background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%!important;
+  background-size:5px 5px,5px 5px!important;
+  background-repeat:no-repeat!important;
+  color:var(--at-select-text)!important;
+  box-shadow:none!important;
+  font-size:10.5px!important;
+  font-weight:760!important;
+}
+
+.ete-atestados :is(.at-room-trigger,.at-reason-trigger){
+  min-height:48px!important;
+  padding:0 13px!important;
+  border:1px solid var(--at-select-border)!important;
+  border-radius:11px!important;
+  background:var(--at-select-bg)!important;
+  color:var(--at-select-text)!important;
+  box-shadow:none!important;
+  transition:background-color .14s ease,border-color .14s ease!important;
+}
+
+@media(hover:hover) and (pointer:fine){
+  .ete-atestados .at-select:hover,
+  .ete-atestados :is(.at-room-trigger,.at-reason-trigger):hover{
+    background-color:var(--at-select-hover)!important;
+    border-color:var(--at-select-border-hover)!important;
+  }
+}
+
+.ete-atestados .at-select:focus,
+.ete-atestados :is(.at-room-trigger,.at-reason-trigger):focus-visible,
+.ete-atestados :is(.at-room-trigger,.at-reason-trigger)[aria-expanded="true"]{
+  border-color:var(--at-select-open)!important;
+  box-shadow:0 0 0 2px rgba(160,165,170,.07)!important;
+}
+
+.ete-atestados :is(.at-room-trigger-arrow,.at-reason-trigger-arrow){
+  color:var(--at-select-arrow)!important;
+}
