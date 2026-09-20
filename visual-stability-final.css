@@ -1576,3 +1576,24 @@ input[type="radio"]:disabled{
     transition:none!important;
   }
 }
+
+
+/* =========================================================
+   DESKTOP MOBILE-MENU GUARD
+   Impede o sistema global de botões de exibir o menu mobile no PC.
+   ========================================================= */
+@media(min-width:821px){
+  html body #menuBtn.mobile-menu{
+    display:none!important;
+    visibility:hidden!important;
+    width:0!important;
+    min-width:0!important;
+    height:0!important;
+    min-height:0!important;
+    padding:0!important;
+    margin:0!important;
+    border:0!important;
+    overflow:hidden!important;
+    pointer-events:none!important;
+  }
+}
