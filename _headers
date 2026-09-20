@@ -27,6 +27,12 @@
 /mobile-menu-enhance.js
   Cache-Control: no-cache, max-age=0, must-revalidate
 
+/portal.css
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/atestados.css
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
 /atestados-optional-loader.js
   Cache-Control: no-cache, max-age=0, must-revalidate
 
