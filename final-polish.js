@@ -1,7 +1,7 @@
 (function(){
   "use strict";
 
-  const LOADING_RE=/^(salvando|apagando|confirmando|entrando|carregando|enviando|processando)/i;
+  const LOADING_RE=/^(salvando|criando|apagando|confirmando|entrando|carregando|enviando|processando|atualizando)/i;
   const EMPTY_SELECTOR=".request-empty,.permission-empty,.student-empty,.computer-empty,.history-empty,.agenda-empty,.student-picker-empty";
   const RELEVANT_NODE_SELECTOR="button,"+EMPTY_SELECTOR+",#agendaSearch,#permissionSearch,#requestSearch,#studentSearch,#computerSearch,#historySearch,#studentPickerSearch";
   let queued=false;
@@ -86,8 +86,6 @@
       matte.href="select-matte.css?v=1";
       document.head.appendChild(matte);
     }
-    ensureLightPaletteLast();
-    watchLateStyles();
     if(!document.getElementById("eteCustomSelectScript")){
       const script=document.createElement("script");
       script.id="eteCustomSelectScript";
@@ -194,7 +192,7 @@
       meta.name="theme-color";
       document.head.appendChild(meta);
     }
-    meta.content=light?"#f8efe2":"#090b0e";
+    meta.content=light?"#f8fafb":"#0a0d10";
   }
 
   function queueThemeMeta(){
