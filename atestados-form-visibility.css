@@ -560,10 +560,10 @@ html.theme-light .ete-atestados #atForm :is(
    ========================================================= */
 .ete-atestados #atForm :is(.at-select,.at-room-trigger,.at-reason-trigger){
   min-height:48px!important;
-  border-color:#353f47!important;
+  border-color:#333e47!important;
   border-radius:11px!important;
-  background-color:#13181c!important;
-  color:#e2e6e9!important;
+  background-color:#151a1f!important;
+  color:#d7dfe4!important;
   box-shadow:none!important;
   font-size:10.5px!important;
   font-weight:760!important;
@@ -574,8 +574,8 @@ html.theme-light .ete-atestados #atForm :is(
   appearance:none!important;
   padding:0 42px 0 14px!important;
   background-image:
-    linear-gradient(45deg,transparent 50%,#8f989f 50%),
-    linear-gradient(135deg,#8f989f 50%,transparent 50%)!important;
+    linear-gradient(45deg,transparent 50%,#8f9da6 50%),
+    linear-gradient(135deg,#8f9da6 50%,transparent 50%)!important;
   background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%!important;
   background-size:5px 5px,5px 5px!important;
   background-repeat:no-repeat!important;
@@ -587,19 +587,19 @@ html.theme-light .ete-atestados #atForm :is(
 }
 
 .ete-atestados #atForm :is(.at-select,.at-room-trigger,.at-reason-trigger):hover{
-  background-color:#171d21!important;
-  border-color:#4b565e!important;
+  background-color:#1a2025!important;
+  border-color:#4c5b65!important;
 }
 
 .ete-atestados #atForm .at-select:focus,
 .ete-atestados #atForm :is(.at-room-trigger,.at-reason-trigger):focus-visible,
 .ete-atestados #atForm :is(.at-room-trigger,.at-reason-trigger)[aria-expanded="true"]{
-  border-color:#636b72!important;
+  border-color:#626970!important;
   box-shadow:0 0 0 2px rgba(160,165,170,.07)!important;
 }
 
 .ete-atestados #atForm :is(.at-room-trigger-arrow,.at-reason-trigger-arrow){
-  color:#8f989f!important;
+  color:#8f9da6!important;
 }
 
 html[data-theme="light"] .ete-atestados #atForm :is(.at-select,.at-room-trigger,.at-reason-trigger),
