@@ -256,3 +256,56 @@ html.theme-light .ete-select-group{color:#738179}
 @media(prefers-reduced-motion:reduce){
   .ete-select-trigger,.ete-select-chevron,.ete-select-option{transition:none!important}
 }
+
+
+/* =========================================================
+   GLOBAL CUSTOM SELECT — exact matte palette
+   ========================================================= */
+html body .ete-select-trigger{
+  border-color:#333e47!important;
+  background:#151a1f!important;
+  color:#d7dfe4!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+@media(hover:hover) and (pointer:fine){
+  html body .ete-select-trigger:hover{
+    border-color:#4c5b65!important;
+    background:#1a2025!important;
+  }
+}
+
+html body .ete-select-trigger:focus-visible,
+html body .ete-select.is-open .ete-select-trigger{
+  border-color:#626970!important;
+  background:#1a2025!important;
+  box-shadow:0 0 0 2px rgba(160,165,170,.07)!important;
+}
+
+html body .ete-select-chevron{
+  color:#8f9da6!important;
+}
+
+html body .ete-select-menu{
+  border-color:#333e47!important;
+  background:#151a1f!important;
+  color:#d7dfe4!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.25)!important;
+  filter:none!important;
+}
+
+html body .ete-select-option{
+  color:#d7dfe4!important;
+}
+
+html body .ete-select-option:hover,
+html body .ete-select-option.is-active{
+  background:#1a2025!important;
+  color:#f1f3f4!important;
+}
+
+html body .ete-select-option.is-selected{
+  background:#20262b!important;
+  color:#f1f3f4!important;
+}
