@@ -82,7 +82,7 @@
   Cache-Control: public, max-age=3600, must-revalidate
 
 /student-reputation.js
-  Cache-Control: public, max-age=3600, must-revalidate
+  Cache-Control: no-cache, max-age=0, must-revalidate
 
 /student-reputation.css
   Cache-Control: public, max-age=3600, must-revalidate
