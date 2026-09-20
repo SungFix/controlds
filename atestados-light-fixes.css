@@ -229,33 +229,23 @@ html.theme-light .at-app-content .at-report-pie-graphic{
 }
 
 
-/* =========================================================
-   BUTTON SYSTEM v6 — Atestados claro
-   ========================================================= */
+/* ACTION CONTROLS v7 — Atestados claro */
 html[data-theme="light"] .ete-atestados,
 html.theme-light .ete-atestados{
-  --at-btn-bg:#f4f7f9;
-  --at-btn-hover:#eef3f6;
-  --at-btn-border:#d6e1e6;
-  --at-btn-border-hover:#c3d1d8;
-  --at-btn-text:#26363e;
-  --at-btn-primary:#31444d;
-  --at-btn-primary-hover:#3b505a;
-  --at-btn-primary-text:#ffffff;
-  --at-btn-danger-bg:#f8f2f3;
-  --at-btn-danger-border:#dfc7cb;
-  --at-btn-danger-text:#955a62;
+  --at-action-bg:#f4f7f9;
+  --at-action-hover:#edf2f4;
+  --at-action-border:#d2dde3;
+  --at-action-border-hover:#bccbd2;
+  --at-action-text:#31454e;
+  --at-primary-bg:#e7eef1;
+  --at-primary-hover:#dde8ec;
+  --at-primary-border:#9fb4be;
+  --at-primary-border-hover:#879faa;
+  --at-primary-text:#2c414a;
 }
 html[data-theme="light"] .ete-atestados .at-icon-danger,
 html.theme-light .ete-atestados .at-icon-danger{
-  background:var(--at-btn-danger-bg)!important;
-  border-color:var(--at-btn-danger-border)!important;
-  color:var(--at-btn-danger-text)!important;
-}
-@media(hover:hover) and (pointer:fine){
-  html[data-theme="light"] .ete-atestados .at-icon-danger:hover,
-  html.theme-light .ete-atestados .at-icon-danger:hover{
-    background:#f3e9eb!important;
-    border-color:#d1adb3!important;
-  }
+  background:#f8f2f3!important;
+  border-color:#ddc3c8!important;
+  color:#925962!important;
 }
