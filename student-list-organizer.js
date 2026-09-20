@@ -125,15 +125,18 @@
     if(!rows)return;
 
     const mapped=buildMappedCards();
-    mapped.forEach(({card})=>{card.hidden=true;card.style.order=""});
+    mapped.forEach(({card})=>{
+      if(!card.hidden)card.hidden=true;
+      if(card.style.order)card.style.order="";
+    });
 
     const filtered=sortItems(mapped.filter(({student})=>isMatch(student)));
     const limit=state.limit==="all"?filtered.length:Number(state.limit||40);
     const visible=filtered.slice(0,limit);
     visible.forEach(({card},index)=>{
-      card.hidden=false;
-      card.style.order=String(index);
-      rows.appendChild(card);
+      if(card.hidden)card.hidden=false;
+      const order=String(index);
+      if(card.style.order!==order)card.style.order=order;
     });
 
     updateFilterBadge();
