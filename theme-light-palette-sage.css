@@ -605,11 +605,11 @@ html[data-theme="light"]{
   --action-text:#31454e;
   --action-muted:#697d86;
 
-  --action-primary-bg:#e7eef1;
-  --action-primary-hover:#dde8ec;
-  --action-primary-border:#9fb4be;
-  --action-primary-border-hover:#879faa;
-  --action-primary-text:#2c414a;
+  --action-primary-bg:#e5e7e9;
+  --action-primary-hover:#d9dcdf;
+  --action-primary-border:#b3b8bd;
+  --action-primary-border-hover:#9da3a9;
+  --action-primary-text:#34393e;
 
   --action-danger-bg:#f8f2f3;
   --action-danger-hover:#f2e8ea;
@@ -626,7 +626,7 @@ html[data-theme="light"] body:not(.auth-locked) .btn.primary{
   background:var(--action-primary-bg)!important;
   border-color:var(--action-primary-border)!important;
   color:var(--action-primary-text)!important;
-  box-shadow:inset 0 -2px 0 rgba(96,125,139,.10)!important;
+  box-shadow:inset 0 -2px 0 rgba(120,125,130,.08)!important;
 }
 html[data-theme="light"] body:not(.auth-locked) .ete-system-open{
   border-color:#e0e8ec!important;
