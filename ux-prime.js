@@ -14,6 +14,7 @@
   let lastDialogOpener=null;
   let observerQueued=false;
   let keyboardInstalled=false;
+  let structuredKeyboardInstalled=false;
   let dialogClickInstalled=false;
 
   function visible(el){
@@ -54,7 +55,7 @@
 
   function syncThemeColor(){
     const light=root.dataset.theme==="light";
-    addMeta("theme-color",light?"#eef2f5":"#090b0e","controlThemeColor");
+    addMeta("theme-color",light?"#f8fafb":"#0a0d10","controlThemeColor");
     root.style.colorScheme=light?"light":"dark";
   }
 
@@ -170,6 +171,105 @@
         return;
       }
       if(event.key==="Escape"&&!document.querySelector("dialog[open]")) closeTransientUi();
+    });
+  }
+
+  function installStructuredKeyboardNavigation(){
+    if(structuredKeyboardInstalled)return;
+    structuredKeyboardInstalled=true;
+
+    const pickerConfigs=[
+      [".group-picker",".group-picker-trigger",".group-picker-popup",".group-option"],
+      [".interval-picker",".interval-picker-trigger",".interval-picker-popup",".interval-option"],
+      [".student-picker",".student-picker-trigger",".student-picker-popup",".student-option"],
+      [".time-picker",".time-trigger",".time-popup",".time-option"]
+    ];
+
+    function pickerContext(target){
+      if(!(target instanceof Element))return null;
+      for(const [wrapperSelector,triggerSelector,popupSelector,optionSelector] of pickerConfigs){
+        const wrapper=target.closest(wrapperSelector);
+        if(!wrapper)continue;
+        const trigger=wrapper.querySelector(triggerSelector);
+        const popup=wrapper.querySelector(popupSelector);
+        if(trigger&&popup)return{wrapper,trigger,popup,optionSelector};
+      }
+      return null;
+    }
+
+    function availableOptions(context){
+      return [...context.popup.querySelectorAll(context.optionSelector)].filter(option=>
+        !option.disabled&&option.getAttribute("aria-disabled")!=="true"&&visible(option)
+      );
+    }
+
+    function closePicker(context){
+      context.popup.classList.remove("open");
+      context.trigger.classList.remove("open");
+      context.trigger.setAttribute("aria-expanded","false");
+      try{context.trigger.focus({preventScroll:true})}catch(_){}
+    }
+
+    function focusOpenedOption(context,direction){
+      requestAnimationFrame(()=>{
+        const options=availableOptions(context);
+        if(!options.length)return;
+        const active=options.find(option=>option.classList.contains("active")||option.getAttribute("aria-selected")==="true");
+        const target=active||(direction<0?options[options.length-1]:options[0]);
+        try{target.focus({preventScroll:true})}catch(_){}
+      });
+    }
+
+    document.addEventListener("keydown",event=>{
+      const context=pickerContext(event.target);
+      if(context){
+        const onTrigger=event.target===context.trigger;
+        const option=event.target.closest?.(context.optionSelector);
+        const open=context.popup.classList.contains("open");
+
+        if(onTrigger&&(event.key==="ArrowDown"||event.key==="ArrowUp")){
+          event.preventDefault();
+          if(!open)context.trigger.click();
+          focusOpenedOption(context,event.key==="ArrowUp"?-1:1);
+          return;
+        }
+
+        if(open&&event.key==="Escape"){
+          event.preventDefault();
+          event.stopPropagation();
+          closePicker(context);
+          return;
+        }
+
+        if(option&&open&&["ArrowDown","ArrowUp","Home","End"].includes(event.key)){
+          const options=availableOptions(context);
+          const index=options.indexOf(option);
+          if(index<0||!options.length)return;
+          event.preventDefault();
+          let next=index;
+          if(event.key==="Home")next=0;
+          else if(event.key==="End")next=options.length-1;
+          else next=(index+(event.key==="ArrowDown"?1:-1)+options.length)%options.length;
+          try{options[next].focus({preventScroll:true})}catch(_){}
+          return;
+        }
+      }
+
+      const tab=event.target.closest?.(".request-tab,.computer-tab,.at-nav-item");
+      if(!tab||!["ArrowLeft","ArrowRight","Home","End"].includes(event.key))return;
+      const list=tab.closest(".request-tabs,.computer-tabs,.at-nav");
+      if(!list)return;
+      const tabs=[...list.querySelectorAll(".request-tab,.computer-tab,.at-nav-item")].filter(item=>!item.disabled&&visible(item));
+      const index=tabs.indexOf(tab);
+      if(index<0||!tabs.length)return;
+      event.preventDefault();
+      let next=index;
+      if(event.key==="Home")next=0;
+      else if(event.key==="End")next=tabs.length-1;
+      else next=(index+(event.key==="ArrowRight"?1:-1)+tabs.length)%tabs.length;
+      const target=tabs[next];
+      try{target.focus({preventScroll:true})}catch(_){}
+      target.click();
     });
   }
 
@@ -352,6 +452,7 @@
     root.dataset.primeUx="3";
     installDocumentMetadata();
     installKeyboardHelp();
+    installStructuredKeyboardNavigation();
     syncEverything();
     window.addEventListener("online",syncNetworkState);
     window.addEventListener("offline",syncNetworkState);
