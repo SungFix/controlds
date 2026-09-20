@@ -432,3 +432,124 @@ html.theme-light .ete-atestados .at-room-option input:checked + span{
   border-color:#91aab5!important;
   color:#2c414a!important;
 }
+
+
+/* CHOICE CONTROLS v7.1 — garante precedência sobre estilos legados */
+.ete-atestados #atForm .at-choice-card input[type="radio"],
+.ete-atestados #atForm .at-reason-option input[type="checkbox"],
+.ete-atestados #atForm .at-room-option input[type="radio"]{
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  width:18px!important;
+  height:18px!important;
+  min-width:18px!important;
+  min-height:18px!important;
+  max-width:18px!important;
+  max-height:18px!important;
+  margin:1px 0 0!important;
+  padding:0!important;
+  display:inline-grid!important;
+  place-content:center!important;
+  flex:0 0 18px!important;
+  border:1px solid #46525b!important;
+  background:#0f1418!important;
+  box-shadow:none!important;
+  cursor:pointer!important;
+  accent-color:unset!important;
+  transition:background-color .14s ease,border-color .14s ease!important;
+}
+
+.ete-atestados #atForm .at-choice-card input[type="radio"],
+.ete-atestados #atForm .at-room-option input[type="radio"]{
+  border-radius:50%!important;
+}
+.ete-atestados #atForm .at-reason-option input[type="checkbox"]{
+  border-radius:5px!important;
+}
+
+.ete-atestados #atForm .at-choice-card input[type="radio"]::before,
+.ete-atestados #atForm .at-room-option input[type="radio"]::before{
+  content:""!important;
+  width:7px!important;
+  height:7px!important;
+  border-radius:50%!important;
+  background:#f1f5f6!important;
+  transform:scale(0)!important;
+  transition:transform .1s ease!important;
+}
+
+.ete-atestados #atForm .at-reason-option input[type="checkbox"]::before{
+  content:""!important;
+  width:8px!important;
+  height:4px!important;
+  border-left:2px solid #f1f5f6!important;
+  border-bottom:2px solid #f1f5f6!important;
+  transform:translateY(-1px) rotate(-45deg) scale(0)!important;
+  transform-origin:center!important;
+  transition:transform .1s ease!important;
+}
+
+.ete-atestados #atForm :is(
+  .at-choice-card input[type="radio"],
+  .at-room-option input[type="radio"],
+  .at-reason-option input[type="checkbox"]
+):checked{
+  background:#607d8b!important;
+  border-color:#607d8b!important;
+}
+
+.ete-atestados #atForm .at-choice-card input[type="radio"]:checked::before,
+.ete-atestados #atForm .at-room-option input[type="radio"]:checked::before{
+  transform:scale(1)!important;
+}
+.ete-atestados #atForm .at-reason-option input[type="checkbox"]:checked::before{
+  transform:translateY(-1px) rotate(-45deg) scale(1)!important;
+}
+
+.ete-atestados #atForm :is(
+  .at-choice-card input[type="radio"],
+  .at-room-option input[type="radio"],
+  .at-reason-option input[type="checkbox"]
+):focus-visible{
+  outline:2px solid #718b99!important;
+  outline-offset:2px!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm .at-choice-card input[type="radio"],
+html[data-theme="light"] .ete-atestados #atForm .at-reason-option input[type="checkbox"],
+html[data-theme="light"] .ete-atestados #atForm .at-room-option input[type="radio"],
+html.theme-light .ete-atestados #atForm .at-choice-card input[type="radio"],
+html.theme-light .ete-atestados #atForm .at-reason-option input[type="checkbox"],
+html.theme-light .ete-atestados #atForm .at-room-option input[type="radio"]{
+  background:#fff!important;
+  border-color:#b7c7cf!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm :is(
+  .at-choice-card input[type="radio"],
+  .at-room-option input[type="radio"],
+  .at-reason-option input[type="checkbox"]
+):checked,
+html.theme-light .ete-atestados #atForm :is(
+  .at-choice-card input[type="radio"],
+  .at-room-option input[type="radio"],
+  .at-reason-option input[type="checkbox"]
+):checked{
+  background:#607d8b!important;
+  border-color:#607d8b!important;
+}
+
+@media(prefers-reduced-motion:reduce){
+  .ete-atestados #atForm :is(
+    .at-choice-card input[type="radio"],
+    .at-room-option input[type="radio"],
+    .at-reason-option input[type="checkbox"]
+  ),
+  .ete-atestados #atForm :is(
+    .at-choice-card input[type="radio"],
+    .at-room-option input[type="radio"],
+    .at-reason-option input[type="checkbox"]
+  )::before{
+    transition:none!important;
+  }
+}
