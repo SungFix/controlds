@@ -277,7 +277,7 @@
       const requestId=String(form.dataset.id||"");
       const code=String(qs("#computerCode")?.value||"").trim();
       if(!requestId){notify("Pedido não encontrado.");return;}
-      if(!/^\d{6}$/.test(code)){notify("Digite um código de notebook com 6 dígitos.");qs("#computerCode")?.focus();return;}
+      if(!/^(?:\d{6}|\d{9})$/.test(code)){notify("Digite o número geral de 6 dígitos ou o número de série de 9 dígitos.");qs("#computerCode")?.focus();return;}
 
       setBusy(form,true,"Confirmando...");
       await v46PickupRpc({p_request_id:requestId,p_code:code});
