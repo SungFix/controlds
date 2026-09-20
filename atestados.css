@@ -18,3 +18,42 @@ html[data-theme="light"] .ete-atestados{--at-border:#d6e0e5;--at-panel:#fff;--at
 @media(max-width:1050px){.at-dashboard-grid{grid-template-columns:1fr}.at-side-stack{grid-template-columns:1fr 1fr;grid-template-rows:auto}.at-bottom-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:860px){.at-metrics{grid-template-columns:repeat(2,1fr)}.at-bottom-grid,.at-form-layout{grid-template-columns:1fr}.at-inline-search,.at-toolbar{grid-template-columns:1fr 170px}}
 @media(max-width:620px){.ete-atestados{gap:12px}.at-page-head{align-items:flex-start;flex-direction:column}.at-head-actions{width:100%;justify-content:space-between}.at-page-head h1{font-size:30px}.at-nav{width:100%}.at-nav-item{flex:1}.at-metrics{grid-template-columns:1fr 1fr;gap:8px}.at-metric{min-height:102px;padding:13px;grid-template-columns:38px 1fr}.at-metric-icon{width:38px;height:38px}.at-dashboard-grid{gap:8px}.at-side-stack{grid-template-columns:1fr}.at-bottom-grid{grid-template-columns:1fr}.at-inline-search,.at-toolbar{grid-template-columns:1fr}.at-overview-toolbar{overflow-x:auto}.at-filter-tabs{flex-wrap:nowrap;min-width:max-content}.at-form{grid-template-columns:1fr}.at-field.full,.at-form-actions{grid-column:1}.at-form-actions .at-btn{flex:1}.at-records-top{grid-template-columns:1fr}.at-records-top .at-btn{width:100%}}
+
+
+/* =========================================================
+   SITEWIDE MATTE — ATESTADOS DARK
+   ========================================================= */
+.ete-atestados{
+  background:#0a0d10!important;
+}
+.ete-atestados :is(
+  .at-card,.at-metric,.at-form-card,.at-form-intro,.at-records-top,
+  .at-report-card,.at-report-table-card,.at-report-filterbar
+){
+  box-shadow:0 1px 2px rgba(0,0,0,.16)!important;
+}
+.ete-atestados :is(
+  .at-card,.at-metric,.at-form-card,.at-form-intro,.at-records-top,
+  .at-report-card,.at-report-table-card
+){
+  background:#11161b!important;
+}
+.ete-atestados :is(
+  .at-card-head,.at-report-filterbar,.at-choice-card,.at-reason-option,
+  .at-period-badge,.at-time-grid
+){
+  background:#151a1f!important;
+}
+.ete-atestados :is(
+  .at-input,.at-select,.at-room-trigger,.at-reason-trigger
+){
+  background:#0f1418!important;
+  box-shadow:none!important;
+}
+.ete-atestados :is(.at-room-groups,.at-reason-list){
+  background:#11161b!important;
+  box-shadow:0 4px 12px rgba(0,0,0,.22)!important;
+}
+.ete-atestados .at-report-pie-graphic{
+  box-shadow:none!important;
+}
