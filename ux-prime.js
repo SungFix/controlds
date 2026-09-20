@@ -244,6 +244,10 @@
       if(!button.getAttribute("aria-label")) button.setAttribute("aria-label","Sair da conta");
       if(!button.title) button.title="Sair da conta";
     });
+    document.querySelectorAll("button[aria-label],[role='button'][aria-label]").forEach(control=>{
+      const label=control.getAttribute("aria-label");
+      if(label&&!control.getAttribute("title")) control.setAttribute("title",label);
+    });
 
     syncPickerA11y();
     syncTabA11y();
@@ -342,7 +346,7 @@
   }
 
   function start(){
-    root.dataset.primeUx="2";
+    root.dataset.primeUx="3";
     installDocumentMetadata();
     installKeyboardHelp();
     syncEverything();
@@ -354,12 +358,30 @@
     });
     themeObserver.observe(root,{attributes:true,attributeFilter:["data-theme","class"]});
 
+    const uxRelevantSelector=[
+      "dialog","form","input","textarea","select",
+      ".nav",".sidebar",".page",".topbar-right",".top-right",
+      ".request-tabs",".computer-tabs",".group-picker",".interval-picker",".student-picker",".time-picker",
+      ".sync-pill","#syncPill","#toast",".toast",".header-logout",".mobile-menu",
+      ".ete-portal",".ete-atestados",".at-control-main"
+    ].join(",");
+
+    function nodeMayNeedUxSync(node){
+      if(!node||node.nodeType!==1)return false;
+      return !!(node.matches?.(uxRelevantSelector)||node.querySelector?.(uxRelevantSelector));
+    }
+
     function handleBodyMutations(mutations){
       const relevantAttributeTarget="dialog,form,button,input,textarea,select,.nav button,.page,.request-tab,.computer-tab,.group-picker-trigger,.interval-picker-trigger,.student-picker-trigger,.group-picker-popup,.interval-picker-popup,.student-picker-popup,.time-popup";
       for(const mutation of mutations){
-        if(mutation.type==="childList"&&(mutation.addedNodes.length||mutation.removedNodes.length)){
-          queueSync();
-          return;
+        if(mutation.type==="childList"){
+          for(const node of mutation.addedNodes){
+            if(nodeMayNeedUxSync(node)){queueSync();return;}
+          }
+          for(const node of mutation.removedNodes){
+            if(nodeMayNeedUxSync(node)){queueSync();return;}
+          }
+          continue;
         }
         if(mutation.type==="attributes"&&mutation.target.matches?.(relevantAttributeTarget)){
           queueSync();
@@ -454,9 +476,22 @@
     button.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>';
     document.body.appendChild(button);
 
+    function scrollCandidates(){
+      return [
+        document.scrollingElement,
+        document.querySelector(".ete-portal:not([hidden])"),
+        document.querySelector(".ete-portal-module"),
+        document.querySelector(".at-control-main")
+      ].filter(Boolean);
+    }
+    function currentScrollTop(){
+      let top=window.scrollY||0;
+      for(const scroller of scrollCandidates()) top=Math.max(top,Number(scroller.scrollTop)||0);
+      return top;
+    }
     function sync(){
       scrollTicking=false;
-      button.classList.toggle("is-visible",window.scrollY>620);
+      button.classList.toggle("is-visible",currentScrollTop()>620);
     }
     function queue(){
       if(scrollTicking)return;
@@ -464,7 +499,15 @@
       requestAnimationFrame(sync);
     }
     window.addEventListener("scroll",queue,{passive:true});
-    button.addEventListener("click",()=>window.scrollTo({top:0,behavior:reduceMotion?"auto":"smooth"}));
+    document.addEventListener("scroll",queue,true);
+    button.addEventListener("click",()=>{
+      const behavior=reduceMotion?"auto":"smooth";
+      window.scrollTo({top:0,behavior});
+      for(const scroller of scrollCandidates()){
+        if(scroller===document.scrollingElement)continue;
+        try{scroller.scrollTo({top:0,behavior});}catch(_){scroller.scrollTop=0;}
+      }
+    });
     sync();
   }
 
