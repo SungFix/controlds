@@ -379,3 +379,60 @@ html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .e
 html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-open{
   border-color:#e1e8ec!important;
 }
+
+
+/* =========================================================
+   PREMIUM LIGHT FINISH v4 — acabamento da paleta Atestados
+   ========================================================= */
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open){
+  background:
+    radial-gradient(circle at 82% -12%,rgba(126,153,170,.055),transparent 31%),
+    linear-gradient(180deg,#f8fafb 0%,#f6f9fa 55%,#f8fafb 100%)!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .content{
+  background:transparent!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) :is(
+  .hero-stat,.mini-stat,.request-stat,.permission-stat,.computer-stat,.student-stat,.history-stat
+){
+  box-shadow:0 8px 24px rgba(32,48,57,.06),inset 0 1px 0 #fff!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) :is(
+  .request-tabs,.computer-tabs,.toolbar,.request-toolbar,.permission-toolbar,.student-toolbar,.computer-toolbar,.history-tools
+){
+  background:#f4f7f9!important;
+  border-color:#dce4e8!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) :is(.request-tab,.computer-tab).active{
+  background:#fff!important;
+  color:#203039!important;
+  border-color:#cfdbe1!important;
+  box-shadow:0 3px 10px rgba(32,48,57,.07)!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) :is(
+  .student-avatar,.computer-device-icon,.history-icon,.page-symbol
+){
+  background:linear-gradient(145deg,#fff,#f4f7f9)!important;
+  border-color:#dce4e8!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .agenda-item{
+  box-shadow:0 6px 18px rgba(32,48,57,.055)!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .agenda-tag{
+  background:#f4f7f9!important;
+  border-color:#dce4e8!important;
+  color:#647680!important;
+}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-card::before{
+  background:#7895a8!important;
+}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-card:nth-of-type(2)::before{
+  background:#6f9b7d!important;
+}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-open{
+  background:#f8fafb!important;
+  color:#26363e!important;
+}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-open:hover{
+  background:#eef3f6!important;
+}
