@@ -606,3 +606,21 @@ input:focus,textarea:focus,select:focus,.filter-select:focus,.request-sort:focus
     transform:none!important;
   }
 }
+
+
+/* Agenda escura — contraste AA para textos auxiliares. */
+html:not([data-theme="light"]) .agenda-purpose .purpose-title{
+  color:#aeb9c2!important;
+  font-size:10.5px!important;
+  line-height:1.45!important;
+}
+html:not([data-theme="light"]) .agenda-tag{
+  color:#aeb9c2!important;
+  font-size:8.8px!important;
+  line-height:1.25!important;
+  border-color:#36404a!important;
+  background:#151a1f!important;
+}
+html:not([data-theme="light"]) .agenda-person small{
+  color:#9eabb4!important;
+}
