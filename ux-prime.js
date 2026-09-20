@@ -300,12 +300,20 @@
   }
 
   function syncTabA11y(){
-    [[".request-tabs",".request-tab"],[".computer-tabs",".computer-tab"]].forEach(([listSelector,tabSelector])=>{
+    [
+      [".request-tabs",".request-tab"],
+      [".computer-tabs",".computer-tab"],
+      [".at-nav",".at-nav-item"]
+    ].forEach(([listSelector,tabSelector])=>{
       document.querySelectorAll(listSelector).forEach(list=>{
         list.setAttribute("role","tablist");
-        list.querySelectorAll(tabSelector).forEach(tab=>{
+        const tabs=[...list.querySelectorAll(tabSelector)];
+        const active=tabs.find(tab=>tab.classList.contains("active"))||tabs[0]||null;
+        tabs.forEach(tab=>{
+          const selected=tab===active;
           tab.setAttribute("role","tab");
-          tab.setAttribute("aria-selected",String(tab.classList.contains("active")));
+          tab.setAttribute("aria-selected",String(selected));
+          tab.tabIndex=selected?0:-1;
         });
       });
     });
