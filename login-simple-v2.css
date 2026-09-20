@@ -677,11 +677,11 @@ html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit{
 body.auth-locked .login-gate .login-card #loginSubmit{
   min-height:44px!important;
   padding:0 16px!important;
-  border:1px solid #536974!important;
+  border:1px solid #4b5157!important;
   border-radius:10px!important;
-  background:#202b31!important;
-  color:#eef3f5!important;
-  box-shadow:inset 0 -2px 0 rgba(113,139,153,.18)!important;
+  background:#292d31!important;
+  color:#f1f3f4!important;
+  box-shadow:inset 0 -2px 0 rgba(160,165,170,.12)!important;
   font:inherit!important;
   font-size:10.5px!important;
   font-weight:820!important;
@@ -691,14 +691,14 @@ body.auth-locked .login-gate .login-card #loginSubmit{
 }
 @media(hover:hover) and (pointer:fine){
   body.auth-locked .login-gate .login-card #loginSubmit:hover:not(:disabled){
-    background:#26343b!important;
-    border-color:#6b828d!important;
+    background:#33383d!important;
+    border-color:#626970!important;
     transform:translateY(-1px)!important;
   }
 }
 body.auth-locked .login-gate .login-card #loginSubmit:active:not(:disabled){transform:translateY(1px)!important}
 body.auth-locked .login-gate .login-card #loginSubmit:focus-visible{
-  outline:2px solid #718b99!important;
+  outline:2px solid #858b91!important;
   outline-offset:2px!important;
   box-shadow:none!important;
 }
@@ -708,14 +708,14 @@ body.auth-locked .login-gate .login-card #loginSubmit:disabled{
   transform:none!important;
 }
 html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit{
-  background:#e7eef1!important;
-  border-color:#9fb4be!important;
-  color:#2c414a!important;
-  box-shadow:inset 0 -2px 0 rgba(96,125,139,.10)!important;
+  background:#e5e7e9!important;
+  border-color:#b3b8bd!important;
+  color:#34393e!important;
+  box-shadow:inset 0 -2px 0 rgba(120,125,130,.08)!important;
 }
 @media(hover:hover) and (pointer:fine){
   html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit:hover:not(:disabled){
-    background:#dde8ec!important;
-    border-color:#879faa!important;
+    background:#d9dcdf!important;
+    border-color:#9da3a9!important;
   }
 }
