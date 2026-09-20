@@ -66,3 +66,29 @@ html.theme-light .ete-select-menu{
   box-shadow:0 14px 30px rgba(45,65,55,.11)!important;
   filter:saturate(.8)!important;
 }
+
+
+/* EXACT MATTE OVERRIDE */
+html body button[aria-haspopup="listbox"],
+html body .at-reason-trigger{
+  background:#151a1f!important;
+  border-color:#333e47!important;
+  color:#d7dfe4!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+@media(hover:hover) and (pointer:fine){
+  html body button[aria-haspopup="listbox"]:hover,
+  html body .at-reason-trigger:hover{
+    background:#1a2025!important;
+    border-color:#4c5b65!important;
+  }
+}
+html body button[aria-haspopup="listbox"]:focus-visible,
+html body button[aria-haspopup="listbox"][aria-expanded="true"],
+html body .at-reason-trigger:focus-visible,
+html body .at-reason-trigger[aria-expanded="true"]{
+  background:#1a2025!important;
+  border-color:#626970!important;
+  box-shadow:0 0 0 2px rgba(160,165,170,.07)!important;
+}
