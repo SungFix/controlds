@@ -6374,9 +6374,20 @@ function useSavedStudent(id){
   closeStudentPicker();
   updateRequestSummary();
 }
+let studentRenderSignature="";
 function renderStudents(){
-  if(!$("#studentRows")) return;
+  const rows=$("#studentRows");
+  if(!rows) return;
+
   const q=($("#studentSearch")?.value || "").toLocaleLowerCase("pt-BR");
+  const canUse=canCreateRequest();
+  const signature=q+"|"+(canUse?"1":"0")+"|"+students.map(s=>[
+    s.id,s.name,s.className,s.course,Number(s.useCount||0),s.lastUsed||""
+  ].join("\u001f")).join("\u001e");
+
+  if(signature===studentRenderSignature) return;
+  studentRenderSignature=signature;
+
   const list=[...students]
     .filter(s=>(s.name+" "+s.className+" "+s.course).toLocaleLowerCase("pt-BR").includes(q))
     .sort((a,b)=>a.name.localeCompare(b.name,"pt-BR"));
@@ -6385,8 +6396,8 @@ function renderStudents(){
   $("#studentUsed").textContent=students.filter(s=>Number(s.useCount||0)>0).length;
   $("#studentUses").textContent=students.reduce((n,s)=>n+Number(s.useCount||0),0);
 
-  $("#studentRows").innerHTML=list.length ? list.map(s=>`
-    <article class="student-card">
+  rows.innerHTML=list.length ? list.map(s=>`
+    <article class="student-card" data-student-id="${esc(s.id)}">
       <div class="student-card-head">
         <div class="student-avatar">${esc(studentInitials(s.name))}</div>
         <div class="student-card-title">
@@ -6406,13 +6417,13 @@ function renderStudents(){
       </div>
       <div class="student-card-foot">
         <div class="student-last-use">${Number(s.useCount||0)} uso${Number(s.useCount||0)===1?"":"s"} registrado${Number(s.useCount||0)===1?"":"s"}</div>
-        ${canCreateRequest()?`<button class="btn small" data-use-student="${s.id}">Usar em pedido</button>`:""}
+        ${canUse?`<button class="btn small" data-use-student="${s.id}">Usar em pedido</button>`:""}
       </div>
     </article>
   `).join("") : `
     <div class="student-empty">
       <strong>Nenhum aluno encontrado</strong>
-      Cadastre um aluno ou ajuste a pesquisa.
+      Ajuste a pesquisa ou os filtros para tentar novamente.
     </div>`;
 
   populateSavedStudentSelect();
@@ -6722,7 +6733,7 @@ function openStudentModal(){
 }
 $("#newStudentBtn")?.addEventListener("click",openStudentModal);
 $("#newStudentBtn2")?.addEventListener("click",openStudentModal);
-$("#studentSearch")?.addEventListener("input",renderStudents);
+$("#studentSearch")?.addEventListener("input",()=>queueSearchRender("students",renderStudents));
 
 
 
@@ -6870,7 +6881,7 @@ $("#permissionForm").addEventListener("submit",e=>{
   toast("Permissão registrada.");
 });
 
-$("#permissionSearch")?.addEventListener("input",renderPermissions);
+$("#permissionSearch")?.addEventListener("input",()=>queueSearchRender("permissions",renderPermissions));
 $("#permissionFilter")?.addEventListener("change",renderPermissions);
 
 $("#requestForm").addEventListener("submit",async e=>{
@@ -6932,9 +6943,18 @@ $("#requestForm").addEventListener("submit",async e=>{
   toast("Pedido criado e salvo.");
 });
 
-$("#agendaSearch").addEventListener("input",renderAgenda);
+const searchRenderFrames=new Map();
+function queueSearchRender(key,renderer){
+  if(searchRenderFrames.has(key)) return;
+  searchRenderFrames.set(key,requestAnimationFrame(()=>{
+    searchRenderFrames.delete(key);
+    renderer();
+  }));
+}
 
-$("#computerSearch")?.addEventListener("input",renderComputers);
+$("#agendaSearch").addEventListener("input",()=>queueSearchRender("agenda",renderAgenda));
+
+$("#computerSearch")?.addEventListener("input",()=>queueSearchRender("computers",renderComputers));
 
 $$("[data-computer-filter]").forEach(btn=>{
   btn.addEventListener("click",()=>{
@@ -6944,7 +6964,7 @@ $$("[data-computer-filter]").forEach(btn=>{
   });
 });
 
-$("#requestSearch").addEventListener("input",renderRequests);
+$("#requestSearch").addEventListener("input",()=>queueSearchRender("requests",renderRequests));
 $("#requestSort").addEventListener("change",renderRequests);
 
 $$("[data-request-filter]").forEach(btn=>{
@@ -6955,7 +6975,7 @@ $$("[data-request-filter]").forEach(btn=>{
   });
 });
 
-$("#historySearch").addEventListener("input",renderHistory);
+$("#historySearch").addEventListener("input",()=>queueSearchRender("history",renderHistory));
 $("#historyFilter").addEventListener("change",renderHistory);
 $("#clearHistoryFilters").addEventListener("click",()=>{
   $("#historySearch").value="";
