@@ -1,6 +1,7 @@
 -- Control Ds — limpeza do histórico de um aluno específico
 -- Usa student_id relacional para não atingir alunos homônimos.
 -- Mantém cadastro, pedidos, permissões e atestados intactos.
+-- Também zera os contadores históricos do cadastro (use_count/last_used).
 
 create or replace function public.ete_clear_student_history(p_student_id text)
 returns integer
@@ -28,6 +29,13 @@ begin
   where student_id = p_student_id;
 
   get diagnostics v_count = row_count;
+
+  update public.ete_students
+  set use_count = 0,
+      last_used = null,
+      updated_at = now()
+  where id = p_student_id;
+
   return v_count;
 end;
 $function$;
