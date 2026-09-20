@@ -105,6 +105,7 @@
 }
 
 @media(min-width:821px){
+  .mobile-menu{display:none !important}
   .mobile-menu-backdrop{display:none !important}
 
   /* Desktop/notebook: layout deterministico, sem depender do grid legado. */
