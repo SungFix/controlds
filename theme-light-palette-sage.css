@@ -247,3 +247,135 @@ html[data-theme="light"] body:not(.auth-locked) .ete-exit-close,
 html[data-theme="light"] body:not(.auth-locked) .ete-exit-option{background:#f4f7f9!important;border-color:#dce4e8!important;color:#26363e!important}
 html[data-theme="light"] body:not(.auth-locked) .ete-exit-option:hover{background:#eef3f6!important;border-color:#cbd8df!important}
 html[data-theme="light"] body:not(.auth-locked) .ete-exit-option small{color:#647680!important}
+
+
+/* =========================================================
+   PROFESSIONAL LIGHT PASS v3
+   Mantem a paleta Atestados: #f8fafb / #f4f7f9 / #ffffff.
+   ========================================================= */
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open){
+  background:#f8fafb!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .content{
+  background:#f8fafb!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .topbar{
+  background:rgba(255,255,255,.97)!important;
+  border-color:#dce4e8!important;
+  box-shadow:0 1px 0 #dce4e8,0 8px 24px rgba(32,48,57,.055)!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .page-symbol,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .topbar-right .header-account,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .top-right .header-account,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .control-theme-toggle-header,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .header-logout{
+  background:#fff!important;
+  border-color:#dce4e8!important;
+  box-shadow:0 3px 10px rgba(32,48,57,.045)!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .pagehead h1{
+  color:#203039!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .pagehead p{
+  color:#647680!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) :is(
+  .panel,.hero-stat,.mini-stat,.request-card,.student-card,.student-item,.computer-card,.computer-item,
+  .permission-card,.permission-item,.history-stat,.request-stat,.student-stat,.permission-stat,.computer-stat,.agenda-item
+){
+  background:#fff!important;
+  border-color:#dce4e8!important;
+  box-shadow:0 8px 24px rgba(32,48,57,.055)!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) :is(
+  .panel,.request-card,.permission-card,.computer-item
+) :is(.panelhead,.request-card-top,.permission-card-top,.computer-item-head){
+  background:#f8fafb!important;
+  border-color:#e3eaed!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .quick-card,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .request-info-box,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .permission-info-box,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .summary-card,
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .computer-meta-box{
+  background:#f8fafb!important;
+  border-color:#e0e8ec!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .nav button.active{
+  background:#eef3f6!important;
+  border-color:#d2dde3!important;
+  box-shadow:inset 3px 0 0 #7e99aa,0 5px 14px rgba(32,48,57,.045)!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .navicon{
+  box-shadow:inset 0 1px 0 #fff,0 2px 7px rgba(32,48,57,.035)!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) :is(
+  input,textarea,select,.filter-select,.request-sort,.group-picker-trigger,.interval-picker-trigger,
+  .student-picker-trigger,.time-trigger,.time-search,.student-picker-search
+){
+  background:#fff!important;
+  border-color:#d8e2e7!important;
+  color:#203039!important;
+  box-shadow:inset 0 1px 0 #fff!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) :is(
+  input,textarea,select,.filter-select,.request-sort,.group-picker-trigger,.interval-picker-trigger,
+  .student-picker-trigger,.time-trigger
+):hover{
+  border-color:#c8d6dd!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) :is(
+  input,textarea,select,.filter-select,.request-sort
+):focus{
+  border-color:#8fa6b2!important;
+  box-shadow:0 0 0 3px rgba(126,153,170,.12)!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .btn{
+  background:#fff!important;
+  border-color:#d6e1e6!important;
+  color:#26363e!important;
+  box-shadow:0 2px 8px rgba(32,48,57,.04)!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .btn:hover{
+  background:#f4f7f9!important;
+  border-color:#c8d6dd!important;
+  box-shadow:0 5px 13px rgba(32,48,57,.065)!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .btn.primary{
+  background:#26363e!important;
+  border-color:#26363e!important;
+  color:#fff!important;
+  box-shadow:0 6px 16px rgba(32,48,57,.12)!important;
+}
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .btn.primary:hover{
+  background:#344851!important;
+  border-color:#344851!important;
+}
+
+/* Portal claro com aparencia de produto da mesma suite. */
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open){
+  background:#f8fafb!important;
+}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-topbar{
+  background:#fff!important;
+  border-color:#dce4e8!important;
+  box-shadow:0 8px 26px rgba(32,48,57,.055)!important;
+}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-card{
+  background:#fff!important;
+  border-color:#dce4e8!important;
+  box-shadow:0 10px 28px rgba(32,48,57,.06)!important;
+}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-card:hover{
+  background:#fff!important;
+  border-color:#cbd8df!important;
+  box-shadow:0 16px 38px rgba(32,48,57,.095)!important;
+}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-icon,
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-status{
+  background:#f4f7f9!important;
+  border-color:#dce4e8!important;
+}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-open{
+  border-color:#e1e8ec!important;
+}
