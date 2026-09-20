@@ -1567,16 +1567,12 @@ input[type="radio"]:disabled{
 }
 
 @media(prefers-reduced-motion:reduce){
-  :is(.btn,.ete-portal-theme,.ete-portal-exit,.ete-portal-back,.ete-exit-option),
-  input[type="checkbox"],input[type="radio"],
-  input[type="checkbox"]::before,input[type="radio"]::before{
+  :is(.btn,.ete-portal-theme,.ete-portal-exit,.ete-portal-back,.ete-exit-option){
     transition:none!important;
     transform:none!important;
   }
-  input[type="checkbox"]:checked::before{
-    transform:translateY(-1px) rotate(-45deg)!important;
-  }
-  input[type="radio"]:checked::before{
-    transform:none!important;
+  input[type="checkbox"],input[type="radio"],
+  input[type="checkbox"]::before,input[type="radio"]::before{
+    transition:none!important;
   }
 }
