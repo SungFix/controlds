@@ -59,21 +59,18 @@ html[data-theme="light"] .ete-atestados{--at-border:#d6e0e5;--at-panel:#fff;--at
 }
 
 
-/* =========================================================
-   BUTTON SYSTEM v6 — Atestados
-   ========================================================= */
+/* ACTION CONTROLS v7 — Atestados */
 .ete-atestados{
-  --at-btn-bg:#151a1f;
-  --at-btn-hover:#1a2026;
-  --at-btn-border:#36414a;
-  --at-btn-border-hover:#4a5964;
-  --at-btn-text:#dce3e7;
-  --at-btn-primary:#536b78;
-  --at-btn-primary-hover:#617b89;
-  --at-btn-primary-text:#f7f9fa;
-  --at-btn-danger-bg:#21191b;
-  --at-btn-danger-border:#56363b;
-  --at-btn-danger-text:#d99aa1;
+  --at-action-bg:#151a1f;
+  --at-action-hover:#1a2025;
+  --at-action-border:#333e47;
+  --at-action-border-hover:#4c5b65;
+  --at-action-text:#d7dfe4;
+  --at-primary-bg:#202b31;
+  --at-primary-hover:#26343b;
+  --at-primary-border:#536974;
+  --at-primary-border-hover:#6b828d;
+  --at-primary-text:#eef3f5;
 }
 
 .ete-atestados .at-btn{
@@ -83,76 +80,66 @@ html[data-theme="light"] .ete-atestados{--at-border:#d6e0e5;--at-panel:#fff;--at
   align-items:center!important;
   justify-content:center!important;
   gap:7px!important;
-  border:1px solid var(--at-btn-border)!important;
-  border-radius:11px!important;
-  background:var(--at-btn-bg)!important;
-  color:var(--at-btn-text)!important;
+  border:1px solid var(--at-action-border)!important;
+  border-radius:10px!important;
+  background:var(--at-action-bg)!important;
+  color:var(--at-action-text)!important;
   box-shadow:none!important;
   font:inherit!important;
   font-size:10.5px!important;
-  font-weight:820!important;
+  font-weight:800!important;
   line-height:1!important;
-  letter-spacing:.005em!important;
-  white-space:nowrap!important;
+  letter-spacing:.008em!important;
   cursor:pointer!important;
-  transition:background-color .15s ease,border-color .15s ease,color .15s ease,transform .12s ease!important;
+  transition:background-color .14s ease,border-color .14s ease,transform .1s ease!important;
 }
 .ete-atestados .at-btn.primary{
-  background:var(--at-btn-primary)!important;
-  border-color:var(--at-btn-primary)!important;
-  color:var(--at-btn-primary-text)!important;
-  box-shadow:none!important;
+  background:var(--at-primary-bg)!important;
+  border-color:var(--at-primary-border)!important;
+  color:var(--at-primary-text)!important;
+  box-shadow:inset 0 -2px 0 rgba(113,139,153,.18)!important;
 }
 @media(hover:hover) and (pointer:fine){
   .ete-atestados .at-btn:hover:not(:disabled){
-    background:var(--at-btn-hover)!important;
-    border-color:var(--at-btn-border-hover)!important;
+    background:var(--at-action-hover)!important;
+    border-color:var(--at-action-border-hover)!important;
     transform:translateY(-1px)!important;
   }
   .ete-atestados .at-btn.primary:hover:not(:disabled){
-    background:var(--at-btn-primary-hover)!important;
-    border-color:var(--at-btn-primary-hover)!important;
+    background:var(--at-primary-hover)!important;
+    border-color:var(--at-primary-border-hover)!important;
   }
 }
-.ete-atestados .at-btn:active:not(:disabled){
-  transform:translateY(1px) scale(.985)!important;
-}
+.ete-atestados .at-btn:active:not(:disabled){transform:translateY(1px)!important}
 .ete-atestados .at-btn:focus-visible{
-  outline:2px solid #7895a8!important;
+  outline:2px solid #718b99!important;
   outline-offset:2px!important;
   box-shadow:none!important;
 }
 .ete-atestados .at-btn:disabled{
-  opacity:.48!important;
+  opacity:.46!important;
   cursor:not-allowed!important;
   transform:none!important;
 }
 
+/* Radio de turma e checkbox de justificativa usam o mesmo desenho global. */
+.ete-atestados .at-room-option input[type="radio"],
+.ete-atestados .at-reason-option input[type="checkbox"],
+.ete-atestados .at-choice-card input[type="radio"]{
+  flex:0 0 18px!important;
+}
+
 .ete-atestados .at-icon-danger{
-  width:38px!important;
-  min-width:38px!important;
-  height:38px!important;
-  min-height:38px!important;
+  width:36px!important;
+  min-width:36px!important;
+  height:36px!important;
+  min-height:36px!important;
   padding:0!important;
   display:grid!important;
   place-items:center!important;
-  border:1px solid var(--at-btn-danger-border)!important;
-  border-radius:10px!important;
-  background:var(--at-btn-danger-bg)!important;
-  color:var(--at-btn-danger-text)!important;
-  box-shadow:none!important;
-  transition:background-color .15s ease,border-color .15s ease,transform .12s ease!important;
-}
-@media(hover:hover) and (pointer:fine){
-  .ete-atestados .at-icon-danger:hover{
-    background:#291d20!important;
-    border-color:#74464d!important;
-    transform:translateY(-1px)!important;
-  }
-}
-.ete-atestados .at-icon-danger:active{transform:translateY(1px) scale(.97)!important}
-.ete-atestados .at-icon-danger:focus-visible{
-  outline:2px solid #a9666d!important;
-  outline-offset:2px!important;
+  border:1px solid #53343a!important;
+  border-radius:9px!important;
+  background:#1d1719!important;
+  color:#d69aa1!important;
   box-shadow:none!important;
 }
