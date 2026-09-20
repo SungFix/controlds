@@ -177,11 +177,12 @@
     const pairs=[
       [".group-picker-trigger",".group-picker-popup",".group-option"],
       [".interval-picker-trigger",".interval-picker-popup",".interval-option"],
-      [".student-picker-trigger",".student-picker-popup",".student-option"]
+      [".student-picker-trigger",".student-picker-popup",".student-option"],
+      [".time-trigger",".time-popup",".time-option"]
     ];
     pairs.forEach(([triggerSelector,popupSelector,optionSelector])=>{
       document.querySelectorAll(triggerSelector).forEach((trigger,index)=>{
-        const wrapper=trigger.closest(".group-picker,.interval-picker,.student-picker")||trigger.parentElement;
+        const wrapper=trigger.closest(".group-picker,.interval-picker,.student-picker,.time-picker")||trigger.parentElement;
         const popup=wrapper?.querySelector(popupSelector)||document.querySelectorAll(popupSelector)[index];
         trigger.setAttribute("aria-haspopup","listbox");
         trigger.setAttribute("aria-expanded",String(trigger.classList.contains("open")||popup?.classList.contains("open")));
