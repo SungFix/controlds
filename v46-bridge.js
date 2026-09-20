@@ -82,6 +82,15 @@ function v46ResetStudentEditMode(){
   if(title)title.textContent="Cadastrar aluno";
   const submit=form?.querySelector('button[type="submit"]');
   if(submit)submit.textContent="Salvar aluno";
+  const historyZone=$("#studentHistoryDangerZone");
+  if(historyZone)historyZone.hidden=true;
+  const historyButton=$("#studentClearHistoryBtn");
+  if(historyButton){
+    historyButton.hidden=true;
+    historyButton.disabled=false;
+    historyButton.textContent="Apagar histórico";
+    delete historyButton.dataset.studentId;
+  }
 }
 document.addEventListener("click",event=>{
   if(event.target.closest?.("#newStudentBtn,#newStudentBtn2"))v46ResetStudentEditMode();
@@ -104,6 +113,16 @@ document.addEventListener("click",async event=>{const target=event.target,confir
   $("#studentModalTitle").textContent="Editar aluno";
   const submit=form.querySelector('button[type="submit"]');
   if(submit)submit.textContent="Salvar alterações";
+  const mayClearHistory=typeof canClearHistory==="function"&&canClearHistory();
+  const historyZone=$("#studentHistoryDangerZone");
+  if(historyZone)historyZone.hidden=!mayClearHistory;
+  const historyButton=$("#studentClearHistoryBtn");
+  if(historyButton){
+    historyButton.hidden=!mayClearHistory;
+    historyButton.disabled=false;
+    historyButton.textContent="Apagar histórico";
+    historyButton.dataset.studentId=String(s.id);
+  }
   $("#studentModal").showModal();
 }else if(delStudent){
   if(!canManageStudents())throw new Error("forbidden");
@@ -113,6 +132,58 @@ document.addEventListener("click",async event=>{const target=event.target,confir
   await v46Rpc("ete_delete_student",{p_student_id:String(s.id)});
   toast("Aluno e dados ligados removidos.");
 }else if(delReq){const r=data.find(x=>String(x.id)===String(delReq.dataset.deleteRequest));if(!r)return;if(!canDeleteRequest(r))throw new Error("forbidden");if(["use","late"].includes(r.status))throw new Error("request_in_use");if(!confirm(`Apagar o pedido de ${r.student}?\n\nEssa ação remove o pedido da agenda, dos computadores e da lista de pedidos.`))return;await v46Rpc("ete_delete_request",{p_request_id:String(r.id)});toast("Pedido apagado.");}else if(ret){if(!canReturn())throw new Error("forbidden");const r=data.find(x=>String(x.id)===String(ret.dataset.return)),wasLate=r?.status==="late";await v46Rpc("ete_return_request",{p_request_id:String(ret.dataset.return)});toast(wasLate?"Devolução confirmada com atraso.":"Devolução confirmada.");}}catch(err){console.error(err);toast(v46ExplainError(err));}},true);
+async function v46HandleClearStudentHistory(button){
+  if(typeof canClearHistory!=="function"||!canClearHistory())throw new Error("forbidden");
+  const studentId=String(button?.dataset?.studentId||"");
+  const student=students.find(item=>String(item?.id)===studentId);
+  if(!student)throw new Error("student_not_found");
+
+  let confirmed=false;
+  if(window.ControlActionModal?.confirm){
+    confirmed=await window.ControlActionModal.confirm({
+      title:"Apagar histórico do aluno",
+      subtitle:student.name+" · "+student.className+" "+student.course,
+      message:"Todos os registros do Histórico vinculados a este aluno serão apagados.",
+      details:["Somente registros do Histórico","Cadastro do aluno será mantido","Pedidos, permissões e atestados serão mantidos"],
+      warning:"Essa ação não pode ser desfeita.",
+      confirmText:"Apagar histórico",
+      cancelText:"Cancelar"
+    });
+  }else{
+    confirmed=window.confirm("Apagar todo o histórico de "+student.name+"?\n\nCadastro, pedidos, permissões e atestados serão mantidos. Essa ação não pode ser desfeita.");
+  }
+  if(!confirmed)return;
+
+  const oldText=button.textContent;
+  button.disabled=true;
+  button.textContent="Apagando...";
+  try{
+    const removed=Number(await v46Rpc("ete_clear_student_history",{p_student_id:studentId}))||0;
+    if(removed===0)toast("Este aluno não possui registros no histórico.");
+    else if(removed===1)toast("1 registro do histórico foi apagado.");
+    else toast(removed+" registros do histórico foram apagados.");
+  }catch(error){
+    console.error("Falha ao apagar histórico do aluno:",error);
+    toast(v46ExplainError(error));
+  }finally{
+    if(button.isConnected){
+      button.disabled=false;
+      button.textContent=oldText||"Apagar histórico";
+    }
+  }
+}
+
+document.addEventListener("click",event=>{
+  const button=event.target.closest?.("[data-clear-student-history]");
+  if(!button)return;
+  event.preventDefault();
+  event.stopPropagation();
+  v46HandleClearStudentHistory(button).catch(error=>{
+    console.error(error);
+    toast(v46ExplainError(error));
+  });
+});
+
 for(const input of [$("#studentPin"),$("#pickupPin")]){if(!input)continue;input.minLength=4;input.maxLength=8;input.pattern="\\d{4,8}";input.autocomplete="new-password";}
 v46ClearBrowserResidue();data=[];students=[];permissions=[];history=[];deletedRequestIds=[];try{render()}catch{}setSyncState("login");
 
