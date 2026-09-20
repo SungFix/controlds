@@ -237,11 +237,11 @@ html.theme-light .ete-atestados{
   --at-action-border:#d2dde3;
   --at-action-border-hover:#bccbd2;
   --at-action-text:#31454e;
-  --at-primary-bg:#e7eef1;
-  --at-primary-hover:#dde8ec;
-  --at-primary-border:#9fb4be;
-  --at-primary-border-hover:#879faa;
-  --at-primary-text:#2c414a;
+  --at-primary-bg:#e5e7e9;
+  --at-primary-hover:#d9dcdf;
+  --at-primary-border:#b3b8bd;
+  --at-primary-border-hover:#9da3a9;
+  --at-primary-text:#34393e;
 }
 html[data-theme="light"] .ete-atestados .at-icon-danger,
 html.theme-light .ete-atestados .at-icon-danger{
