@@ -10,12 +10,12 @@
     style.textContent=`
       body.auth-locked .login-password-wrap{position:relative;width:100%;margin-top:8px}
       body.auth-locked .login-password-wrap>#loginPassword{margin-top:0!important;padding-right:78px!important}
-      body.auth-locked .login-password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);min-width:60px;height:36px;padding:0 8px;border:1px solid #303943;border-radius:9px;background:#151b21;color:#aeb8c1;font:inherit;font-size:9px;font-weight:850;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:none!important;transition:background .14s ease,border-color .14s ease,color .14s ease}
-      body.auth-locked .login-password-toggle:hover{background:#1a2229;border-color:#43515e;color:#e5eaed}
-      body.auth-locked .login-password-toggle:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(95,127,174,.12)!important}
-      html[data-theme="light"] body.auth-locked .login-password-toggle{background:#efefec;border-color:#c3c6c0;color:#5f656c}
-      html[data-theme="light"] body.auth-locked .login-password-toggle:hover{background:#e3e4df;border-color:#b4b8b1;color:#20242a}
-      @media(max-width:420px){body.auth-locked .login-password-toggle{right:7px;height:34px;min-width:58px}}
+      body.auth-locked .login-password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);min-width:64px;height:38px;padding:0 9px;border:1px solid #333e47;border-radius:9px;background:#151a1f;color:#b9c2c9;font:inherit;font-size:10.5px;font-weight:820;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:none!important;transition:background .14s ease,border-color .14s ease,color .14s ease}
+      body.auth-locked .login-password-toggle:hover{background:#1a2025;border-color:#4c5b65;color:#eef1f3}
+      body.auth-locked .login-password-toggle:focus-visible{outline:2px solid #858b91;outline-offset:2px;box-shadow:none!important}
+      html[data-theme="light"] body.auth-locked .login-password-toggle{background:#f4f6f7;border-color:#d1d7db;color:#5f686e}
+      html[data-theme="light"] body.auth-locked .login-password-toggle:hover{background:#eceff1;border-color:#b8c0c5;color:#34393d}
+      @media(max-width:420px){body.auth-locked .login-password-toggle{right:7px;height:40px;min-width:64px;font-size:11px}}
     `;
     document.head.appendChild(style);
   }
@@ -46,6 +46,7 @@
     toggle.textContent="Mostrar";
     toggle.setAttribute("aria-label","Mostrar senha");
     toggle.setAttribute("aria-pressed","false");
+    toggle.setAttribute("aria-controls","loginPassword");
     wrap.appendChild(toggle);
 
     toggle.addEventListener("click",()=>{
