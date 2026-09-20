@@ -12,7 +12,8 @@ function v46EmptyState(){ return {requests:[],history:[],students:[],permissions
 function v46ExplainError(err){
   const m=String(err?.message||err||"");
   if(m.includes("duplicate_overlap")) return "Já existe um pedido ativo desse aluno em um horário que coincide.";
-  if(m.includes("invalid_pin")) return "PIN incorreto ou inválido. Use de 4 a 8 números.";\n  if(m.includes("invalid_code")) return "Use o número geral de 6 dígitos ou o número de série de 9 dígitos.";
+  if(m.includes("invalid_pin")) return "PIN incorreto ou inválido. Use de 4 a 8 números.";
+  if(m.includes("invalid_code")) return "Use o número geral de 6 dígitos ou o número de série de 9 dígitos.";
   if(m.includes("pin_locked")) return "Muitas tentativas incorretas. Aguarde 5 minutos.";
   if(m.includes("code_in_use")) return "Este notebook já está em uso.";
   if(m.includes("forbidden")) return "Sua conta não tem permissão para esta ação.";
