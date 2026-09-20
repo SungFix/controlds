@@ -55,7 +55,7 @@
   Cache-Control: public, max-age=3600, must-revalidate
 
 /theme-light-palette-sage.css
-  Cache-Control: public, max-age=3600, must-revalidate
+  Cache-Control: no-cache, max-age=0, must-revalidate
 
 /custom-select.js
   Cache-Control: public, max-age=3600, must-revalidate
@@ -134,3 +134,15 @@
 
 /theme-light.css
   Cache-Control: public, max-age=3600, must-revalidate
+
+/visual-stability-final.css
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/atestados-light-polish.css
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/atestados-light-fixes.css
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/atestados-form-visibility.css
+  Cache-Control: no-cache, max-age=0, must-revalidate
