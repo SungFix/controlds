@@ -139,3 +139,96 @@
     grid-column:auto !important;
   }
 }
+
+
+/* =========================================================
+   MOBILE HEADER ICON FIX — ícone independente do JS
+   Evita botão vazio e alinha com o símbolo da página.
+   ========================================================= */
+@media(max-width:820px){
+  .mobile-menu{
+    position:relative!important;
+    width:40px!important;
+    min-width:40px!important;
+    height:40px!important;
+    min-height:40px!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
+
+  /* O SVG continua no DOM para semântica/estado, mas o desenho visual
+     fica em CSS para nunca desaparecer durante carregamento. */
+  .mobile-menu svg{
+    display:none!important;
+  }
+
+  .mobile-menu::before,
+  .mobile-menu::after{
+    content:""!important;
+    position:absolute!important;
+    left:50%!important;
+    top:50%!important;
+    width:18px!important;
+    height:2px!important;
+    margin:0!important;
+    border:0!important;
+    border-radius:999px!important;
+    background:currentColor!important;
+    pointer-events:none!important;
+    transition:transform .16s ease,box-shadow .16s ease!important;
+  }
+
+  .mobile-menu::before{
+    transform:translate(-50%,-50%)!important;
+    box-shadow:0 -6px 0 currentColor,0 6px 0 currentColor!important;
+  }
+
+  .mobile-menu::after{
+    opacity:0!important;
+    transform:translate(-50%,-50%) rotate(-45deg)!important;
+  }
+
+  html.mobile-menu-open .mobile-menu::before,
+  body.mobile-menu-open .mobile-menu::before{
+    box-shadow:none!important;
+    transform:translate(-50%,-50%) rotate(45deg)!important;
+  }
+
+  html.mobile-menu-open .mobile-menu::after,
+  body.mobile-menu-open .mobile-menu::after{
+    opacity:1!important;
+  }
+
+  .topbar-left{
+    gap:10px!important;
+  }
+
+  .page-symbol{
+    width:40px!important;
+    min-width:40px!important;
+    height:40px!important;
+    min-height:40px!important;
+    flex-basis:40px!important;
+  }
+}
+
+@media(max-width:340px){
+  .topbar-left{
+    gap:8px!important;
+  }
+
+  .mobile-menu,
+  .page-symbol{
+    width:38px!important;
+    min-width:38px!important;
+    height:38px!important;
+    min-height:38px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .mobile-menu::before,
+  .mobile-menu::after{
+    transition:none!important;
+  }
+}
