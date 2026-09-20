@@ -249,3 +249,17 @@ html.theme-light .ete-atestados .at-icon-danger{
   border-color:#ddc3c8!important;
   color:#925962!important;
 }
+
+
+/* SELECT CONTROLS v8 — Atestados claro */
+html[data-theme="light"] .ete-atestados,
+html.theme-light .ete-atestados{
+  --at-select-bg:#f4f6f7;
+  --at-select-hover:#eceff1;
+  --at-select-border:#d1d7db;
+  --at-select-border-hover:#b8c0c5;
+  --at-select-open:#8f969b;
+  --at-select-text:#34393d;
+  --at-select-muted:#727b81;
+  --at-select-arrow:#777f85;
+}
