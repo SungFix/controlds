@@ -673,53 +673,49 @@ html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit{
 }
 
 
-/* =========================================================
-   BUTTON SYSTEM v6 — Login
-   ========================================================= */
+/* ACTION CONTROLS v7 — Login */
 body.auth-locked .login-gate .login-card #loginSubmit{
-  min-height:46px!important;
+  min-height:44px!important;
   padding:0 16px!important;
-  border:1px solid #627b87!important;
-  border-radius:11px!important;
-  background:#536b78!important;
-  color:#f7f9fa!important;
-  box-shadow:none!important;
+  border:1px solid #536974!important;
+  border-radius:10px!important;
+  background:#202b31!important;
+  color:#eef3f5!important;
+  box-shadow:inset 0 -2px 0 rgba(113,139,153,.18)!important;
   font:inherit!important;
   font-size:10.5px!important;
-  font-weight:850!important;
-  line-height:1!important;
-  letter-spacing:.005em!important;
+  font-weight:820!important;
+  letter-spacing:.008em!important;
   cursor:pointer!important;
-  transition:background-color .15s ease,border-color .15s ease,transform .12s ease!important;
+  transition:background-color .14s ease,border-color .14s ease,transform .1s ease!important;
 }
 @media(hover:hover) and (pointer:fine){
   body.auth-locked .login-gate .login-card #loginSubmit:hover:not(:disabled){
-    background:#617b89!important;
-    border-color:#617b89!important;
+    background:#26343b!important;
+    border-color:#6b828d!important;
     transform:translateY(-1px)!important;
   }
 }
-body.auth-locked .login-gate .login-card #loginSubmit:active:not(:disabled){
-  transform:translateY(1px) scale(.985)!important;
-}
+body.auth-locked .login-gate .login-card #loginSubmit:active:not(:disabled){transform:translateY(1px)!important}
 body.auth-locked .login-gate .login-card #loginSubmit:focus-visible{
-  outline:2px solid #7895a8!important;
+  outline:2px solid #718b99!important;
   outline-offset:2px!important;
   box-shadow:none!important;
 }
 body.auth-locked .login-gate .login-card #loginSubmit:disabled{
-  opacity:.48!important;
+  opacity:.46!important;
   cursor:not-allowed!important;
   transform:none!important;
 }
 html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit{
-  background:#31444d!important;
-  border-color:#31444d!important;
-  color:#fff!important;
+  background:#e7eef1!important;
+  border-color:#9fb4be!important;
+  color:#2c414a!important;
+  box-shadow:inset 0 -2px 0 rgba(96,125,139,.10)!important;
 }
 @media(hover:hover) and (pointer:fine){
   html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit:hover:not(:disabled){
-    background:#3b505a!important;
-    border-color:#3b505a!important;
+    background:#dde8ec!important;
+    border-color:#879faa!important;
   }
 }
