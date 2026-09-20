@@ -365,3 +365,70 @@ html[data-theme="light"] .ete-atestados #atForm .at-reason-list,
 html.theme-light .ete-atestados #atForm .at-reason-list{
   box-shadow:0 3px 9px rgba(32,48,57,.06)!important;
 }
+
+
+/* =========================================================
+   CHOICE CONTROLS v7 — cards, checkbox e radio do Atestados
+   ========================================================= */
+.ete-atestados #atForm .at-choice-card{
+  min-height:58px!important;
+  padding:11px 12px!important;
+  gap:10px!important;
+  border-color:#36424b!important;
+  border-radius:10px!important;
+  background:#13191e!important;
+  box-shadow:none!important;
+}
+.ete-atestados #atForm .at-choice-card:hover{
+  border-color:#52636e!important;
+  background:#171e23!important;
+}
+.ete-atestados #atForm .at-choice-card:has(input:checked){
+  border-color:#607d8b!important;
+  background:#182126!important;
+  box-shadow:inset 2px 0 0 #607d8b!important;
+}
+.ete-atestados #atForm .at-choice-card input[type="radio"]{
+  width:18px!important;
+  height:18px!important;
+  min-width:18px!important;
+  min-height:18px!important;
+  accent-color:unset!important;
+}
+.ete-atestados #atForm .at-reason-option,
+.ete-atestados .at-room-option span{
+  transition:background-color .14s ease,border-color .14s ease,color .14s ease!important;
+}
+.ete-atestados #atForm .at-reason-option:has(input:checked){
+  background:#182126!important;
+}
+.ete-atestados .at-room-option input:checked + span{
+  background:#182126!important;
+  border-color:#607d8b!important;
+  color:#eef3f5!important;
+}
+
+html[data-theme="light"] .ete-atestados #atForm .at-choice-card,
+html.theme-light .ete-atestados #atForm .at-choice-card{
+  background:#f4f7f9!important;
+  border-color:#d2dde3!important;
+}
+html[data-theme="light"] .ete-atestados #atForm .at-choice-card:hover,
+html.theme-light .ete-atestados #atForm .at-choice-card:hover{
+  background:#eef3f6!important;
+  border-color:#b7c8d0!important;
+}
+html[data-theme="light"] .ete-atestados #atForm .at-choice-card:has(input:checked),
+html.theme-light .ete-atestados #atForm .at-choice-card:has(input:checked){
+  background:#e8f0f3!important;
+  border-color:#91aab5!important;
+  box-shadow:inset 2px 0 0 #607d8b!important;
+}
+html[data-theme="light"] .ete-atestados #atForm .at-reason-option:has(input:checked),
+html.theme-light .ete-atestados #atForm .at-reason-option:has(input:checked),
+html[data-theme="light"] .ete-atestados .at-room-option input:checked + span,
+html.theme-light .ete-atestados .at-room-option input:checked + span{
+  background:#e8f0f3!important;
+  border-color:#91aab5!important;
+  color:#2c414a!important;
+}
