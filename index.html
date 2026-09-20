@@ -5226,7 +5226,7 @@ body.auth-locked .shell{
         <input id="pickupPin" type="password" autocomplete="new-password" inputmode="numeric" minlength="4" maxlength="8" required placeholder="Senha criada no pedido">
       </label>
       <label class="full">Código do notebook
-        <input id="computerCode" inputmode="numeric" pattern="\d{6}" maxlength="6" required placeholder="6 dígitos">
+        <input id="computerCode" inputmode="numeric" pattern="(?:\d{6}|\d{9})" maxlength="9" required placeholder="6 dígitos (nº geral) ou 9 dígitos (nº de série)">
       </label>
     </div>
     <div class="modalactions">
