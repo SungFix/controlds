@@ -596,65 +596,42 @@ html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit{
 }
 
 
-/* =========================================================
-   BUTTON SYSTEM v6 — tema claro fosco
-   ========================================================= */
+/* ACTION CONTROLS v7 — tema claro */
 html[data-theme="light"]{
-  --btn-bg:#f4f7f9;
-  --btn-bg-hover:#eef3f6;
-  --btn-border:#d6e1e6;
-  --btn-border-hover:#c3d1d8;
-  --btn-text:#26363e;
+  --action-bg:#f4f7f9;
+  --action-bg-hover:#edf2f4;
+  --action-border:#d2dde3;
+  --action-border-hover:#bccbd2;
+  --action-text:#31454e;
+  --action-muted:#697d86;
 
-  --btn-primary-bg:#31444d;
-  --btn-primary-hover:#3b505a;
-  --btn-primary-border:#31444d;
-  --btn-primary-text:#ffffff;
+  --action-primary-bg:#e7eef1;
+  --action-primary-hover:#dde8ec;
+  --action-primary-border:#9fb4be;
+  --action-primary-border-hover:#879faa;
+  --action-primary-text:#2c414a;
 
-  --btn-danger-bg:#f8f2f3;
-  --btn-danger-hover:#f3e9eb;
-  --btn-danger-border:#dfc7cb;
-  --btn-danger-border-hover:#d1adb3;
-  --btn-danger-text:#955a62;
-}
+  --action-danger-bg:#f8f2f3;
+  --action-danger-hover:#f2e8ea;
+  --action-danger-border:#ddc3c8;
+  --action-danger-text:#925962;
 
-html[data-theme="light"] body:not(.auth-locked) :is(
-  .btn,
-  .ete-portal-theme,.ete-portal-exit,.ete-portal-back,.ete-system-open,.ete-exit-close
-){
-  box-shadow:none!important;
+  --choice-bg:#ffffff;
+  --choice-border:#b7c7cf;
+  --choice-accent:#607d8b;
+  --choice-mark:#ffffff;
 }
 
 html[data-theme="light"] body:not(.auth-locked) .btn.primary{
-  background:var(--btn-primary-bg)!important;
-  border-color:var(--btn-primary-border)!important;
-  color:var(--btn-primary-text)!important;
+  background:var(--action-primary-bg)!important;
+  border-color:var(--action-primary-border)!important;
+  color:var(--action-primary-text)!important;
+  box-shadow:inset 0 -2px 0 rgba(96,125,139,.10)!important;
 }
-
-html[data-theme="light"] body:not(.auth-locked) :is(.btn.danger,.delete-request,.ete-portal-exit,.ete-exit-close){
-  background:var(--btn-danger-bg)!important;
-  border-color:var(--btn-danger-border)!important;
-  color:var(--btn-danger-text)!important;
-}
-
-
-/* BUTTON SYSTEM v6 — Portal claro */
 html[data-theme="light"] body:not(.auth-locked) .ete-system-open{
-  background:transparent!important;
-  border-color:#e1e8ec!important;
+  border-color:#e0e8ec!important;
   color:#647680!important;
 }
 html[data-theme="light"] body:not(.auth-locked) .ete-system-open span:last-child{
-  color:#31444d!important;
-}
-html[data-theme="light"] body:not(.auth-locked) .ete-exit-option{
-  background:var(--btn-bg)!important;
-  border-color:var(--btn-border)!important;
-  color:var(--btn-text)!important;
-  box-shadow:none!important;
-}
-html[data-theme="light"] body:not(.auth-locked) .ete-exit-option.danger{
-  background:var(--btn-danger-bg)!important;
-  border-color:var(--btn-danger-border)!important;
-  color:var(--btn-danger-text)!important;
+  color:#405761!important;
 }
