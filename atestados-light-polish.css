@@ -308,3 +308,119 @@ html[data-theme="light"] .at-app-content .at-records-summary b{
     box-shadow:0 6px 18px rgba(32,48,57,.04)!important;
   }
 }
+
+
+/* =========================================================
+   ATESTADOS PROFESSIONAL LIGHT PASS v3
+   Mais hierarquia e leitura sem alterar o fluxo do modulo.
+   ========================================================= */
+html[data-theme="light"] .ete-atestados .at-control-sidebar .at-nav-item{
+  min-height:50px!important;
+  font-size:11.5px!important;
+  border-radius:12px!important;
+}
+html[data-theme="light"] .ete-atestados .at-control-navicon{
+  width:31px!important;
+  height:31px!important;
+  border-radius:9px!important;
+  box-shadow:0 2px 7px rgba(32,48,57,.035)!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-topbar{
+  background:#fff!important;
+  border-color:#dce4e8!important;
+  box-shadow:0 1px 0 #dce4e8,0 8px 24px rgba(32,48,57,.045)!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content .at-page-head h1{
+  font-size:30px!important;
+  line-height:1.08!important;
+  letter-spacing:-.035em!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content .at-page-head p{
+  max-width:780px!important;
+  font-size:12px!important;
+  line-height:1.6!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content .at-metric{
+  border-radius:16px!important;
+  border-color:#dce4e8!important;
+  background:#fff!important;
+  box-shadow:0 8px 24px rgba(32,48,57,.055)!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content .at-metric span:not(.at-metric-marker){
+  font-size:10px!important;
+  line-height:1.35!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content .at-metric strong{
+  font-size:30px!important;
+  letter-spacing:-.04em!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content .at-metric small{
+  font-size:10px!important;
+  line-height:1.45!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content :is(.at-card,.at-form-card,.at-form-intro){
+  border-radius:16px!important;
+  border-color:#dce4e8!important;
+  background:#fff!important;
+  box-shadow:0 8px 24px rgba(32,48,57,.05)!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content .at-card-head{
+  min-height:60px!important;
+  padding:0 17px!important;
+  background:#f8fafb!important;
+  border-color:#e3eaed!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content .at-card-head strong{
+  font-size:13px!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content .at-card-head small{
+  font-size:10px!important;
+  line-height:1.45!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content .at-table th{
+  font-size:9.5px!important;
+  letter-spacing:.06em!important;
+  background:#f4f7f9!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content .at-table td{
+  font-size:11px!important;
+  line-height:1.45!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content .at-table tbody tr{
+  transition:background-color .14s ease!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content .at-table tbody tr:hover{
+  background:#f8fafb!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content .at-btn{
+  min-height:42px!important;
+  font-size:10.5px!important;
+  border-radius:11px!important;
+}
+html[data-theme="light"] .ete-atestados .at-app-content .at-status,
+html[data-theme="light"] .ete-atestados .at-app-content .at-badge{
+  font-size:9px!important;
+}
+@media(hover:hover) and (pointer:fine){
+  html[data-theme="light"] .ete-atestados .at-app-content :is(.at-card,.at-metric){
+    transition:transform .18s cubic-bezier(.2,.72,.2,1),box-shadow .18s ease,border-color .18s ease!important;
+  }
+  html[data-theme="light"] .ete-atestados .at-app-content :is(.at-card,.at-metric):hover{
+    transform:translateY(-2px)!important;
+    border-color:#cbd8df!important;
+    box-shadow:0 14px 34px rgba(32,48,57,.085)!important;
+  }
+}
+@media(max-width:760px){
+  html[data-theme="light"] .ete-atestados .at-app-content .at-page-head h1{font-size:25px!important}
+  html[data-theme="light"] .ete-atestados .at-app-content .at-page-head p{font-size:11px!important}
+  html[data-theme="light"] .ete-atestados .at-app-content :is(.at-card,.at-metric){
+    box-shadow:0 5px 16px rgba(32,48,57,.045)!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html[data-theme="light"] .ete-atestados .at-app-content :is(.at-card,.at-metric,.at-table tbody tr){
+    transition:none!important;
+    transform:none!important;
+  }
+}
