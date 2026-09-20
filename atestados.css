@@ -86,7 +86,7 @@ html[data-theme="light"] .ete-atestados{--at-border:#d6e0e5;--at-panel:#fff;--at
   color:var(--at-action-text)!important;
   box-shadow:none!important;
   font:inherit!important;
-  font-size:10.5px!important;
+  font-size:11.5px!important;
   font-weight:800!important;
   line-height:1!important;
   letter-spacing:.008em!important;
@@ -97,7 +97,7 @@ html[data-theme="light"] .ete-atestados{--at-border:#d6e0e5;--at-panel:#fff;--at
   background:var(--at-primary-bg)!important;
   border-color:var(--at-primary-border)!important;
   color:var(--at-primary-text)!important;
-  box-shadow:inset 0 -2px 0 rgba(160,165,170,.12)!important;
+  box-shadow:none!important;
 }
 @media(hover:hover) and (pointer:fine){
   .ete-atestados .at-btn:hover:not(:disabled){
@@ -176,7 +176,7 @@ html[data-theme="light"] .ete-atestados{--at-border:#d6e0e5;--at-panel:#fff;--at
   background-repeat:no-repeat!important;
   color:var(--at-select-text)!important;
   box-shadow:none!important;
-  font-size:10.5px!important;
+  font-size:12px!important;
   font-weight:760!important;
 }
 
