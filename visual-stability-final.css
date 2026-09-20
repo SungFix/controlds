@@ -1605,15 +1605,15 @@ input[type="radio"]:disabled{
 :root{
   --select-h:48px;
   --select-radius:11px;
-  --select-bg:#13181c;
-  --select-bg-hover:#171d21;
-  --select-border:#353f47;
-  --select-border-hover:#4b565e;
-  --select-border-open:#636b72;
-  --select-text:#e2e6e9;
-  --select-muted:#8a949c;
-  --select-arrow:#8f989f;
-  --select-popup:#12171b;
+  --select-bg:#151a1f;
+  --select-bg-hover:#1a2025;
+  --select-border:#333e47;
+  --select-border-hover:#4c5b65;
+  --select-border-open:#626970;
+  --select-text:#d7dfe4;
+  --select-muted:#8f9da6;
+  --select-arrow:#8f9da6;
+  --select-popup:#151a1f;
 }
 
 /* Selects nativos */
