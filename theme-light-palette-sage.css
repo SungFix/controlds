@@ -594,3 +594,45 @@ html[data-theme="light"] body.auth-locked .login-gate .login-grid input{
 html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit{
   box-shadow:none!important;
 }
+
+
+/* =========================================================
+   BUTTON SYSTEM v6 — tema claro fosco
+   ========================================================= */
+html[data-theme="light"]{
+  --btn-bg:#f4f7f9;
+  --btn-bg-hover:#eef3f6;
+  --btn-border:#d6e1e6;
+  --btn-border-hover:#c3d1d8;
+  --btn-text:#26363e;
+
+  --btn-primary-bg:#31444d;
+  --btn-primary-hover:#3b505a;
+  --btn-primary-border:#31444d;
+  --btn-primary-text:#ffffff;
+
+  --btn-danger-bg:#f8f2f3;
+  --btn-danger-hover:#f3e9eb;
+  --btn-danger-border:#dfc7cb;
+  --btn-danger-border-hover:#d1adb3;
+  --btn-danger-text:#955a62;
+}
+
+html[data-theme="light"] body:not(.auth-locked) :is(
+  .btn,
+  .ete-portal-theme,.ete-portal-exit,.ete-portal-back,.ete-system-open,.ete-exit-close
+){
+  box-shadow:none!important;
+}
+
+html[data-theme="light"] body:not(.auth-locked) .btn.primary{
+  background:var(--btn-primary-bg)!important;
+  border-color:var(--btn-primary-border)!important;
+  color:var(--btn-primary-text)!important;
+}
+
+html[data-theme="light"] body:not(.auth-locked) :is(.btn.danger,.delete-request,.ete-portal-exit,.ete-exit-close){
+  background:var(--btn-danger-bg)!important;
+  border-color:var(--btn-danger-border)!important;
+  color:var(--btn-danger-text)!important;
+}
