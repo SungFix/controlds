@@ -556,3 +556,67 @@
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});
   else start();
 })();
+
+/* Product convenience — comportamentos pequenos, sem alterar regras de negócio */
+(function initProductConvenience(){
+  "use strict";
+
+  const reduceMotion=!!(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+  function smoothBehavior(){
+    return reduceMotion?"auto":"smooth";
+  }
+
+  function installPageNavigationPolish(){
+    document.addEventListener("click",event=>{
+      const jump=event.target.closest?.("[data-page-jump],.nav button[data-page]");
+      if(!jump)return;
+
+      requestAnimationFrame(()=>{
+        const pageKey=jump.dataset.pageJump||jump.dataset.page;
+        const page=pageKey&&document.getElementById("page-"+pageKey);
+        if(!page?.classList.contains("active"))return;
+
+        if(window.scrollY>90){
+          window.scrollTo({top:0,behavior:smoothBehavior()});
+        }
+      });
+    });
+  }
+
+  function installScrollableTabPolish(){
+    document.addEventListener("click",event=>{
+      const tab=event.target.closest?.(".request-tab,.computer-tab,.at-nav-item");
+      if(!tab)return;
+      requestAnimationFrame(()=>{
+        try{
+          tab.scrollIntoView({behavior:smoothBehavior(),block:"nearest",inline:"nearest"});
+        }catch(_){}
+      });
+    });
+  }
+
+  function installPressedFeedback(){
+    document.addEventListener("pointerdown",event=>{
+      const target=event.target.closest?.("button,.btn,[role='button']");
+      if(!target||target.disabled)return;
+      target.dataset.uiPressed="1";
+    },{passive:true});
+
+    const clear=event=>{
+      const target=event.target.closest?.("[data-ui-pressed='1']");
+      if(target)delete target.dataset.uiPressed;
+    };
+    document.addEventListener("pointerup",clear,{passive:true});
+    document.addEventListener("pointercancel",clear,{passive:true});
+  }
+
+  function start(){
+    installPageNavigationPolish();
+    installScrollableTabPolish();
+    installPressedFeedback();
+  }
+
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});
+  else start();
+})();
