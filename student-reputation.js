@@ -36,10 +36,10 @@
   }
 
   function statsForStudent(studentId){
-    const returns=(Array.isArray(data)?data:[]).filter(request=>
-      String(request?.studentId||"")===String(studentId||"") && request?.returnedAt
+    const returns=(Array.isArray(history)?history:[]).filter(item=>
+      String(item?.studentId||"")===String(studentId||"") && item?.type==="return"
     );
-    const late=returns.filter(wasLate).length;
+    const late=returns.filter(item=>/devolução atrasada|devolucao atrasada|atrasad/i.test(String(item?.detail||"")+" "+String(item?.text||""))).length;
     const onTime=returns.length-late;
     const score=returns.length ? Math.round((onTime/returns.length)*100) : null;
     let level="Sem histórico",tone="neutral";
