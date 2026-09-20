@@ -556,3 +556,41 @@ html[data-theme="light"] body:not(.auth-locked):not(.portal-open) :is(
     box-shadow:none!important;
   }
 }
+
+
+/* =========================================================
+   SITEWIDE MATTE — LOGIN LIGHT FINAL
+   Paleta global carregada após o CSS do login.
+   ========================================================= */
+html[data-theme="light"] body.auth-locked .login-gate{
+  background:#f8fafb!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate::before{
+  display:none!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card{
+  background:#fbfcfc!important;
+  border-color:#dce4e8!important;
+  box-shadow:0 2px 7px rgba(32,48,57,.06)!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-brand{
+  background:#f4f7f9!important;
+  border-color:#dce4e8!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-mark{
+  background:#eef3f6!important;
+  border-color:#cfdbe1!important;
+  box-shadow:none!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-brand::after{
+  background:#eef3f6!important;
+  border-color:#d2dde3!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input{
+  background:#fbfcfc!important;
+  border-color:#dce4e8!important;
+  box-shadow:none!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit{
+  box-shadow:none!important;
+}
