@@ -3,6 +3,7 @@
 
   const LOADING_RE=/^(salvando|apagando|confirmando|entrando|carregando|enviando|processando)/i;
   const EMPTY_SELECTOR=".request-empty,.permission-empty,.student-empty,.computer-empty,.history-empty,.agenda-empty,.student-picker-empty";
+  const RELEVANT_NODE_SELECTOR="button,"+EMPTY_SELECTOR+",#agendaSearch,#permissionSearch,#requestSearch,#studentSearch,#computerSearch,#historySearch,#studentPickerSearch";
   let queued=false;
   let headObserver=null;
 
@@ -139,11 +140,30 @@
     requestAnimationFrame(sync);
   }
 
+  function nodeNeedsSync(node){
+    if(!node)return false;
+    const element=node.nodeType===Node.TEXT_NODE?node.parentElement:node;
+    if(!(element instanceof Element))return false;
+    return element.matches(RELEVANT_NODE_SELECTOR)||!!element.querySelector(RELEVANT_NODE_SELECTOR);
+  }
+
+  function mutationsNeedSync(records){
+    for(const record of records){
+      if(record.type==="attributes"&&nodeNeedsSync(record.target))return true;
+      if(record.type==="characterData"&&nodeNeedsSync(record.target))return true;
+      if(record.type==="childList"){
+        if(nodeNeedsSync(record.target))return true;
+        for(const node of record.addedNodes)if(nodeNeedsSync(node))return true;
+      }
+    }
+    return false;
+  }
+
   function start(){
     document.documentElement.dataset.finalPolish="1";
     setTimeout(ensureGlobalSelectAssets,0);
     sync();
-    const observer=new MutationObserver(queue);
+    const observer=new MutationObserver(records=>{if(mutationsNeedSync(records))queue();});
     observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:["disabled","class"]});
   }
 
