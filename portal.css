@@ -41,3 +41,54 @@ html[data-theme="light"] .ete-portal{background:radial-gradient(circle at 12% 0%
     overflow:visible !important;
   }
 }
+
+
+/* =========================================================
+   SITEWIDE MATTE — PORTAL ETE
+   ========================================================= */
+.ete-portal{
+  background:#0a0d10!important;
+}
+.ete-portal:before{
+  display:none!important;
+}
+.ete-portal-topbar{
+  background:#11161b!important;
+  border-color:#303943!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  box-shadow:none!important;
+}
+.ete-portal-mark,
+.ete-portal-user,
+.ete-portal-theme,
+.ete-portal-exit,
+.ete-portal-back,
+.ete-portal-points span{
+  background:#151a1f!important;
+  box-shadow:none!important;
+}
+.ete-system-card{
+  background:#11161b!important;
+  border-color:#303943!important;
+  box-shadow:none!important;
+}
+.ete-system-card:before{
+  background:#7895a8!important;
+  opacity:.72!important;
+}
+.ete-system-card.available:before{background:#5e9b75!important}
+.ete-system-card.preparing:before{background:#8b78b6!important}
+.ete-system-card:hover{
+  background:#141a1f!important;
+  border-color:#3a4650!important;
+  box-shadow:0 3px 8px rgba(0,0,0,.18)!important;
+}
+.ete-system-icon,
+.ete-system-status,
+.ete-system-open,
+.ete-module-panel,
+.ete-module-note{
+  background:#151a1f!important;
+  box-shadow:none!important;
+}
