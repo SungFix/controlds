@@ -4896,6 +4896,15 @@ body.auth-locked .shell{
                         <button type="button" class="group-option" data-group-target="studentGroup" data-group-value="1°B EDF"><span>1°B EDF</span><small>1º ano · B</small></button>
                         <button type="button" class="group-option" data-group-target="studentGroup" data-group-value="2°A EDF"><span>2°A EDF</span><small>2º ano · A</small></button>
                         <button type="button" class="group-option" data-group-target="studentGroup" data-group-value="2°B EDF"><span>2°B EDF</span><small>2º ano · B</small></button>
+                        <button type="button" class="group-option" data-group-target="studentGroup" data-group-value="3°A EDF"><span>3°A EDF</span><small>3º ano · A</small></button>
+                        <button type="button" class="group-option" data-group-target="studentGroup" data-group-value="3°B EDF"><span>3°B EDF</span><small>3º ano · B</small></button>
+                      </div>
+                    </div>
+
+                    <div class="group-course">
+                      <div class="group-course-title">Guia de Turismo · GTU</div>
+                      <div class="group-options-grid">
+                        <button type="button" class="group-option" data-group-target="studentGroup" data-group-value="3° GTU"><span>3° GTU</span><small>3º ano · turma única</small></button>
                       </div>
                     </div>
                   </div>
@@ -5049,6 +5058,15 @@ body.auth-locked .shell{
                         <button type="button" class="group-option" data-group-target="newStudentGroup" data-group-value="1°B EDF"><span>1°B EDF</span><small>1º ano · B</small></button>
                         <button type="button" class="group-option" data-group-target="newStudentGroup" data-group-value="2°A EDF"><span>2°A EDF</span><small>2º ano · A</small></button>
                         <button type="button" class="group-option" data-group-target="newStudentGroup" data-group-value="2°B EDF"><span>2°B EDF</span><small>2º ano · B</small></button>
+                        <button type="button" class="group-option" data-group-target="newStudentGroup" data-group-value="3°A EDF"><span>3°A EDF</span><small>3º ano · A</small></button>
+                        <button type="button" class="group-option" data-group-target="newStudentGroup" data-group-value="3°B EDF"><span>3°B EDF</span><small>3º ano · B</small></button>
+                      </div>
+                    </div>
+
+                    <div class="group-course">
+                      <div class="group-course-title">Guia de Turismo · GTU</div>
+                      <div class="group-options-grid">
+                        <button type="button" class="group-option" data-group-target="newStudentGroup" data-group-value="3° GTU"><span>3° GTU</span><small>3º ano · turma única</small></button>
                       </div>
                     </div>
                   </div>
@@ -5819,22 +5837,23 @@ function makeStudentClass(year, section){
 }
 function parseStudentClass(className){
   const text=String(className||"").trim().toUpperCase().replace(/\s+/g," ");
-  const m=text.match(/([12])\s*[°º]?\s*([AB])/);
-  return {
-    year: m ? m[1] : "1",
-    section: m ? m[2] : "A"
-  };
+  const m=text.match(/([123])\s*[°º]?\s*([AB])/);
+  if(m) return {year:m[1],section:m[2]};
+  if(/^3\s*[°º]?$/.test(text)) return {year:"3",section:""};
+  return {year:"1",section:"A"};
 }
 
 const VALID_STUDENT_GROUPS=[
   "1°A DS","1°B DS","2°A DS","2°B DS",
-  "1°A EDF","1°B EDF","2°A EDF","2°B EDF"
+  "1°A EDF","1°B EDF","2°A EDF","2°B EDF","3°A EDF","3°B EDF",
+  "3° GTU"
 ];
 
 function groupCourseName(value){
-  return String(value||"").endsWith("EDF")
-    ? "Edificações"
-    : "Desenvolvimento de Sistemas";
+  const course=String(value||"").trim().toUpperCase().split(/\s+/).pop();
+  if(course==="EDF") return "Edificações";
+  if(course==="GTU") return "Guia de Turismo";
+  return "Desenvolvimento de Sistemas";
 }
 
 function groupClassOnly(value){
@@ -5885,12 +5904,11 @@ function toggleGroupPicker(prefix){
 }
 
 function parseStudentGroup(group){
-  const text=String(group||"").trim().toUpperCase();
-  const m=text.match(/^([12])\s*[°º]?\s*([AB])\s+(DS|EDF)$/);
-  return {
-    className: m ? (m[1]+"°"+m[2]) : "1°A",
-    course: m ? m[3] : "DS"
-  };
+  const text=String(group||"").trim().toUpperCase().replace(/\s+/g," ");
+  if(!VALID_STUDENT_GROUPS.includes(text)) return {className:"1°A",course:"DS"};
+  const parts=text.split(" ");
+  const course=parts.pop();
+  return {className:parts.join(" "),course};
 }
 function getCurrentStudentGroup(){
   return $("#studentGroup")?.value || "1°A DS";
@@ -7202,6 +7220,6 @@ setSyncState("login");
   }
 })();
 </script>
-<script src="v46-bridge.js"></script>
+<script src="v46-bridge.js?v=2"></script>
 </body>
 </html>
