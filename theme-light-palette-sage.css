@@ -635,3 +635,31 @@ html[data-theme="light"] body:not(.auth-locked) .ete-system-open{
 html[data-theme="light"] body:not(.auth-locked) .ete-system-open span:last-child{
   color:#405761!important;
 }
+
+
+/* SELECT CONTROLS v8 — tema claro */
+html[data-theme="light"]{
+  --select-bg:#f4f6f7;
+  --select-bg-hover:#eceff1;
+  --select-border:#d1d7db;
+  --select-border-hover:#b8c0c5;
+  --select-border-open:#8f969b;
+  --select-text:#34393d;
+  --select-muted:#727b81;
+  --select-arrow:#777f85;
+  --select-popup:#fbfcfc;
+}
+
+html[data-theme="light"] body:not(.auth-locked) :is(
+  .group-option,.interval-option,.student-picker-option,.time-option
+).active{
+  background:#e7eaec!important;
+  border-color:#c4cbd0!important;
+  color:#2f3438!important;
+}
+
+html[data-theme="light"] body:not(.auth-locked) :is(
+  .group-option,.interval-option,.student-picker-option,.time-option
+):hover{
+  background:#eef1f2!important;
+}
