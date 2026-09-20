@@ -161,3 +161,9 @@
 
 /v46-bridge.js
   Cache-Control: no-cache, max-age=0, must-revalidate
+
+/computer-id-enhance.js
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/registered-student-flow.js
+  Cache-Control: no-cache, max-age=0, must-revalidate
