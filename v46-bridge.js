@@ -144,7 +144,7 @@ async function v46HandleClearStudentHistory(button){
       title:"Apagar histórico do aluno",
       subtitle:student.name+" · "+student.className+" "+student.course,
       message:"Todos os registros do Histórico vinculados a este aluno serão apagados.",
-      details:["Somente registros do Histórico","Cadastro do aluno será mantido","Pedidos, permissões e atestados serão mantidos"],
+      details:["Registros do Histórico","Contador de usos e último uso","Cadastro, pedidos, permissões e atestados serão mantidos"],
       warning:"Essa ação não pode ser desfeita.",
       confirmText:"Apagar histórico",
       cancelText:"Cancelar"
@@ -158,10 +158,12 @@ async function v46HandleClearStudentHistory(button){
   button.disabled=true;
   button.textContent="Apagando...";
   try{
+    const previousUseCount=Number(student.useCount||0);
     const removed=Number(await v46Rpc("ete_clear_student_history",{p_student_id:studentId}))||0;
-    if(removed===0)toast("Este aluno não possui registros no histórico.");
-    else if(removed===1)toast("1 registro do histórico foi apagado.");
-    else toast(removed+" registros do histórico foram apagados.");
+    if(removed===0&&previousUseCount===0)toast("O histórico deste aluno já estava vazio.");
+    else if(removed===0)toast("Histórico do aluno zerado, incluindo o contador de usos.");
+    else if(removed===1)toast("1 registro foi apagado e os contadores do aluno foram zerados.");
+    else toast(removed+" registros foram apagados e os contadores do aluno foram zerados.");
   }catch(error){
     console.error("Falha ao apagar histórico do aluno:",error);
     toast(v46ExplainError(error));
