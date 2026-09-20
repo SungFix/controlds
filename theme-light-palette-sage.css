@@ -636,3 +636,25 @@ html[data-theme="light"] body:not(.auth-locked) :is(.btn.danger,.delete-request,
   border-color:var(--btn-danger-border)!important;
   color:var(--btn-danger-text)!important;
 }
+
+
+/* BUTTON SYSTEM v6 — Portal claro */
+html[data-theme="light"] body:not(.auth-locked) .ete-system-open{
+  background:transparent!important;
+  border-color:#e1e8ec!important;
+  color:#647680!important;
+}
+html[data-theme="light"] body:not(.auth-locked) .ete-system-open span:last-child{
+  color:#31444d!important;
+}
+html[data-theme="light"] body:not(.auth-locked) .ete-exit-option{
+  background:var(--btn-bg)!important;
+  border-color:var(--btn-border)!important;
+  color:var(--btn-text)!important;
+  box-shadow:none!important;
+}
+html[data-theme="light"] body:not(.auth-locked) .ete-exit-option.danger{
+  background:var(--btn-danger-bg)!important;
+  border-color:var(--btn-danger-border)!important;
+  color:var(--btn-danger-text)!important;
+}
