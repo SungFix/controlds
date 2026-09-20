@@ -51,8 +51,18 @@
   },true);
   document.addEventListener("keydown",function(event){
     if(event.key!=="Escape")return;
+    const roomPicker=event.target.closest?.(".at-room-picker");
+    const reasonPicker=event.target.closest?.(".at-reason-picker");
+    const roomOpen=!!roomPicker?.classList.contains("open");
+    const reasonOpen=!!(reasonPicker&&openReasonPicker===reasonPicker);
     closeOpenPickers();
     closeOpenReasonPickers();
+    if(roomOpen||reasonOpen){
+      event.preventDefault();
+      event.stopPropagation();
+      const trigger=(roomOpen?roomPicker?.querySelector(".at-room-trigger"):reasonPicker?.querySelector(".at-reason-trigger"));
+      try{trigger?.focus({preventScroll:true})}catch(_){}
+    }
   });
 
   function enhancePicker(picker){
@@ -78,6 +88,17 @@
     function open(){closeOpenPickers(picker);closeOpenReasonPickers();picker.classList.add("open");trigger.setAttribute("aria-expanded","true");}
     function sync(){const selected=picker.querySelector('input[name="atClass"]:checked');if(selected){setText(label,roomLabel(selected.value));trigger.classList.add("has-value");}else{setText(label,"Selecione a turma");trigger.classList.remove("has-value");}}
     trigger.addEventListener("click",function(event){event.preventDefault();event.stopPropagation();picker.classList.contains("open")?close():open();});
+    trigger.addEventListener("keydown",function(event){
+      if(event.key!=="ArrowDown"&&event.key!=="ArrowUp")return;
+      event.preventDefault();
+      if(!picker.classList.contains("open"))open();
+      requestAnimationFrame(function(){
+        const options=[...picker.querySelectorAll('input[name="atClass"]:not(:disabled)')];
+        const selected=options.find(input=>input.checked);
+        const target=selected||(event.key==="ArrowUp"?options[options.length-1]:options[0]);
+        try{target?.focus({preventScroll:true})}catch(_){}
+      });
+    });
     picker.addEventListener("change",function(event){if(event.target.matches('input[name="atClass"]')){sync();close();}});
     sync();
   }
@@ -118,6 +139,17 @@
       event.preventDefault();
       event.stopPropagation();
       openReasonPicker===picker?close():open();
+    });
+    trigger.addEventListener("keydown",function(event){
+      if(event.key!=="ArrowDown"&&event.key!=="ArrowUp")return;
+      event.preventDefault();
+      if(openReasonPicker!==picker)open();
+      requestAnimationFrame(function(){
+        const options=[...list.querySelectorAll('input[name="atReason"]:not(:disabled)')];
+        const checked=options.find(input=>input.checked);
+        const target=checked||(event.key==="ArrowUp"?options[options.length-1]:options[0]);
+        try{target?.focus({preventScroll:true})}catch(_){}
+      });
     });
     list.addEventListener("change",function(event){if(event.target.matches('input[name="atReason"]'))sync();});
     sync();
@@ -238,20 +270,37 @@
     });
   }
 
+  function enhanceScope(scope){
+    if(!scope||((scope.nodeType!==1)&&scope!==document))return;
+    if(scope!==document&&scope.matches?.(".ete-atestados"))enhanceModule(scope);
+    if(scope!==document&&scope.matches?.(".at-room-picker"))enhancePicker(scope);
+    if(scope!==document&&scope.matches?.(".at-reason-list"))enhanceReasonPicker(scope);
+    scope.querySelectorAll?.(".ete-atestados").forEach(enhanceModule);
+    scope.querySelectorAll?.(".at-room-picker").forEach(enhancePicker);
+    scope.querySelectorAll?.(".at-reason-list").forEach(enhanceReasonPicker);
+  }
+
   function scan(){
     ensureLayoutStyles();
-    document.querySelectorAll(".ete-atestados").forEach(enhanceModule);
-    document.querySelectorAll(".at-room-picker").forEach(enhancePicker);
-    document.querySelectorAll(".at-reason-list").forEach(enhanceReasonPicker);
+    enhanceScope(document);
   }
 
-  function queueScan(){
-    if(scanQueued)return;
-    scanQueued=true;
-    requestAnimationFrame(function(){scanQueued=false;scan();});
+  function handleMutations(records){
+    let queued=false;
+    for(const record of records){
+      for(const node of record.addedNodes){
+        if(!(node instanceof Element))continue;
+        const relevant=node.matches(".ete-atestados,.at-room-picker,.at-reason-list")
+          || !!node.querySelector(".ete-atestados,.at-room-picker,.at-reason-list");
+        if(!relevant)continue;
+        if(queued)continue;
+        queued=true;
+        requestAnimationFrame(function(){enhanceScope(node)});
+      }
+    }
   }
 
-  const observer=new MutationObserver(queueScan);
+  const observer=new MutationObserver(handleMutations);
   function start(){scan();if(document.body)observer.observe(document.body,{childList:true,subtree:true});}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
 })();
