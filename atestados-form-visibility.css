@@ -336,3 +336,32 @@ html.theme-light .ete-atestados #atForm .at-image-drop-copy small{
   .ete-atestados #atForm .at-image-upload-field{padding:12px!important}
   .ete-atestados #atForm .at-image-drop{min-height:112px!important}
 }
+
+
+/* =========================================================
+   SITEWIDE MATTE — FORMULÁRIO ATESTADOS
+   ========================================================= */
+.ete-atestados .at-form-card{
+  box-shadow:0 1px 2px rgba(0,0,0,.16)!important;
+}
+.ete-atestados #atForm .at-reason-list{
+  box-shadow:0 4px 12px rgba(0,0,0,.22)!important;
+}
+.ete-atestados #atForm .at-choice-card:has(input:checked){
+  box-shadow:inset 3px 0 0 #7899ad!important;
+}
+.ete-atestados #atForm .at-image-upload-field,
+.ete-atestados #atForm .at-image-drop,
+.ete-atestados #atForm .at-image-drop-icon,
+.ete-atestados #atForm .at-image-drop-action{
+  box-shadow:none!important;
+}
+html[data-theme="light"] .ete-atestados .at-form-card,
+html.theme-light .ete-atestados .at-form-card{
+  background:#fbfcfc!important;
+  box-shadow:0 1px 2px rgba(32,48,57,.045)!important;
+}
+html[data-theme="light"] .ete-atestados #atForm .at-reason-list,
+html.theme-light .ete-atestados #atForm .at-reason-list{
+  box-shadow:0 3px 9px rgba(32,48,57,.06)!important;
+}
