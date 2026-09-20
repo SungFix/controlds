@@ -41,7 +41,11 @@
     if(!card)return;
     const head=card.querySelector(".student-card-head");
     card.classList.toggle("is-open",expanded);
-    if(head)head.setAttribute("aria-expanded",String(expanded));
+    if(head){
+      head.setAttribute("aria-expanded",String(expanded));
+      const name=card.querySelector(".student-card-title strong")?.textContent?.trim()||"aluno";
+      head.setAttribute("aria-label",(expanded?"Ocultar":"Ver")+" informações de "+name);
+    }
   }
 
   function closeOthers(except){
