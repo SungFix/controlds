@@ -287,7 +287,9 @@
   function syncFormBusy(){
     document.querySelectorAll("form").forEach(form=>{
       const submit=form.querySelector('button[type="submit"],input[type="submit"]');
-      if(submit) form.setAttribute("aria-busy",String(!!submit.disabled));
+      const busy=!!submit&&(submit.getAttribute("aria-busy")==="true"||submit.classList?.contains("is-loading"));
+      if(busy) form.setAttribute("aria-busy","true");
+      else form.removeAttribute("aria-busy");
     });
   }
 
@@ -433,9 +435,11 @@
   function animatePage(target){
     if(reduceMotion||!target)return;
     target.classList.remove("ui-page-enter");
-    void target.offsetWidth;
-    target.classList.add("ui-page-enter");
-    window.setTimeout(()=>target.classList.remove("ui-page-enter"),340);
+    requestAnimationFrame(()=>{
+      if(!target.isConnected)return;
+      target.classList.add("ui-page-enter");
+      window.setTimeout(()=>target.classList.remove("ui-page-enter"),340);
+    });
   }
 
   function prepareRevealElement(element){
@@ -499,7 +503,7 @@
       requestAnimationFrame(sync);
     }
     window.addEventListener("scroll",queue,{passive:true});
-    document.addEventListener("scroll",queue,true);
+    document.addEventListener("scroll",queue,{capture:true,passive:true});
     button.addEventListener("click",()=>{
       const behavior=reduceMotion?"auto":"smooth";
       window.scrollTo({top:0,behavior});
