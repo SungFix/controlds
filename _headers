@@ -115,7 +115,7 @@
   Cache-Control: public, max-age=3600, must-revalidate
 
 /atestados-room-picker.js
-  Cache-Control: public, max-age=3600, must-revalidate
+  Cache-Control: no-cache, max-age=0, must-revalidate
 
 /atestados-date-picker.js
   Cache-Control: public, max-age=3600, must-revalidate
@@ -166,4 +166,10 @@
   Cache-Control: no-cache, max-age=0, must-revalidate
 
 /registered-student-flow.js
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/login-usability.js
+  Cache-Control: no-cache, max-age=0, must-revalidate
+
+/action-modal.css
   Cache-Control: no-cache, max-age=0, must-revalidate
