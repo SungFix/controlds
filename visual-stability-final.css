@@ -1784,3 +1784,35 @@ input[type="radio"]:disabled{
     transition:none!important;
   }
 }
+
+
+/* =========================================================
+   SELECT PALETTE GUARD — visible controls, not hidden selects
+   ========================================================= */
+html body :is(
+  .history-filter-trigger,
+  .ete-select-trigger,
+  .group-picker-trigger,
+  .interval-picker-trigger,
+  .student-picker-trigger,
+  .time-trigger
+){
+  background:#151a1f!important;
+  border-color:#333e47!important;
+  color:#d7dfe4!important;
+  box-shadow:none!important;
+}
+
+@media(hover:hover) and (pointer:fine){
+  html body :is(
+    .history-filter-trigger,
+    .ete-select-trigger,
+    .group-picker-trigger,
+    .interval-picker-trigger,
+    .student-picker-trigger,
+    .time-trigger
+  ):hover{
+    background:#1a2025!important;
+    border-color:#4c5b65!important;
+  }
+}
