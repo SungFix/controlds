@@ -158,3 +158,6 @@
 
 /select-matte.css
   Cache-Control: no-cache, max-age=0, must-revalidate
+
+/v46-bridge.js
+  Cache-Control: no-cache, max-age=0, must-revalidate
