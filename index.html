@@ -5074,12 +5074,12 @@ body.auth-locked .shell{
       </label>
     </div>
 
-    <section class="student-history-danger-zone" id="studentHistoryDangerZone" hidden aria-labelledby="studentHistoryDangerTitle">
+    <section class="student-history-danger-zone" id="studentHistoryDangerZone" hidden aria-labelledby="studentHistoryDangerTitle" aria-describedby="studentHistoryDangerDescription">
       <div class="student-history-danger-copy">
         <strong id="studentHistoryDangerTitle">Histórico do aluno</strong>
-        <small>Apaga somente os registros do Histórico ligados a este aluno. Cadastro, pedidos, permissões e atestados permanecem.</small>
+        <small id="studentHistoryDangerDescription">Apaga os eventos do Histórico deste aluno e zera o contador de usos e o último uso. Cadastro, pedidos, permissões e atestados permanecem.</small>
       </div>
-      <button type="button" class="btn danger" id="studentClearHistoryBtn" data-clear-student-history hidden>Apagar histórico</button>
+      <button type="button" class="btn danger" id="studentClearHistoryBtn" data-clear-student-history aria-describedby="studentHistoryDangerDescription" hidden>Apagar histórico</button>
     </section>
 
     <div class="modalactions">
