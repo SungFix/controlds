@@ -388,7 +388,6 @@
     ".permission-card",".permission-item",".history-event",
     ".portal-card",".at-card",".at-metric",".at-form-card"
   ].join(",");
-  const activationSelector=".page,.at-view,.ete-portal-home";
   let revealObserver=null;
   let scrollTicking=false;
 
@@ -471,14 +470,20 @@
 
   function handleMotionMutations(mutations){
     for(const mutation of mutations){
-      if(mutation.type==="childList"){
-        mutation.addedNodes.forEach(node=>prepareReveals(node));
-        continue;
-      }
-      const target=mutation.target;
-      if(!target.matches?.(activationSelector))continue;
-      if(target.classList.contains("active")||target.matches(".ete-portal-home"))animatePage(target);
+      mutation.addedNodes.forEach(node=>prepareReveals(node));
     }
+  }
+
+  function installPageMotion(){
+    document.addEventListener("click",event=>{
+      const navButton=event.target.closest?.(".nav button[data-page]");
+      if(!navButton)return;
+      const pageKey=navButton.dataset.page;
+      requestAnimationFrame(()=>{
+        const target=document.getElementById("page-"+pageKey);
+        if(target?.classList.contains("active"))animatePage(target);
+      });
+    });
   }
 
   function installConvenienceKeys(){
@@ -498,10 +503,11 @@
     prepareReveals(document);
     installScrollTop();
     installConvenienceKeys();
+    installPageMotion();
     root.dataset.motionReady="1";
 
     const observer=new MutationObserver(handleMotionMutations);
-    observer.observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:["class"]});
+    observer.observe(document.body,{subtree:true,childList:true});
   }
 
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});
