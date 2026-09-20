@@ -1165,3 +1165,160 @@ dialog::-webkit-scrollbar-thumb,
     transform:none!important;
   }
 }
+
+
+/* =========================================================
+   MATTE FINISH v5 — acabamento fosco, sóbrio e sem brilho
+   Preserva hierarquia, legibilidade e estrutura.
+   ========================================================= */
+:root{
+  --pro-shadow-card:0 1px 2px rgba(0,0,0,.18)!important;
+  --pro-shadow-card-hover:0 3px 8px rgba(0,0,0,.20)!important;
+  --pro-shadow-soft:0 1px 3px rgba(0,0,0,.15)!important;
+}
+
+/* Fundo sólido: remove iluminação decorativa */
+html:not([data-theme="light"]) body:not(.portal-open):not(.auth-locked){
+  background:#0a0d10!important;
+}
+
+/* Topbar sólida, sem vidro/blur */
+@media(min-width:821px){
+  html:not([data-theme="light"]) .topbar{
+    background:#0d1115!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+    box-shadow:0 1px 0 var(--ui-border)!important;
+  }
+}
+
+/* Superfícies foscas: sem reflexos nem gradientes luminosos */
+html:not([data-theme="light"]) :is(
+  .panel,.hero-stat,.mini-stat,.request-card,.student-card,.student-item,
+  .computer-card,.computer-item,.permission-card,.permission-item,
+  .history-stat,.request-stat,.student-stat,.permission-stat,.computer-stat,
+  .agenda-item,.quick-card
+){
+  background:var(--ui-surface)!important;
+  box-shadow:var(--pro-shadow-card)!important;
+}
+
+html:not([data-theme="light"]) :is(
+  .panelhead,.request-card-top,.permission-card-top,.student-card-head,.computer-item-head,
+  .request-card-body,.permission-card-body,.student-card-body,.computer-item-body,
+  .request-info-box,.permission-info-box,.student-meta,.computer-meta-box,
+  .summary-item,.time-card,.saved-student-box
+){
+  background:var(--ui-surface-2)!important;
+  box-shadow:none!important;
+}
+
+html:not([data-theme="light"]) :is(
+  .student-avatar,.computer-device-icon,.history-icon,.page-symbol,.navicon
+){
+  background:var(--ui-surface-2)!important;
+  box-shadow:none!important;
+}
+
+/* Remove halos decorativos dos indicadores */
+.overview-strip > :is(.hero-stat,.mini-stat)::after,
+.request-overview > *::after,
+.permission-overview > *::after,
+.computer-overview > *::after,
+.student-overview > *::after,
+.history-overview > *::after{
+  display:none!important;
+}
+:is(.hero-stat,.mini-stat,.request-stat,.permission-stat,.computer-stat,.student-stat,.history-stat) strong,
+.mini-stat .value{
+  text-shadow:none!important;
+}
+
+/* Controles segmentados sem brilho */
+.request-tabs,.computer-tabs{
+  box-shadow:none!important;
+}
+.request-tab.active,.computer-tab.active{
+  box-shadow:none!important;
+}
+
+/* Botões foscos */
+.btn,.at-btn,.ete-system-open,
+.control-theme-toggle-header,
+.header-logout{
+  box-shadow:none!important;
+}
+.btn.primary{
+  box-shadow:none!important;
+}
+@media(hover:hover) and (pointer:fine){
+  :is(.hero-stat,.mini-stat,.request-card,.student-card,.student-item,.computer-card,.computer-item,
+  .permission-card,.permission-item,.history-event,.agenda-item,.quick-card):hover{
+    box-shadow:var(--pro-shadow-card-hover)!important;
+  }
+}
+
+/* Sidebar sem reflexos */
+.sidebar,.brandmark,.local-pill{
+  box-shadow:none!important;
+}
+
+/* Modal menos dramático */
+dialog{
+  box-shadow:0 12px 34px rgba(0,0,0,.30)!important;
+}
+
+/* Portal sem overlay luminoso */
+.ete-portal:not(.module-open) .ete-system-card::after{
+  display:none!important;
+}
+.ete-portal:not(.module-open) .ete-system-card,
+.ete-portal:not(.module-open) .ete-portal-topbar,
+.ete-portal:not(.module-open) .ete-system-icon,
+.ete-portal:not(.module-open) .ete-system-open{
+  box-shadow:none!important;
+}
+@media(hover:hover) and (pointer:fine){
+  .ete-portal:not(.module-open) .ete-system-card:hover{
+    box-shadow:0 3px 9px rgba(0,0,0,.18)!important;
+  }
+}
+
+/* Atestados também fosco */
+.ete-atestados .at-control-main :is(.at-card,.at-metric,.at-form-card,.at-form-intro){
+  box-shadow:0 1px 2px rgba(0,0,0,.16)!important;
+}
+.ete-atestados .at-control-main :is(.at-input,.at-select,.at-room-trigger,.at-reason-trigger){
+  box-shadow:none!important;
+}
+.ete-atestados .at-control-main :is(.at-input,.at-select,.at-room-trigger,.at-reason-trigger):focus,
+.ete-atestados .at-control-main :is(.at-room-trigger,.at-reason-trigger).open{
+  box-shadow:0 0 0 2px rgba(120,149,168,.11)!important;
+}
+@media(hover:hover) and (pointer:fine){
+  .ete-atestados .at-control-main :is(.at-card,.at-metric):hover{
+    box-shadow:0 3px 8px rgba(0,0,0,.18)!important;
+  }
+}
+
+/* Foco discreto, ainda acessível */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible{
+  outline-color:#7895a8!important;
+  box-shadow:none!important;
+}
+
+/* Mobile ainda mais plano */
+@media(max-width:820px){
+  html:not([data-theme="light"]) :is(
+    .panel,.hero-stat,.mini-stat,.request-card,.student-card,.student-item,
+    .computer-card,.computer-item,.permission-card,.permission-item,
+    .history-stat,.request-stat,.student-stat,.permission-stat,.computer-stat,.agenda-item
+  ){
+    box-shadow:none!important;
+  }
+  dialog{box-shadow:0 10px 28px rgba(0,0,0,.28)!important}
+}
