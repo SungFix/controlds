@@ -1816,3 +1816,73 @@ html body :is(
     border-color:#4c5b65!important;
   }
 }
+
+
+/* =========================================================
+   STUDENT EDIT — limpeza individual do histórico
+   ========================================================= */
+#studentModal .student-history-danger-zone{
+  margin-top:18px;
+  padding:14px 15px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  border:1px solid #4a3338;
+  border-radius:12px;
+  background:#171315;
+}
+
+#studentModal .student-history-danger-zone[hidden]{
+  display:none!important;
+}
+
+#studentModal .student-history-danger-copy{
+  min-width:0;
+  display:grid;
+  gap:5px;
+}
+
+#studentModal .student-history-danger-copy strong{
+  color:#dfb2b7;
+  font-size:10.5px;
+  font-weight:850;
+}
+
+#studentModal .student-history-danger-copy small{
+  max-width:520px;
+  color:#938589;
+  font-size:9px;
+  line-height:1.55;
+}
+
+#studentModal #studentClearHistoryBtn{
+  flex:0 0 auto;
+  min-width:134px;
+}
+
+html[data-theme="light"] #studentModal .student-history-danger-zone{
+  background:#faf5f6;
+  border-color:#dfc8cc;
+}
+
+html[data-theme="light"] #studentModal .student-history-danger-copy strong{
+  color:#865961;
+}
+
+html[data-theme="light"] #studentModal .student-history-danger-copy small{
+  color:#74676a;
+}
+
+@media(max-width:600px){
+  #studentModal .student-history-danger-zone{
+    align-items:stretch;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  #studentModal #studentClearHistoryBtn{
+    width:100%;
+    min-width:0;
+  }
+}
