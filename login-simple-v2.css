@@ -592,3 +592,82 @@ html[data-theme="light"] body.auth-locked .login-gate .login-note{
     margin-bottom:26px !important;
   }
 }
+
+
+/* =========================================================
+   SITEWIDE MATTE — LOGIN
+   ========================================================= */
+body.auth-locked .login-gate{
+  background:#0a0d10!important;
+}
+body.auth-locked .login-gate::before{
+  opacity:.12!important;
+  background-image:none!important;
+}
+body.auth-locked .login-gate .login-card{
+  background:#11161b!important;
+  border-color:#303943!important;
+  box-shadow:0 6px 18px rgba(0,0,0,.24)!important;
+}
+body.auth-locked .login-gate .login-card .login-brand{
+  background:#151b20!important;
+  border-right-color:#303943!important;
+}
+body.auth-locked .login-gate .login-card .login-mark{
+  background:#171d22!important;
+  border-color:#3a4650!important;
+  box-shadow:none!important;
+}
+body.auth-locked .login-gate .login-card .login-brand::after{
+  background:#151b20!important;
+  box-shadow:none!important;
+}
+body.auth-locked .login-gate .login-grid input{
+  background:#0f1418!important;
+  box-shadow:none!important;
+}
+body.auth-locked .login-gate .login-grid input:focus{
+  box-shadow:0 0 0 2px rgba(120,149,168,.11)!important;
+}
+body.auth-locked .login-gate .login-card #loginSubmit{
+  box-shadow:none!important;
+}
+body.auth-locked .login-gate .login-card #loginSubmit:hover:not(:disabled){
+  box-shadow:none!important;
+}
+
+/* Claro: sólido e sem brilho; a paleta global reforça estes tons depois. */
+html[data-theme="light"] body.auth-locked .login-gate{
+  background:#f8fafb!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate::before{
+  background-image:none!important;
+  opacity:0!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card{
+  background:#fbfcfc!important;
+  border-color:#dce4e8!important;
+  box-shadow:0 2px 7px rgba(32,48,57,.06)!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-brand{
+  background:#f4f7f9!important;
+  border-color:#dce4e8!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card .login-mark{
+  background:#eef3f6!important;
+  border-color:#cfdbe1!important;
+  box-shadow:none!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input{
+  background:#fbfcfc!important;
+  border-color:#dce4e8!important;
+  box-shadow:none!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-grid input:focus{
+  background:#fff!important;
+  border-color:#8fa6b2!important;
+  box-shadow:0 0 0 2px rgba(126,153,170,.10)!important;
+}
+html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit{
+  box-shadow:none!important;
+}
