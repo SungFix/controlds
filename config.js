@@ -239,14 +239,14 @@ window.ETE_CONFIG = {
     ensureScript("controlHistoryFilterPolishScript", "history-filter-polish.js?v=2");
     ensureScript("controlMobileLogoutIconScript", "mobile-logout-icon.js?v=2");
     ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=3");
-    ensureScript("controlPortalScript", "portal.js?v=16");
+    ensureScript("controlAtestadosOptionalLoaderScript", "atestados-optional-loader.js?v=2");
+    ensureScript("controlPortalScript", "portal.js?v=17");
     ensureScript("controlAdminFunctionAuthFixScript", "admin-function-auth-fix.js?v=1");
     ensureScript("controlPortalAdminScript", "portal-admin.js?v=3");
     ensureScript("controlPortalAdminCornerScript", "portal-admin-corner.js?v=3");
     ensureScript("controlRelationalFrontendV2Script", "relational-frontend-v2.js?v=2");
     ensureScript("controlRegisteredStudentFlowScript", "registered-student-flow.js?v=6");
     ensureScript("controlRequestCreatorLabelScript", "request-creator-label.js?v=1");
-    ensureScript("controlAtestadosOptionalLoaderScript", "atestados-optional-loader.js?v=1");
   }
 
   function updateButton(button){
