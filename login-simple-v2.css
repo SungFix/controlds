@@ -673,49 +673,50 @@ html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit{
 }
 
 
-/* ACTION CONTROLS v7 — Login */
+/* ACTION CONTROLS v7 — Login
+   Paleta colorida restaurada somente na tela de login. */
 body.auth-locked .login-gate .login-card #loginSubmit{
   min-height:44px!important;
   padding:0 16px!important;
-  border:1px solid #4b5157!important;
-  border-radius:10px!important;
-  background:#292d31!important;
-  color:#f1f3f4!important;
+  border:1px solid #627b87!important;
+  border-radius:11px!important;
+  background:#536b78!important;
+  color:#f7f9fa!important;
   box-shadow:none!important;
   font:inherit!important;
   font-size:12px!important;
-  font-weight:820!important;
+  font-weight:850!important;
   letter-spacing:.008em!important;
   cursor:pointer!important;
   transition:background-color .14s ease,border-color .14s ease,transform .1s ease!important;
 }
 @media(hover:hover) and (pointer:fine){
   body.auth-locked .login-gate .login-card #loginSubmit:hover:not(:disabled){
-    background:#33383d!important;
-    border-color:#626970!important;
+    background:#617b89!important;
+    border-color:#7893a0!important;
     transform:translateY(-1px)!important;
   }
 }
 body.auth-locked .login-gate .login-card #loginSubmit:active:not(:disabled){transform:translateY(1px)!important}
 body.auth-locked .login-gate .login-card #loginSubmit:focus-visible{
-  outline:2px solid #858b91!important;
+  outline:2px solid #7895a8!important;
   outline-offset:2px!important;
   box-shadow:none!important;
 }
 body.auth-locked .login-gate .login-card #loginSubmit:disabled{
-  opacity:.46!important;
+  opacity:.48!important;
   cursor:not-allowed!important;
   transform:none!important;
 }
 html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit{
-  background:#e5e7e9!important;
-  border-color:#b3b8bd!important;
-  color:#34393e!important;
+  background:#31444d!important;
+  border-color:#31444d!important;
+  color:#fff!important;
   box-shadow:none!important;
 }
 @media(hover:hover) and (pointer:fine){
   html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit:hover:not(:disabled){
-    background:#d9dcdf!important;
-    border-color:#9da3a9!important;
+    background:#3b505a!important;
+    border-color:#3b505a!important;
   }
 }
