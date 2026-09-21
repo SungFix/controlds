@@ -720,3 +720,12 @@ html[data-theme="light"] body.auth-locked .login-gate .login-card #loginSubmit{
     border-color:#3b505a!important;
   }
 }
+
+
+/* LOGIN — impede flash do controle de tema durante autenticação */
+body.auth-locked .control-theme-toggle{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
