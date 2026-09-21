@@ -76,7 +76,7 @@
       const link=document.createElement("link");
       link.id="eteCustomSelectStyles";
       link.rel="stylesheet";
-      link.href="custom-select.css?v=1";
+      link.href="custom-select.css?v=2";
       document.head.appendChild(link);
     }
     if(!document.getElementById("eteSelectMatteStyles")){
