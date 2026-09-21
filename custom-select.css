@@ -96,7 +96,8 @@
 
 .ete-select-menu{
   position:fixed;
-  z-index:2147483000;
+  /* Acima do Portal/Atestados (2147483600) e abaixo do menu global de saída (2147483646). */
+  z-index:2147483645;
   display:none;
   max-height:min(320px,calc(100vh - 28px));
   overflow:auto;
