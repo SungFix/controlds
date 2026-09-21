@@ -5676,6 +5676,7 @@ async function loginWithCredentials(username,password){
 async function forceFreshLogin(){
   const client=initSupabase();
   if(!client){
+    setAuthLocked(true);
     setSyncState("error");
     return;
   }
