@@ -88,7 +88,7 @@
       if(!script){
         script=document.createElement("script");
         script.id="eteAtestadosScript";
-        script.src="atestados.js?v=10";
+        script.src="atestados.js?v=11";
         script.defer=true;
         script.addEventListener("load",done,{once:true});
         script.addEventListener("error",fail,{once:true});
@@ -269,7 +269,7 @@
     portal.hidden=false;
     document.body.classList.add("portal-open");
     setSelectedSystem("");
-    ensureAtestadosAssets().catch(error=>console.error("Falha ao preparar Atestados:",error));
+    ensureAtestadosAssets().then(()=>{const loadOptional=window.ETEAtestadosOptionalLoader?.load;if(typeof loadOptional==="function")return loadOptional();}).catch(error=>console.error("Falha ao preparar Atestados:",error));
   }
 
   function hidePortal(){
@@ -300,14 +300,13 @@
       const token=++atestadosOpenToken;
       ensureAtestadosAssets()
         .then(module=>module.mount("#eteAtestadosRoot"))
-        .then(async ready=>{
+        .then(ready=>{
           if(!ready||token!==atestadosOpenToken||selectedSystem()!=="atestados"||!isAuthenticated())return;
-          const optionalLoader=window.ETEAtestadosOptionalLoader?.load;
-          if(typeof optionalLoader==="function")await optionalLoader();
-          if(token!==atestadosOpenToken||selectedSystem()!=="atestados"||!isAuthenticated())return;
           portal.classList.add("module-open");
           portal.hidden=false;
           document.body.classList.add("portal-open");
+          const optionalLoader=window.ETEAtestadosOptionalLoader?.load;
+          if(typeof optionalLoader==="function")optionalLoader().catch(error=>console.error("Falha ao finalizar recursos do Atestados:",error));
         })
         .catch(error=>{
           if(token!==atestadosOpenToken)return;
