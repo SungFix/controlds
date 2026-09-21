@@ -435,7 +435,7 @@
     if(!floating) return;
     const hasHeader=!!document.querySelector(".control-theme-toggle-header");
     const loginLocked=root.classList.contains("auth-locked");
-    floating.style.display=loginLocked||!hasHeader?"inline-flex":"none";
+    floating.style.display=loginLocked?"none":(!hasHeader?"inline-flex":"none");
   }
 
   function syncEverything(){
