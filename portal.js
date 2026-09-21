@@ -300,8 +300,11 @@
       const token=++atestadosOpenToken;
       ensureAtestadosAssets()
         .then(module=>module.mount("#eteAtestadosRoot"))
-        .then(ready=>{
+        .then(async ready=>{
           if(!ready||token!==atestadosOpenToken||selectedSystem()!=="atestados"||!isAuthenticated())return;
+          const optionalLoader=window.ETEAtestadosOptionalLoader?.load;
+          if(typeof optionalLoader==="function")await optionalLoader();
+          if(token!==atestadosOpenToken||selectedSystem()!=="atestados"||!isAuthenticated())return;
           portal.classList.add("module-open");
           portal.hidden=false;
           document.body.classList.add("portal-open");
