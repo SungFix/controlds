@@ -5648,6 +5648,7 @@ function setAuthLocked(locked){
     else shell.removeAttribute("aria-hidden");
   }
   window.scrollTo({top:0,left:0,behavior:"auto"});
+  document.documentElement.classList.remove("ete-first-paint");
 }
 function unlockApp(){
   setAuthLocked(false);
