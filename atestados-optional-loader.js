@@ -133,6 +133,8 @@
     observer.observe(document.body,{childList:true,subtree:true});
   }
 
+  window.ETEAtestadosOptionalLoader=Object.freeze({load:loadOptional});
+
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});
   else start();
 })();
