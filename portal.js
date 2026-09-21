@@ -59,7 +59,10 @@
     return el;
   }
 
-  function ensureAtestadosAssets(callback){
+  let atestadosAssetsPromise=null;
+  let atestadosOpenToken=0;
+
+  function ensureAtestadosAssets(){
     asset("link","eteAtestadosStyles",{rel:"stylesheet",href:"atestados.css?v=6"});
     asset("link","eteAtestadosRoomStyles",{rel:"stylesheet",href:"atestados-room-picker.css?v=6"});
     asset("link","eteAtestadosControlLayoutStyles",{rel:"stylesheet",href:"atestados-control-layout.css?v=3"});
@@ -71,18 +74,35 @@
     asset("script","eteAtestadosTimePickerScript",{src:"atestados-time-picker.js?v=3",defer:true});
     asset("script","eteAtestadosDatePickerScript",{src:"atestados-date-picker.js?v=1",defer:true});
     asset("script","eteAtestadosStudentFlowScript",{src:"atestados-student-flow.js?v=1",defer:true});
-    if(window.ETEAtestados){callback?.();return;}
-    let script=document.getElementById("eteAtestadosScript");
-    if(!script){
-      script=document.createElement("script");
-      script.id="eteAtestadosScript";
-      script.src="atestados.js?v=9";
-      script.defer=true;
-      script.addEventListener("load",function(){callback?.();},{once:true});
-      document.head.appendChild(script);
-      return;
-    }
-    script.addEventListener("load",function(){callback?.();},{once:true});
+
+    if(window.ETEAtestados)return Promise.resolve(window.ETEAtestados);
+    if(atestadosAssetsPromise)return atestadosAssetsPromise;
+
+    atestadosAssetsPromise=new Promise((resolve,reject)=>{
+      let script=document.getElementById("eteAtestadosScript");
+      const done=()=>window.ETEAtestados
+        ? resolve(window.ETEAtestados)
+        : reject(new Error("Atestados não foi inicializado."));
+      const fail=()=>reject(new Error("Falha ao carregar o Atestados."));
+
+      if(!script){
+        script=document.createElement("script");
+        script.id="eteAtestadosScript";
+        script.src="atestados.js?v=10";
+        script.defer=true;
+        script.addEventListener("load",done,{once:true});
+        script.addEventListener("error",fail,{once:true});
+        document.head.appendChild(script);
+      }else{
+        script.addEventListener("load",done,{once:true});
+        script.addEventListener("error",fail,{once:true});
+      }
+    }).catch(error=>{
+      atestadosAssetsPromise=null;
+      throw error;
+    });
+
+    return atestadosAssetsPromise;
   }
 
   function getUser(){
@@ -240,6 +260,7 @@
 
   function showPortalHome(){
     if(!isAuthenticated())return;
+    atestadosOpenToken++;
     closeExitMenu();
     stopAtestados();
     buildPortal();
@@ -248,10 +269,12 @@
     portal.hidden=false;
     document.body.classList.add("portal-open");
     setSelectedSystem("");
+    ensureAtestadosAssets().catch(error=>console.error("Falha ao preparar Atestados:",error));
   }
 
   function hidePortal(){
     if(!portal)return;
+    atestadosOpenToken++;
     closeExitMenu();
     stopAtestados();
     portal.hidden=true;
@@ -273,11 +296,22 @@
     if(systemId==="atestados"){
       setSelectedSystem("atestados");
       buildPortal();
-      portal.classList.add("module-open");
       refreshUser();
-      portal.hidden=false;
-      document.body.classList.add("portal-open");
-      ensureAtestadosAssets(()=>window.ETEAtestados?.mount("#eteAtestadosRoot"));
+      const token=++atestadosOpenToken;
+      ensureAtestadosAssets()
+        .then(module=>module.mount("#eteAtestadosRoot"))
+        .then(()=>{
+          if(token!==atestadosOpenToken||selectedSystem()!=="atestados"||!isAuthenticated())return;
+          portal.classList.add("module-open");
+          portal.hidden=false;
+          document.body.classList.add("portal-open");
+        })
+        .catch(error=>{
+          if(token!==atestadosOpenToken)return;
+          console.error("Falha ao abrir Atestados:",error);
+          setSelectedSystem("");
+          showPortalHome();
+        });
     }
   }
 
