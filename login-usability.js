@@ -10,11 +10,11 @@
     style.textContent=`
       body.auth-locked .login-password-wrap{position:relative;width:100%;margin-top:8px}
       body.auth-locked .login-password-wrap>#loginPassword{margin-top:0!important;padding-right:78px!important}
-      body.auth-locked .login-password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);min-width:64px;height:38px;padding:0 9px;border:1px solid #333e47;border-radius:9px;background:#151a1f;color:#b9c2c9;font:inherit;font-size:10.5px;font-weight:820;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:none!important;transition:background .14s ease,border-color .14s ease,color .14s ease}
-      body.auth-locked .login-password-toggle:hover{background:#1a2025;border-color:#4c5b65;color:#eef1f3}
-      body.auth-locked .login-password-toggle:focus-visible{outline:2px solid #858b91;outline-offset:2px;box-shadow:none!important}
-      html[data-theme="light"] body.auth-locked .login-password-toggle{background:#f4f6f7;border-color:#d1d7db;color:#5f686e}
-      html[data-theme="light"] body.auth-locked .login-password-toggle:hover{background:#eceff1;border-color:#b8c0c5;color:#34393d}
+      body.auth-locked .login-password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);min-width:64px;height:38px;padding:0 9px;border:1px solid #43515e;border-radius:9px;background:#1a2229;color:#d4dde3;font:inherit;font-size:10.5px;font-weight:820;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:none!important;transition:background .14s ease,border-color .14s ease,color .14s ease}
+      body.auth-locked .login-password-toggle:hover{background:#24313a;border-color:#5d7481;color:#f3f6f8}
+      body.auth-locked .login-password-toggle:focus-visible{outline:2px solid #7895a8;outline-offset:2px;box-shadow:none!important}
+      html[data-theme="light"] body.auth-locked .login-password-toggle{background:#e7eef1;border-color:#9fb4be;color:#2c414a}
+      html[data-theme="light"] body.auth-locked .login-password-toggle:hover{background:#dde8ec;border-color:#879faa;color:#20323a}
       @media(max-width:420px){body.auth-locked .login-password-toggle{right:7px;height:40px;min-width:64px;font-size:11px}}
     `;
     document.head.appendChild(style);
