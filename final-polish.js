@@ -95,6 +95,15 @@
     }
   }
 
+  function ensureNotebookInventoryView(){
+    if(document.getElementById("eteNotebookInventoryViewScript"))return;
+    const script=document.createElement("script");
+    script.id="eteNotebookInventoryViewScript";
+    script.src="notebook-inventory-view.js?v=1";
+    script.defer=true;
+    document.head.appendChild(script);
+  }
+
   function syncButton(button){
     if(!(button instanceof HTMLButtonElement)) return;
     const text=String(button.textContent||"").trim();
@@ -160,6 +169,7 @@
   function start(){
     document.documentElement.dataset.finalPolish="1";
     setTimeout(ensureGlobalSelectAssets,0);
+    setTimeout(ensureNotebookInventoryView,0);
     sync();
     const observer=new MutationObserver(records=>{if(mutationsNeedSync(records))queue();});
     observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:["disabled","class"]});
