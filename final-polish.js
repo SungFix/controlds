@@ -99,7 +99,7 @@
     if(document.getElementById("eteNotebookInventoryViewScript"))return;
     const script=document.createElement("script");
     script.id="eteNotebookInventoryViewScript";
-    script.src="notebook-inventory-view.js?v=1";
+    script.src="notebook-inventory-view.js?v=2";
     script.defer=true;
     document.head.appendChild(script);
   }
