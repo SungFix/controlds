@@ -3,6 +3,7 @@
 
   let selectedNotebookId="";
   let selectedIdentifier="";
+  let selectedNotebookLabel="";
   let observer=null;
   let queued=false;
   let loading=false;
@@ -29,15 +30,25 @@
     style.textContent=`
       #notebookRequestUseModal{width:min(620px,calc(100% - 28px))}
       .notebook-request-use-modal{padding:22px}
+      .notebook-use-choice-options{display:grid;grid-template-columns:1fr;gap:10px}
+      .notebook-use-choice-option{
+        min-height:94px;padding:15px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:6px;text-align:left;
+        border:1px solid var(--ui-border,#2d333a);border-radius:12px;background:var(--ui-surface-2,#15181d);color:var(--ui-text,#eef1f4);box-shadow:none;
+        transition:background .14s ease,border-color .14s ease,transform .14s ease,box-shadow .14s ease
+      }
+      .notebook-use-choice-option strong{font-size:14px;line-height:1.25;color:inherit}
+      .notebook-use-choice-option span{font-size:12px;line-height:1.4;font-weight:650;color:var(--ui-muted,#9da5ae)}
+      .notebook-use-choice-option:hover,.notebook-use-choice-option:focus-visible{background:var(--ui-surface-3,#1c2026);border-color:var(--ui-accent,#59636f);transform:translateY(-1px);box-shadow:0 8px 22px rgba(0,0,0,.16);outline:none}
       .notebook-request-use-list{display:grid;gap:9px;max-height:min(58vh,520px);overflow:auto;padding-right:2px}
+      .notebook-request-use-toolbar{display:flex;justify-content:flex-start;margin-bottom:10px}
       .notebook-request-use-item{width:100%;min-height:72px;padding:13px 14px;display:flex;align-items:center;justify-content:space-between;gap:14px;text-align:left;border:1px solid var(--ui-border,#2d333a);border-radius:12px;background:var(--ui-surface-2,#15181d);color:var(--ui-text,#eef1f4)}
       .notebook-request-use-item:hover,.notebook-request-use-item:focus-visible{background:var(--ui-surface-3,#1c2026);border-color:var(--ui-accent,#59636f);outline:none}
       .notebook-request-use-item strong{display:block;font-size:12px;color:inherit}
       .notebook-request-use-item span{display:block;margin-top:4px;font-size:9.5px;color:var(--ui-muted,#9da5ae);line-height:1.45}
       .notebook-request-use-badge{flex:0 0 auto;padding:6px 9px;border:1px solid #35465c;border-radius:999px;background:#161c24;color:#8ea6c8;font-size:8px;font-weight:850}
       .notebook-request-use-empty{padding:22px;border:1px dashed var(--ui-border,#2d333a);border-radius:12px;text-align:center;color:var(--ui-muted,#9da5ae);font-size:10px;line-height:1.5}
-      html[data-theme="light"] .notebook-request-use-item{background:#f7f9fa;color:#1d303a}
-      html[data-theme="light"] .notebook-request-use-item:hover,html[data-theme="light"] .notebook-request-use-item:focus-visible{background:#edf2f5}
+      html[data-theme="light"] .notebook-use-choice-option,html[data-theme="light"] .notebook-request-use-item{background:#f7f9fa;color:#1d303a}
+      html[data-theme="light"] .notebook-use-choice-option:hover,html[data-theme="light"] .notebook-use-choice-option:focus-visible,html[data-theme="light"] .notebook-request-use-item:hover,html[data-theme="light"] .notebook-request-use-item:focus-visible{background:#edf2f5}
       @media(max-width:600px){#notebookRequestUseModal{width:min(460px,calc(100% - 20px))}.notebook-request-use-modal{padding:18px}.notebook-request-use-item{align-items:flex-start;flex-direction:column;gap:9px}}
     `;
     document.head.appendChild(style);
@@ -54,8 +65,8 @@
       <div class="modal notebook-request-use-modal">
         <div class="modalhead">
           <div>
-            <h2 id="notebookRequestUseTitle">Usar notebook no pedido</h2>
-            <p id="notebookRequestUseDesc">Escolha um pedido aguardando retirada. Este fluxo é somente de retirada.</p>
+            <h2 id="notebookRequestUseTitle">Usar notebook em</h2>
+            <p id="notebookRequestUseDesc"></p>
           </div>
           <button type="button" class="close" data-notebook-use-close aria-label="Fechar">×</button>
         </div>
@@ -65,6 +76,14 @@
     dialog.addEventListener("click",event=>{if(event.target===dialog)dialog.close();});
     dialog.querySelector("[data-notebook-use-close]")?.addEventListener("click",()=>dialog.close());
     dialog.addEventListener("click",event=>{
+      const target=event.target.closest?.("[data-notebook-use-target]");
+      if(target){
+        event.preventDefault();
+        if(target.dataset.notebookUseTarget==="pickup")renderRequests();
+        return;
+      }
+      const back=event.target.closest?.("[data-notebook-use-back]");
+      if(back){event.preventDefault();renderChoice();return;}
       const button=event.target.closest?.("[data-notebook-use-request]");
       if(!button)return;
       event.preventDefault();
@@ -99,17 +118,36 @@
     throw new Error("ambiguous_notebook");
   }
 
-  function renderRequests(notebookLabel){
+  function renderChoice(){
+    const title=el("notebookRequestUseTitle");
+    const desc=el("notebookRequestUseDesc");
     const list=el("notebookRequestUseList");
+    if(title)title.textContent="Usar notebook em";
+    if(desc)desc.textContent=`Notebook ${selectedNotebookLabel} · escolha a ação.`;
+    if(!list)return;
+    list.innerHTML=`
+      <div class="notebook-use-choice-options">
+        <button type="button" class="notebook-use-choice-option" data-notebook-use-target="pickup">
+          <strong>Retirada</strong>
+          <span>Usar este notebook em um pedido que está aguardando retirada.</span>
+        </button>
+      </div>`;
+  }
+
+  function renderRequests(){
+    const title=el("notebookRequestUseTitle");
+    const desc=el("notebookRequestUseDesc");
+    const list=el("notebookRequestUseList");
+    if(title)title.textContent="Retirada";
+    if(desc)desc.textContent=`Notebook ${selectedNotebookLabel} · escolha o pedido do aluno.`;
     if(!list)return;
     const pending=pendingRequests();
-    const desc=el("notebookRequestUseDesc");
-    if(desc)desc.textContent=`Notebook ${notebookLabel} · escolha um pedido aguardando retirada.`;
+    const back='<div class="notebook-request-use-toolbar"><button type="button" class="btn secondary small" data-notebook-use-back>Voltar</button></div>';
     if(!pending.length){
-      list.innerHTML='<div class="notebook-request-use-empty"><strong>Nenhum pedido aguardando retirada.</strong><br>Crie o pedido do aluno primeiro e depois use o notebook aqui.</div>';
+      list.innerHTML=back+'<div class="notebook-request-use-empty"><strong>Nenhum pedido aguardando retirada.</strong><br>Crie o pedido do aluno primeiro e depois volte aqui.</div>';
       return;
     }
-    list.innerHTML=pending.map(request=>{
+    list.innerHTML=back+pending.map(request=>{
       const group=groupText(request)||"Turma não informada";
       const time=String(request.time||"").trim();
       return `<button type="button" class="notebook-request-use-item" data-notebook-use-request="${escHtml(request.id)}">
@@ -127,8 +165,10 @@
       const resolved=await notebookIdentifier(notebookId);
       selectedNotebookId=String(notebookId);
       selectedIdentifier=resolved.identifier;
-      renderRequests(resolved.label);
-      ensureModal().showModal();
+      selectedNotebookLabel=resolved.label;
+      ensureModal();
+      renderChoice();
+      el("notebookRequestUseModal")?.showModal();
     }catch(error){
       console.error("Falha ao preparar retirada pelo inventário:",error);
       if(String(error?.message||error).includes("ambiguous_notebook")) notify("Este notebook não possui uma identificação única para retirada. Use o código do equipamento de 9 caracteres quando ele for informado.");
@@ -152,7 +192,7 @@
     if(pinInput)pinInput.value="";
     codeInput.value=selectedIdentifier;
     codeInput.dispatchEvent(new Event("input",{bubbles:true}));
-    ensureModal().close();
+    el("notebookRequestUseModal")?.close();
     dialog.showModal();
     try{pinInput?.focus();}catch(_){}
   }
@@ -175,18 +215,14 @@
       button.type="button";
       button.className="btn primary small";
       button.dataset.useNotebookRequest=notebookId;
-      button.textContent="Usar no pedido";
+      button.textContent="Usar em";
       const danger=foot.querySelector(".delete-request,[data-inventory-delete-request]");
       if(danger)foot.insertBefore(button,danger);
       else foot.appendChild(button);
     });
   }
 
-  function queueSync(){
-    if(queued)return;
-    queued=true;
-    requestAnimationFrame(syncButtons);
-  }
+  function queueSync(){if(queued)return;queued=true;requestAnimationFrame(syncButtons);}
 
   function start(){
     ensureModal();
