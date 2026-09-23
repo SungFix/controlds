@@ -7,12 +7,12 @@
     if(!form||!original||form.dataset.computerIdEnhanced==="1") return;
     form.dataset.computerIdEnhanced="1";
 
-    // Mantém o mesmo nó: apenas atualiza a validação visual para o padrão atual.
+    // Mantém o mesmo nó e aceita as três identificações cadastradas no inventário.
     const input=original;
     input.maxLength=9;
-    input.pattern="(?:\\d{6}|\\d{9})";
-    input.placeholder="6 dígitos (nº geral) ou 9 dígitos (nº de série)";
-    input.title="Digite o número geral de 6 dígitos ou o número de série de 9 dígitos";
+    input.pattern="(?:\\d{4}|\\d{6}|[A-Za-z0-9]{9})";
+    input.placeholder="Etiqueta (4), tombamento (6) ou código do equipamento (9)";
+    input.title="Digite a etiqueta de 4 dígitos, o tombamento de 6 dígitos ou o código do equipamento de 9 caracteres";
     input.setAttribute("aria-describedby","computerCodeHelp");
 
     const label=input.closest("label");
@@ -34,16 +34,17 @@
       help.style.color="var(--muted, #8f98a2)";
       help.style.fontSize="10.5px";
       help.style.lineHeight="1.45";
-      help.textContent="Use o número geral (6 dígitos). Se o notebook não tiver esse número, use o número de série (9 dígitos).";
+      help.textContent="Use a etiqueta de 4 dígitos. Também aceitamos tombamento de 6 dígitos e código do equipamento de 9 caracteres.";
       input.insertAdjacentElement("afterend",help);
     }
 
     function sanitize(){
-      input.value=input.value.replace(/\D/g,"").slice(0,9);
-      const len=input.value.length;
-      if(len===6) help.textContent="Número geral de 6 dígitos reconhecido.";
-      else if(len===9) help.textContent="Número de série de 9 dígitos reconhecido.";
-      else help.textContent="Use o número geral (6 dígitos) ou o número de série (9 dígitos).";
+      input.value=input.value.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,9);
+      const value=input.value;
+      if(/^\d{4}$/.test(value)) help.textContent="Etiqueta de 4 dígitos reconhecida.";
+      else if(/^\d{6}$/.test(value)) help.textContent="Tombamento de 6 dígitos reconhecido.";
+      else if(/^[A-Z0-9]{9}$/.test(value)) help.textContent="Código do equipamento de 9 caracteres reconhecido.";
+      else help.textContent="Use etiqueta (4 dígitos), tombamento (6 dígitos) ou código do equipamento (9 caracteres).";
     }
     input.addEventListener("input",sanitize);
 
