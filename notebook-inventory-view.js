@@ -96,7 +96,7 @@
     if(!request)return {key:"available",label:"Disponível"};
     if(request.status==="late")return {key:"late",label:"Em atraso"};
     if(request.status==="use")return {key:"use",label:"Em uso"};
-    return {key:"done",label:"Concluído"};
+    return {key:"done",label:"Disponível"};
   }
 
   function canDeleteRequestSafe(request){
@@ -214,8 +214,8 @@
       const equipment=notebook.equipmentCode||"Não informado";
       const requestGroupTextValue=request?requestGroup(request):"—";
       const requestTime=request?.time||"—";
-      const ownerLabel=active?"Com quem está":(request?"Último usuário":"Situação");
-      const ownerValue=request?.student||"Sem uso registrado";
+      const ownerLabel=active?"Com quem está":"Disponibilidade";
+      const ownerValue=active?(request?.student||"Aluno não informado"):"Livre para uso";
       const provisional=notebook.provisionalReference&&!notebook.assetNumber
         ? `<span class="inventory-provisional">Referência provisória: ${escapeHtml(notebook.provisionalReference)}</span>`:"";
       const action=active&&canReturnSafe()
@@ -225,7 +225,7 @@
           : "");
       const note=active
         ? (status.key==="late"?"Devolução em atraso.":"Aguardando a devolução do equipamento.")
-        : (request?"Equipamento disponível. Último uso já foi concluído.":"Equipamento disponível para retirada.");
+        : "Equipamento disponível para retirada.";
 
       return `
         <article class="inventory-computer-item" data-inventory-id="${escapeHtml(notebook.id)}" data-request-id="${escapeHtml(request?.id||"")}">
@@ -238,7 +238,7 @@
                 ${provisional}
               </div>
             </div>
-            <span class="status ${status.key==="available"?"inventory-status-available":status.key}">${escapeHtml(status.label)}</span>
+            <span class="status ${status.key==="available"||status.key==="done"?"inventory-status-available":status.key}">${escapeHtml(status.label)}</span>
           </div>
 
           <div class="computer-item-body">
@@ -254,8 +254,8 @@
             </div>
 
             ${request?`<div class="computer-meta-grid inventory-request-grid">
-              <div class="computer-meta-box"><span>Turma / Curso</span><strong>${escapeHtml(requestGroupTextValue)}</strong></div>
-              <div class="computer-meta-box"><span>Horário</span><strong>${escapeHtml(requestTime)}</strong></div>
+              <div class="computer-meta-box"><span>Turma / Curso do último uso</span><strong>${escapeHtml(requestGroupTextValue)}</strong></div>
+              <div class="computer-meta-box"><span>Horário do último uso</span><strong>${escapeHtml(requestTime)}</strong></div>
             </div>`:""}
           </div>
 
