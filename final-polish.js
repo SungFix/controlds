@@ -106,7 +106,7 @@
     if(!document.getElementById("eteNotebookRequestUseScript")){
       const helper=document.createElement("script");
       helper.id="eteNotebookRequestUseScript";
-      helper.src="notebook-request-use.js?v=1";
+      helper.src="notebook-request-use.js?v=2";
       helper.defer=true;
       document.head.appendChild(helper);
     }
