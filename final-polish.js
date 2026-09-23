@@ -96,12 +96,20 @@
   }
 
   function ensureNotebookInventoryView(){
-    if(document.getElementById("eteNotebookInventoryViewScript"))return;
-    const script=document.createElement("script");
-    script.id="eteNotebookInventoryViewScript";
-    script.src="notebook-inventory-view.js?v=2";
-    script.defer=true;
-    document.head.appendChild(script);
+    if(!document.getElementById("eteNotebookInventoryViewScript")){
+      const script=document.createElement("script");
+      script.id="eteNotebookInventoryViewScript";
+      script.src="notebook-inventory-view.js?v=2";
+      script.defer=true;
+      document.head.appendChild(script);
+    }
+    if(!document.getElementById("eteNotebookRequestUseScript")){
+      const helper=document.createElement("script");
+      helper.id="eteNotebookRequestUseScript";
+      helper.src="notebook-request-use.js?v=1";
+      helper.defer=true;
+      document.head.appendChild(helper);
+    }
   }
 
   function syncButton(button){
