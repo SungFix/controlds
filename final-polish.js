@@ -110,6 +110,13 @@
       helper.defer=true;
       document.head.appendChild(helper);
     }
+    if(!document.getElementById("eteNotebookHistoryPolishScript")){
+      const polish=document.createElement("script");
+      polish.id="eteNotebookHistoryPolishScript";
+      polish.src="notebook-history-polish.js?v=1";
+      polish.defer=true;
+      document.head.appendChild(polish);
+    }
   }
 
   function syncButton(button){
