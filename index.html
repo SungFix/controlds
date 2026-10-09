@@ -5228,7 +5228,7 @@ body.auth-locked .shell{
         <input id="pickupPin" type="password" autocomplete="new-password" inputmode="numeric" minlength="4" maxlength="8" required placeholder="Senha criada no pedido">
       </label>
       <label class="full">Código do notebook
-        <input id="computerCode" inputmode="numeric" pattern="(?:\d{6}|\d{9})" maxlength="9" required placeholder="6 dígitos (nº geral) ou 9 dígitos (nº de série)">
+        <input id="computerCode" inputmode="text" autocapitalize="characters" autocomplete="off" spellcheck="false" pattern="(?:[0-9]{4}|[0-9]{6}|[A-Za-z0-9]{9})" maxlength="9" required placeholder="Etiqueta (4), tombamento (6) ou código do equipamento (9)">
       </label>
     </div>
     <div class="modalactions">
@@ -7161,14 +7161,14 @@ document.addEventListener("click",e=>{
     toast(wasLate?"Devolução confirmada com atraso.":"Devolução confirmada.");
   }
 });
-$("#computerCode").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,"").slice(0,6));
+$("#computerCode").addEventListener("input",e=>e.target.value=e.target.value.replace(/[^A-Za-z0-9]/g,"").toUpperCase().slice(0,9));
 $("#pickupForm").addEventListener("submit",async e=>{
   e.preventDefault();
   if(!canPickup()){toast("Somente Monitor ou ADM pode confirmar a retirada.");return;}
-  const code=$("#computerCode").value;
+  const code=$("#computerCode").value.trim().toUpperCase();
   const pin=$("#pickupPin").value.trim();
-  if(!/^\d{3,8}$/.test(pin)){toast("Digite a senha do aluno.");return;}
-  if(!/^\d{6}$/.test(code)){toast("Digite um código de 6 dígitos.");return;}
+  if(!/^\d{4,8}$/.test(pin)){toast("Digite o PIN do aluno (4 a 8 números).");return;}
+  if(!/^(?:\d{4}|\d{6}|[A-Z0-9]{9})$/.test(code)){toast("Use a etiqueta de 4 dígitos, o tombamento de 6 ou o código do equipamento de 9 caracteres.");return;}
 
   const r=data.find(x=>String(x.id)===String($("#pickupForm").dataset.id));
   if(!r){toast("Pedido não encontrado.");return;}
@@ -7244,7 +7244,7 @@ setSyncState("login");
   }
 })();
 </script>
-<script src="v46-bridge.js?v=4"></script>
+<script src="v46-bridge.js?v=5"></script>
 <script src="request-date-picker.js?v=1"></script>
 </body>
 </html>
