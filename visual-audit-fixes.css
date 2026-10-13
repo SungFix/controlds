@@ -1,0 +1,199 @@
+/* Control Ds — auditoria visual final
+   Correções defensivas para evitar sobreposição, clipping e colisão em telas intermediárias.
+   Mantém o visual existente e atua apenas em estrutura/empilhamento. */
+
+/* 1) Cabeçalhos de modal: o texto sempre cede espaço ao botão de fechar. */
+dialog .modalhead,
+dialog .request-modal-head{
+  align-items:flex-start!important;
+}
+
+dialog .modalhead > div,
+dialog .request-modal-copy{
+  min-width:0!important;
+  flex:1 1 auto!important;
+}
+
+dialog .modalhead h2,
+dialog .modalhead p,
+dialog .request-modal-head h2,
+dialog .request-modal-head p{
+  max-width:100%!important;
+  overflow-wrap:anywhere!important;
+  word-break:normal!important;
+}
+
+dialog .modalhead .close,
+dialog .request-modal-head .close{
+  position:static!important;
+  inset:auto!important;
+  flex:0 0 36px!important;
+  width:36px!important;
+  min-width:36px!important;
+  max-width:36px!important;
+  height:36px!important;
+  min-height:36px!important;
+  margin:0 0 0 auto!important;
+  align-self:flex-start!important;
+  z-index:2!important;
+}
+
+/* Modais auxiliares criados por JS seguem a mesma regra. */
+.control-action-copy{
+  min-width:0!important;
+  flex:1 1 auto!important;
+}
+.control-action-close{
+  flex:0 0 40px!important;
+  width:40px!important;
+  min-width:40px!important;
+}
+
+.ete-exit-head > div,
+.ete-admin-topbar > div{
+  min-width:0!important;
+  flex:1 1 auto!important;
+}
+.ete-exit-close,
+.ete-admin-close{
+  flex:0 0 42px!important;
+}
+.ete-admin-modal h2,
+.ete-admin-topbar h1,
+.ete-exit-head h2{
+  overflow-wrap:anywhere!important;
+}
+
+/* 2) Elementos flex/grid importantes podem encolher sem empurrar ações sobre o conteúdo. */
+.topbar-shell,
+.topbar-left,
+.topbar-copy,
+.pagehead > *,
+.panelhead > *,
+.row > *,
+.row-actions,
+.actions,
+.toolbar > *,
+.request-toolbar > *,
+.history-tools > *,
+.permission-toolbar > *,
+.computer-toolbar > *,
+.computer-item-head > *,
+.computer-item-foot > *,
+.request-card-body > *,
+.permission-card-body > *,
+.student-card-head > *{
+  min-width:0!important;
+}
+
+/* 3) Popover de filtro de alunos deve ficar acima dos cartões, nunca atrás deles. */
+.student-filter-popover{
+  z-index:500!important;
+}
+
+/* 4) Aviso de rede não deve cobrir o cabeçalho principal. */
+.prime-network-banner{
+  top:88px!important;
+  max-width:calc(100vw - 24px)!important;
+  white-space:normal!important;
+  text-align:center!important;
+}
+
+/* 5) Atestados: protege título e ações do cabeçalho em larguras pequenas. */
+.at-app-top-left{
+  min-width:0!important;
+  flex:1 1 auto!important;
+}
+.at-app-top-title{
+  min-width:0!important;
+}
+.at-app-top-right{
+  flex:0 0 auto!important;
+  min-width:0!important;
+}
+
+/* 6) Tablet: compacta somente os controles que competem com o título.
+      Acima dessa faixa o cabeçalho permanece completo; abaixo dela já existe layout mobile. */
+@media (min-width:821px) and (max-width:1040px){
+  .topbar-left{
+    flex:1 1 auto!important;
+  }
+  .topbar-right,
+  .top-right{
+    flex:0 0 auto!important;
+  }
+
+  .control-theme-toggle-header{
+    width:42px!important;
+    min-width:42px!important;
+    max-width:42px!important;
+    padding:0!important;
+    gap:0!important;
+  }
+  .control-theme-toggle-header .theme-label{
+    display:none!important;
+  }
+
+  .topbar-right .sync-pill,
+  .top-right .sync-pill{
+    width:42px!important;
+    min-width:42px!important;
+    max-width:42px!important;
+    padding:0!important;
+    gap:0!important;
+    font-size:0!important;
+  }
+
+  .topbar-right .header-logout,
+  .top-right .header-logout{
+    width:42px!important;
+    min-width:42px!important;
+    max-width:42px!important;
+    padding:0!important;
+    gap:0!important;
+    font-size:0!important;
+    text-indent:0!important;
+    overflow:hidden!important;
+  }
+
+  .topbar-copy h2,
+  .top-title strong,
+  .topbar-copy p,
+  .top-title small{
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+}
+
+@media (max-width:820px){
+  dialog .modalhead .close,
+  dialog .request-modal-head .close{
+    flex-basis:38px!important;
+    width:38px!important;
+    min-width:38px!important;
+    max-width:38px!important;
+    height:38px!important;
+    min-height:38px!important;
+  }
+
+  .prime-network-banner{
+    top:76px!important;
+    width:auto!important;
+  }
+
+  .at-app-top-title strong{
+    display:block!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+}
+
+@media (max-width:480px){
+  /* Em telas muito estreitas, subtítulos longos quebram naturalmente sem invadir ações. */
+  dialog .modalhead p,
+  dialog .request-modal-head p{
+    overflow-wrap:anywhere!important;
+  }
+}
