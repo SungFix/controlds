@@ -215,7 +215,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlPortalAdminIconFixStyles", "portal-admin-icon-fix.css?v=1");
     ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=3");
     ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=4");
-    ensureStylesheet("controlVisualAuditFixesStyles", "visual-audit-fixes.css?v=1");
+    ensureStylesheet("controlVisualAuditFixesStyles", "visual-audit-fixes.css?v=2");
 
     ensureScript("controlLoginUsabilityScript", "login-usability.js?v=1");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
@@ -244,7 +244,7 @@ window.ETE_CONFIG = {
     ensureScript("controlPortalScript", "portal.js?v=18");
     ensureScript("controlAdminFunctionAuthFixScript", "admin-function-auth-fix.js?v=1");
     ensureScript("controlPortalAdminScript", "portal-admin.js?v=3");
-    ensureScript("controlPortalAdminCornerScript", "portal-admin-corner.js?v=3");
+    ensureScript("controlPortalAdminCornerScript", "portal-admin-corner.js?v=4");
     ensureScript("controlRelationalFrontendV2Script", "relational-frontend-v2.js?v=2");
     ensureScript("controlRegisteredStudentFlowScript", "registered-student-flow.js?v=6");
     ensureScript("controlRequestCreatorLabelScript", "request-creator-label.js?v=1");
