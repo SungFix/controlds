@@ -214,7 +214,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlPortalAdminV2Styles", "portal-admin-v2.css?v=1");
     ensureStylesheet("controlPortalAdminIconFixStyles", "portal-admin-icon-fix.css?v=1");
     ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=3");
-    ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=4");
+    ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=4");\n    ensureStylesheet("controlVisualAuditFixesStyles", "visual-audit-fixes.css?v=1");
 
     ensureScript("controlLoginUsabilityScript", "login-usability.js?v=1");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
@@ -339,7 +339,16 @@ window.ETE_CONFIG = {
 
   function mountFloatingButton(){
     if (!document.body) return;
+    const header = document.querySelector(".topbar-right, .top-right");
     let button = document.querySelector(".control-theme-toggle-floating");
+
+    // O cabeçalho já possui o controle de tema. O botão flutuante é apenas fallback
+    // para telas sem cabeçalho, evitando cobrir filtros, cartões ou ações no rodapé.
+    if (header) {
+      if (button) button.remove();
+      return;
+    }
+
     if (!button) {
       button = makeButton("control-theme-toggle-floating");
       button.style.position = "fixed";
