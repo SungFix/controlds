@@ -100,9 +100,11 @@ dialog .request-modal-head .close{
 /* 5) Aviso de rede não deve cobrir o cabeçalho principal. */
 .prime-network-banner{
   top:88px!important;
+  width:min(520px,calc(100vw - 24px))!important;
   max-width:calc(100vw - 24px)!important;
   white-space:normal!important;
   text-align:center!important;
+  justify-content:center!important;
 }
 
 /* Quando offline, reserva espaço real para o aviso em vez de deixá-lo sobre a página.
@@ -239,10 +241,10 @@ body.portal-open .prime-network-banner{
 
   .prime-network-banner{
     top:76px!important;
-    width:auto!important;
+    width:min(520px,calc(100vw - 24px))!important;
   }
   html[data-network="offline"] body:not(.portal-open) .main > .content{
-    padding-top:68px!important;
+    padding-top:90px!important;
   }
 
   .at-app-top-title strong{
