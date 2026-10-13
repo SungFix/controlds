@@ -99,6 +99,15 @@ dialog .request-modal-head .close{
   text-align:center!important;
 }
 
+/* Quando offline, reserva espaço real para o aviso em vez de deixá-lo sobre a página.
+   No Portal/Atestados ele é ocultado, pois essas telas já possuem seus próprios controles. */
+html[data-network="offline"] body:not(.portal-open) .main > .content{
+  padding-top:78px!important;
+}
+body.portal-open .prime-network-banner{
+  display:none!important;
+}
+
 /* 5) Atestados: protege título e ações do cabeçalho em larguras pequenas. */
 .at-app-top-left{
   min-width:0!important;
@@ -177,9 +186,30 @@ dialog .request-modal-head .close{
     min-height:38px!important;
   }
 
+  /* A barra mobile já é apertada: o estado de sincronização continua disponível
+     na lateral, enquanto o cabeçalho preserva título e ações sem colisão. */
+  .topbar-right .sync-pill,
+  .top-right .sync-pill{
+    display:none!important;
+  }
+
+  .control-theme-toggle-header{
+    width:40px!important;
+    min-width:40px!important;
+    max-width:40px!important;
+    padding:0!important;
+    gap:0!important;
+  }
+  .control-theme-toggle-header .theme-label{
+    display:none!important;
+  }
+
   .prime-network-banner{
     top:76px!important;
     width:auto!important;
+  }
+  html[data-network="offline"] body:not(.portal-open) .main > .content{
+    padding-top:68px!important;
   }
 
   .at-app-top-title strong{
