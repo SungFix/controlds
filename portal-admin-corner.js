@@ -10,17 +10,19 @@
       && document.body.classList.contains("portal-open");
   }
 
-  function isNotebookViewport(){
-    return window.innerWidth>=1024 && window.innerWidth<=1600;
-  }
-
   function placeButton(){
     queued=false;
     const portal=document.getElementById("eteCentralPortal");
     const button=document.getElementById("etePortalAdminButton");
     if(!portal||!button)return;
 
-    if(button.parentElement!==portal)portal.insertBefore(button,portal.firstChild);
+    const actions=portal.querySelector(".ete-portal-actions");
+    if(!actions)return;
+
+    // O botão nasce dentro das ações do Portal e deve permanecer ali.
+    // Versões anteriores o moviam para um canto fixo, o que podia cobrir
+    // a marca/títulos em telas menores.
+    if(button.parentElement!==actions)actions.insertBefore(button,actions.firstChild);
 
     const visible=isPortalHomeVisible(portal);
     button.hidden=!visible;
@@ -29,31 +31,18 @@
     button.title="Administração";
     button.style.setProperty("display",visible?"inline-flex":"none","important");
 
-    if(!visible)return;
-
-    const notebook=isNotebookViewport();
-
-    button.style.setProperty("position","fixed","important");
-    button.style.setProperty("top",notebook?"auto":"8px","important");
-    button.style.setProperty("left","8px","important");
-    button.style.setProperty("right","auto","important");
-    button.style.setProperty("bottom",notebook?"8px":"auto","important");
+    // Limpa qualquer posicionamento inline deixado por versões antigas.
+    ["top","left","right","bottom","z-index"].forEach(prop=>button.style.removeProperty(prop));
+    button.style.setProperty("position","static","important");
     button.style.setProperty("margin","0","important");
     button.style.setProperty("transform","none","important");
-    button.style.setProperty("z-index","2147483643","important");
-    button.style.setProperty("width","50px","important");
-    button.style.setProperty("min-width","50px","important");
-    button.style.setProperty("height","50px","important");
-    button.style.setProperty("min-height","50px","important");
-    button.style.setProperty("padding","0","important");
     button.style.setProperty("font-size","0","important");
     button.style.setProperty("line-height","1","important");
     button.style.setProperty("align-items","center","important");
     button.style.setProperty("justify-content","center","important");
-    button.style.setProperty("border-radius","13px","important");
-    button.dataset.cornerFixed="true";
+    button.dataset.cornerFixed="false";
     button.dataset.iconOnly="true";
-    button.dataset.notebookCorner=notebook?"bottom-left":"top-left";
+    button.dataset.notebookCorner="actions";
   }
 
   function queuePlace(){
@@ -80,7 +69,7 @@
       }
 
       if(mutation.type==="childList"){
-        if(mutation.target===document.body||mutation.target.id==="eteCentralPortal"){
+        if(mutation.target===document.body||mutation.target.id==="eteCentralPortal"||mutation.target.classList?.contains("ete-portal-actions")){
           queuePlace();
           return;
         }
