@@ -91,7 +91,13 @@ dialog .request-modal-head .close{
   z-index:500!important;
 }
 
-/* 4) Aviso de rede não deve cobrir o cabeçalho principal. */
+/* 4) O botão de voltar ao topo fica acima do conteúdo normal, mas abaixo de
+   popovers/painéis móveis como o filtro de alunos. */
+.ui-scroll-top{
+  z-index:400!important;
+}
+
+/* 5) Aviso de rede não deve cobrir o cabeçalho principal. */
 .prime-network-banner{
   top:88px!important;
   max-width:calc(100vw - 24px)!important;
@@ -108,7 +114,7 @@ body.portal-open .prime-network-banner{
   display:none!important;
 }
 
-/* 5) Portal ETE: administração pertence à barra de ações, nunca a um canto flutuante. */
+/* 6) Portal ETE: administração pertence à barra de ações, nunca a um canto flutuante. */
 #eteCentralPortal .ete-portal-actions #etePortalAdminButton{
   position:static!important;
   inset:auto!important;
@@ -126,7 +132,7 @@ body.portal-open .prime-network-banner{
   box-shadow:none!important;
 }
 
-/* 6) Atestados: protege título e ações do cabeçalho em larguras pequenas. */
+/* 7) Atestados: protege título e ações do cabeçalho em larguras pequenas. */
 .at-app-top-left{
   min-width:0!important;
   flex:1 1 auto!important;
@@ -139,7 +145,7 @@ body.portal-open .prime-network-banner{
   min-width:0!important;
 }
 
-/* 7) Tablet: compacta somente os controles que competem com o título.
+/* 8) Tablet: compacta somente os controles que competem com o título.
       Acima dessa faixa o cabeçalho permanece completo; abaixo dela já existe layout mobile. */
 @media (min-width:821px) and (max-width:1040px){
   .topbar-left{
