@@ -108,7 +108,25 @@ body.portal-open .prime-network-banner{
   display:none!important;
 }
 
-/* 5) Atestados: protege título e ações do cabeçalho em larguras pequenas. */
+/* 5) Portal ETE: administração pertence à barra de ações, nunca a um canto flutuante. */
+#eteCentralPortal .ete-portal-actions #etePortalAdminButton{
+  position:static!important;
+  inset:auto!important;
+  z-index:auto!important;
+  width:42px!important;
+  min-width:42px!important;
+  max-width:42px!important;
+  height:42px!important;
+  min-height:42px!important;
+  padding:0!important;
+  margin:0!important;
+  transform:none!important;
+  flex:0 0 42px!important;
+  font-size:0!important;
+  box-shadow:none!important;
+}
+
+/* 6) Atestados: protege título e ações do cabeçalho em larguras pequenas. */
 .at-app-top-left{
   min-width:0!important;
   flex:1 1 auto!important;
@@ -121,7 +139,7 @@ body.portal-open .prime-network-banner{
   min-width:0!important;
 }
 
-/* 6) Tablet: compacta somente os controles que competem com o título.
+/* 7) Tablet: compacta somente os controles que competem com o título.
       Acima dessa faixa o cabeçalho permanece completo; abaixo dela já existe layout mobile. */
 @media (min-width:821px) and (max-width:1040px){
   .topbar-left{
@@ -176,6 +194,15 @@ body.portal-open .prime-network-banner{
 }
 
 @media (max-width:820px){
+  #eteCentralPortal .ete-portal-actions #etePortalAdminButton{
+    width:40px!important;
+    min-width:40px!important;
+    max-width:40px!important;
+    height:40px!important;
+    min-height:40px!important;
+    flex-basis:40px!important;
+  }
+
   dialog .modalhead .close,
   dialog .request-modal-head .close{
     flex-basis:38px!important;
