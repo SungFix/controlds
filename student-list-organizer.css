@@ -208,3 +208,28 @@ html.theme-light .student-filter-field select{background:#faf6f0;color:#211e1a}
   pointer-events:none;
   visibility:hidden;
 }
+
+
+/* Alunos — elimina overflow horizontal do documento que criava a faixa inferior */
+body:has(#page-students.active),
+.shell:has(#page-students.active),
+.main:has(#page-students.active),
+.content:has(#page-students.active){
+  max-width:100%!important;
+  overflow-x:clip!important;
+}
+.main:has(#page-students.active),
+.content:has(#page-students.active),
+#page-students.active,
+#page-students.active #studentRows,
+#page-students.active #studentRows .student-card{
+  min-width:0!important;
+}
+#page-students.active,
+#page-students.active #studentRows{
+  width:100%!important;
+  max-width:100%!important;
+}
+#page-students.active #studentRows .student-card{
+  max-width:100%!important;
+}
