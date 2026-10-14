@@ -54,9 +54,7 @@
   function apply(){
     queued=false;
     applyOfficialRosterMode();
-    document.querySelectorAll(".student-card button,[data-use-student],[data-edit-student],[data-delete-student]").forEach(button=>{
-      if(button.closest(".student-card")) decorateButton(button);
-    });
+    document.querySelectorAll("#studentRows .student-card button").forEach(decorateButton);
   }
 
   function queueApply(){
@@ -68,12 +66,16 @@
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",apply,{once:true});
   else apply();
 
-  const observer=new MutationObserver(queueApply);
+  let observer=null;
   function observe(){
-    if(document.body) observer.observe(document.body,{childList:true,subtree:true});
+    const rows=document.getElementById("studentRows");
+    if(!rows||observer)return;
+    observer=new MutationObserver(queueApply);
+    observer.observe(rows,{childList:true});
   }
-  if(document.body) observe();
-  else document.addEventListener("DOMContentLoaded",observe,{once:true});
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",observe,{once:true});
+  else observe();
 
+  window.addEventListener("student-roster-rendered",queueApply);
   window.addEventListener("pageshow",queueApply);
 })();
