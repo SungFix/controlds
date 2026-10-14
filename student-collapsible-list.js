@@ -77,13 +77,8 @@
     const name=card.querySelector(".student-card-title strong")?.textContent?.trim()||"aluno";
     head.setAttribute("aria-label","Ver informações de "+name);
 
-    if(!head.querySelector(".student-row-chevron")){
-      const chevron=document.createElement("span");
-      chevron.className="student-row-chevron";
-      chevron.setAttribute("aria-hidden","true");
-      chevron.innerHTML='<svg viewBox="0 0 24 24"><path d="m7 9 5 5 5-5"/></svg>';
-      head.appendChild(chevron);
-    }
+    const chevron=head.querySelector(".student-row-chevron");
+    if(chevron)chevron.setAttribute("aria-expanded",String(!!id&&id===openId&&!card.hidden));
 
     setCardState(card,!!id&&id===openId&&!card.hidden);
   }
