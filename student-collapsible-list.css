@@ -439,8 +439,8 @@ html.theme-light #page-students #studentRows .student-last-use::before{backgroun
 }
 
 #page-students #studentRows .student-card{
-  content-visibility:auto;
-  contain-intrinsic-size:68px;
+  content-visibility:visible;
+  contain:none;
   border-radius:14px!important;
   border-color:#29333d!important;
   background:#11171d!important;
@@ -575,4 +575,15 @@ html.theme-light #page-students #studentRows .student-row-usage strong{
   #page-students #studentRows .student-row-usage span{display:none}
   #page-students #studentRows .student-row-usage strong{font-size:10px}
   #page-students #studentRows .student-row-quick{gap:4px}
+}
+
+
+/* Roster V3 — renderização estável: os 40 itens já paginados permanecem desenhados. */
+#page-students #studentRows{
+  overflow-anchor:none;
+}
+#page-students #studentRows .student-card{
+  visibility:visible!important;
+  opacity:1!important;
+  contain:none!important;
 }
