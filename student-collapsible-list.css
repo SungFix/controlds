@@ -814,3 +814,53 @@ html.theme-light #page-students #studentRows .student-row-usage{
     min-width:28px!important;
   }
 }
+
+
+/* Contador de usos — alinhamento visual definitivo */
+#page-students #studentRows .student-row-usage{
+  box-sizing:border-box!important;
+  width:auto!important;
+  min-width:58px!important;
+  height:28px!important;
+  min-height:28px!important;
+  padding:0 9px!important;
+  display:inline-flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:4px!important;
+  line-height:1!important;
+  vertical-align:middle!important;
+}
+#page-students #studentRows .student-row-usage strong,
+#page-students #studentRows .student-row-usage span{
+  display:inline-flex!important;
+  align-items:center!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  line-height:1!important;
+  transform:none!important;
+  position:static!important;
+}
+#page-students #studentRows .student-row-usage strong{
+  font-size:10px!important;
+  font-weight:900!important;
+}
+#page-students #studentRows .student-row-usage span{
+  font-size:7.5px!important;
+  font-weight:750!important;
+  text-transform:lowercase!important;
+}
+@media(max-width:680px){
+  #page-students #studentRows .student-row-usage{
+    width:auto!important;
+    min-width:34px!important;
+    height:28px!important;
+    min-height:28px!important;
+    padding:0 8px!important;
+  }
+  #page-students #studentRows .student-row-usage span{
+    display:none!important;
+  }
+}
