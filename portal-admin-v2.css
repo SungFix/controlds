@@ -31,3 +31,43 @@ html[data-theme="light"] .ete-admin-tabs{background:#f3f7f9;border-color:#d4dfe5
   line-height:1;
   transform:translate(1px,-1px);
 }
+
+
+/* Modal admin — reserva fixa para o fechamento; nunca sobrepor títulos */
+.ete-admin-modal > .ete-admin-modal-close{
+  position:absolute!important;
+  top:17px!important;
+  right:17px!important;
+  left:auto!important;
+  bottom:auto!important;
+  margin:0!important;
+  z-index:3!important;
+}
+.ete-admin-modal > .ete-admin-kicker,
+.ete-admin-modal > h2,
+.ete-admin-modal > .ete-admin-target{
+  box-sizing:border-box;
+  max-width:calc(100% - 58px);
+}
+.ete-admin-modal > .ete-admin-kicker{
+  padding-right:0;
+  overflow-wrap:anywhere;
+}
+.ete-admin-modal > h2{
+  margin-right:0!important;
+  overflow-wrap:anywhere;
+}
+.ete-admin-modal > .ete-admin-target{
+  overflow-wrap:anywhere;
+}
+@media(max-width:720px){
+  .ete-admin-modal > .ete-admin-modal-close{
+    top:14px!important;
+    right:14px!important;
+  }
+  .ete-admin-modal > .ete-admin-kicker,
+  .ete-admin-modal > h2,
+  .ete-admin-modal > .ete-admin-target{
+    max-width:calc(100% - 54px);
+  }
+}
