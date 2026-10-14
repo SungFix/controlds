@@ -129,7 +129,7 @@
     });
 
     observer=new MutationObserver(queueScan);
-    observer.observe(container,{childList:true,subtree:true,attributes:true,attributeFilter:["hidden","data-student-id"]});
+    observer.observe(container,{childList:true});
     window.addEventListener("student-list-updated",queueScan);
     window.addEventListener("control-theme-change",queueScan);
     queueScan();
