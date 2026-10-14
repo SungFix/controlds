@@ -12,6 +12,7 @@
 
   let mounted=false;
   let statusQueued=false;
+  let loadMoreObserver=null;
 
   function filterCount(){
     let count=0;
@@ -146,6 +147,22 @@
     status.className="student-list-status";
     status.innerHTML='<span id="studentListCount"></span><button type="button" class="student-load-more" id="studentLoadMore" hidden>Mostrar mais</button>';
     toolbar.insertAdjacentElement("afterend",status);
+
+    const sentinel=document.createElement("div");
+    sentinel.id="studentListSentinel";
+    sentinel.className="student-list-sentinel";
+    sentinel.setAttribute("aria-hidden","true");
+    rows.insertAdjacentElement("afterend",sentinel);
+
+    if("IntersectionObserver" in window){
+      loadMoreObserver=new IntersectionObserver(entries=>{
+        if(!entries.some(entry=>entry.isIntersecting))return;
+        if(rows.dataset.studentHasMore!=="1")return;
+        state.shown+=PAGE_SIZE;
+        renderRoster(false);
+      },{root:null,rootMargin:"500px 0px 500px 0px",threshold:0});
+      loadMoreObserver.observe(sentinel);
+    }
 
     document.getElementById("studentFilterButton")?.addEventListener("click",event=>{event.stopPropagation();togglePopover();});
     document.getElementById("studentFilterPopover")?.addEventListener("click",event=>event.stopPropagation());
