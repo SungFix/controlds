@@ -656,3 +656,161 @@ html.theme-light #page-students #studentRows .student-row-usage strong{
     height:40px!important;
   }
 }
+
+
+/* Roster V5B — acabamento da aba Alunos */
+#page-students #studentRows.student-list{
+  gap:9px!important;
+}
+#page-students #studentRows .student-card{
+  border:1px solid #2b3944!important;
+  border-radius:14px!important;
+  background:#11181e!important;
+  box-shadow:0 1px 0 rgba(255,255,255,.018)!important;
+}
+#page-students #studentRows .student-card:not(.is-open){
+  min-height:72px!important;
+  height:72px!important;
+}
+#page-students #studentRows .student-card:hover:not(.is-open){
+  background:#141c23!important;
+  border-color:#3a4b58!important;
+  transform:none!important;
+}
+#page-students #studentRows .student-card-head{
+  box-sizing:border-box!important;
+  min-height:70px!important;
+  height:70px!important;
+  padding:0 16px!important;
+  gap:13px!important;
+  align-items:center!important;
+}
+#page-students #studentRows .student-avatar{
+  width:44px!important;
+  height:44px!important;
+  flex:0 0 44px!important;
+  border-radius:12px!important;
+  border:1px solid #354957!important;
+  background:#17232c!important;
+  font-size:10px!important;
+  font-weight:900!important;
+}
+#page-students #studentRows .student-card-title{
+  min-width:0!important;
+  height:auto!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  gap:4px!important;
+}
+#page-students #studentRows .student-card-title strong{
+  margin:0!important;
+  font-size:13px!important;
+  line-height:17px!important;
+  font-weight:850!important;
+  letter-spacing:-.01em!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#page-students #studentRows .student-card-title small{
+  margin:0!important;
+  font-size:9px!important;
+  line-height:12px!important;
+  font-weight:720!important;
+  color:#8fa0ad!important;
+}
+#page-students #studentRows .student-row-quick{
+  margin-left:auto!important;
+  flex:0 0 auto!important;
+  height:34px!important;
+  gap:8px!important;
+  align-items:center!important;
+}
+#page-students #studentRows .student-row-usage{
+  min-width:66px!important;
+  height:32px!important;
+  min-height:32px!important;
+  padding:0 11px!important;
+  border:1px solid #31424f!important;
+  background:#131c23!important;
+  border-radius:999px!important;
+}
+#page-students #studentRows .student-row-usage strong{
+  font-size:10px!important;
+}
+#page-students #studentRows .student-row-usage span{
+  font-size:7.5px!important;
+  color:#91a0ac!important;
+}
+#page-students #studentRows .student-row-chevron{
+  width:32px!important;
+  height:32px!important;
+  min-width:32px!important;
+  margin:0!important;
+  border-radius:9px!important;
+  color:#8798a5!important;
+}
+#page-students #studentRows .student-row-chevron:hover{
+  background:#1b252d!important;
+  color:#edf3f6!important;
+}
+#page-students #studentRows .student-card.is-open{
+  height:auto!important;
+  border-color:#3a4d5a!important;
+}
+#page-students #studentRows .student-card.is-open .student-card-head{
+  height:70px!important;
+  min-height:70px!important;
+}
+html[data-theme="light"] #page-students #studentRows .student-card,
+html.theme-light #page-students #studentRows .student-card{
+  border-color:#d6ccc0!important;
+  background:#fffdf9!important;
+}
+html[data-theme="light"] #page-students #studentRows .student-card:hover:not(.is-open),
+html.theme-light #page-students #studentRows .student-card:hover:not(.is-open){
+  border-color:#c1b4a5!important;
+  background:#faf6f0!important;
+}
+html[data-theme="light"] #page-students #studentRows .student-avatar,
+html.theme-light #page-students #studentRows .student-avatar{
+  border-color:#d0c3b4!important;
+  background:#f2ece4!important;
+}
+html[data-theme="light"] #page-students #studentRows .student-row-usage,
+html.theme-light #page-students #studentRows .student-row-usage{
+  border-color:#d5cabc!important;
+  background:#f7f2eb!important;
+}
+@media(max-width:680px){
+  #page-students #studentRows.student-list{gap:7px!important}
+  #page-students #studentRows .student-card:not(.is-open){
+    min-height:66px!important;
+    height:66px!important;
+  }
+  #page-students #studentRows .student-card-head,
+  #page-students #studentRows .student-card.is-open .student-card-head{
+    min-height:64px!important;
+    height:64px!important;
+    padding:0 11px!important;
+    gap:10px!important;
+  }
+  #page-students #studentRows .student-avatar{
+    width:40px!important;
+    height:40px!important;
+    flex-basis:40px!important;
+  }
+  #page-students #studentRows .student-card-title strong{font-size:12px!important}
+  #page-students #studentRows .student-row-usage{
+    min-width:38px!important;
+    width:38px!important;
+    padding:0 7px!important;
+  }
+  #page-students #studentRows .student-row-usage span{display:none!important}
+  #page-students #studentRows .student-row-chevron{
+    width:28px!important;
+    height:28px!important;
+    min-width:28px!important;
+  }
+}
