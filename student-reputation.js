@@ -35,13 +35,24 @@
     return returned.minute>Math.min(end+15,MAX_MINUTES);
   }
 
-  function statsForStudent(studentId){
-    const returns=(Array.isArray(history)?history:[]).filter(item=>
-      String(item?.studentId||"")===String(studentId||"") && item?.type==="return"
-    );
-    const late=returns.filter(item=>/devolução atrasada|devolucao atrasada|atrasad/i.test(String(item?.detail||"")+" "+String(item?.text||""))).length;
-    const onTime=returns.length-late;
-    const score=returns.length ? Math.round((onTime/returns.length)*100) : null;
+  function buildStatsMap(){
+    const counts=new Map();
+    (Array.isArray(history)?history:[]).forEach(item=>{
+      if(item?.type!=="return")return;
+      const id=String(item?.studentId||"");
+      if(!id)return;
+      const current=counts.get(id)||{total:0,late:0};
+      current.total++;
+      if(/devolução atrasada|devolucao atrasada|atrasad/i.test(String(item?.detail||"")+" "+String(item?.text||"")))current.late++;
+      counts.set(id,current);
+    });
+    return counts;
+  }
+
+  function statsForStudent(studentId,statsMap){
+    const current=statsMap.get(String(studentId||""))||{total:0,late:0};
+    const onTime=current.total-current.late;
+    const score=current.total ? Math.round((onTime/current.total)*100) : null;
     let level="Sem histórico",tone="neutral";
     if(score!==null){
       if(score>=90){ level="Excelente"; tone="excellent"; }
@@ -49,7 +60,7 @@
       else if(score>=50){ level="Regular"; tone="regular"; }
       else { level="Atenção"; tone="attention"; }
     }
-    return {total:returns.length,onTime,late,score,level,tone};
+    return {total:current.total,onTime,late:current.late,score,level,tone};
   }
 
   function registrationOf(student){
@@ -82,17 +93,17 @@
 
   function decorate(){
     queued=false;
-    const fallback=visibleStudents();
     const byId=new Map((Array.isArray(students)?students:[]).map(student=>[String(student.id||""),student]));
-    document.querySelectorAll("#studentRows .student-card").forEach((card,index)=>{
+    const statsMap=buildStatsMap();
+    document.querySelectorAll("#studentRows .student-card").forEach(card=>{
       const mappedId=String(card.dataset.studentId||card.dataset.studentReputationId||"");
-      const student=(mappedId&&byId.get(mappedId))||fallback[index];
+      const student=mappedId?byId.get(mappedId):null;
       const body=card.querySelector(".student-card-body");
-      if(!student||!body) return;
+      if(!student||!body)return;
       card.dataset.studentReputationId=String(student.id||"");
       decorateStudentDetails(card,student);
       card.querySelectorAll(".student-reputation").forEach(node=>node.remove());
-      const stat=statsForStudent(student.id);
+      const stat=statsForStudent(student.id,statsMap);
       const badge=document.createElement("div");
       badge.className="student-reputation is-"+stat.tone;
       badge.setAttribute("aria-label",stat.total?`Reputação ${stat.level}. ${stat.onTime} devoluções no prazo e ${stat.late} atrasadas.`:"Reputação sem histórico de devoluções.");
