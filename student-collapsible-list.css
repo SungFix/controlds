@@ -587,3 +587,72 @@ html.theme-light #page-students #studentRows .student-row-usage strong{
   opacity:1!important;
   contain:none!important;
 }
+
+
+/* Roster V4 — geometria uniforme das linhas */
+#page-students #studentRows.student-list{
+  gap:8px!important;
+}
+#page-students #studentRows .student-card:not(.is-open){
+  height:70px!important;
+  min-height:70px!important;
+}
+#page-students #studentRows .student-card-head{
+  box-sizing:border-box!important;
+  width:100%!important;
+  height:68px!important;
+  min-height:68px!important;
+  padding:0 14px!important;
+  align-items:center!important;
+}
+#page-students #studentRows .student-card-title{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  gap:3px!important;
+  height:42px!important;
+}
+#page-students #studentRows .student-card-title strong,
+#page-students #studentRows .student-card-title small{
+  margin:0!important;
+  padding:0!important;
+}
+#page-students #studentRows .student-card-title strong{
+  line-height:18px!important;
+}
+#page-students #studentRows .student-card-title small{
+  line-height:14px!important;
+}
+#page-students #studentRows .student-avatar{
+  align-self:center!important;
+}
+#page-students #studentRows .student-row-quick{
+  align-self:center!important;
+  height:32px!important;
+}
+#page-students #studentRows .student-row-chevron{
+  align-self:center!important;
+  margin-left:8px!important;
+}
+#page-students #studentRows .student-card.is-open{
+  height:auto!important;
+  min-height:70px!important;
+}
+#page-students #studentRows .student-card.is-open .student-card-head{
+  height:68px!important;
+}
+@media(max-width:680px){
+  #page-students #studentRows .student-card:not(.is-open){
+    height:66px!important;
+    min-height:66px!important;
+  }
+  #page-students #studentRows .student-card-head,
+  #page-students #studentRows .student-card.is-open .student-card-head{
+    height:64px!important;
+    min-height:64px!important;
+    padding:0 11px!important;
+  }
+  #page-students #studentRows .student-card-title{
+    height:40px!important;
+  }
+}
