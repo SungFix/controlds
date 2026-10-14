@@ -1,97 +1,17 @@
 (function initStudentListOrganizer(){
   "use strict";
 
-  const state={course:"all",year:"all",room:"all",sort:"az",limit:"all"};
+  const PAGE_SIZE=40;
+  const state=window.ETEStudentRosterState||{course:"all",year:"all",room:"all",sort:"az",shown:PAGE_SIZE};
+  state.course=state.course||"all";
+  state.year=state.year||"all";
+  state.room=state.room||"all";
+  state.sort=state.sort||"az";
+  state.shown=Math.max(PAGE_SIZE,Number(state.shown||PAGE_SIZE));
+  window.ETEStudentRosterState=state;
+
   let mounted=false;
-  let applyQueued=false;
-
-  function norm(value){return String(value||"").trim().toLocaleLowerCase("pt-BR")}
-  function collate(a,b){return String(a||"").localeCompare(String(b||""),"pt-BR",{sensitivity:"base"})}
-  function yearOf(student){const m=String(student?.className||"").match(/^([123])°/);return m?m[1]:""}
-  function roomOf(student){
-    if(String(student?.course||"").toUpperCase()==="GTU")return "GTU";
-    const c=String(student?.className||"").toUpperCase();
-    if(c.includes("A"))return "A";
-    if(c.includes("B"))return "B";
-    return "";
-  }
-  function recentValue(student){
-    const value=Date.parse(student?.lastUsed||"");
-    return Number.isFinite(value)?value:0;
-  }
-
-  function baseStudents(){
-    const search=norm(document.getElementById("studentSearch")?.value);
-    const source=Array.isArray(students)?students:[];
-    return [...source]
-      .filter(student=>norm(`${student?.name||""} ${student?.className||""} ${student?.course||""}`).includes(search))
-      .sort((a,b)=>collate(a?.name,b?.name));
-  }
-
-  function ensureManagementActions(card,student){
-    if(typeof canManageStudents!=="function"||!canManageStudents())return;
-    const foot=card.querySelector(".student-card-foot");
-    if(!foot)return;
-    let actions=foot.querySelector(".v46-student-actions");
-    if(!actions){
-      actions=document.createElement("div");
-      actions.className="row-actions v46-student-actions";
-      const useButton=foot.querySelector("[data-use-student]");
-      if(useButton)actions.append(useButton);
-      foot.append(actions);
-    }
-    if(!actions.querySelector(`[data-edit-student="${CSS.escape(String(student.id))}"]`)){
-      const edit=document.createElement("button");
-      edit.type="button";
-      edit.className="btn small secondary";
-      edit.dataset.editStudent=String(student.id);
-      edit.textContent="Editar";
-      edit.title="Editar nome, turma ou curso";
-      actions.append(edit);
-    }
-    if(!actions.querySelector(`[data-delete-student="${CSS.escape(String(student.id))}"]`)){
-      const remove=document.createElement("button");
-      remove.type="button";
-      remove.className="btn small danger";
-      remove.dataset.deleteStudent=String(student.id);
-      remove.textContent="Remover";
-      remove.title="Remover aluno e todos os dados ligados";
-      actions.append(remove);
-    }
-  }
-
-  function buildMappedCards(){
-    const source=baseStudents();
-    const byId=new Map(source.map(student=>[String(student.id||""),student]));
-    const cards=[...document.querySelectorAll("#studentRows .student-card")];
-    return cards.map((card,index)=>{
-      const currentId=String(card.dataset.studentId||"");
-      const student=(currentId&&byId.get(currentId))||source[index];
-      if(student){
-        card.dataset.studentId=String(student.id||"");
-        card.dataset.studentCourse=String(student.course||"");
-        card.dataset.studentYear=yearOf(student);
-        card.dataset.studentRoom=roomOf(student);
-        ensureManagementActions(card,student);
-      }
-      return {card,student};
-    }).filter(item=>item.student);
-  }
-
-  function isMatch(student){
-    if(state.course!=="all"&&String(student.course||"").toUpperCase()!==state.course)return false;
-    if(state.year!=="all"&&yearOf(student)!==state.year)return false;
-    if(state.room!=="all"&&roomOf(student)!==state.room)return false;
-    return true;
-  }
-
-  function sortItems(items){
-    const sorted=[...items];
-    if(state.sort==="za")sorted.sort((a,b)=>collate(b.student.name,a.student.name));
-    else if(state.sort==="recent")sorted.sort((a,b)=>recentValue(b.student)-recentValue(a.student)||collate(a.student.name,b.student.name));
-    else sorted.sort((a,b)=>collate(a.student.name,b.student.name));
-    return sorted;
-  }
+  let statusQueued=false;
 
   function filterCount(){
     let count=0;
@@ -99,56 +19,53 @@
     if(state.year!=="all")count++;
     if(state.room!=="all")count++;
     if(state.sort!=="az")count++;
-    if(state.limit!=="all")count++;
     return count;
   }
 
   function updateFilterBadge(){
     const badge=document.querySelector(".student-filter-badge");
-    const count=filterCount();
     if(!badge)return;
+    const count=filterCount();
     badge.hidden=count===0;
     badge.textContent=String(count);
   }
 
-  function updateStatus(visible,totalFiltered,totalRoster){
+  function updateStatus(){
+    statusQueued=false;
+    const rows=document.getElementById("studentRows");
     const count=document.getElementById("studentListCount");
-    const hint=document.getElementById("studentListScrollHint");
-    if(count)count.innerHTML=`Exibindo <strong>${visible}</strong> de <strong>${totalFiltered}</strong> resultado${totalFiltered===1?"":"s"} · ${totalRoster} alunos no total`;
-    const rows=document.getElementById("studentRows");
-    if(hint)hint.textContent=rows&&rows.scrollHeight>rows.clientHeight?"Role dentro da lista para ver mais":"";
-  }
-
-  function apply(){
-    applyQueued=false;
-    const rows=document.getElementById("studentRows");
+    const more=document.getElementById("studentLoadMore");
     if(!rows)return;
 
-    const mapped=buildMappedCards();
-    mapped.forEach(({card})=>{
-      if(!card.hidden)card.hidden=true;
-      if(card.style.order)card.style.order="";
-    });
+    const visible=Number(rows.dataset.studentRenderedCount||rows.querySelectorAll(".student-card").length||0);
+    const filtered=Number(rows.dataset.studentFilteredCount||visible);
+    const total=Number(rows.dataset.studentTotalCount||(Array.isArray(students)?students.length:0));
+    const hasMore=rows.dataset.studentHasMore==="1";
 
-    const filtered=sortItems(mapped.filter(({student})=>isMatch(student)));
-    const limit=state.limit==="all"?filtered.length:Number(state.limit||40);
-    const visible=filtered.slice(0,limit);
-    visible.forEach(({card},index)=>{
-      if(card.hidden)card.hidden=false;
-      const order=String(index);
-      if(card.style.order!==order)card.style.order=order;
-    });
-
+    if(count){
+      count.innerHTML=`Exibindo <strong>${visible}</strong> de <strong>${filtered}</strong> resultado${filtered===1?"":"s"} · ${total} alunos cadastrados`;
+    }
+    if(more){
+      more.hidden=!hasMore;
+      const remaining=Math.max(0,filtered-visible);
+      more.textContent=remaining>PAGE_SIZE?`Mostrar mais ${PAGE_SIZE}`:`Mostrar mais ${remaining}`;
+    }
     updateFilterBadge();
-    updateStatus(visible.length,filtered.length,Array.isArray(students)?students.length:0);
-
-    try{window.dispatchEvent(new CustomEvent("student-list-updated",{detail:{visible:visible.length,filtered:filtered.length}}))}catch(_){ }
   }
 
-  function queueApply(){
-    if(applyQueued)return;
-    applyQueued=true;
-    requestAnimationFrame(apply);
+  function queueStatus(){
+    if(statusQueued)return;
+    statusQueued=true;
+    requestAnimationFrame(updateStatus);
+  }
+
+  function renderRoster(resetShown){
+    if(resetShown)state.shown=PAGE_SIZE;
+    try{
+      if(typeof renderStudents==="function")renderStudents();
+    }finally{
+      queueStatus();
+    }
   }
 
   function closePopover(){
@@ -168,15 +85,13 @@
   }
 
   function resetFilters(){
-    Object.assign(state,{course:"all",year:"all",room:"all",sort:"az",limit:"all"});
+    Object.assign(state,{course:"all",year:"all",room:"all",sort:"az",shown:PAGE_SIZE});
     document.querySelectorAll("[data-student-filter]").forEach(select=>{
       const key=select.dataset.studentFilter;
       if(key in state)select.value=state[key];
     });
-    const rows=document.getElementById("studentRows");
-    if(rows)rows.scrollTop=0;
     window.ETECustomSelect?.sync?.();
-    queueApply();
+    renderRoster(false);
   }
 
   function mountControls(){
@@ -197,7 +112,7 @@
 
     const page=document.getElementById("page-students");
     const description=page?.querySelector(".pagehead p");
-    if(description)description.textContent="Consulte a listagem oficial de alunos, filtre por turma e encontre rapidamente quem você precisa.";
+    if(description)description.textContent="Consulte os alunos por nome, turma ou curso sem carregar toda a listagem de uma vez.";
 
     const wrap=document.createElement("div");
     wrap.className="student-filter-wrap";
@@ -208,7 +123,7 @@
         <span class="student-filter-badge" hidden>0</span>
       </button>
       <div class="student-filter-popover" id="studentFilterPopover" role="dialog" aria-label="Filtros de alunos">
-        <div class="student-filter-head"><div><strong>Filtrar alunos</strong><small>Combine os filtros para reduzir a lista.</small></div></div>
+        <div class="student-filter-head"><div><strong>Filtrar alunos</strong><small>Os filtros pesquisam toda a listagem, mesmo os alunos que ainda não foram exibidos.</small></div></div>
         <div class="student-filter-grid">
           <label class="student-filter-field">Curso
             <select data-student-filter="course"><option value="all">Todos</option><option value="DS">DS</option><option value="EDF">EDF</option><option value="GTU">GTU</option></select>
@@ -220,35 +135,38 @@
             <select data-student-filter="room"><option value="all">Todas</option><option value="A">Sala A</option><option value="B">Sala B</option><option value="GTU">GTU</option></select>
           </label>
           <label class="student-filter-field">Ordem
-            <select data-student-filter="sort"><option value="az">A → Z</option><option value="za">Z → A</option><option value="recent">Recentes</option></select>
-          </label>
-          <label class="student-filter-field">Número de registros
-            <select data-student-filter="limit"><option value="all" selected>Mostrar todos</option><option value="20">20</option><option value="40">40</option><option value="80">80</option></select>
+            <select data-student-filter="sort"><option value="az">A → Z</option><option value="za">Z → A</option><option value="recent">Uso mais recente</option></select>
           </label>
         </div>
-        <div class="student-filter-footer"><button type="button" class="student-filter-reset" id="studentFilterReset">Limpar filtros</button><small>“Recentes” considera o último uso registrado.</small></div>
+        <div class="student-filter-footer"><button type="button" class="student-filter-reset" id="studentFilterReset">Limpar filtros</button><small>40 alunos são exibidos por vez para manter a página leve.</small></div>
       </div>`;
     toolbar.append(wrap);
 
     const status=document.createElement("div");
     status.className="student-list-status";
-    status.innerHTML='<span id="studentListCount"></span><span class="student-list-scroll-hint" id="studentListScrollHint"></span>';
+    status.innerHTML='<span id="studentListCount"></span><button type="button" class="student-load-more" id="studentLoadMore" hidden>Mostrar mais</button>';
     toolbar.insertAdjacentElement("afterend",status);
 
-    document.getElementById("studentFilterButton")?.addEventListener("click",event=>{event.stopPropagation();togglePopover()});
+    document.getElementById("studentFilterButton")?.addEventListener("click",event=>{event.stopPropagation();togglePopover();});
     document.getElementById("studentFilterPopover")?.addEventListener("click",event=>event.stopPropagation());
     document.getElementById("studentFilterReset")?.addEventListener("click",resetFilters);
+    document.getElementById("studentLoadMore")?.addEventListener("click",()=>{
+      state.shown+=PAGE_SIZE;
+      renderRoster(false);
+    });
+
     document.querySelectorAll("[data-student-filter]").forEach(select=>select.addEventListener("change",()=>{
       const key=select.dataset.studentFilter;
       if(key in state)state[key]=select.value;
-      rows.scrollTop=0;
-      queueApply();
+      renderRoster(true);
     }));
-    search.addEventListener("input",()=>requestAnimationFrame(queueApply));
+
+    search.addEventListener("input",()=>{state.shown=PAGE_SIZE;});
     document.addEventListener("click",closePopover);
-    document.addEventListener("keydown",event=>{if(event.key==="Escape")closePopover()});
+    document.addEventListener("keydown",event=>{if(event.key==="Escape")closePopover();});
 
     mounted=true;
+    queueStatus();
   }
 
   function wrapRender(){
@@ -256,7 +174,14 @@
     const base=renderStudents;
     const wrapped=function(){
       const result=base.apply(this,arguments);
-      queueApply();
+      queueStatus();
+      try{
+        const rows=document.getElementById("studentRows");
+        window.dispatchEvent(new CustomEvent("student-list-updated",{detail:{
+          visible:Number(rows?.dataset.studentRenderedCount||0),
+          filtered:Number(rows?.dataset.studentFilteredCount||0)
+        }}));
+      }catch(_){}
       return result;
     };
     wrapped.__studentOrganizerWrapped=true;
@@ -268,13 +193,14 @@
       const link=document.createElement("link");
       link.id="controlStudentCollapsibleListStyles";
       link.rel="stylesheet";
-      link.href="student-collapsible-list.css?v=2";
+      link.href="student-collapsible-list.css?v=3";
       document.head.appendChild(link);
     }
     if(!document.getElementById("controlStudentCollapsibleListScript")){
       const script=document.createElement("script");
       script.id="controlStudentCollapsibleListScript";
-      script.src="student-collapsible-list.js?v=2";
+      script.src="student-collapsible-list.js?v=3";
+      script.async=false;
       script.defer=true;
       document.head.appendChild(script);
     }
@@ -284,11 +210,13 @@
     ensureCollapsibleAssets();
     mountControls();
     wrapRender();
-    queueApply();
+    queueStatus();
   }
 
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",install,{once:true});
   else install();
-  window.addEventListener("pageshow",queueApply);
-  window.addEventListener("control-theme-change",queueApply);
+
+  window.addEventListener("pageshow",queueStatus);
+  window.addEventListener("student-roster-rendered",queueStatus);
+  window.addEventListener("control-theme-change",queueStatus);
 })();
