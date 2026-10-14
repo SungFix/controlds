@@ -33,7 +33,15 @@
   --shadow:0 18px 50px rgba(0,0,0,.26);
 }
 *{box-sizing:border-box}
-html,body{min-height:100%}
+html,body{
+  min-height:100%;
+  max-width:100%;
+  overflow-x:hidden !important;
+}
+body{width:100%}
+.shell,.main,.content,.page{min-width:0}
+.shell,.main{max-width:100%}
+
 body{
   margin:0;
   color:var(--text);
