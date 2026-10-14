@@ -188,7 +188,7 @@
       const link=document.createElement("link");
       link.id="controlStudentCollapsibleListStyles";
       link.rel="stylesheet";
-      link.href="student-collapsible-list.css?v=6";
+      link.href="student-collapsible-list.css?v=7";
       document.head.appendChild(link);
     }
     if(!document.getElementById("controlStudentCollapsibleListScript")){
