@@ -656,3 +656,157 @@ html.theme-light #page-students #studentRows .student-row-usage strong{
     height:40px!important;
   }
 }
+
+
+/* Roster V5 — linha fechada compacta, equilibrada e consistente */
+#page-students #studentRows.student-list{
+  gap:7px!important;
+}
+#page-students #studentRows .student-card:not(.is-open){
+  height:64px!important;
+  min-height:64px!important;
+  border-radius:12px!important;
+  border:1px solid #293640!important;
+  background:#10171d!important;
+  box-shadow:none!important;
+}
+#page-students #studentRows .student-card:not(.is-open):hover{
+  border-color:#3a4a57!important;
+  background:#131b22!important;
+}
+#page-students #studentRows .student-card-head{
+  height:62px!important;
+  min-height:62px!important;
+  padding:0 14px!important;
+  gap:12px!important;
+  align-items:center!important;
+}
+#page-students #studentRows .student-avatar{
+  width:40px!important;
+  height:40px!important;
+  flex:0 0 40px!important;
+  border-radius:11px!important;
+  border:1px solid #334553!important;
+  background:#16212a!important;
+  font-size:10px!important;
+  font-weight:900!important;
+  letter-spacing:.02em!important;
+}
+#page-students #studentRows .student-card-title{
+  min-width:0!important;
+  height:auto!important;
+  gap:2px!important;
+  justify-content:center!important;
+}
+#page-students #studentRows .student-card-title strong{
+  max-width:100%!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  font-size:12.5px!important;
+  line-height:16px!important;
+  font-weight:850!important;
+  letter-spacing:-.01em!important;
+}
+#page-students #studentRows .student-card-title small{
+  font-size:8.5px!important;
+  line-height:12px!important;
+  font-weight:750!important;
+  color:#91a0ad!important;
+  letter-spacing:.02em!important;
+}
+#page-students #studentRows .student-row-quick{
+  flex:0 0 auto!important;
+  height:30px!important;
+  gap:7px!important;
+  margin-left:auto!important;
+}
+#page-students #studentRows .student-row-usage{
+  min-width:58px!important;
+  height:30px!important;
+  min-height:30px!important;
+  padding:0 9px!important;
+  gap:4px!important;
+  border-color:#30404c!important;
+  background:#121b22!important;
+}
+#page-students #studentRows .student-row-usage strong{
+  font-size:9.5px!important;
+}
+#page-students #studentRows .student-row-usage span{
+  font-size:7px!important;
+  color:#93a1ad!important;
+}
+#page-students #studentRows .student-row-chevron{
+  width:28px!important;
+  height:28px!important;
+  min-width:28px!important;
+  margin-left:0!important;
+  border-radius:8px!important;
+  color:#82919d!important;
+}
+#page-students #studentRows .student-row-chevron:hover{
+  background:#19232b!important;
+  color:#e7edf2!important;
+}
+#page-students #studentRows .student-card.is-open{
+  border-radius:12px!important;
+  border-color:#344450!important;
+}
+#page-students #studentRows .student-card.is-open .student-card-head{
+  height:62px!important;
+  min-height:62px!important;
+}
+html[data-theme="light"] #page-students #studentRows .student-card:not(.is-open),
+html.theme-light #page-students #studentRows .student-card:not(.is-open){
+  border-color:#d7cec2!important;
+  background:#fffdf9!important;
+}
+html[data-theme="light"] #page-students #studentRows .student-card:not(.is-open):hover,
+html.theme-light #page-students #studentRows .student-card:not(.is-open):hover{
+  border-color:#c5b9aa!important;
+  background:#faf6f0!important;
+}
+html[data-theme="light"] #page-students #studentRows .student-avatar,
+html.theme-light #page-students #studentRows .student-avatar{
+  border-color:#d0c4b5!important;
+  background:#f1ebe3!important;
+}
+html[data-theme="light"] #page-students #studentRows .student-row-usage,
+html.theme-light #page-students #studentRows .student-row-usage{
+  border-color:#d7cec2!important;
+  background:#f7f2eb!important;
+}
+@media(max-width:680px){
+  #page-students #studentRows.student-list{gap:6px!important}
+  #page-students #studentRows .student-card:not(.is-open){
+    height:60px!important;
+    min-height:60px!important;
+  }
+  #page-students #studentRows .student-card-head,
+  #page-students #studentRows .student-card.is-open .student-card-head{
+    height:58px!important;
+    min-height:58px!important;
+    padding:0 10px!important;
+    gap:9px!important;
+  }
+  #page-students #studentRows .student-avatar{
+    width:36px!important;
+    height:36px!important;
+    flex-basis:36px!important;
+    border-radius:10px!important;
+  }
+  #page-students #studentRows .student-card-title strong{
+    font-size:11.5px!important;
+  }
+  #page-students #studentRows .student-row-usage{
+    min-width:34px!important;
+    width:34px!important;
+    padding:0 6px!important;
+  }
+  #page-students #studentRows .student-row-chevron{
+    width:26px!important;
+    height:26px!important;
+    min-width:26px!important;
+  }
+}
