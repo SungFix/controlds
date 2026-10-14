@@ -6398,7 +6398,7 @@ function renderStudents(){
   const yearFilter=String(rosterState.year||"all");
   const roomFilter=String(rosterState.room||"all").toUpperCase();
   const sortMode=String(rosterState.sort||"az");
-  const shown=Math.max(20,Number(rosterState.shown||40));
+  const shown=Number.POSITIVE_INFINITY;
   const canUse=canCreateRequest();
 
   const yearOf=student=>{
@@ -6417,7 +6417,7 @@ function renderStudents(){
     s.registrationNumber||s.registration_number||""
   ].join("\u001f")).join("\u001e");
   const signature=[
-    q,courseFilter,yearFilter,roomFilter,sortMode,shown,canUse?"1":"0",studentDataSignature
+    q,courseFilter,yearFilter,roomFilter,sortMode,canUse?"1":"0",studentDataSignature
   ].join("|");
 
   if(signature===studentRenderSignature) return;
@@ -6449,11 +6449,11 @@ function renderStudents(){
     list.sort((a,b)=>a.name.localeCompare(b.name,"pt-BR",{sensitivity:"base"}));
   }
 
-  const visible=list.slice(0,shown);
+  const visible=list;
   rows.dataset.studentFilteredCount=String(list.length);
   rows.dataset.studentRenderedCount=String(visible.length);
   rows.dataset.studentTotalCount=String(students.length);
-  rows.dataset.studentHasMore=visible.length<list.length?"1":"0";
+  rows.dataset.studentHasMore="0";
 
   $("#studentTotal").textContent=students.length;
   $("#studentUsed").textContent=students.filter(s=>Number(s.useCount||0)>0).length;
