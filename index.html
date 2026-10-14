@@ -6379,34 +6379,92 @@ function useSavedStudent(id){
   updateRequestSummary();
 }
 let studentRenderSignature="";
+let studentPickerSignature="";
 function renderStudents(){
   const rows=$("#studentRows");
   if(!rows) return;
 
+  const rosterState=window.ETEStudentRosterState||{};
   const q=($("#studentSearch")?.value || "").toLocaleLowerCase("pt-BR");
+  const courseFilter=String(rosterState.course||"all").toUpperCase();
+  const yearFilter=String(rosterState.year||"all");
+  const roomFilter=String(rosterState.room||"all").toUpperCase();
+  const sortMode=String(rosterState.sort||"az");
+  const shown=Math.max(20,Number(rosterState.shown||40));
   const canUse=canCreateRequest();
-  const signature=q+"|"+(canUse?"1":"0")+"|"+students.map(s=>[
-    s.id,s.name,s.className,s.course,Number(s.useCount||0),s.lastUsed||""
+
+  const yearOf=student=>{
+    const match=String(student?.className||"").match(/^([123])°/);
+    return match?match[1]:"";
+  };
+  const roomOf=student=>{
+    if(String(student?.course||"").toUpperCase()==="GTU")return "GTU";
+    const group=String(student?.className||"").toUpperCase();
+    if(group.includes("A"))return "A";
+    if(group.includes("B"))return "B";
+    return "";
+  };
+  const studentDataSignature=students.map(s=>[
+    s.id,s.name,s.className,s.course,Number(s.useCount||0),s.lastUsed||"",
+    s.registrationNumber||s.registration_number||""
   ].join("\u001f")).join("\u001e");
+  const signature=[
+    q,courseFilter,yearFilter,roomFilter,sortMode,shown,canUse?"1":"0",studentDataSignature
+  ].join("|");
 
   if(signature===studentRenderSignature) return;
   studentRenderSignature=signature;
 
-  const list=[...students]
-    .filter(s=>(s.name+" "+s.className+" "+s.course).toLocaleLowerCase("pt-BR").includes(q))
-    .sort((a,b)=>a.name.localeCompare(b.name,"pt-BR"));
+  let list=[...students].filter(student=>{
+    const hay=[
+      student?.name||"",
+      student?.className||"",
+      student?.course||"",
+      student?.registrationNumber||student?.registration_number||""
+    ].join(" ").toLocaleLowerCase("pt-BR");
+    if(!hay.includes(q))return false;
+    if(courseFilter!=="ALL"&&String(student?.course||"").toUpperCase()!==courseFilter)return false;
+    if(yearFilter!=="all"&&yearOf(student)!==yearFilter)return false;
+    if(roomFilter!=="ALL"&&roomOf(student)!==roomFilter)return false;
+    return true;
+  });
+
+  if(sortMode==="za"){
+    list.sort((a,b)=>b.name.localeCompare(a.name,"pt-BR",{sensitivity:"base"}));
+  }else if(sortMode==="recent"){
+    list.sort((a,b)=>{
+      const recentA=Date.parse(a?.lastUsed||"")||0;
+      const recentB=Date.parse(b?.lastUsed||"")||0;
+      return recentB-recentA||a.name.localeCompare(b.name,"pt-BR",{sensitivity:"base"});
+    });
+  }else{
+    list.sort((a,b)=>a.name.localeCompare(b.name,"pt-BR",{sensitivity:"base"}));
+  }
+
+  const visible=list.slice(0,shown);
+  rows.dataset.studentFilteredCount=String(list.length);
+  rows.dataset.studentRenderedCount=String(visible.length);
+  rows.dataset.studentTotalCount=String(students.length);
+  rows.dataset.studentHasMore=visible.length<list.length?"1":"0";
 
   $("#studentTotal").textContent=students.length;
   $("#studentUsed").textContent=students.filter(s=>Number(s.useCount||0)>0).length;
   $("#studentUses").textContent=students.reduce((n,s)=>n+Number(s.useCount||0),0);
 
-  rows.innerHTML=list.length ? list.map(s=>`
-    <article class="student-card" data-student-id="${esc(s.id)}">
+  rows.innerHTML=visible.length ? visible.map(s=>{
+    const uses=Number(s.useCount||0);
+    const year=yearOf(s);
+    const room=roomOf(s);
+    return `
+    <article class="student-card" data-student-id="${esc(s.id)}" data-student-course="${esc(s.course||"")}" data-student-year="${esc(year)}" data-student-room="${esc(room)}">
       <div class="student-card-head">
         <div class="student-avatar">${esc(studentInitials(s.name))}</div>
         <div class="student-card-title">
           <strong>${esc(s.name)}</strong>
-          <small>${esc(s.className)} ${esc(s.course)}</small>
+          <small>${esc(s.className)} · ${esc(s.course)}</small>
+        </div>
+        <div class="student-row-quick" aria-label="${uses} uso${uses===1?"":"s"} registrado${uses===1?"":"s"}">
+          <span class="student-row-usage"><strong>${uses}</strong><span>uso${uses===1?"":"s"}</span></span>
         </div>
       </div>
       <div class="student-card-body">
@@ -6420,17 +6478,26 @@ function renderStudents(){
         </div>
       </div>
       <div class="student-card-foot">
-        <div class="student-last-use">${Number(s.useCount||0)} uso${Number(s.useCount||0)===1?"":"s"} registrado${Number(s.useCount||0)===1?"":"s"}</div>
+        <div class="student-last-use">${uses} uso${uses===1?"":"s"} registrado${uses===1?"":"s"}</div>
         ${canUse?`<button class="btn small" data-use-student="${s.id}">Usar em pedido</button>`:""}
       </div>
-    </article>
-  `).join("") : `
+    </article>`;
+  }).join("") : `
     <div class="student-empty">
       <strong>Nenhum aluno encontrado</strong>
       Ajuste a pesquisa ou os filtros para tentar novamente.
     </div>`;
 
-  populateSavedStudentSelect();
+  if(studentPickerSignature!==studentDataSignature){
+    studentPickerSignature=studentDataSignature;
+    populateSavedStudentSelect();
+  }
+
+  try{
+    window.dispatchEvent(new CustomEvent("student-roster-rendered",{
+      detail:{visible:visible.length,filtered:list.length,total:students.length}
+    }));
+  }catch(_){}
 }
 
 function renderComputers(){
