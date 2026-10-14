@@ -6473,6 +6473,9 @@ function renderStudents(){
         </div>
         <div class="student-row-quick" aria-label="${uses} uso${uses===1?"":"s"} registrado${uses===1?"":"s"}">
           <span class="student-row-usage"><strong>${uses}</strong><span>uso${uses===1?"":"s"}</span></span>
+          <button class="student-row-chevron" type="button" aria-label="Mostrar detalhes de ${esc(s.name)}" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 10 3 3 3-3"/></svg>
+          </button>
         </div>
       </div>
       <div class="student-card-body">
