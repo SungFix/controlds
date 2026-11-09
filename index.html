@@ -6044,7 +6044,10 @@ function renderRequests(){
   }else if(sort==="time"){
     list=[...list].sort((a,b)=>a.time.localeCompare(b.time));
   }else{
-    list=[...list].sort((a,b)=>Number(b.id)-Number(a.id));
+    list=[...list].sort((a,b)=>{
+      const byCreatedAt=(Date.parse(b.createdAt||"")||0)-(Date.parse(a.createdAt||"")||0);
+      return byCreatedAt||(Number(b.id)-Number(a.id)||0);
+    });
   }
 
   if($("#requestResultsLabel")){
@@ -6528,7 +6531,8 @@ function renderComputers(){
   list=[...list].sort((a,b)=>{
     if(["use","late"].includes(a.status) && !["use","late"].includes(b.status)) return -1;
     if(["use","late"].includes(b.status) && !["use","late"].includes(a.status)) return 1;
-    return Number(b.id)-Number(a.id);
+    const byCreatedAt=(Date.parse(b.createdAt||"")||0)-(Date.parse(a.createdAt||"")||0);
+    return byCreatedAt||(Number(b.id)-Number(a.id)||0);
   });
 
   if($("#computerResultsLabel")){
