@@ -1,0 +1,191 @@
+/* Control DS — acentos de cor primária
+   Camada visual isolada: não modifica login, Portal ETE ou Atestados.
+   Mantém dimensões e estrutura dos componentes existentes. */
+
+body:not(.auth-locked):not(.portal-open){
+  --ds-blue:#76b7ff;
+  --ds-green:#6ed5aa;
+  --ds-yellow:#f4c76e;
+  --ds-red:#fa8d96;
+  --ds-purple:#bcabfa;
+  --ds-primary-bg:#3c82c9;
+  --ds-primary-bg-hover:#4e98e2;
+  --ds-primary-fg:#ffffff;
+  --ds-blue-rgb:118,183,255;
+  --ds-green-rgb:110,213,170;
+  --ds-yellow-rgb:244,199,110;
+  --ds-red-rgb:250,141,150;
+}
+
+/* Acentos com contraste adequado também no tema claro. */
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open){
+  --ds-blue:#2568a4;
+  --ds-green:#18784f;
+  --ds-yellow:#92620f;
+  --ds-red:#b43f4e;
+  --ds-purple:#7550a1;
+  --ds-primary-bg:#286ba9;
+  --ds-primary-bg-hover:#1e568a;
+  --ds-primary-fg:#ffffff;
+  --ds-blue-rgb:37,104,164;
+  --ds-green-rgb:24,120,79;
+  --ds-yellow-rgb:146,98,15;
+  --ds-red-rgb:180,63,78;
+}
+
+/* Navegação: cada área recebe seu próprio tom, sem alterar o layout. */
+body:not(.auth-locked):not(.portal-open) .nav button[data-page="home"],
+body:not(.auth-locked):not(.portal-open) .nav button[data-page="computers"]{
+  --ds-nav-color:var(--ds-blue);
+  --ds-nav-rgb:var(--ds-blue-rgb);
+}
+body:not(.auth-locked):not(.portal-open) .nav button[data-page="agenda"],
+body:not(.auth-locked):not(.portal-open) .nav button[data-page="requests"]{
+  --ds-nav-color:var(--ds-yellow);
+  --ds-nav-rgb:var(--ds-yellow-rgb);
+}
+body:not(.auth-locked):not(.portal-open) .nav button[data-page="permissions"],
+body:not(.auth-locked):not(.portal-open) .nav button[data-page="students"]{
+  --ds-nav-color:var(--ds-green);
+  --ds-nav-rgb:var(--ds-green-rgb);
+}
+body:not(.auth-locked):not(.portal-open) .nav button[data-page="history"]{
+  --ds-nav-color:var(--ds-red);
+  --ds-nav-rgb:var(--ds-red-rgb);
+}
+body:not(.auth-locked):not(.portal-open) .nav button .navicon{
+  color:var(--ds-nav-color) !important;
+  border-color:rgba(var(--ds-nav-rgb),.26) !important;
+  background:rgba(var(--ds-nav-rgb),.09) !important;
+}
+body:not(.auth-locked):not(.portal-open) .nav button.active{
+  box-shadow:inset 3px 0 0 var(--ds-nav-color) !important;
+  border-color:rgba(var(--ds-nav-rgb),.32) !important;
+  background:rgba(var(--ds-nav-rgb),.14) !important;
+}
+body:not(.auth-locked):not(.portal-open) .nav button.active .navicon{
+  color:var(--ds-nav-color) !important;
+  background:rgba(var(--ds-nav-rgb),.19) !important;
+  border-color:rgba(var(--ds-nav-rgb),.38) !important;
+}
+
+/* Ações principais, indicadores de sincronização e identificação da página. */
+body:not(.auth-locked):not(.portal-open) .btn.primary{
+  background:var(--ds-primary-bg) !important;
+  color:var(--ds-primary-fg) !important;
+  border-color:var(--ds-primary-bg) !important;
+}
+body:not(.auth-locked):not(.portal-open) .btn.primary:hover:not(:disabled){
+  background:var(--ds-primary-bg-hover) !important;
+  border-color:var(--ds-primary-bg-hover) !important;
+}
+body:not(.auth-locked):not(.portal-open) .btn.primary:focus-visible{
+  outline:2px solid var(--ds-blue) !important;
+  outline-offset:3px !important;
+}
+body:not(.auth-locked):not(.portal-open) .page-symbol{
+  color:var(--ds-blue) !important;
+  border-color:rgba(var(--ds-blue-rgb),.38) !important;
+  background:rgba(var(--ds-blue-rgb),.12) !important;
+}
+body:not(.auth-locked):not(.portal-open) .sync-pill.online{
+  color:var(--ds-green) !important;
+  border-color:rgba(var(--ds-green-rgb),.36) !important;
+  background:rgba(var(--ds-green-rgb),.10) !important;
+}
+body:not(.auth-locked):not(.portal-open) .sync-pill.error{
+  color:var(--ds-red) !important;
+  border-color:rgba(var(--ds-red-rgb),.36) !important;
+  background:rgba(var(--ds-red-rgb),.10) !important;
+}
+
+/* Indicadores numéricos e cards: cor no conteúdo, não nos fundos. */
+body:not(.auth-locked):not(.portal-open) .overview-strip > .hero-stat{
+  border-left:3px solid var(--ds-blue) !important;
+}
+body:not(.auth-locked):not(.portal-open) .hero-stat strong{
+  color:var(--ds-blue) !important;
+}
+body:not(.auth-locked):not(.portal-open) .hero-bars span:nth-child(4n + 1){background:var(--ds-blue) !important}
+body:not(.auth-locked):not(.portal-open) .hero-bars span:nth-child(4n + 2){background:var(--ds-green) !important}
+body:not(.auth-locked):not(.portal-open) .hero-bars span:nth-child(4n + 3){background:var(--ds-yellow) !important}
+body:not(.auth-locked):not(.portal-open) .hero-bars span:nth-child(4n){background:var(--ds-red) !important}
+body:not(.auth-locked):not(.portal-open) .overview-strip > .mini-stat:nth-child(2) .value{color:var(--ds-blue) !important}
+body:not(.auth-locked):not(.portal-open) .overview-strip > .mini-stat:nth-child(3) .value{color:var(--ds-yellow) !important}
+body:not(.auth-locked):not(.portal-open) .overview-strip > .mini-stat:nth-child(4) .value{color:var(--ds-red) !important}
+body:not(.auth-locked):not(.portal-open) .overview-strip > .mini-stat:nth-child(2){border-top:2px solid var(--ds-blue) !important}
+body:not(.auth-locked):not(.portal-open) .overview-strip > .mini-stat:nth-child(3){border-top:2px solid var(--ds-yellow) !important}
+body:not(.auth-locked):not(.portal-open) .overview-strip > .mini-stat:nth-child(4){border-top:2px solid var(--ds-red) !important}
+
+/* KPIs de módulos: ciclo azul, amarelo, verde e vermelho. */
+body:not(.auth-locked):not(.portal-open) :is(.request-overview,.permission-overview,.history-overview,.student-overview,.computer-overview) > :is(.request-stat,.permission-stat,.history-stat,.student-stat,.computer-stat):nth-child(4n + 1){
+  --ds-stat-accent:var(--ds-blue);
+}
+body:not(.auth-locked):not(.portal-open) :is(.request-overview,.permission-overview,.history-overview,.student-overview,.computer-overview) > :is(.request-stat,.permission-stat,.history-stat,.student-stat,.computer-stat):nth-child(4n + 2){
+  --ds-stat-accent:var(--ds-yellow);
+}
+body:not(.auth-locked):not(.portal-open) :is(.request-overview,.permission-overview,.history-overview,.student-overview,.computer-overview) > :is(.request-stat,.permission-stat,.history-stat,.student-stat,.computer-stat):nth-child(4n + 3){
+  --ds-stat-accent:var(--ds-green);
+}
+body:not(.auth-locked):not(.portal-open) :is(.request-overview,.permission-overview,.history-overview,.student-overview,.computer-overview) > :is(.request-stat,.permission-stat,.history-stat,.student-stat,.computer-stat):nth-child(4n){
+  --ds-stat-accent:var(--ds-red);
+}
+body:not(.auth-locked):not(.portal-open) :is(.request-stat,.permission-stat,.history-stat,.student-stat,.computer-stat){
+  border-top:2px solid var(--ds-stat-accent, var(--ds-blue)) !important;
+}
+body:not(.auth-locked):not(.portal-open) :is(.request-stat,.permission-stat,.history-stat,.student-stat,.computer-stat) > strong,
+body:not(.auth-locked):not(.portal-open) :is(.request-stat,.permission-stat,.history-stat,.student-stat,.computer-stat) .value{
+  color:var(--ds-stat-accent, var(--ds-blue)) !important;
+}
+body:not(.auth-locked):not(.portal-open) :is(.request-stat,.permission-stat,.history-stat,.student-stat,.computer-stat) .mini-dot{
+  background:var(--ds-stat-accent, var(--ds-blue)) !important;
+}
+
+/* Estados de pedidos e computadores sempre distinguíveis por cor. */
+body:not(.auth-locked):not(.portal-open) .status.wait{
+  color:var(--ds-yellow) !important;
+  background:rgba(var(--ds-yellow-rgb),.11) !important;
+  border-color:rgba(var(--ds-yellow-rgb),.35) !important;
+}
+body:not(.auth-locked):not(.portal-open) .status.use{
+  color:var(--ds-blue) !important;
+  background:rgba(var(--ds-blue-rgb),.11) !important;
+  border-color:rgba(var(--ds-blue-rgb),.35) !important;
+}
+body:not(.auth-locked):not(.portal-open) .status.late{
+  color:var(--ds-red) !important;
+  background:rgba(var(--ds-red-rgb),.11) !important;
+  border-color:rgba(var(--ds-red-rgb),.35) !important;
+}
+body:not(.auth-locked):not(.portal-open) .status.done{
+  color:var(--ds-green) !important;
+  background:rgba(var(--ds-green-rgb),.11) !important;
+  border-color:rgba(var(--ds-green-rgb),.35) !important;
+}
+
+/* Filtros e ações rápidas: orientação visual sem alterar a navegação. */
+body:not(.auth-locked):not(.portal-open) .request-tab.active,
+body:not(.auth-locked):not(.portal-open) .computer-tab.active{
+  color:var(--ds-blue) !important;
+  border-color:rgba(var(--ds-blue-rgb),.39) !important;
+  background:rgba(var(--ds-blue-rgb),.13) !important;
+}
+body:not(.auth-locked):not(.portal-open) .request-tab.active[data-request-filter="wait"]{
+  color:var(--ds-yellow) !important;
+  border-color:rgba(var(--ds-yellow-rgb),.37) !important;
+  background:rgba(var(--ds-yellow-rgb),.12) !important;
+}
+body:not(.auth-locked):not(.portal-open) .request-tab.active[data-request-filter="done"],
+body:not(.auth-locked):not(.portal-open) .computer-tab.active[data-computer-filter="done"]{
+  color:var(--ds-green) !important;
+  border-color:rgba(var(--ds-green-rgb),.37) !important;
+  background:rgba(var(--ds-green-rgb),.12) !important;
+}
+body:not(.auth-locked):not(.portal-open) .quick-panel .quick-card:nth-child(3n + 1){border-left:3px solid var(--ds-blue) !important}
+body:not(.auth-locked):not(.portal-open) .quick-panel .quick-card:nth-child(3n + 2){border-left:3px solid var(--ds-yellow) !important}
+body:not(.auth-locked):not(.portal-open) .quick-panel .quick-card:nth-child(3n){border-left:3px solid var(--ds-green) !important}
+
+/* Mantém a distinção cromática sem impor animações ou tamanhos novos. */
+@media (prefers-reduced-motion:reduce){
+  body:not(.auth-locked):not(.portal-open) .btn.primary{transition:none !important}
+}
