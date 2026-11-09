@@ -8,8 +8,8 @@ body:not(.auth-locked):not(.portal-open){
   --ds-yellow:#f4c76e;
   --ds-red:#fa8d96;
   --ds-purple:#bcabfa;
-  --ds-primary-bg:#3c82c9;
-  --ds-primary-bg-hover:#4e98e2;
+  --ds-primary-bg:#2870b4;
+  --ds-primary-bg-hover:#3477b6;
   --ds-primary-fg:#ffffff;
   --ds-blue-rgb:118,183,255;
   --ds-green-rgb:110,213,170;
@@ -31,6 +31,11 @@ html[data-theme="light"] body:not(.auth-locked):not(.portal-open){
   --ds-green-rgb:24,120,79;
   --ds-yellow-rgb:146,98,15;
   --ds-red-rgb:180,63,78;
+}
+
+/* Em fundo claro, mantém os rótulos da navegação legíveis. */
+html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .nav button.active{
+  color:#203039 !important;
 }
 
 /* Navegação: cada área recebe seu próprio tom, sem alterar o layout. */
