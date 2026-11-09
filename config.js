@@ -362,8 +362,16 @@ window.ETE_CONFIG = {
     updateButton(button);
   }
 
+  function removeLegacyControlColorStyles(){
+    // Compatibilidade com páginas antigas mantidas em cache após a reversão visual.
+    document.querySelectorAll('link[rel="stylesheet"][href*="control-primary-accents.css"]').forEach(function(link){
+      link.remove();
+    });
+  }
+
   function mountThemeControls(){
     observerQueued = false;
+    removeLegacyControlColorStyles();
     ensureThemeStyles();
     mountHeaderButton();
     mountFloatingButton();
