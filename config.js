@@ -217,7 +217,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=4");
     ensureStylesheet("controlVisualAuditFixesStyles", "visual-audit-fixes.css?v=3");
 
-    ensureScript("controlLoginUsabilityScript", "login-usability.js?v=1");
+    ensureScript("controlLoginUsabilityScript", "login-usability.js?v=2");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
     ensureScript("controlComputerIdScript", "computer-id-enhance.js?v=2");
     ensureScript("controlPermissionDetailsScript", "permission-details-enhance.js?v=3");
