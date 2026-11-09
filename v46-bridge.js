@@ -13,7 +13,7 @@ function v46ExplainError(err){
   const m=String(err?.message||err||"");
   if(m.includes("duplicate_overlap")) return "Já existe um pedido ativo desse aluno em um horário que coincide.";
   if(m.includes("invalid_pin")) return "PIN incorreto ou inválido. Use de 4 a 8 números.";
-  if(m.includes("invalid_code")) return "Use o número geral de 6 dígitos ou o número de série de 9 dígitos.";
+  if(m.includes("invalid_code")) return "Use a etiqueta de 4 dígitos, o tombamento de 6 dígitos ou o código do equipamento de 9 caracteres.";
   if(m.includes("pin_locked")) return "Muitas tentativas incorretas. Aguarde 5 minutos.";
   if(m.includes("code_in_use")) return "Este notebook já está em uso.";
   if(m.includes("forbidden")) return "Sua conta não tem permissão para esta ação.";
@@ -24,6 +24,19 @@ function v46ExplainError(err){
   if(m.includes("restore_window_expired")) return "O prazo de 5 minutos para restaurar terminou.";
   if(m.includes("past_date")) return "Não é possível criar pedido para uma data passada.";
   if(m.includes("Invalid login credentials")) return "Usuário ou senha inválidos.";
+  if(m==="offline") return "Sem conexão com a internet. Verifique a conexão e tente novamente.";
+  const mensagensDeValidacao=new Set([
+    "Conta sem perfil autorizado.",
+    "Seu perfil não pode apagar o histórico.",
+    "Não foi possível validar sua conta.",
+    "Senha incorreta.",
+    "Informe o nome do aluno.",
+    "O PIN do aluno deve ter de 4 a 8 números.",
+    "A devolução precisa ser depois da retirada.",
+    "Digite o PIN do aluno (4 a 8 números).",
+    "Use a etiqueta de 4 dígitos, o tombamento de 6 ou o código do equipamento de 9 caracteres."
+  ]);
+  if(mensagensDeValidacao.has(m)) return m;
   return "Não foi possível concluir a ação. Verifique a conexão e tente novamente.";
 }
 function v46ClearBrowserResidue(){try{for(const key of Object.keys(localStorage)){if(key.startsWith("ete_")||/^sb-.*-auth-token$/.test(key)) localStorage.removeItem(key);}sessionStorage.clear();}catch{}}
@@ -45,13 +58,11 @@ const v46RenderStudentsBase=renderStudents;
 renderStudents=function(){
   v46RenderStudentsBase();
   if(!canManageStudents())return;
-  const q=($("#studentSearch")?.value||"").toLocaleLowerCase("pt-BR");
-  const list=[...students]
-    .filter(s=>(s.name+" "+s.className+" "+s.course).toLocaleLowerCase("pt-BR").includes(q))
-    .sort((a,b)=>a.name.localeCompare(b.name,"pt-BR"));
+  const studentsById=new Map(students.map(student=>[String(student.id),student]));
   const cards=$$("#studentRows .student-card");
-  cards.forEach((card,index)=>{
-    const s=list[index],foot=card.querySelector(".student-card-foot");
+  cards.forEach(card=>{
+    const s=studentsById.get(String(card.dataset.studentId||""));
+    const foot=card.querySelector(".student-card-foot");
     if(!s||!foot||foot.querySelector("[data-delete-student]"))return;
     let actions=foot.querySelector(".v46-student-actions");
     if(!actions){
