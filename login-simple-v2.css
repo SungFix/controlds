@@ -614,8 +614,10 @@ body.auth-locked .login-gate .login-card .login-brand{
   border-right-color:#303943!important;
 }
 body.auth-locked .login-gate .login-card .login-mark{
-  background:#171d22!important;
-  border-color:#3a4650!important;
+  border-color:transparent!important;
+  background:
+    linear-gradient(#171d22,#171d22) padding-box,
+    conic-gradient(from 225deg,#5f7fae 0 25%,#5e9b75 25% 50%,#b69a5d 50% 75%,#a9666d 75% 100%) border-box!important;
   box-shadow:none!important;
 }
 body.auth-locked .login-gate .login-card .login-brand::after{
@@ -654,8 +656,10 @@ html[data-theme="light"] body.auth-locked .login-gate .login-card .login-brand{
   border-color:#dce4e8!important;
 }
 html[data-theme="light"] body.auth-locked .login-gate .login-card .login-mark{
-  background:#eef3f6!important;
-  border-color:#cfdbe1!important;
+  border-color:transparent!important;
+  background:
+    linear-gradient(#eef3f6,#eef3f6) padding-box,
+    conic-gradient(from 225deg,#5f7fae 0 25%,#5e9b75 25% 50%,#b69a5d 50% 75%,#a9666d 75% 100%) border-box!important;
   box-shadow:none!important;
 }
 html[data-theme="light"] body.auth-locked .login-gate .login-grid input{

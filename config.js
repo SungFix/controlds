@@ -68,8 +68,8 @@ window.ETE_CONFIG = {
 
   function finalizeLoginStyles(){
     const loginStyle = document.querySelector('link[href^="login-simple-v2.css"]');
-    if (loginStyle && loginStyle.getAttribute("href") !== "login-simple-v2.css?v=8") {
-      loginStyle.href = "login-simple-v2.css?v=8";
+    if (loginStyle && loginStyle.getAttribute("href") !== "login-simple-v2.css?v=9") {
+      loginStyle.href = "login-simple-v2.css?v=9";
     }
 
     const paletteStyle = document.getElementById("controlLightPaletteSageStyles");
