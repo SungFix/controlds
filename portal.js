@@ -374,6 +374,8 @@
   }
 
   function start(){
+    // Um novo login deve começar no Portal, não em um módulo salvo nesta aba.
+    if(!isAuthenticated())setSelectedSystem("");
     ensureExitDropdownStyles();
     ensureAccessStyles();
     installExitHook();
