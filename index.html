@@ -12,7 +12,7 @@
 <script src="login-usability.js?v=2" defer></script>
 <link rel="stylesheet" href="request-date-picker.css?v=1">
 
-<script src="config.js?v=24"></script>
+<script src="config.js?v=25"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4"></script>
 
 <style>
@@ -5821,9 +5821,14 @@ function refreshLateStatuses(persist=true){
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 const statusLabel=s=>s==="wait"?"Aguardando":s==="use"?"Em uso":s==="done"?"Concluído":"Atrasado";
 
+let toastHideTimer = null;
 function toast(t){
   const el=$("#toast"); el.textContent=t; el.classList.add("show");
-  setTimeout(()=>el.classList.remove("show"),2100);
+  if(toastHideTimer !== null) clearTimeout(toastHideTimer);
+  toastHideTimer = setTimeout(()=>{
+    el.classList.remove("show");
+    toastHideTimer = null;
+  },2100);
 }
 function classifyHistory(text){
   const t=text.toLowerCase();
