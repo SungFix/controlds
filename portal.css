@@ -183,3 +183,122 @@ html[data-theme="light"] body.portal-open #eteCentralPortal.ete-portal:not(.modu
   color:#526267 !important;
   -webkit-text-fill-color:#526267 !important;
 }
+
+/* Cartões de sistemas: acabamento matte, sem glow e sem alterar a navegação.
+   Escopo limitado à tela inicial do Portal ETE. */
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-grid .ete-system-card:not(.locked):not(:disabled){
+  min-height:236px !important;
+  border:1px solid #35404a !important;
+  border-radius:12px !important;
+  background:#12171c !important;
+  box-shadow:none !important;
+  gap:18px !important;
+  transition:background-color .15s ease,border-color .15s ease !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-grid .ete-system-card:not(.locked):not(:disabled):hover{
+  background:#161d23 !important;
+  border-color:#4c5a66 !important;
+  transform:none !important;
+  box-shadow:none !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-grid .ete-system-card:not(.locked):not(:disabled)::before{
+  height:2px !important;
+  opacity:1 !important;
+  background:#638cac !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-grid .ete-system-card[data-system="atestados"]:not(.locked):not(:disabled)::before{
+  background:#64947a !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card[data-system="control-ds"] .ete-system-icon{
+  color:#a6c5dc !important;
+  border-color:#40586c !important;
+  background:#1a2630 !important;
+  box-shadow:none !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card[data-system="atestados"] .ete-system-icon{
+  color:#a6cbb6 !important;
+  border-color:#405e4e !important;
+  background:#192920 !important;
+  box-shadow:none !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card .ete-system-copy strong{
+  font-size:17px !important;
+  line-height:1.25 !important;
+  color:#f0f3f6 !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card .ete-system-copy p{
+  font-size:12px !important;
+  line-height:1.55 !important;
+  color:#acb9c4 !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card:not(.locked):not(:disabled) .ete-system-open{
+  padding:12px 13px !important;
+  border:1px solid #303c47 !important;
+  border-radius:9px !important;
+  background:#161d24 !important;
+  color:#dce7f0 !important;
+  font-size:11px !important;
+  box-shadow:none !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card[data-system="atestados"]:not(.locked):not(:disabled) .ete-system-open{
+  border-color:#34483d !important;
+  background:#17221c !important;
+  color:#d5e9db !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card[data-system="control-ds"] .ete-system-open span:last-child{
+  color:#a6c5dc !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card[data-system="atestados"] .ete-system-open span:last-child{
+  color:#a6cbb6 !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card:focus-visible{
+  outline:2px solid #90b7d4 !important;
+  outline-offset:3px !important;
+}
+html[data-theme="light"] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-grid .ete-system-card:not(.locked):not(:disabled){
+  background:#f8fafb !important;
+  border-color:#c6d4dc !important;
+  box-shadow:none !important;
+}
+html[data-theme="light"] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-grid .ete-system-card:not(.locked):not(:disabled):hover{
+  background:#f0f5f8 !important;
+  border-color:#a9c1d0 !important;
+  box-shadow:none !important;
+}
+html[data-theme="light"] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card[data-system="control-ds"] .ete-system-icon{
+  color:#31668f !important;
+  background:#e7f0f6 !important;
+  border-color:#b3cbdc !important;
+}
+html[data-theme="light"] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card[data-system="atestados"] .ete-system-icon{
+  color:#356f50 !important;
+  background:#e7f2eb !important;
+  border-color:#b6d5c2 !important;
+}
+html[data-theme="light"] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card .ete-system-copy strong{
+  color:#26343e !important;
+}
+html[data-theme="light"] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card .ete-system-copy p{
+  color:#516575 !important;
+}
+html[data-theme="light"] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card[data-system="control-ds"]:not(.locked):not(:disabled) .ete-system-open{
+  background:#ecf3f8 !important;
+  border-color:#c5d6e2 !important;
+  color:#315f81 !important;
+}
+html[data-theme="light"] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card[data-system="atestados"]:not(.locked):not(:disabled) .ete-system-open{
+  background:#edf5ef !important;
+  border-color:#c5dacc !important;
+  color:#366e50 !important;
+}
+html[data-theme="light"] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card[data-system="control-ds"] .ete-system-open span:last-child{
+  color:#315f81 !important;
+}
+html[data-theme="light"] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card[data-system="atestados"] .ete-system-open span:last-child{
+  color:#366e50 !important;
+}
+@media(max-width:760px){
+  body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-grid .ete-system-card:not(.locked):not(:disabled){
+    min-height:210px !important;
+  }
+}
