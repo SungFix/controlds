@@ -103,6 +103,7 @@ window.ETE_CONFIG = {
   const root = document.documentElement;
   let observerQueued = false;
   let themeTransitionTimer = 0;
+  let themeAssetsInitialized = false;
 
   function normalizeTheme(value){
     return value === "light" ? "light" : "dark";
@@ -180,6 +181,7 @@ window.ETE_CONFIG = {
   }
 
   function ensureThemeStyles(){
+    if (themeAssetsInitialized) return;
     ensureStylesheet("controlThemeStyles", "theme-light.css?v=7");
     ensureStylesheet("controlThemeRefineStyles", "theme-light-refine.css?v=3");
     ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=12");
@@ -248,6 +250,7 @@ window.ETE_CONFIG = {
     ensureScript("controlRelationalFrontendV2Script", "relational-frontend-v2.js?v=2");
     ensureScript("controlRegisteredStudentFlowScript", "registered-student-flow.js?v=6");
     ensureScript("controlRequestCreatorLabelScript", "request-creator-label.js?v=1");
+    themeAssetsInitialized = true;
   }
 
   function updateButton(button){
