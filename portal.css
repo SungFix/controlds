@@ -92,3 +92,70 @@ html[data-theme="light"] .ete-portal{background:radial-gradient(circle at 12% 0%
   background:#151a1f!important;
   box-shadow:none!important;
 }
+
+/* Alinhamento discreto com o Control DS: apenas a página de seleção.
+   Conserva integralmente as cores originais e o CSS dos módulos abertos. */
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-topbar{
+  border-radius:12px !important;
+  margin-bottom:54px !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-mark{
+  border-radius:11px !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-hero{
+  margin-bottom:30px !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-hero h1{
+  font-size:clamp(30px,3.5vw,46px) !important;
+  line-height:1.12 !important;
+  letter-spacing:-.035em !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-hero p{
+  font-size:13px !important;
+  line-height:1.6 !important;
+  margin-top:12px !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-section-head{
+  margin-bottom:12px !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-grid{
+  gap:14px !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card{
+  border-radius:13px !important;
+  min-height:228px !important;
+  padding:22px !important;
+  gap:22px !important;
+  transform:none !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card:hover{
+  transform:none !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-icon{
+  border-radius:11px !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card strong{
+  font-size:17px !important;
+  letter-spacing:-.02em !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card p{
+  font-size:12px !important;
+  line-height:1.55 !important;
+  margin-top:8px !important;
+}
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-open{
+  padding-top:13px !important;
+  font-size:11px !important;
+}
+@media(max-width:760px){
+  body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-topbar{
+    margin-bottom:34px !important;
+  }
+  body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-hero h1{
+    font-size:clamp(28px,7vw,36px) !important;
+  }
+  body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card{
+    min-height:210px !important;
+    padding:18px !important;
+  }
+}
