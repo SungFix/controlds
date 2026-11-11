@@ -170,6 +170,9 @@ body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-topb
     linear-gradient(#121820,#121820) padding-box,
     conic-gradient(from 225deg,#5f7fae 0 25%,#5e9b75 25% 50%,#b69a5d 50% 75%,#a9666d 75% 100%) border-box !important;
   color:#f3f6f8 !important;
+  -webkit-text-fill-color:#f3f6f8 !important;
+  background-clip:padding-box,border-box !important;
+  -webkit-background-clip:padding-box,border-box !important;
   box-shadow:none !important;
   text-shadow:none !important;
 }
@@ -178,4 +181,5 @@ html[data-theme="light"] body.portal-open #eteCentralPortal.ete-portal:not(.modu
     linear-gradient(#f7fafc,#f7fafc) padding-box,
     conic-gradient(from 225deg,#5f7fae 0 25%,#5e9b75 25% 50%,#b69a5d 50% 75%,#a9666d 75% 100%) border-box !important;
   color:#526267 !important;
+  -webkit-text-fill-color:#526267 !important;
 }
