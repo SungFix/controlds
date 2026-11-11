@@ -33,6 +33,9 @@
 /control-primary-accents.css
   Cache-Control: no-store, max-age=0
 
+/portal-color-accents.css
+  Cache-Control: no-store, max-age=0
+
 /atestados.css
   Cache-Control: no-cache, max-age=0, must-revalidate
 
