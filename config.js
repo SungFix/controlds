@@ -216,7 +216,6 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=3");
     ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=4");
     ensureStylesheet("controlVisualAuditFixesStyles", "visual-audit-fixes.css?v=3");
-    ensureStylesheet("controlPortalColorAccentsStyles", "portal-color-accents.css?v=2");
 
     ensureScript("controlLoginUsabilityScript", "login-usability.js?v=2");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
@@ -364,7 +363,7 @@ window.ETE_CONFIG = {
 
   function removeLegacyControlColorStyles(){
     // Compatibilidade com páginas antigas mantidas em cache após a reversão visual.
-    document.querySelectorAll('link[rel="stylesheet"][href*="control-primary-accents.css"]').forEach(function(link){
+    document.querySelectorAll('link[rel="stylesheet"][href*="control-primary-accents.css"],link[rel="stylesheet"][href*="portal-color-accents.css"]').forEach(function(link){
       link.remove();
     });
   }
