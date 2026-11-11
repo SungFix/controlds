@@ -161,3 +161,21 @@ body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-open
     padding:18px !important;
   }
 }
+
+/* Marca ETE: cores institucionais discretas, sem brilho ou alteração de tamanho.
+   Restrita ao cabeçalho da seleção de sistemas. */
+body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-topbar .ete-portal-mark{
+  border:2px solid transparent !important;
+  background:
+    linear-gradient(#121820,#121820) padding-box,
+    conic-gradient(from 225deg,#5f7fae 0 25%,#5e9b75 25% 50%,#b69a5d 50% 75%,#a9666d 75% 100%) border-box !important;
+  color:#f2d6a1 !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+}
+html[data-theme="light"] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-topbar .ete-portal-mark{
+  background:
+    linear-gradient(#f7fafc,#f7fafc) padding-box,
+    conic-gradient(from 225deg,#5f7fae 0 25%,#5e9b75 25% 50%,#b69a5d 50% 75%,#a9666d 75% 100%) border-box !important;
+  color:#415267 !important;
+}
