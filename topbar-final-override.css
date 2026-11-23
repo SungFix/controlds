@@ -164,13 +164,13 @@ html[data-theme="light"] body .exit-confirm-note.clean b{
 /* Control Ds: a luz fica no plano de fundo e não interfere nos componentes. */
 html:not([data-theme="light"]) body:not(.auth-locked):not(.portal-open),
 html:not([data-theme="light"]) body:not(.auth-locked):not(.portal-open) .main{
-  background:#e8e8e8!important;
+  background:#0d0f11!important;
   background-attachment:scroll!important;
 }
 
 /* Portal ETE: mesma linguagem luminosa do login, um pouco mais discreta. */
 html:not([data-theme="light"]) .ete-portal:not(.module-open){
-  background:#e8e8e8!important;
+  background:#0d0f11!important;
   background-attachment:scroll!important;
 }
 
@@ -178,7 +178,7 @@ html:not([data-theme="light"]) .ete-portal:not(.module-open){
 html:not([data-theme="light"]) .ete-portal.module-open,
 html:not([data-theme="light"]) .ete-portal.module-open .ete-portal-module,
 html:not([data-theme="light"]) .ete-portal.module-open .ete-atestados{
-  background:#e8e8e8!important;
+  background:#0d0f11!important;
   background-attachment:scroll!important;
 }
 
@@ -186,7 +186,7 @@ html:not([data-theme="light"]) .ete-portal.module-open .at-control-shell{
   background:transparent !important;
 }
 html:not([data-theme="light"]) .ete-portal.module-open .at-app-main{
-  background:#e8e8e8!important;
+  background:#0d0f11!important;
   background-attachment:scroll!important;
 }
 
