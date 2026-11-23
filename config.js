@@ -74,16 +74,21 @@ window.ETE_CONFIG = {
 
     const paletteStyle = document.getElementById("controlLightPaletteSageStyles");
     const identityStyle = document.getElementById("controlCarbonMonoStudioStyles");
+    const auditStyle = document.getElementById("controlCarbonMonoAuditStyles");
     Promise.all([
       waitForStylesheet(loginStyle),
       waitForStylesheet(paletteStyle),
-      waitForStylesheet(identityStyle)
+      waitForStylesheet(identityStyle),
+      waitForStylesheet(auditStyle)
     ]).then(function(){
       if (paletteStyle && paletteStyle.parentNode === document.head) {
         document.head.appendChild(paletteStyle);
       }
       if (identityStyle && identityStyle.parentNode === document.head) {
         document.head.appendChild(identityStyle);
+      }
+      if (auditStyle && auditStyle.parentNode === document.head) {
+        document.head.appendChild(auditStyle);
       }
       releaseAfterPaint();
     });
@@ -225,6 +230,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlVisualAuditFixesStyles", "visual-audit-fixes.css?v=3");
     ensureStylesheet("controlSubtleMotionStyles", "subtle-motion.css?v=1");
     ensureStylesheet("controlCarbonMonoStudioStyles", "carbon-mono-studio.css?v=2");
+    ensureStylesheet("controlCarbonMonoAuditStyles", "carbon-mono-audit.css?v=1");
 
     ensureScript("controlLoginUsabilityScript", "login-usability.js?v=2");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
