@@ -1,0 +1,63 @@
+/* Microanimacoes do Portal ETE, login e Atestados.
+   Movimento discreto, sem brilho, gradiente, novas cores ou mudancas de layout.
+   O Control DS interno continua usando Motion Prime (visual-prime.css/ux-prime.js). */
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes eteSubtleEnter {
+    from { opacity:0; transform:translate3d(0,8px,0); }
+    to   { opacity:1; transform:translate3d(0,0,0); }
+  }
+
+  @keyframes eteSubtleFade {
+    from { opacity:0; }
+    to   { opacity:1; }
+  }
+
+  /* Login: uma unica entrada suave, sem deslocar campos durante a digitacao. */
+  body.auth-locked .login-gate:not(.hidden) .login-card {
+    animation:eteSubtleEnter 300ms cubic-bezier(.2,.7,.2,1) both;
+  }
+
+  /* Portal ETE: animar apenas a tela inicial, nunca cards bloqueados. */
+  body.portal-open #eteCentralPortal:not([hidden]):not(.module-open) .ete-portal-hero {
+    animation:eteSubtleEnter 300ms cubic-bezier(.2,.7,.2,1) both;
+  }
+  body.portal-open #eteCentralPortal:not([hidden]):not(.module-open) .ete-portal-section-head {
+    animation:eteSubtleFade 360ms ease both;
+  }
+  body.portal-open #eteCentralPortal:not([hidden]):not(.module-open) .ete-system-card:not(.locked):not(:disabled) {
+    animation:eteSubtleEnter 340ms cubic-bezier(.2,.7,.2,1) both;
+  }
+  body.portal-open #eteCentralPortal:not([hidden]):not(.module-open) .ete-system-card:not(.locked):not(:disabled):nth-child(2) {
+    animation-delay:65ms;
+  }
+
+  /* Atestados: entrada do modulo, sem alterar conteudo nem navegacao. */
+  body.portal-open #eteCentralPortal.module-open .ete-portal-module {
+    animation:eteSubtleEnter 260ms cubic-bezier(.2,.7,.2,1) both;
+  }
+
+  /* Microinteracao no CTA: apenas a seta se move, nao o card inteiro. */
+  body.portal-open #eteCentralPortal:not(.module-open) .ete-system-card:not(.locked):not(:disabled) .ete-system-open span:last-child {
+    transition:transform 160ms ease;
+  }
+  @media (hover:hover) and (pointer:fine) {
+    body.portal-open #eteCentralPortal:not(.module-open) .ete-system-card:not(.locked):not(:disabled):hover .ete-system-open span:last-child {
+      transform:translateX(3px);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.auth-locked .login-gate .login-card,
+  body.portal-open #eteCentralPortal .ete-portal-hero,
+  body.portal-open #eteCentralPortal .ete-portal-section-head,
+  body.portal-open #eteCentralPortal .ete-system-card,
+  body.portal-open #eteCentralPortal .ete-portal-module,
+  body.portal-open #eteCentralPortal .ete-system-open span:last-child {
+    animation:none !important;
+    transition:none !important;
+    transform:none !important;
+    opacity:1 !important;
+  }
+}
