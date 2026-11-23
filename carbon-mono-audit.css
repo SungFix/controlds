@@ -286,3 +286,76 @@ html[data-theme] :is(.at-status.error,.at-status[data-state="error"],
 .ete-admin-form-error,.login-error.show){
  color:var(--audit-danger)!important;
 }
+
+
+/* Componentes adicionais auditados: calendário de pedidos, upload e modais de ação. */
+html[data-theme] :is(.request-date-trigger,.request-date-popover,.request-date-nav,
+.request-date-head,.request-date-foot,.request-date-today){
+ background:var(--audit-panel)!important;color:var(--audit-text)!important;
+ border-color:var(--audit-border)!important;box-shadow:none!important;
+ border-radius:7px!important;
+}
+html[data-theme] :is(.request-date-nav,.request-date-today):hover{
+ background:var(--audit-hover)!important;
+}
+html[data-theme] :is(.request-date-month,.request-date-day){
+ color:var(--audit-text)!important;
+}
+html[data-theme] :is(.request-date-weekdays,.request-date-hint){
+ color:var(--audit-muted)!important;
+}
+html[data-theme] .request-date-weekdays span{color:var(--audit-muted)!important}
+html[data-theme] :is(.request-date-day,.at-date-day){
+ border-radius:6px!important;
+}
+html[data-theme] .request-date-day:hover{
+ background:var(--audit-hover)!important;border-color:var(--audit-border)!important;
+}
+html[data-theme] .request-date-day.selected{
+ background:var(--audit-accent)!important;border-color:var(--audit-accent)!important;color:#fff!important;
+}
+html[data-theme] :is(.at-image-upload-field,.at-image-drop,.at-image-preview,
+.at-image-preview-thumb,.at-image-viewer-head,.at-image-viewer-body){
+ background:var(--audit-panel)!important;background-image:none!important;
+ border-color:var(--audit-border)!important;color:var(--audit-text)!important;
+ box-shadow:none!important;border-radius:7px!important;
+}
+html[data-theme] .at-image-drop:hover{
+ background:var(--audit-hover)!important;border-color:var(--audit-soft)!important;
+}
+html[data-theme] :is(.at-image-drop-copy strong,.at-image-preview-name,.at-image-viewer-head strong){
+ color:var(--audit-text)!important;
+}
+html[data-theme] :is(.at-image-drop-copy small,.at-image-preview-size,.at-image-upload-help){
+ color:var(--audit-muted)!important;
+}
+html[data-theme] :is(.at-image-remove,.at-image-view-button,.at-image-drop-action){
+ background:var(--audit-surface)!important;border-color:var(--audit-border)!important;
+ color:var(--audit-text)!important;box-shadow:none!important;border-radius:7px!important;
+}
+html[data-theme] :is(.at-image-upload-help.error,.at-image-remove.error){
+ color:var(--audit-danger)!important;
+}
+html[data-theme] #controlActionModal .control-action-card{
+ background:var(--audit-panel)!important;border-color:var(--audit-border)!important;
+ color:var(--audit-text)!important;border-radius:10px!important;box-shadow:none!important;
+}
+html[data-theme] #controlActionModal :is(.control-action-head,.control-action-details,
+.control-action-close){
+ background:var(--audit-surface)!important;border-color:var(--audit-border)!important;
+ color:var(--audit-text)!important;box-shadow:none!important;
+}
+html[data-theme] #controlActionModal :is(.control-action-copy h2,.control-action-message){
+ color:var(--audit-text)!important;
+}
+html[data-theme] #controlActionModal :is(.control-action-copy p,.control-action-details){
+ color:var(--audit-muted)!important;
+}
+html[data-theme] #controlActionModal .control-action-warning{color:var(--audit-danger)!important}
+/* Indicadores de perigo mantêm destaque, sem voltar à identidade azul anterior. */
+html[data-theme] .control-action-icon{
+ background:var(--audit-surface)!important;color:var(--audit-danger)!important;
+ border-color:var(--audit-border)!important;box-shadow:none!important;
+ border-radius:8px!important;
+}
+html[data-theme] .control-action-icon.warning{color:var(--audit-muted)!important}
