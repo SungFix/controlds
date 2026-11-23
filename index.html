@@ -4482,6 +4482,99 @@ dialog::backdrop{background:rgba(0,0,0,.74)}
  .nav button::after,.nav button::before,.nav button .navicon,.sidebar{transition:none!important}
 }
 
+
+/* Control ETE — botões sóbrios, foscos e compactos */
+:root{
+  --ete-btn-bg:#20242a;
+  --ete-btn-hover:#292e35;
+  --ete-btn-border:#3b424b;
+  --ete-btn-text:#d5dbe1;
+  --ete-btn-primary:#535f6d;
+  --ete-btn-primary-hover:#606d7c;
+}
+/* Superfícies planas, sem gradiente, brilho ou sombra ornamental */
+.btn,
+button.close,
+button.time-trigger,
+button.group-picker-trigger,
+button.interval-picker-trigger,
+button.student-picker-trigger{
+  border-radius:8px !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+  filter:none;
+  letter-spacing:normal;
+}
+.btn{
+  background:var(--ete-btn-bg);
+  border-color:var(--ete-btn-border);
+  color:var(--ete-btn-text);
+  font-weight:650;
+  transition:background-color .16s ease,border-color .16s ease,color .16s ease,transform .12s ease !important;
+}
+.btn:hover:not(:disabled){
+  background:var(--ete-btn-hover);
+  border-color:#535c66;
+  border-radius:8px !important;
+  box-shadow:none !important;
+}
+.btn.primary{
+  background:var(--ete-btn-primary);
+  border-color:#687584;
+  color:#f4f6f8;
+}
+.btn.primary:hover:not(:disabled){
+  background:var(--ete-btn-primary-hover);
+  border-color:#788695;
+  color:#fff;
+}
+.btn.secondary{background:#1c2025;border-color:#353d46;color:#cbd2da}
+.btn.secondary:hover:not(:disabled){background:#252a30}
+.btn:disabled{opacity:.48;cursor:not-allowed;box-shadow:none !important}
+.btn:active:not(:disabled){transform:scale(.985)}
+/* Botões dos menus, filtros e seletores */
+.nav button{
+  border-radius:8px !important;
+  box-shadow:none !important;
+  font-weight:600;
+}
+.nav button:hover{background:#1b1f24}
+.nav button.active{background:#242930;border-color:#373f48;box-shadow:none !important}
+.nav button::after{background:#758394;opacity:.65}
+.nav button .navicon{border-radius:7px;background:#191d22}
+.nav button.active .navicon{background:#2d333b}
+.student-option,.group-option,.interval-option,.time-option{
+  border-radius:7px !important;
+  box-shadow:none !important;
+}
+button.close{
+  background:#20242a;
+  border-color:#3a424c;
+  color:#c0c8d0;
+}
+button.close:hover{background:#2b3037;color:#e6e9ed}
+button.time-trigger,button.group-picker-trigger,button.interval-picker-trigger,button.student-picker-trigger{
+  background:#191d22;
+  border-color:#39414b;
+  color:#dce2e8;
+  font-weight:600;
+}
+button.time-trigger:hover,button.group-picker-trigger:hover,
+button.interval-picker-trigger:hover,button.student-picker-trigger:hover{
+  background:#22272d;border-color:#4a5560;
+}
+.btn:focus-visible,.nav button:focus-visible,button.close:focus-visible,
+button.time-trigger:focus-visible,button.group-picker-trigger:focus-visible,
+button.interval-picker-trigger:focus-visible,button.student-picker-trigger:focus-visible{
+  outline:2px solid #8a9caf;outline-offset:2px;
+}
+/* Remove somente o arredondamento animado anterior nos botões */
+.btn:not(:disabled):hover{border-radius:8px !important}
+@media(prefers-reduced-motion:reduce){
+ .btn,.nav button,button.close,button.time-trigger,button.group-picker-trigger,
+ button.interval-picker-trigger,button.student-picker-trigger{transition:none !important}
+}
+
 </style>
 </head>
 <body class="auth-locked">
