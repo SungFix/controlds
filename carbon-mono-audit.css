@@ -359,3 +359,310 @@ html[data-theme] .control-action-icon{
  border-radius:8px!important;
 }
 html[data-theme] .control-action-icon.warning{color:var(--audit-muted)!important}
+
+
+/* Redesenho Carbon / Mono Studio — composição, tipografia e hierarquia reais */
+html[data-theme] body{
+ font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif!important;
+ font-size:13px;
+ letter-spacing:normal!important;
+}
+html[data-theme] :is(.main,.content,.at-app-main,.at-app-content,.ete-portal-shell,.ete-admin-shell){
+ min-width:0;
+}
+/* Barra lateral mais fina, navegação plana e tipografia editorial */
+@media(min-width:821px){
+ html[data-theme] .shell{grid-template-columns:232px minmax(0,1fr)!important}
+ html[data-theme] body #eteCentralPortal .at-control-shell{grid-template-columns:232px minmax(0,1fr)!important}
+}
+html[data-theme] .sidebar,html[data-theme] body #eteCentralPortal .at-control-sidebar{
+ padding:24px 14px 18px!important;
+}
+html[data-theme] .brand{gap:10px!important;padding:2px 9px 22px!important;border-color:var(--audit-border)!important}
+html[data-theme] .brandmark{
+ width:37px!important;height:37px!important;border-radius:8px!important;
+ padding:1px!important;background:var(--audit-border)!important;
+}
+html[data-theme] .brandmark::after{
+ background:var(--audit-panel)!important;color:var(--audit-text)!important;border-radius:7px!important;
+ font-weight:750!important
+}
+html[data-theme] .brand strong{font-size:15px!important;font-weight:750!important;letter-spacing:-.02em!important;color:var(--audit-text)!important}
+html[data-theme] .brand small{font-size:10px!important;letter-spacing:0!important;color:var(--audit-muted)!important}
+html[data-theme] .section-label{
+ font-size:9px!important;font-weight:650!important;letter-spacing:.075em!important;
+ color:var(--audit-muted)!important;padding:24px 12px 9px!important
+}
+html[data-theme] .nav{gap:4px!important}
+html[data-theme] .nav button{
+ min-height:43px!important;padding:0 10px!important;gap:11px!important;
+ border:1px solid transparent!important;border-radius:6px!important;
+ color:var(--audit-muted)!important;background:transparent!important;
+ font-size:12px!important;font-weight:560!important;text-shadow:none!important
+}
+html[data-theme] .nav button:hover{background:var(--audit-surface)!important;color:var(--audit-text)!important}
+html[data-theme] .nav button.active{
+ background:var(--audit-surface)!important;border:1px solid var(--audit-border)!important;
+ color:var(--audit-text)!important;font-weight:675!important;
+}
+html[data-theme] .nav button::before{display:none!important}
+html[data-theme] .nav button::after{display:none!important}
+html[data-theme] .nav .navicon{
+ flex:0 0 24px!important;width:24px!important;height:24px!important;
+ border:0!important;background:transparent!important;color:var(--audit-muted)!important;
+}
+html[data-theme] .nav button.active .navicon{background:transparent!important;color:var(--audit-text)!important}
+html[data-theme] .nav .navicon svg{width:17px!important;height:17px!important}
+html[data-theme] .side-status{border-color:var(--audit-border)!important;padding:14px 8px 0!important}
+html[data-theme] .local-pill{
+ border-radius:6px!important;border:1px solid var(--audit-border)!important;
+ background:var(--audit-surface)!important;color:var(--audit-muted)!important;
+ box-shadow:none!important
+}
+html[data-theme] .side-status p{color:var(--audit-muted)!important;font-size:10px!important}
+/* Topbar limpa: não repetir títulos grandes nem bordas ornamentais */
+html[data-theme] .topbar,html[data-theme] body #eteCentralPortal .at-app-topbar{
+ min-height:68px!important;height:auto!important;
+ border-bottom:1px solid var(--audit-border)!important;
+ background:var(--audit-panel)!important;box-shadow:none!important;
+}
+html[data-theme] .topbar-shell{width:100%!important;max-width:none!important;gap:12px!important}
+html[data-theme] .topbar-copy h2,html[data-theme] .topbar-copy #topTitle{
+ font-size:16px!important;line-height:1.25!important;letter-spacing:-.025em!important;font-weight:700!important
+}
+html[data-theme] .topbar-copy p{font-size:9px!important;color:var(--audit-muted)!important}
+html[data-theme] :is(.control-theme-toggle,.header-logout,.header-account,.sync-pill){
+ min-height:35px!important;font-size:10px!important;font-weight:600!important;
+ border-radius:6px!important;box-shadow:none!important;
+}
+/* Conteúdo com escala e espaçamento consistentes */
+html[data-theme] .content,html[data-theme] body #eteCentralPortal .at-app-content{
+ max-width:1480px!important;padding:36px clamp(18px,3vw,48px) 68px!important;margin:0 auto!important;
+}
+html[data-theme] .pagehead,html[data-theme] body #eteCentralPortal .at-app-content .at-page-head{
+ margin-bottom:25px!important;padding:0 0 22px!important;
+ border-bottom:1px solid var(--audit-border)!important;
+ gap:16px!important;align-items:center!important
+}
+html[data-theme] .pagehead h1,html[data-theme] body #eteCentralPortal .at-app-content .at-page-head h1{
+ font-size:clamp(24px,2vw,31px)!important;line-height:1.15!important;
+ font-weight:740!important;letter-spacing:-.045em!important;color:var(--audit-text)!important
+}
+html[data-theme] .pagehead p,html[data-theme] body #eteCentralPortal .at-app-content .at-page-head p{
+ font-size:12px!important;line-height:1.55!important;color:var(--audit-muted)!important;
+ margin-top:7px!important;
+}
+html[data-theme] .pagehead .actions{gap:8px!important}
+html[data-theme] :is(.btn,.at-btn,.ete-portal-back,.ete-system-open,.ete-admin-save,.ete-admin-cancel){
+ min-height:38px!important;padding:9px 13px!important;font-size:11px!important;
+ font-weight:625!important;letter-spacing:0!important;
+ border-radius:6px!important;text-shadow:none!important;box-shadow:none!important;
+}
+/* Estatísticas: cartão grande e composições sem barras decorativas */
+html[data-theme] #page-home .overview-strip{
+ display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+ gap:12px!important;margin-bottom:20px!important;
+}
+html[data-theme] #page-home :is(.hero-stat,.mini-stat){
+ position:relative!important;min-height:158px!important;
+ padding:20px 21px!important;display:flex!important;
+ flex-direction:column!important;justify-content:space-between!important;gap:12px!important;
+ background:var(--audit-panel)!important;border:1px solid var(--audit-border)!important;
+ box-shadow:none!important;border-radius:8px!important;overflow:hidden!important;
+}
+html[data-theme] #page-home .hero-stat::before,
+html[data-theme] #page-home .mini-stat::before{
+ content:"";position:absolute;top:0;left:0;right:0;height:2px;
+ background:var(--audit-border)!important
+}
+html[data-theme] #page-home :is(.hero-stat .eyebrow,.mini-stat .label){
+ color:var(--audit-muted)!important;font-size:10px!important;
+ font-weight:650!important;letter-spacing:.04em!important;text-transform:uppercase!important
+}
+html[data-theme] #page-home :is(.hero-stat strong,.mini-stat .value){
+ margin:0!important;color:var(--audit-text)!important;
+ font-size:clamp(31px,3vw,43px)!important;line-height:1!important;
+ font-weight:710!important;letter-spacing:-.06em!important;
+}
+html[data-theme] #page-home :is(.hero-stat small,.mini-stat .hint){
+ color:var(--audit-muted)!important;font-size:10px!important;line-height:1.4!important;
+}
+html[data-theme] #page-home .hero-bars{display:none!important}
+html[data-theme] #page-home .mini-stat .dot{width:6px!important;height:6px!important;background:var(--audit-muted)!important}
+/* Conteúdo operacional reorganizado, valorizando áreas de ação */
+html[data-theme] #page-home .grid-2{
+ display:grid!important;grid-template-columns:minmax(0,1.4fr) minmax(310px,1fr)!important;
+ gap:14px!important;align-items:stretch!important
+}
+html[data-theme] #page-home .panel{
+ border:1px solid var(--audit-border)!important;
+ background:var(--audit-panel)!important;border-radius:8px!important;box-shadow:none!important
+}
+html[data-theme] #page-home .panelhead{
+ min-height:56px!important;padding:14px 19px!important;background:transparent!important;
+ border-bottom:1px solid var(--audit-border)!important
+}
+html[data-theme] #page-home .panelhead strong,html[data-theme] #page-home .quick-title{
+ color:var(--audit-text)!important;font-size:13px!important;font-weight:700!important;letter-spacing:-.01em!important
+}
+html[data-theme] #page-home .panelhead small{font-size:10px!important;color:var(--audit-muted)!important}
+html[data-theme] #page-home .quick-panel{padding:16px!important}
+html[data-theme] #page-home .quick-title{padding:0 3px 12px!important;margin:0!important}
+html[data-theme] #page-home .quick-actions{gap:8px!important}
+html[data-theme] #page-home .quick-card{
+ background:var(--audit-surface)!important;border:1px solid var(--audit-border)!important;
+ border-radius:7px!important;min-height:72px!important;padding:14px 16px!important;
+ gap:10px!important;box-shadow:none!important
+}
+html[data-theme] #page-home .quick-card .left strong{
+ color:var(--audit-text)!important;font-size:11px!important;font-weight:650!important
+}
+html[data-theme] #page-home .quick-card .left small{
+ color:var(--audit-muted)!important;font-size:10px!important;margin-top:5px!important
+}
+html[data-theme] #page-home .quick-card .btn{
+ min-width:57px!important;padding:8px 12px!important
+}
+html[data-theme] #page-home .agenda-empty{
+ background:var(--audit-surface)!important;border:1px dashed var(--audit-border)!important;
+ color:var(--audit-muted)!important;border-radius:7px!important;
+ font-size:11px!important;padding:35px 20px!important;min-height:150px!important;
+ display:grid!important;place-items:center!important
+}
+/* Aplicação estrutural nas demais páginas do Control Ds */
+html[data-theme] :is(.request-overview,.permission-overview,.student-overview,.computer-overview,.history-overview){
+ gap:12px!important;margin-bottom:21px!important
+}
+html[data-theme] :is(.request-stat,.permission-stat,.student-stat,.computer-stat,.history-stat){
+ min-height:116px!important;padding:18px!important;border-radius:8px!important;
+ background:var(--audit-panel)!important;border:1px solid var(--audit-border)!important;
+ box-shadow:none!important
+}
+html[data-theme] :is(.request-stat,.permission-stat,.student-stat,.computer-stat,.history-stat) strong{
+ font-size:30px!important;font-weight:715!important;letter-spacing:-.04em!important;color:var(--audit-text)!important
+}
+html[data-theme] :is(.student-card,.request-card,.permission-card,.computer-item,.history-event,.at-card,.at-metric){
+ border-radius:8px!important;background:var(--audit-panel)!important;
+ border-color:var(--audit-border)!important;box-shadow:none!important;
+}
+html[data-theme] :is(.request-card,.permission-card,.computer-item,.student-card):hover{
+ border-color:var(--audit-soft)!important;
+}
+html[data-theme] :is(.toolbar,.request-toolbar,.history-tools,.permission-toolbar,.computer-toolbar){
+ gap:10px!important
+}
+/* Portal: tirar aparência de landing page futurista, tornar módulo institucional */
+html[data-theme] body #eteCentralPortal .ete-portal-shell{
+ width:min(1200px,calc(100% - 40px))!important;padding:24px 0 55px!important
+}
+html[data-theme] body #eteCentralPortal .ete-portal-topbar{
+ margin-bottom:48px!important;padding:13px 17px!important;
+ border-radius:8px!important;min-height:66px!important
+}
+html[data-theme] body #eteCentralPortal .ete-portal-mark{
+ width:39px!important;height:39px!important;border-radius:7px!important;
+ background:var(--audit-surface)!important;border-color:var(--audit-border)!important
+}
+html[data-theme] body #eteCentralPortal .ete-portal-hero{
+ max-width:890px!important;margin:0 0 30px!important;
+ padding:4px 0 0!important;background:transparent!important;
+ border:0!important;box-shadow:none!important
+}
+html[data-theme] body #eteCentralPortal .ete-portal-hero h1{
+ color:var(--audit-text)!important;
+ font-size:clamp(34px,4vw,49px)!important;
+ font-weight:740!important;letter-spacing:-.045em!important;line-height:1.1!important;
+}
+html[data-theme] body #eteCentralPortal .ete-portal-hero p{
+ max-width:680px!important;font-size:14px!important;line-height:1.65!important;
+ color:var(--audit-muted)!important
+}
+html[data-theme] body #eteCentralPortal .ete-portal-kicker{
+ font-size:10px!important;font-weight:650!important;letter-spacing:.08em!important;color:var(--audit-muted)!important
+}
+html[data-theme] body #eteCentralPortal .ete-portal-grid{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:13px!important;
+}
+html[data-theme] body #eteCentralPortal .ete-system-card{
+ min-height:205px!important;padding:23px!important;border:1px solid var(--audit-border)!important;
+ background:var(--audit-panel)!important;border-radius:8px!important;
+ box-shadow:none!important;backdrop-filter:none!important;gap:17px!important
+}
+html[data-theme] body #eteCentralPortal .ete-system-card:not(.locked):not(:disabled):hover{
+ transform:translateY(-2px)!important;background:var(--audit-surface)!important;
+ border-color:var(--audit-soft)!important
+}
+html[data-theme] body #eteCentralPortal .ete-system-icon{
+ width:40px!important;height:40px!important;border:1px solid var(--audit-border)!important;
+ background:var(--audit-surface)!important;border-radius:7px!important
+}
+/* Administração: compactação e organização do painel */
+html[data-theme] .ete-admin-shell{max-width:1120px!important;padding:27px 18px 55px!important}
+html[data-theme] .ete-admin-topbar{padding:22px!important;border-radius:9px!important;box-shadow:none!important}
+html[data-theme] .ete-admin-topbar h1{font-size:27px!important;letter-spacing:-.035em!important;font-weight:720!important}
+html[data-theme] :is(.ete-admin-user-card,.ete-admin-stat,.ete-admin-security-card,.ete-admin-modal,.ete-admin-activity-item){
+ border-radius:8px!important;box-shadow:none!important;padding:16px!important
+}
+html[data-theme] .ete-admin-tab{font-weight:625!important;font-size:11px!important;letter-spacing:0!important}
+/* Atestados: mesmas proporções de Control Ds */
+html[data-theme] body #eteCentralPortal .at-app-content .at-metrics{
+ gap:12px!important;margin-bottom:20px!important
+}
+html[data-theme] body #eteCentralPortal .at-app-content .at-metric{
+ padding:18px!important;min-height:128px!important;border-radius:8px!important;
+ box-shadow:none!important
+}
+html[data-theme] body #eteCentralPortal .at-app-content :is(.at-card,.at-form-card,.at-report-card,.at-report-table-card){
+ border:1px solid var(--audit-border)!important;border-radius:8px!important;
+ box-shadow:none!important;padding:18px!important
+}
+html[data-theme] body #eteCentralPortal .at-app-content :is(.at-form-intro,.at-card-head,.at-records-top){
+ border-color:var(--audit-border)!important
+}
+/* Login: reduzir ornamentação e preservar formulário autenticado */
+html[data-theme] body.auth-locked .login-gate .login-card{
+ border-radius:10px!important;max-width:760px!important;min-height:445px!important
+}
+html[data-theme] body.auth-locked .login-gate .login-card .login-brand{
+ background:var(--audit-surface)!important;border-color:var(--audit-border)!important;
+ padding:32px 26px!important
+}
+html[data-theme] body.auth-locked .login-gate .login-card .login-mark{
+ background:var(--audit-panel)!important;border:1px solid var(--audit-border)!important;
+ border-radius:8px!important;box-shadow:none!important
+}
+html[data-theme] body.auth-locked .login-gate .login-card #loginTitle{
+ font-weight:730!important;letter-spacing:-.045em!important;font-size:29px!important
+}
+html[data-theme] body.auth-locked .login-gate .login-card :is(input,.btn){
+ border-radius:6px!important;box-shadow:none!important
+}
+/* Breakpoints reais — tablet e celular */
+@media(max-width:1120px){
+ html[data-theme] #page-home .overview-strip{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ html[data-theme] #page-home .grid-2{grid-template-columns:1fr!important}
+ html[data-theme] .content,html[data-theme] body #eteCentralPortal .at-app-content{
+ padding:26px 22px 52px!important
+ }
+}
+@media(max-width:820px){
+ html[data-theme] .shell{grid-template-columns:minmax(0,1fr)!important}
+ html[data-theme] .sidebar{position:fixed!important;width:min(84vw,290px)!important}
+ html[data-theme] #page-home .overview-strip{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ html[data-theme] .pagehead,html[data-theme] body #eteCentralPortal .at-app-content .at-page-head{
+ align-items:flex-start!important;flex-direction:column!important
+ }
+ html[data-theme] .pagehead .actions{width:100%!important;justify-content:flex-start!important}
+ html[data-theme] body #eteCentralPortal .ete-portal-topbar{margin-bottom:28px!important}
+}
+@media(max-width:600px){
+ html[data-theme] .content,html[data-theme] body #eteCentralPortal .at-app-content{padding:20px 13px 40px!important}
+ html[data-theme] #page-home .overview-strip{grid-template-columns:minmax(0,1fr)!important}
+ html[data-theme] #page-home :is(.hero-stat,.mini-stat){min-height:112px!important;padding:16px!important}
+ html[data-theme] #page-home .grid-2{grid-template-columns:minmax(0,1fr)!important}
+ html[data-theme] body #eteCentralPortal .ete-portal-shell{width:calc(100% - 24px)!important}
+ html[data-theme] body #eteCentralPortal .ete-portal-grid{grid-template-columns:1fr!important}
+ html[data-theme] body #eteCentralPortal .ete-system-card{min-height:176px!important}
+ html[data-theme] .quick-card{min-width:0!important}
+ html[data-theme] body.auth-locked .login-gate .login-card{min-height:0!important}
+}
