@@ -23,9 +23,7 @@ html[data-theme="light"]{
 /* Fundo e estrutura: mesma composição do tema escuro, somente com a paleta clara. */
 html[data-theme="light"] body{
   color:var(--text) !important;
-  background:
-    radial-gradient(circle at 72% -10%,rgba(82,119,140,.07),transparent 32%),
-    linear-gradient(180deg,#f3f6f8 0%,#edf2f5 45%,#eef2f5 100%) !important;
+  background:#e8e8e8!important;
 }
 html[data-theme="light"] .sidebar{
   background:linear-gradient(180deg,rgba(23,36,44,.018),transparent 30%),var(--sidebar) !important;
@@ -261,9 +259,7 @@ html[data-theme="light"] .done{color:#4e7560 !important;background:#edf5f0 !impo
 
 /* Login: mesma linguagem do restante do sistema. */
 html[data-theme="light"] .login-gate{
-  background:
-    radial-gradient(circle at 50% 0%,rgba(82,119,140,.07),transparent 34%),
-    #eef2f5 !important;
+  background:#e8e8e8!important;
 }
 html[data-theme="light"] .login-card{
   background:#ffffff !important;
