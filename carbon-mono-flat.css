@@ -800,3 +800,175 @@ html[data-theme] body #page-computers .computer-item .computer-availability{
   padding:13px 14px!important;flex-wrap:wrap!important
  }
 }
+
+
+/* Mono Studio — Criar pedido: cobertura completa da janela e seus seletores.
+   Escopo exclusivamente claro; preserva o modo Carbon escuro e toda a lógica. */
+html[data-theme="light"] body #requestModal{
+ --order-bg:#e8e8e8;
+ --order-panel:#f9f9f9;
+ --order-surface:#eeeeee;
+ --order-field:#ffffff;
+ --order-line:#d0d0d0;
+ --order-text:#252525;
+ --order-muted:#626262;
+ --order-accent:#4c4c4c;
+ background:var(--order-bg)!important;background-image:none!important;
+ color:var(--order-text)!important;border:1px solid var(--order-line)!important;
+ box-shadow:none!important;backdrop-filter:none!important;
+ color-scheme:light;
+}
+html[data-theme="light"] body #requestModal::backdrop{
+ background:rgba(0,0,0,.52)!important;backdrop-filter:none!important
+}
+html[data-theme="light"] body #requestModal :is(
+ .modal,.request-layout,.request-main,.request-side,.request-modal-head,.request-modal-copy
+){
+ color:var(--order-text)!important;background:transparent!important;
+ background-image:none!important;box-shadow:none!important;
+}
+html[data-theme="light"] body #requestModal .modal{
+ background:var(--order-bg)!important;border:0!important
+}
+html[data-theme="light"] body #requestModal :is(
+ .request-section,.request-summary-card,.saved-student-box,.time-card,
+ .request-summary-body,.request-section-body,.request-inline-grid,.simple-grid
+){
+ background:var(--order-panel)!important;background-image:none!important;
+ border-color:var(--order-line)!important;color:var(--order-text)!important;
+ box-shadow:none!important;backdrop-filter:none!important
+}
+html[data-theme="light"] body #requestModal :is(
+ .request-section,.request-summary-card,.saved-student-box,.time-card
+){border:1px solid var(--order-line)!important;border-radius:9px!important}
+html[data-theme="light"] body #requestModal :is(
+ .request-section-head,.request-summary-top,.request-modal-head,.modalactions
+){
+ background:var(--order-surface)!important;background-image:none!important;
+ border-color:var(--order-line)!important;box-shadow:none!important;
+}
+html[data-theme="light"] body #requestModal .request-modal-head{
+ background:transparent!important
+}
+html[data-theme="light"] body #requestModal :is(
+ .request-modal-copy h2,.request-section-copy h3,.request-summary-top h4,
+ .saved-title strong,.request-summary-card strong,.summary-item strong,
+ .group-picker-value strong,.student-picker-main strong
+){color:var(--order-text)!important;text-shadow:none!important}
+html[data-theme="light"] body #requestModal :is(
+ .request-modal-copy p,.request-modal-eyebrow,.request-section-copy p,
+ .request-summary-top p,.request-summary-card p,.summary-item span,
+ .summary-note,.student-hint,.saved-title small,.request-security-note,
+ .request-modal-footer-hint,.time-note,.time-info,.group-picker-copy small,
+ .student-picker-main small,.time-card .title
+){
+ color:var(--order-muted)!important;text-shadow:none!important
+}
+html[data-theme="light"] body #requestModal :is(
+ label,.request-inline-grid label,.simple-grid label,.request-section-body label,
+ .request-summary-grid label
+){color:var(--order-text)!important}
+html[data-theme="light"] body #requestModal :is(
+ input:not([type="hidden"]),textarea,select,.student-picker-search,
+ .time-search,.group-picker-trigger,.student-picker-trigger,.time-trigger
+){
+ background:var(--order-field)!important;background-image:none!important;
+ color:var(--order-text)!important;border:1px solid var(--order-line)!important;
+ box-shadow:none!important;text-shadow:none!important;border-radius:7px!important;
+ color-scheme:light!important
+}
+html[data-theme="light"] body #requestModal :is(input,textarea)::placeholder{
+ color:#777777!important;opacity:1!important
+}
+html[data-theme="light"] body #requestModal :is(
+ input:not([type="hidden"]),textarea,select,.group-picker-trigger,
+ .student-picker-trigger,.time-trigger
+):hover{border-color:#aaaaaa!important}
+html[data-theme="light"] body #requestModal :is(
+ input:not([type="hidden"]),textarea,select,.group-picker-trigger,
+ .student-picker-trigger,.time-trigger
+):focus-visible{
+ outline:2px solid #777777!important;outline-offset:2px!important;
+ border-color:#777777!important;box-shadow:none!important
+}
+html[data-theme="light"] body #requestModal :is(
+ .request-section-badge,.group-picker-badge,.student-picker-chevron,
+ .group-picker-chevron,.student-picker-search-wrap,.time-info,
+ .summary-item,.summary-note
+){
+ background:var(--order-surface)!important;background-image:none!important;
+ color:var(--order-text)!important;border-color:var(--order-line)!important;
+ box-shadow:none!important
+}
+html[data-theme="light"] body #requestModal :is(
+ .request-section-badge,.group-picker-badge,.summary-item,.summary-note,.time-info
+){border-radius:7px!important}
+html[data-theme="light"] body #requestModal :is(
+ .student-picker-popup,.group-picker-popup,.time-popup
+){
+ background:var(--order-panel)!important;background-image:none!important;
+ border:1px solid var(--order-line)!important;color:var(--order-text)!important;
+ box-shadow:0 8px 22px rgba(0,0,0,.11)!important;
+ backdrop-filter:none!important;border-radius:8px!important
+}
+html[data-theme="light"] body #requestModal :is(
+ .group-course,.group-course-title,.group-options-grid,.student-picker-list,
+ .time-list,.student-picker-search-wrap
+){
+ background:var(--order-panel)!important;background-image:none!important;
+ border-color:var(--order-line)!important;color:var(--order-text)!important;
+ box-shadow:none!important
+}
+html[data-theme="light"] body #requestModal :is(
+ .group-option,.student-option,.time-option
+){
+ background:var(--order-field)!important;background-image:none!important;
+ border:1px solid var(--order-line)!important;color:var(--order-text)!important;
+ box-shadow:none!important;border-radius:6px!important
+}
+html[data-theme="light"] body #requestModal :is(
+ .group-option,.student-option,.time-option
+):hover{
+ background:var(--order-surface)!important;border-color:#aaaaaa!important
+}
+html[data-theme="light"] body #requestModal :is(
+ .group-option.active,.student-option.active,.time-option.active,
+ .group-option[aria-selected="true"],.student-option[aria-selected="true"],
+ .time-option[aria-selected="true"]
+){
+ background:#e2e2e2!important;border-color:#999999!important;
+ color:var(--order-text)!important
+}
+html[data-theme="light"] body #requestModal :is(
+ .group-option strong,.group-option span,.group-course-title,
+ .student-option strong,.time-option strong
+){color:var(--order-text)!important}
+html[data-theme="light"] body #requestModal :is(
+ .group-option small,.student-option small,.time-option small
+){color:var(--order-muted)!important}
+html[data-theme="light"] body #requestModal :is(
+ .btn.secondary,.close,.new-student-inline
+){
+ background:var(--order-surface)!important;border:1px solid var(--order-line)!important;
+ color:var(--order-text)!important;box-shadow:none!important;
+ border-radius:7px!important
+}
+html[data-theme="light"] body #requestModal .btn.primary{
+ background:var(--order-accent)!important;border:1px solid var(--order-accent)!important;
+ color:#ffffff!important;box-shadow:none!important;border-radius:7px!important
+}
+html[data-theme="light"] body #requestModal .btn.primary:hover:not(:disabled){
+ background:#393939!important;border-color:#393939!important
+}
+html[data-theme="light"] body #requestModal .btn.secondary:hover:not(:disabled){
+ background:#e3e3e3!important;border-color:#aaaaaa!important
+}
+html[data-theme="light"] body #requestModal :is(.modalactions,.request-section-head,.request-summary-top){
+ border-color:var(--order-line)!important
+}
+@media(max-width:720px){
+ html[data-theme="light"] body #requestModal .modal{padding:16px!important}
+ html[data-theme="light"] body #requestModal :is(.request-section-body,.request-summary-body){
+  min-width:0!important
+ }
+}
