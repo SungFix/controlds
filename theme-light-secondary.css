@@ -25,9 +25,7 @@ html[data-theme="light"]{
 
 html[data-theme="light"] body{
   color:var(--text) !important;
-  background:
-    radial-gradient(circle at 88% -10%,rgba(82,119,140,.07),transparent 30%),
-    linear-gradient(180deg,#f3f6f8 0%,#edf2f5 54%,#e8eef2 100%) !important;
+  background:#e8e8e8!important;
 }
 html[data-theme="light"] .content{background:transparent !important}
 
