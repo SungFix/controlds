@@ -32,8 +32,8 @@ body.auth-locked .login-gate::before{
   opacity:0;
   background-image:none;
   background-size:34px 34px;
-  -webkit-mask-image:radial-gradient(circle at center,#000 0%,transparent 72%);
-  mask-image:radial-gradient(circle at center,#000 0%,transparent 72%);
+  -webkit-mask-image:none;
+  mask-image:none;
 }
 
 body.auth-locked .login-gate .login-card{
