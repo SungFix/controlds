@@ -53,6 +53,8 @@
     // A identidade escolhida deve permanecer após os estilos opcionais.
     const identity=document.getElementById("controlCarbonMonoStudioStyles");
     if(identity && identity.parentNode===document.head)document.head.appendChild(identity);
+    const audit=document.getElementById("controlCarbonMonoAuditStyles");
+    if(audit && audit.parentNode===document.head)document.head.appendChild(audit);
   }
 
   function ensureScript(id,src){
