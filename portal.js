@@ -65,7 +65,7 @@
   function ensureAtestadosAssets(){
     asset("link","eteAtestadosStyles",{rel:"stylesheet",href:"atestados.css?v=6"});
     asset("link","eteAtestadosRoomStyles",{rel:"stylesheet",href:"atestados-room-picker.css?v=6"});
-    asset("link","eteAtestadosControlLayoutStyles",{rel:"stylesheet",href:"atestados-control-layout.css?v=3"});
+    asset("link","eteAtestadosControlLayoutStyles",{rel:"stylesheet",href:"atestados-control-layout.css?v=4"});
     asset("link","eteAtestadosMinimalStyles",{rel:"stylesheet",href:"atestados-minimal.css?v=4"});
     asset("link","eteAtestadosFigmaStyles",{rel:"stylesheet",href:"atestados-figma-features.css?v=5"});
     asset("link","eteAtestadosTimePickerStyles",{rel:"stylesheet",href:"atestados-time-picker.css?v=2"});
