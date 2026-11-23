@@ -562,3 +562,106 @@ html[data-theme] body :is(#page-requests,#page-computers,#page-students)
  :is(.status,.status.done,.status.use,.status.wait,.status.late){
  box-shadow:none!important;text-shadow:none!important
 }
+
+
+/* Continuação da revisão com capturas: detalhes expandidos dos estudantes,
+   cartão do notebook e painel vazio de autorizações. */
+html[data-theme] body #page-students #studentRows .student-card{
+ border-radius:8px!important;overflow:hidden!important;
+ background:var(--flat-card)!important;border-color:var(--flat-card-border)!important
+}
+html[data-theme] body #page-students #studentRows :is(.student-card-head,.student-card-body,.student-card-foot){
+ background:var(--flat-card)!important;border-color:var(--flat-card-border)!important;
+ box-shadow:none!important;
+}
+html[data-theme] body #page-students #studentRows .student-card-body{
+ gap:10px!important
+}
+html[data-theme] body #page-students #studentRows :is(.student-meta,.student-reputation){
+ background:var(--flat-subcard)!important;border:1px solid var(--flat-card-border)!important;
+ color:var(--flat-card-text)!important;box-shadow:none!important;
+ border-radius:7px!important;
+}
+html[data-theme] body #page-students #studentRows .student-reputation{
+ margin-left:0!important;padding:10px 12px!important;
+ min-width:0!important;flex:1 1 auto!important;
+}
+html[data-theme] body #page-students #studentRows :is(.student-meta strong,.student-reputation-title strong){
+ color:var(--flat-card-text)!important
+}
+html[data-theme] body #page-students #studentRows :is(.student-meta span,.student-reputation-title,.student-reputation small){
+ color:var(--flat-card-muted)!important
+}
+html[data-theme] body #page-students #studentRows :is(.student-card-action,.student-card-action-use,.student-card-action-edit){
+ background:var(--flat-subcard)!important;color:var(--flat-card-text)!important;
+ border:1px solid var(--flat-card-border)!important;
+ border-radius:6px!important;box-shadow:none!important;
+}
+html[data-theme] body #page-students #studentRows :is(.student-card-action,.student-card-action-use,.student-card-action-edit):hover{
+ background:var(--flat-filter)!important;border-color:var(--flat-card-muted)!important;
+}
+html[data-theme] body #page-students #studentRows .student-card-action-delete{
+ background:var(--flat-card)!important;border-color:var(--flat-card-border)!important;
+ color:var(--audit-danger,#ba878b)!important;box-shadow:none!important
+}
+html[data-theme] body #page-students #studentRows .student-row-quick{
+ background:transparent!important;border-color:var(--flat-card-border)!important
+}
+/* Notebook: manter a disposição clara de disponibilidade e identificação,
+   sem aumentar a quantidade de molduras, nem mudar botões de ação. */
+html[data-theme] body #page-computers .computer-item{
+ border:1px solid var(--flat-card-border)!important;border-radius:8px!important;
+ background:var(--flat-card)!important;box-shadow:none!important;
+}
+html[data-theme] body #page-computers :is(.computer-item-head,.computer-item-body,.computer-item-foot){
+ background:var(--flat-card)!important;border-color:var(--flat-card-border)!important;
+ box-shadow:none!important
+}
+html[data-theme] body #page-computers :is(.computer-owner,.computer-meta-box){
+ background:var(--flat-subcard)!important;border:1px solid var(--flat-card-border)!important;
+ border-radius:7px!important;box-shadow:none!important;
+}
+html[data-theme] body #page-computers .computer-meta-grid{gap:9px!important}
+html[data-theme] body #page-computers .computer-item-foot{
+ border-top:1px solid var(--flat-card-border)!important
+}
+html[data-theme] body #page-computers .computer-item .btn{
+ background:var(--flat-subcard)!important;border:1px solid var(--flat-card-border)!important;
+ color:var(--flat-card-text)!important;border-radius:6px!important;box-shadow:none!important
+}
+html[data-theme] body #page-computers .computer-item .btn.primary{
+ background:var(--ete-action,var(--flat-subcard))!important;
+ border-color:var(--ete-action,var(--flat-card-border))!important;
+ color:var(--ete-action-text,#fff)!important
+}
+/* Autorizações: filtro e estado vazio integram a mesma paleta. */
+html[data-theme] body #page-permissions :is(.permission-toolbar,.permission-list){
+ background:transparent!important;background-image:none!important;
+ box-shadow:none!important
+}
+html[data-theme] body #page-permissions :is(.permission-toolbar input,.permission-toolbar select,.filter-select){
+ background:var(--flat-filter)!important;border:1px solid var(--flat-card-border)!important;
+ color:var(--flat-card-text)!important;box-shadow:none!important;
+ border-radius:7px!important
+}
+html[data-theme] body #page-permissions :is(.permission-empty,.permission-help,.permission-card){
+ background:var(--flat-card)!important;background-image:none!important;
+ border:1px solid var(--flat-card-border)!important;box-shadow:none!important;
+ color:var(--flat-card-muted)!important;border-radius:8px!important
+}
+html[data-theme] body #page-permissions .permission-empty{
+ min-height:158px!important;padding:28px 18px!important
+}
+html[data-theme] body #page-permissions .permission-empty strong{
+ color:var(--flat-card-text)!important
+}
+html[data-theme] body #page-permissions :is(.permission-info-box,.permission-card-top){
+ background:var(--flat-subcard)!important;border-color:var(--flat-card-border)!important
+}
+/* Apenas responsividade estrutural; preserva comportamento de expansão. */
+@media(max-width:780px){
+ html[data-theme] body #page-students #studentRows .student-card-body{grid-template-columns:1fr!important}
+ html[data-theme] body #page-students #studentRows .student-reputation{
+  width:100%!important;min-width:0!important
+ }
+}
