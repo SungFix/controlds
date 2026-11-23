@@ -68,8 +68,8 @@ window.ETE_CONFIG = {
 
   function finalizeLoginStyles(){
     const loginStyle = document.querySelector('link[href^="login-simple-v2.css"]');
-    if (loginStyle && loginStyle.getAttribute("href") !== "login-simple-v2.css?v=11") {
-      loginStyle.href = "login-simple-v2.css?v=11";
+    if (loginStyle && loginStyle.getAttribute("href") !== "login-simple-v2.css?v=12") {
+      loginStyle.href = "login-simple-v2.css?v=12";
     }
 
     const paletteStyle = document.getElementById("controlLightPaletteSageStyles");
@@ -231,7 +231,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlPortalAdminV2Styles", "portal-admin-v2.css?v=2");
     ensureStylesheet("controlPortalAdminIconFixStyles", "portal-admin-icon-fix.css?v=3");
     ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=5");
-    ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=6");
+    ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=7");
     ensureStylesheet("controlVisualAuditFixesStyles", "visual-audit-fixes.css?v=3");
     ensureStylesheet("controlSubtleMotionStyles", "subtle-motion.css?v=1");
     ensureStylesheet("controlCarbonMonoStudioStyles", "carbon-mono-studio.css?v=2");
@@ -261,7 +261,7 @@ window.ETE_CONFIG = {
     ensureScript("controlHistoryFilterPolishScript", "history-filter-polish.js?v=2");
     ensureScript("controlMobileLogoutIconScript", "mobile-logout-icon.js?v=2");
     ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=3");
-    ensureScript("controlAtestadosOptionalLoaderScript", "atestados-optional-loader.js?v=5");
+    ensureScript("controlAtestadosOptionalLoaderScript", "atestados-optional-loader.js?v=6");
     ensureScript("controlPortalScript", "portal.js?v=22");
     ensureScript("controlAdminFunctionAuthFixScript", "admin-function-auth-fix.js?v=1");
     ensureScript("controlPortalAdminScript", "portal-admin.js?v=3");
