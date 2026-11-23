@@ -20,7 +20,7 @@
   function refreshLightPaletteOrder(){
     const palette=document.getElementById("controlLightPaletteSageStyles");
     if(!palette)return;
-    if(palette.getAttribute("href")!=="theme-light-palette-sage.css?v=4")palette.href="theme-light-palette-sage.css?v=4";
+    if(palette.getAttribute("href")!=="theme-light-palette-sage.css?v=5")palette.href="theme-light-palette-sage.css?v=5";
     document.head.appendChild(palette);
   }
 
