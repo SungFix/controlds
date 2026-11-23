@@ -31,7 +31,7 @@ window.ETE_CONFIG = {
 
   const guardStyle = document.createElement("style");
   guardStyle.id = "eteFirstPaintGuard";
-  const firstPaintBackground = initialTheme === "light" ? "#f8fafb" : "#080a0d";
+  const firstPaintBackground = initialTheme === "light" ? "#e8e8e8" : "#0d0f11";
   guardStyle.textContent = "html.ete-first-paint{visibility:hidden!important;background:" + firstPaintBackground + "!important}";
   document.head.appendChild(guardStyle);
 
@@ -73,12 +73,17 @@ window.ETE_CONFIG = {
     }
 
     const paletteStyle = document.getElementById("controlLightPaletteSageStyles");
+    const identityStyle = document.getElementById("controlCarbonMonoStudioStyles");
     Promise.all([
       waitForStylesheet(loginStyle),
-      waitForStylesheet(paletteStyle)
+      waitForStylesheet(paletteStyle),
+      waitForStylesheet(identityStyle)
     ]).then(function(){
       if (paletteStyle && paletteStyle.parentNode === document.head) {
         document.head.appendChild(paletteStyle);
+      }
+      if (identityStyle && identityStyle.parentNode === document.head) {
+        document.head.appendChild(identityStyle);
       }
       releaseAfterPaint();
     });
@@ -98,8 +103,8 @@ window.ETE_CONFIG = {
 
   const STORAGE_KEY = "control-ds-theme";
   const THEME_TRANSITION_MS = 520;
-  const LIGHT_THEME_COLOR = "#F3F7FA";
-  const DARK_THEME_COLOR = "#080a0d";
+  const LIGHT_THEME_COLOR = "#e8e8e8";
+  const DARK_THEME_COLOR = "#0d0f11";
   const root = document.documentElement;
   let observerQueued = false;
   let themeTransitionTimer = 0;
@@ -219,6 +224,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=4");
     ensureStylesheet("controlVisualAuditFixesStyles", "visual-audit-fixes.css?v=3");
     ensureStylesheet("controlSubtleMotionStyles", "subtle-motion.css?v=1");
+    ensureStylesheet("controlCarbonMonoStudioStyles", "carbon-mono-studio.css?v=1");
 
     ensureScript("controlLoginUsabilityScript", "login-usability.js?v=2");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
