@@ -1,0 +1,32 @@
+/* Ação discreta na ficha expandida do aluno, sem alteração de cores globais. */
+#page-students .student-card-foot .student-copy-details{
+  min-height:32px;
+  padding:7px 11px;
+  border-radius:8px;
+  border:1px solid #40546a;
+  background:#17232d;
+  color:#d6e6f2;
+  font-size:10px;
+  white-space:nowrap;
+}
+#page-students .student-card-foot .student-copy-details:hover:not(:disabled){
+  background:#1d3040;
+  border-color:#59758e;
+}
+#page-students .student-card-foot .student-copy-details:focus-visible{
+  outline:2px solid #90bad9;
+  outline-offset:2px;
+}
+#page-students .student-card-foot .student-copy-details:disabled{opacity:.8;cursor:default}
+@media(max-width:640px){
+  #page-students .student-card-foot{flex-wrap:wrap}
+}
+html[data-theme="light"] #page-students .student-card-foot .student-copy-details{
+  background:#e9f1f7;
+  color:#315f81;
+  border-color:#b5cbdd;
+}
+html[data-theme="light"] #page-students .student-card-foot .student-copy-details:hover:not(:disabled){
+  background:#dceaf3;
+  border-color:#8caec8;
+}
