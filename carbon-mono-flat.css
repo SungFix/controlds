@@ -259,3 +259,165 @@ html[data-theme] body :is(input:not(:-webkit-autofill),textarea,select,
 @media(prefers-reduced-motion:reduce){
  html[data-theme] body :is(.ete-system-card,.btn,.at-btn){transition:none!important}
 }
+
+
+/* Auditoria de componentes internos: agenda, solicitações, alunos,
+   notebooks, autorizações e histórico. Cobertura dos cartões que
+   mantinham cores fixas dos estilos anteriores. */
+html[data-theme][data-theme] body :is(
+ #page-agenda .toolbar,#page-agenda .agenda-panel,#page-home .agenda-panel,
+ #page-agenda .agenda-modern,#page-home .agenda-modern,
+ .request-list-modern,.student-list-modern,.computer-list-modern,
+ .permission-list-modern,.history-list,.permission-toolbar,.request-toolbar,
+ .student-toolbar,.computer-toolbar,.history-tools
+){
+ background:var(--flat-panel)!important;background-image:none!important;
+ border-color:var(--flat-line)!important;box-shadow:none!important;
+}
+html[data-theme][data-theme] body :is(#page-agenda,#page-home)
+ :is(.agenda-item,.agenda-item:hover){
+ background:var(--flat-raised)!important;background-image:none!important;
+ border:1px solid var(--flat-line)!important;box-shadow:none!important;
+ border-radius:8px!important;
+}
+html[data-theme][data-theme] body :is(#page-agenda,#page-home)
+ .agenda-item:hover{border-color:var(--flat-muted)!important}
+html[data-theme][data-theme] body :is(#page-agenda,#page-home)
+ :is(.agenda-person strong,.agenda-purpose .purpose-title){
+ color:var(--flat-text)!important;text-shadow:none!important;
+ font-weight:650!important;
+}
+html[data-theme][data-theme] body :is(#page-agenda,#page-home)
+ :is(.agenda-person small,.agenda-person .meta-dot,.agenda-empty){
+ color:var(--flat-muted)!important;
+}
+html[data-theme][data-theme] body :is(#page-agenda,#page-home) .agenda-tag{
+ color:var(--flat-muted)!important;background:var(--flat-panel)!important;
+ border:1px solid var(--flat-line)!important;box-shadow:none!important;
+ border-radius:6px!important;
+}
+html[data-theme][data-theme] body :is(#page-agenda,#page-home) .agenda-accent{
+ background:var(--flat-muted)!important
+}
+/* Apenas pequenos indicadores semânticos usam verde/amarelo/vermelho. */
+html[data-theme][data-theme] body .agenda-item.done .agenda-accent{background:#668d77!important}
+html[data-theme][data-theme] body .agenda-item.wait .agenda-accent{background:#9c896c!important}
+html[data-theme][data-theme] body .agenda-item.late .agenda-accent{background:#a57479!important}
+html[data-theme][data-theme] body .agenda-item.use .agenda-accent{background:#77838e!important}
+html[data-theme][data-theme] body :is(#page-agenda,#page-home) .agenda-action-area{
+ background:transparent!important
+}
+html[data-theme][data-theme] body :is(#page-agenda,#page-home) .agenda-action-area .status{
+ border-radius:6px!important;box-shadow:none!important
+}
+html[data-theme][data-theme] body #agendaSearch{
+ background:var(--flat-field)!important;color:var(--flat-text)!important;
+ border:1px solid var(--flat-line)!important;border-radius:7px!important;
+ box-shadow:none!important;min-height:44px!important;
+}
+html[data-theme][data-theme] body #page-agenda .toolbar{
+ background:transparent!important;padding:0!important;border:0!important
+}
+/* Mesma correção para os blocos de todas as outras áreas operacionais. */
+html[data-theme][data-theme] body :is(
+ .request-card,.permission-card,.computer-card,.computer-item,
+ .student-card,.history-event,.history-line,.permission-item,
+ .computer-item-body,.student-card-body,.request-card-body,
+ .permission-card-body,.request-info-grid,.student-grid,.computer-grid,
+ .request-summary-card,.request-summary-body,.permission-saved-student-box,
+ .student-picker-popup,.group-picker-popup,.interval-picker-popup,
+ .history-filter-menu,.student-filter-popover,.time-popup,
+ .request-date-popover,.request-date-head,.request-date-foot,
+ .user-profile-popover,.control-action-card
+){
+ background:var(--flat-panel)!important;background-image:none!important;
+ border-color:var(--flat-line)!important;box-shadow:none!important;
+}
+html[data-theme][data-theme] body :is(
+ .request-info-box,.request-reason,.permission-info-box,.computer-meta-box,
+ .student-meta,.request-section,.student-card-head,.request-card-top,
+ .permission-card-top,.computer-item-head,.computer-owner,
+ .student-option,.group-option,.interval-option,.time-option,
+ .history-filter-option,.history-filter-trigger,.saved-student-box,
+ .student-card-foot,.computer-item-foot,.permission-note
+){
+ background:var(--flat-raised)!important;background-image:none!important;
+ border-color:var(--flat-line)!important;box-shadow:none!important;
+}
+html[data-theme][data-theme] body :is(
+ .request-search-wrap,.request-sort,.student-toolbar input,
+ .computer-toolbar input,.permission-toolbar input,.history-tools input,
+ .history-tools select,.request-toolbar input,.request-date-trigger,
+ .group-picker-trigger,.interval-picker-trigger,.student-picker-trigger,
+ .time-trigger,.filter-select,.search,.at-inline-search,.at-search-wrap
+){
+ background:var(--flat-field)!important;background-image:none!important;
+ border-color:var(--flat-line)!important;color:var(--flat-text)!important;
+ box-shadow:none!important;
+}
+html[data-theme][data-theme] body :is(
+ .student-card-title strong,.computer-item-head strong,.request-card strong,
+ .permission-card strong,.history-main strong,.agenda-person strong,
+ .request-info-box strong,.computer-meta-box strong,.permission-info-box strong,
+ .student-option strong,.group-option strong,.interval-option strong,
+ .request-section h3,.request-summary-card strong
+){color:var(--flat-text)!important;text-shadow:none!important}
+html[data-theme][data-theme] body :is(
+ .request-subid,.request-info-box span,.permission-info-box span,
+ .computer-meta-box span,.student-meta span,.computer-owner small,
+ .history-time,.history-main small,.student-card-title small,
+ .computer-state-note,.student-last-use,.request-results-label,
+ .computer-results-label,.permission-help,.request-reason .label,
+ .student-option small,.group-option small,.interval-option small,
+ .history-filter-option small
+){color:var(--flat-muted)!important}
+html[data-theme][data-theme] body :is(
+ .request-tab,.computer-tab,.student-card-action,.history-filter-trigger,
+ .student-option,.group-option,.interval-option,.time-option,
+ .history-filter-option,.request-sort,.filter-select,.student-picker-trigger
+){border-radius:7px!important;box-shadow:none!important}
+html[data-theme][data-theme] body :is(
+ .request-tab.active,.computer-tab.active,.history-filter-option.active,
+ .student-option.active,.group-option.active,.interval-option.active,
+ .time-option.active
+){
+ background:var(--flat-raised)!important;border-color:var(--flat-muted)!important;
+ color:var(--flat-text)!important;
+}
+/* Superfícies e controles auxiliares em Portal, Administração e Atestados. */
+html[data-theme][data-theme] body :is(
+ .ete-admin-user-card,.ete-admin-activity-item,.ete-admin-stat,
+ .ete-admin-security-card,.ete-admin-overview-note,.ete-admin-toggle,
+ .ete-admin-modal,.ete-admin-permission-modal,.ete-exit-card
+){
+ background:var(--flat-panel)!important;background-image:none!important;
+ border-color:var(--flat-line)!important;box-shadow:none!important
+}
+html[data-theme][data-theme] body #eteCentralPortal :is(
+ .at-choice-card,.at-reason-option,.at-room-option,.at-time-option,
+ .at-date-popover,.at-date-head,.at-date-foot,.at-class-chart-row,
+ .at-recent-row,.at-course-row,.at-report-filterbar,.at-report-grid-clean,
+ .at-image-preview,.at-image-drop,.at-image-upload-field,.at-form-steps,
+ .at-figure,.at-report-pie-item,.at-report-pie-graphic
+){
+ background:var(--flat-panel)!important;background-image:none!important;
+ border-color:var(--flat-line)!important;box-shadow:none!important
+}
+html[data-theme][data-theme] body #eteCentralPortal :is(
+ .at-room-option:hover,.at-reason-option:hover,.at-time-option:hover,
+ .at-date-day:hover,.at-choice-card:hover
+){
+ background:var(--flat-raised)!important;border-color:var(--flat-muted)!important
+}
+/* Manter contraste dos estados de seleção e validação. */
+html[data-theme] body #eteCentralPortal :is(
+ .at-date-day.selected,.at-room-option.selected,.at-time-option.selected
+){background:var(--ete-action,#686e73)!important;color:#fff!important}
+@media(max-width:700px){
+ html[data-theme] body :is(#page-agenda,#page-home) .agenda-item{
+  grid-template-columns:5px minmax(0,1fr)!important;gap:10px!important;
+ }
+ html[data-theme] body :is(#page-agenda,#page-home) .agenda-action-area{
+  grid-column:2!important;min-width:0!important;justify-content:flex-start!important
+ }
+}
