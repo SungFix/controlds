@@ -386,8 +386,7 @@ html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .e
    ========================================================= */
 html[data-theme="light"] body:not(.auth-locked):not(.portal-open){
   background:
-    radial-gradient(circle at 82% -12%,rgba(126,153,170,.055),transparent 31%),
-    linear-gradient(180deg,#f8fafb 0%,#f6f9fa 55%,#f8fafb 100%)!important;
+    #e8e8e8!important;
 }
 html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .content{
   background:transparent!important;
