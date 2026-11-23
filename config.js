@@ -390,6 +390,39 @@ window.ETE_CONFIG = {
     });
   }
 
+  // Mantém a identidade visual por último mesmo quando módulos carregam CSS dinamicamente.
+  // Observa somente inclusões de CSS no HEAD; não altera elementos funcionais.
+  let visualOrderPending = false;
+  const visualIds = [
+    "controlCarbonMonoStudioStyles",
+    "controlCarbonMonoAuditStyles",
+    "controlCarbonMonoFlatStyles"
+  ];
+  function restoreVisualOrder(){
+    visualOrderPending = false;
+    const flat = document.getElementById(visualIds[2]);
+    if(!flat || flat.parentNode !== document.head)return;
+    const styles = Array.from(document.head.children)
+      .filter(node=>node.matches?.('style,link[rel="stylesheet"]'));
+    if(styles[styles.length-1] === flat)return;
+    visualIds.forEach(id=>{
+      const el=document.getElementById(id);
+      if(el && el.parentNode === document.head)document.head.appendChild(el);
+    });
+  }
+  function queueVisualOrder(){
+    if(visualOrderPending)return;
+    visualOrderPending=true;
+    requestAnimationFrame(restoreVisualOrder);
+  }
+  const visualOrderObserver=new MutationObserver(mutations=>{
+    if(mutations.some(record=>Array.from(record.addedNodes).some(node=>
+      node.nodeType===1 && node.matches?.('style,link[rel="stylesheet"]')
+    )))queueVisualOrder();
+  });
+  visualOrderObserver.observe(document.head,{childList:true});
+  queueVisualOrder();
+
   function mountThemeControls(){
     observerQueued = false;
     removeLegacyControlColorStyles();
