@@ -1,0 +1,261 @@
+/* CONTROL ETE — Superfícies totalmente planas
+   Carbon = grafite escuro; Mono Studio = cinzas claros.
+   Camada final, sem modificar layout, comportamento, imagens ou estados de dados. */
+html[data-theme="dark"]{
+ --flat-canvas:#0d0f11;--flat-side:#131619;--flat-top:#171a1c;
+ --flat-panel:#171a1c;--flat-raised:#202427;--flat-field:#15191c;
+ --flat-line:#353a3e;--flat-text:#ededed;--flat-muted:#a6abad;
+}
+html[data-theme="light"]{
+ --flat-canvas:#e8e8e8;--flat-side:#f0f0f0;--flat-top:#f9f9f9;
+ --flat-panel:#f9f9f9;--flat-raised:#eeeeee;--flat-field:#fff;
+ --flat-line:#d0d0d0;--flat-text:#252525;--flat-muted:#646464;
+}
+/* Remoção real dos gradientes luminosos do canvas em TODAS as aplicações. */
+html[data-theme] body,
+html[data-theme] body:not(.portal-open):not(.auth-locked),
+html[data-theme] body.portal-open,
+html[data-theme] body.auth-locked,
+html[data-theme] body .shell,
+html[data-theme] body .main,
+html[data-theme] body .content,
+html[data-theme] body #eteCentralPortal.ete-portal,
+html[data-theme] body #eteCentralPortal.ete-portal.module-open,
+html[data-theme] body #eteCentralPortal .ete-portal-shell,
+html[data-theme] body #eteCentralPortal .ete-portal-module,
+html[data-theme] body #eteCentralPortal .at-control-shell,
+html[data-theme] body #eteCentralPortal .at-app-main,
+html[data-theme] body #eteCentralPortal .at-control-main,
+html[data-theme] body #eteCentralPortal .at-app-content,
+html[data-theme] body #eteCentralPortal .at-view,
+html[data-theme] body .ete-admin-layer,
+html[data-theme] body .ete-admin-shell,
+html[data-theme] body .login-gate,
+html[data-theme] body.auth-locked .login-gate{
+ background:var(--flat-canvas)!important;
+ background-image:none!important;
+ box-shadow:none!important;
+}
+/* Fundo simples em cada container fixo. Não alterar position/z-index que isolam módulos. */
+html[data-theme] body #eteCentralPortal.ete-portal::before,
+html[data-theme] body #eteCentralPortal.ete-portal::after,
+html[data-theme] body.auth-locked .login-gate::before,
+html[data-theme] body.auth-locked .login-gate::after,
+html[data-theme] body .shell::before,
+html[data-theme] body .shell::after{
+ background:none!important;background-image:none!important;
+ opacity:0!important;box-shadow:none!important;
+}
+/* Login: marca, painel lateral, formulário e conteúdos sem iluminação. */
+html[data-theme] body.auth-locked .login-gate .login-card{
+ background:var(--flat-panel)!important;background-image:none!important;
+ border-color:var(--flat-line)!important;color:var(--flat-text)!important;
+ box-shadow:none!important;filter:none!important;backdrop-filter:none!important;
+}
+html[data-theme] body.auth-locked .login-gate .login-card .login-brand,
+html[data-theme] body.auth-locked .login-gate .login-card .login-brand::before,
+html[data-theme] body.auth-locked .login-gate .login-card .login-mark{
+ background:var(--flat-raised)!important;background-image:none!important;
+ border-color:var(--flat-line)!important;box-shadow:none!important;
+ filter:none!important;backdrop-filter:none!important;
+}
+html[data-theme] body.auth-locked .login-gate .login-card .login-brand::after{
+ background:var(--flat-panel)!important;background-image:none!important;
+ color:var(--flat-muted)!important;border-color:var(--flat-line)!important;
+ box-shadow:none!important;text-shadow:none!important;
+}
+html[data-theme] body.auth-locked .login-gate .login-card :is(input,button){
+ box-shadow:none!important;text-shadow:none!important;
+}
+html[data-theme] body.auth-locked .login-gate .login-card input:focus-visible{
+ outline:2px solid var(--flat-muted)!important;outline-offset:2px!important;
+}
+/* Control Ds — nav, barras, indicadores, formulários, listas e overlays. */
+html[data-theme] body .sidebar,
+html[data-theme] body .side-status{
+ background:var(--flat-side)!important;background-image:none!important;
+ box-shadow:none!important;backdrop-filter:none!important;
+}
+html[data-theme] body .topbar,
+html[data-theme] body .topbar-shell{
+ background:var(--flat-top)!important;background-image:none!important;
+ box-shadow:none!important;backdrop-filter:none!important;
+}
+html[data-theme] body :is(
+ .page,.panel,.panelhead,.hero-stat,.mini-stat,.student-stat,.computer-stat,
+ .permission-stat,.request-stat,.history-stat,.student-card,.request-card,
+ .permission-card,.computer-card,.computer-item,.quick-card,.request-main,
+ .request-side,.request-section,.request-summary-card,.history-event,
+ .student-card-head,.request-card-top,.permission-card-top,.computer-item-head,
+ .student-card-body,.request-card-body,.permission-card-body,.computer-item-body,
+ .request-summary-top,.request-summary-body,.student-list,.request-list,
+ .permission-list,.history-list,.computer-list-modern,.agenda-panel
+){
+ background-image:none!important;box-shadow:none!important;
+}
+html[data-theme] body :is(
+ .panel,.hero-stat,.mini-stat,.student-stat,.computer-stat,
+ .permission-stat,.request-stat,.history-stat,.student-card,.request-card,
+ .permission-card,.computer-card,.computer-item,.request-main,.request-side,
+ .request-section,.request-summary-card,.history-event
+){
+ background-color:var(--flat-panel)!important;
+}
+html[data-theme] body :is(.panelhead,.student-card-head,.request-card-top,
+ .permission-card-top,.computer-item-head,.quick-card,.request-summary-top,
+ .request-section-head,.student-meta,.request-info-box,.permission-info-box,
+ .computer-meta-box,.request-reason,.summary-item,.computer-owner){
+ background:var(--flat-raised)!important;box-shadow:none!important;
+}
+html[data-theme] body :is(.group-picker-popup,.interval-picker-popup,
+ .student-picker-popup,.time-popup,.request-date-popover,.request-date-head,
+ .request-date-foot,.history-filter-menu,.student-filter-popover,
+ .user-profile-popover,.control-action-card,.control-action-details,
+ .saved-student-box,.permission-saved-student-box){
+ background:var(--flat-panel)!important;background-image:none!important;
+ border-color:var(--flat-line)!important;box-shadow:none!important;
+ backdrop-filter:none!important;
+}
+html[data-theme] body :is(.request-search-wrap,.at-search-wrap,.search,
+ .filter-select,.request-date-trigger,.group-picker-trigger,
+ .interval-picker-trigger,.student-picker-trigger,.time-trigger,
+ .history-filter-trigger){
+ background-image:none!important;box-shadow:none!important;
+}
+html[data-theme] body dialog,
+html[data-theme] body dialog .modal,
+html[data-theme] body dialog .modalhead,
+html[data-theme] body #controlActionModal .control-action-card{
+ background:var(--flat-panel)!important;background-image:none!important;
+ border-color:var(--flat-line)!important;box-shadow:none!important;
+ backdrop-filter:none!important;
+}
+html[data-theme] body dialog::backdrop{
+ background:rgba(0,0,0,.62)!important;backdrop-filter:none!important;
+}
+html[data-theme] body :is(.btn,.control-theme-toggle,.nav button,
+ .header-account,.header-logout,.sync-pill,.student-card-action,
+ .request-tab,.computer-tab,.history-filter-option,.toast){
+ background-image:none!important;box-shadow:none!important;text-shadow:none!important;
+}
+/* Neutralização de brilhos decorativos das estatísticas, sem ocultar dados. */
+html[data-theme] body :is(
+ .hero-stat,.mini-stat,.request-stat,.permission-stat,.student-stat,
+ .computer-stat,.history-stat,.request-card,.permission-card,
+ .student-card,.computer-item
+)::before,
+html[data-theme] body :is(
+ .hero-stat,.mini-stat,.request-stat,.permission-stat,.student-stat,
+ .computer-stat,.history-stat,.request-card,.permission-card,
+ .student-card,.computer-item
+)::after{
+ background-image:none!important;box-shadow:none!important;
+}
+html[data-theme] body .hero-bars{display:none!important}
+html[data-theme] body .brandmark,
+html[data-theme] body .brandmark::after{
+ background-image:none!important;box-shadow:none!important;
+}
+/* Portal ETE + gerenciamento — tudo fosco e planos sólidos. */
+html[data-theme] body #eteCentralPortal :is(
+ .ete-portal-topbar,.ete-portal-mark,.ete-portal-hero,.ete-system-card,
+ .ete-system-icon,.ete-system-open,.ete-module-panel,.ete-module-note,
+ .ete-portal-user,.ete-portal-theme,.ete-portal-exit,.ete-portal-back,
+ .ete-portal-points,.ete-portal-section-head,.ete-portal-admin-button
+){
+ background-image:none!important;box-shadow:none!important;
+ text-shadow:none!important;filter:none!important;backdrop-filter:none!important;
+}
+html[data-theme] body #eteCentralPortal :is(.ete-system-card,.ete-portal-topbar,.ete-module-panel){
+ background:var(--flat-panel)!important;border-color:var(--flat-line)!important;
+}
+html[data-theme] body #eteCentralPortal .ete-system-card::before,
+html[data-theme] body #eteCentralPortal .ete-system-card::after,
+html[data-theme] body #eteCentralPortal .ete-portal-hero::before{
+ background:none!important;background-image:none!important;box-shadow:none!important;
+}
+html[data-theme] body :is(
+ .ete-admin-topbar,.ete-admin-user-card,.ete-admin-stat,.ete-admin-modal,
+ .ete-admin-permission-modal,.ete-admin-security-card,.ete-admin-activity-item,
+ .ete-admin-notice,.ete-admin-tabs,.ete-admin-toggle,.ete-admin-modal-layer,
+ .ete-admin-cap-summary,.ete-admin-overview-note,.ete-admin-activity,
+ .ete-admin-change,.ete-admin-security-grid,.ete-exit-card
+){
+ background-image:none!important;box-shadow:none!important;
+ backdrop-filter:none!important;filter:none!important;
+}
+html[data-theme] body :is(.ete-admin-user-card,.ete-admin-stat,.ete-admin-modal,
+ .ete-admin-topbar,.ete-admin-security-card,.ete-admin-activity-item,
+ .ete-admin-permission-modal,.ete-exit-card){
+ background:var(--flat-panel)!important;border-color:var(--flat-line)!important;
+}
+html[data-theme] body :is(.ete-admin-modal-layer,.ete-exit-backdrop){
+ background:rgba(0,0,0,.62)!important;backdrop-filter:none!important;
+}
+html[data-theme] body :is(.ete-admin-tab,.ete-admin-switch-track,
+ .ete-admin-save,.ete-admin-cancel,.ete-admin-refresh,.ete-admin-close,
+ .ete-admin-modal-close,.ete-exit-option,.ete-exit-close){
+ background-image:none!important;box-shadow:none!important;
+}
+/* Atestados — painel, formulários, imagens, datas, horas, gráficos e relatórios. */
+html[data-theme] body #eteCentralPortal :is(
+ .ete-atestados,.at-control-shell,.at-control-sidebar,.at-control-side-card,
+ .at-app-topbar,.at-app-main,.at-app-content,.at-card,.at-card-head,
+ .at-metric,.at-metric-icon,.at-form-intro,.at-form-card,.at-records-card,
+ .at-report-card,.at-report-table-card,.at-report-filterbar,.at-empty-state,
+ .at-room-groups,.at-reason-list,.at-reason-option,.at-time-popover,
+ .at-time-popover-head,.at-date-popover,.at-date-head,.at-date-foot,
+ .at-class-chart-track,.at-mini-track,.at-image-upload-field,.at-image-drop,
+ .at-image-preview,.at-image-viewer-body,.at-image-viewer-head
+){
+ background-image:none!important;box-shadow:none!important;
+ text-shadow:none!important;backdrop-filter:none!important;
+}
+html[data-theme] body #eteCentralPortal :is(
+ .at-control-sidebar,.at-app-topbar,.at-card,.at-metric,.at-form-intro,
+ .at-form-card,.at-records-card,.at-report-card,.at-report-table-card,
+ .at-room-groups,.at-reason-list,.at-time-popover,.at-date-popover,
+ .at-image-upload-field,.at-image-drop,.at-image-preview
+){
+ background:var(--flat-panel)!important;border-color:var(--flat-line)!important;
+}
+html[data-theme] body #eteCentralPortal :is(.at-app-main,.at-app-content,
+ .at-view,.at-control-shell,.at-control-main){
+ background:var(--flat-canvas)!important;
+}
+html[data-theme] body #eteCentralPortal :is(.at-room-option,.at-date-day,
+ .at-time-option,.at-reason-option,.at-choice-card,.at-btn,.at-nav-item,
+ .at-input,.at-select,.at-textarea,.at-date-trigger,.at-time-trigger,
+ .at-room-trigger,.at-reason-trigger){
+ background-image:none!important;box-shadow:none!important;text-shadow:none!important;
+}
+html[data-theme] body #eteCentralPortal :is(.at-metric,.at-card,.at-form-card,
+ .at-report-card,.at-records-card)::before,
+html[data-theme] body #eteCentralPortal :is(.at-metric,.at-card,.at-form-card,
+ .at-report-card,.at-records-card)::after{
+ background-image:none!important;box-shadow:none!important;
+}
+html[data-theme] body #eteCentralPortal :is(.at-status,.at-app-sync,.at-badge)::before,
+html[data-theme] body #eteCentralPortal :is(.at-status,.at-app-sync,.at-badge)::after{
+ box-shadow:none!important;
+}
+/* Componentes opcionais podem viver fora do nó do módulo. */
+html[data-theme] body :is(.at-date-popover,.at-time-popover,#atImageViewerAddon,
+ .at-image-viewer-body,.at-image-viewer-head,.request-date-popover){
+ background:var(--flat-panel)!important;background-image:none!important;
+ border-color:var(--flat-line)!important;box-shadow:none!important;
+ backdrop-filter:none!important;
+}
+html[data-theme] body #atImageViewerAddon::backdrop{
+ background:rgba(0,0,0,.62)!important;backdrop-filter:none!important;
+}
+/* Não retirar o destaque de foco por teclado ou os estados semânticos.
+   Remove somente iluminação decorativa, não ícones nem conteúdo. */
+html[data-theme] body :is(input:not(:-webkit-autofill),textarea,select,
+ button,[role="button"]):focus-visible{
+ box-shadow:none!important;
+ outline:2px solid var(--flat-muted)!important;outline-offset:2px!important;
+}
+@media(prefers-reduced-motion:reduce){
+ html[data-theme] body :is(.ete-system-card,.btn,.at-btn){transition:none!important}
+}
