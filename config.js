@@ -68,8 +68,8 @@ window.ETE_CONFIG = {
 
   function finalizeLoginStyles(){
     const loginStyle = document.querySelector('link[href^="login-simple-v2.css"]');
-    if (loginStyle && loginStyle.getAttribute("href") !== "login-simple-v2.css?v=10") {
-      loginStyle.href = "login-simple-v2.css?v=10";
+    if (loginStyle && loginStyle.getAttribute("href") !== "login-simple-v2.css?v=11") {
+      loginStyle.href = "login-simple-v2.css?v=11";
     }
 
     const paletteStyle = document.getElementById("controlLightPaletteSageStyles");
@@ -197,17 +197,17 @@ window.ETE_CONFIG = {
 
   function ensureThemeStyles(){
     if (themeAssetsInitialized) return;
-    ensureStylesheet("controlThemeStyles", "theme-light.css?v=7");
+    ensureStylesheet("controlThemeStyles", "theme-light.css?v=8");
     ensureStylesheet("controlThemeRefineStyles", "theme-light-refine.css?v=3");
-    ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=12");
+    ensureStylesheet("controlThemeSecondaryStyles", "theme-light-secondary.css?v=13");
     ensureStylesheet("controlLightPermissionsStyles", "theme-light-permissions.css?v=3");
-    ensureStylesheet("controlPermissionCardsStyles", "permission-cards.css?v=2");
+    ensureStylesheet("controlPermissionCardsStyles", "permission-cards.css?v=3");
     ensureStylesheet("controlThemeTransitionStyles", "theme-transition.css?v=13");
     ensureStylesheet("controlHeaderPolishStyles", "header-polish.css?v=4");
     ensureStylesheet("controlMobileMenuStyles", "mobile-menu-enhance.css?v=4");
     ensureStylesheet("controlMobilePolishStyles", "mobile-polish.css?v=4");
     ensureStylesheet("controlMobileHeaderPolishStyles", "mobile-header-polish.css?v=3");
-    ensureStylesheet("controlThemeParityStyles", "theme-light-parity.css?v=2");
+    ensureStylesheet("controlThemeParityStyles", "theme-light-parity.css?v=3");
     ensureStylesheet("controlVisualPrimeStyles", "visual-prime.css?v=3");
     ensureStylesheet("controlAccessibilityPrimeStyles", "accessibility-prime.css?v=2");
     ensureStylesheet("controlStudentLightPolishStyles", "student-light-polish.css?v=1");
@@ -216,7 +216,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlActionModalStyles", "action-modal.css?v=1");
     ensureStylesheet("controlFinalPolishStyles", "final-polish.css?v=2");
     ensureStylesheet("controlContrastSweepStyles", "contrast-sweep.css?v=5");
-    ensureStylesheet("controlTopbarFinalOverrideStyles", "topbar-final-override.css?v=12");
+    ensureStylesheet("controlTopbarFinalOverrideStyles", "topbar-final-override.css?v=13");
     ensureStylesheet("controlUserProfileStyles", "user-profile.css?v=3");
     ensureStylesheet("controlStudentCardActionsStyles", "student-card-actions.css?v=3");
     ensureStylesheet("controlStudentReputationStyles", "student-reputation.css?v=3");
@@ -226,12 +226,12 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlMobileFormReadabilityStyles", "mobile-form-readability.css?v=6");
     ensureStylesheet("controlMobileGroupPickerFlowStyles", "mobile-group-picker-flow.css?v=4");
     ensureStylesheet("controlMobileTextareaExpandStyles", "mobile-textarea-expand.css?v=2");
-    ensureStylesheet("controlPortalStyles", "portal.css?v=12");
-    ensureStylesheet("controlPortalAdminStyles", "portal-admin.css?v=3");
+    ensureStylesheet("controlPortalStyles", "portal.css?v=13");
+    ensureStylesheet("controlPortalAdminStyles", "portal-admin.css?v=4");
     ensureStylesheet("controlPortalAdminV2Styles", "portal-admin-v2.css?v=2");
-    ensureStylesheet("controlPortalAdminIconFixStyles", "portal-admin-icon-fix.css?v=2");
-    ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=4");
-    ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=5");
+    ensureStylesheet("controlPortalAdminIconFixStyles", "portal-admin-icon-fix.css?v=3");
+    ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=5");
+    ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=6");
     ensureStylesheet("controlVisualAuditFixesStyles", "visual-audit-fixes.css?v=3");
     ensureStylesheet("controlSubtleMotionStyles", "subtle-motion.css?v=1");
     ensureStylesheet("controlCarbonMonoStudioStyles", "carbon-mono-studio.css?v=2");
@@ -261,8 +261,8 @@ window.ETE_CONFIG = {
     ensureScript("controlHistoryFilterPolishScript", "history-filter-polish.js?v=2");
     ensureScript("controlMobileLogoutIconScript", "mobile-logout-icon.js?v=2");
     ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=3");
-    ensureScript("controlAtestadosOptionalLoaderScript", "atestados-optional-loader.js?v=4");
-    ensureScript("controlPortalScript", "portal.js?v=21");
+    ensureScript("controlAtestadosOptionalLoaderScript", "atestados-optional-loader.js?v=5");
+    ensureScript("controlPortalScript", "portal.js?v=22");
     ensureScript("controlAdminFunctionAuthFixScript", "admin-function-auth-fix.js?v=1");
     ensureScript("controlPortalAdminScript", "portal-admin.js?v=3");
     ensureScript("controlPortalAdminCornerScript", "portal-admin-corner.js?v=4");
