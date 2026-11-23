@@ -1,0 +1,192 @@
+/* Identidade visual Control ETE — Carbon (escuro) / Mono Studio (claro).
+   Apenas apresentação. Mantém layout funcional, responsividade, estados e permissões.
+   Carregar após as camadas antigas, inclusive recursos opcionais do Atestados. */
+html[data-theme="dark"]{
+ --bg:#0d0f11;--bg-2:#121416;--sidebar:#141719;--panel:#171a1c;--panel-2:#25292c;
+ --line:#353a3e;--line-soft:#2c3033;--text:#ededed;--muted:#a6abad;--muted-2:#858c90;
+ --blue:#8e989d;--green:#87a698;--yellow:#baa688;--red:#ba878b;
+ --shadow:none;
+ --ete-surface:#171a1c;--ete-surface-alt:#202427;--ete-canvas:#0d0f11;
+ --ete-border:#353a3e;--ete-ink:#ededed;--ete-secondary:#a6abad;--ete-quiet:#858c90;
+ --ete-action:#686e73;--ete-action-text:#fff;--ete-rad:6px;
+}
+html[data-theme="light"]{
+ --bg:#e8e8e8;--bg-2:#efefef;--sidebar:#eeeeee;--panel:#f9f9f9;--panel-2:#efefef;
+ --line:#d0d0d0;--line-soft:#dedede;--text:#252525;--muted:#646464;--muted-2:#747474;
+ --blue:#555b60;--green:#53705c;--yellow:#86704e;--red:#915e63;
+ --shadow:none;
+ --ete-surface:#f9f9f9;--ete-surface-alt:#eeeeee;--ete-canvas:#e8e8e8;
+ --ete-border:#d0d0d0;--ete-ink:#252525;--ete-secondary:#646464;--ete-quiet:#747474;
+ --ete-action:#4c4c4c;--ete-action-text:#fff;--ete-rad:9px;
+}
+html[data-theme] body:not(.portal-open){background:var(--ete-canvas)!important;color:var(--ete-ink)}
+html[data-theme] .shell,html[data-theme] .main,html[data-theme] .content{color:var(--ete-ink)}
+/* Estrutura principal Control Ds */
+html[data-theme] .sidebar{background:var(--sidebar)!important;border-color:var(--ete-border)!important;box-shadow:none!important}
+html[data-theme] .topbar{background:var(--ete-surface)!important;border-color:var(--ete-border)!important;box-shadow:none!important;backdrop-filter:none!important}
+html[data-theme] .panel,html[data-theme] .hero-stat,html[data-theme] .mini-stat,
+html[data-theme] .student-card,html[data-theme] .computer-card,html[data-theme] .computer-item,
+html[data-theme] .request-card,html[data-theme] .permission-card,html[data-theme] .quick-card,
+html[data-theme] .student-stat,html[data-theme] .request-stat,html[data-theme] .history-stat,
+html[data-theme] .time-card,html[data-theme] .request-main,html[data-theme] .request-side,
+html[data-theme] .summary-card,html[data-theme] .request-section{
+ background:var(--ete-surface)!important;border-color:var(--ete-border)!important;
+ box-shadow:none!important;border-radius:var(--ete-rad)!important
+}
+html[data-theme] .panelhead,html[data-theme] .request-card-top,
+html[data-theme] .permission-card-top,html[data-theme] .student-card-head{
+ background:var(--ete-surface-alt)!important;border-color:var(--ete-border)!important
+}
+html[data-theme] .nav button{color:var(--ete-secondary)!important;border-radius:var(--ete-rad)!important;box-shadow:none!important}
+html[data-theme] .nav button:hover{background:var(--ete-surface-alt)!important;color:var(--ete-ink)!important}
+html[data-theme] .nav button.active{background:var(--ete-surface-alt)!important;color:var(--ete-ink)!important;border-color:var(--ete-border)!important;box-shadow:none!important}
+html[data-theme] .nav button .navicon,html[data-theme] .nav button.active .navicon{
+ background:var(--ete-surface-alt)!important;border-color:var(--ete-border)!important;color:var(--ete-ink)!important;
+ border-radius:var(--ete-rad)!important
+}
+html[data-theme] .pagehead h1,html[data-theme] .topbar h2,
+html[data-theme] .top-title strong{color:var(--ete-ink)!important}
+html[data-theme] .pagehead p,html[data-theme] .topbar p,
+html[data-theme] .meta,html[data-theme] .student-card-title small{color:var(--ete-secondary)!important}
+html[data-theme] .btn:not(.danger),html[data-theme] button.close,
+html[data-theme] .control-theme-toggle{
+ border:1px solid var(--ete-border)!important;border-radius:var(--ete-rad)!important;
+ background:var(--ete-surface-alt)!important;color:var(--ete-ink)!important;
+ box-shadow:none!important;text-shadow:none!important;filter:none!important
+}
+html[data-theme] .btn.primary:not(.danger){
+ background:var(--ete-action)!important;color:var(--ete-action-text)!important;
+ border-color:var(--ete-action)!important
+}
+html[data-theme] .btn:hover:not(:disabled):not(.danger),html[data-theme] .control-theme-toggle:hover{
+ filter:brightness(1.10)!important;box-shadow:none!important
+}
+html[data-theme] input:not([type="checkbox"]):not([type="radio"]),
+html[data-theme] textarea,html[data-theme] select,
+html[data-theme] .filter-select,html[data-theme] .time-trigger,
+html[data-theme] .student-picker-trigger,html[data-theme] .group-picker-trigger,
+html[data-theme] .interval-picker-trigger{
+ background:var(--ete-surface)!important;color:var(--ete-ink)!important;
+ border-color:var(--ete-border)!important;box-shadow:none!important;
+ border-radius:var(--ete-rad)!important
+}
+html[data-theme] input::placeholder,html[data-theme] textarea::placeholder{color:var(--ete-quiet)!important}
+html[data-theme] dialog{background:var(--ete-surface)!important;border-color:var(--ete-border)!important;color:var(--ete-ink)!important;box-shadow:0 18px 45px #0005!important;border-radius:calc(var(--ete-rad) + 5px)!important}
+html[data-theme] dialog .modal,html[data-theme] dialog .modalhead{background:var(--ete-surface)!important;color:var(--ete-ink)!important}
+html[data-theme] .toast{background:var(--ete-surface-alt)!important;color:var(--ete-ink)!important;border-color:var(--ete-border)!important;border-radius:var(--ete-rad)!important}
+/* Login: retem grade e campos atuais, mas remove acabamento visual excessivo. */
+html[data-theme] body.auth-locked .login-gate{background:var(--ete-canvas)!important;color:var(--ete-ink)!important}
+html[data-theme] body.auth-locked .login-gate::before{background:none!important;opacity:0!important}
+html[data-theme] body.auth-locked .login-gate .login-card{
+ background:var(--ete-surface)!important;color:var(--ete-ink)!important;
+ border-color:var(--ete-border)!important;border-radius:calc(var(--ete-rad) + 6px)!important;
+ box-shadow:none!important
+}
+html[data-theme] body.auth-locked .login-gate .login-card::before,
+html[data-theme] body.auth-locked .login-gate .login-card::after{box-shadow:none!important}
+html[data-theme] body.auth-locked .login-gate .login-card .login-brand{
+ background:var(--ete-surface-alt)!important;border-color:var(--ete-border)!important;color:var(--ete-ink)!important
+}
+html[data-theme] body.auth-locked .login-gate .login-card .login-mark{
+ background:var(--ete-surface)!important;border-color:var(--ete-border)!important;color:var(--ete-ink)!important;box-shadow:none!important;border-radius:var(--ete-rad)!important
+}
+html[data-theme] body.auth-locked .login-gate .login-card #loginTitle,
+html[data-theme] body.auth-locked .login-gate .login-card .login-brand strong{color:var(--ete-ink)!important}
+html[data-theme] body.auth-locked .login-gate .login-card p,
+html[data-theme] body.auth-locked .login-gate .login-card .login-note{color:var(--ete-secondary)!important}
+html[data-theme] body.auth-locked .login-gate .login-card input{
+ background:var(--ete-canvas)!important;border-color:var(--ete-border)!important;color:var(--ete-ink)!important;box-shadow:none!important
+}
+html[data-theme] body.auth-locked .login-gate .login-card .btn.primary{
+ background:var(--ete-action)!important;border-color:var(--ete-action)!important;
+ color:var(--ete-action-text)!important;box-shadow:none!important;border-radius:var(--ete-rad)!important
+}
+/* Portal ETE — paleta comum com controle e login. */
+html[data-theme] .ete-portal{background:var(--ete-canvas)!important;color:var(--ete-ink)!important}
+html[data-theme] .ete-portal::before{opacity:0!important;background:none!important}
+html[data-theme] .ete-portal-topbar,html[data-theme] .ete-portal-hero,
+html[data-theme] .ete-system-card,html[data-theme] .ete-module-panel,
+html[data-theme] .ete-module-note{
+ background:var(--ete-surface)!important;color:var(--ete-ink)!important;
+ border-color:var(--ete-border)!important;box-shadow:none!important;
+ backdrop-filter:none!important;border-radius:calc(var(--ete-rad) + 3px)!important
+}
+html[data-theme] .ete-portal-mark,html[data-theme] .ete-system-icon{
+ background:var(--ete-surface-alt)!important;border-color:var(--ete-border)!important;
+ color:var(--ete-ink)!important;box-shadow:none!important;border-radius:var(--ete-rad)!important
+}
+html[data-theme] .ete-portal-brand strong,html[data-theme] .ete-portal-hero h1,
+html[data-theme] .ete-system-copy strong,html[data-theme] .ete-portal-section-head h2{
+ color:var(--ete-ink)!important
+}
+html[data-theme] .ete-portal-brand small,html[data-theme] .ete-portal-hero p,
+html[data-theme] .ete-system-copy p,html[data-theme] .ete-system-copy small,
+html[data-theme] .ete-portal-section-head p{color:var(--ete-secondary)!important}
+html[data-theme] .ete-portal-back,html[data-theme] .ete-portal-theme,
+html[data-theme] .ete-portal-exit,html[data-theme] .ete-portal-user,
+html[data-theme] .ete-system-open,html[data-theme] .ete-portal-admin-button{
+ background:var(--ete-surface-alt)!important;border-color:var(--ete-border)!important;
+ color:var(--ete-ink)!important;box-shadow:none!important;
+ border-radius:var(--ete-rad)!important
+}
+html[data-theme] .ete-system-card:not(.locked):not(:disabled):hover{
+ background:var(--ete-surface-alt)!important;border-color:var(--ete-quiet)!important;
+ box-shadow:none!important
+}
+/* Atestados — redefine tokens antes das declarações locais existentes. */
+html[data-theme] .ete-atestados{
+ --at-border:var(--ete-border)!important;--at-panel:var(--ete-surface)!important;
+ --at-panel2:var(--ete-surface-alt)!important;--at-text:var(--ete-ink)!important;
+ --at-muted:var(--ete-secondary)!important;--at-soft:var(--ete-quiet)!important;
+ --at-blue:var(--ete-action)!important;
+ color:var(--ete-ink)!important
+}
+html[data-theme] .at-control-sidebar,html[data-theme] .at-app-topbar,
+html[data-theme] .at-card,html[data-theme] .at-metric,html[data-theme] .at-form-card,
+html[data-theme] .at-report-card,html[data-theme] .at-report-table-card,
+html[data-theme] .at-control-side-card,html[data-theme] .at-main-records,
+html[data-theme] .at-table-wrap{
+ background:var(--ete-surface)!important;color:var(--ete-ink)!important;
+ border-color:var(--ete-border)!important;box-shadow:none!important;
+ border-radius:var(--ete-rad)!important
+}
+html[data-theme] .at-app-main,html[data-theme] .at-app-content,
+html[data-theme] .at-control-shell{background:var(--ete-canvas)!important;color:var(--ete-ink)!important}
+html[data-theme] .at-nav-item,html[data-theme] .at-filter-tabs button{border-radius:var(--ete-rad)!important;box-shadow:none!important}
+html[data-theme] .at-nav-item.active,html[data-theme] .at-filter-tabs button.active{
+ background:var(--ete-surface-alt)!important;border-color:var(--ete-border)!important;color:var(--ete-ink)!important;box-shadow:none!important
+}
+html[data-theme] .at-control-navicon,html[data-theme] .at-metric-icon{
+ background:var(--ete-surface-alt)!important;border-color:var(--ete-border)!important;color:var(--ete-ink)!important;box-shadow:none!important
+}
+html[data-theme] .at-page-head h1,html[data-theme] .at-card-head h2,
+html[data-theme] .at-app-top-title,html[data-theme] .at-metric strong{color:var(--ete-ink)!important}
+html[data-theme] .at-eyebrow,html[data-theme] .at-card-kicker,
+html[data-theme] .at-page-head p,html[data-theme] .at-control-section-label{color:var(--ete-secondary)!important}
+html[data-theme] .at-btn:not(.at-icon-danger),html[data-theme] .at-room-trigger,
+html[data-theme] .at-reason-trigger,html[data-theme] .at-app-theme{
+ background:var(--ete-surface-alt)!important;color:var(--ete-ink)!important;
+ border-color:var(--ete-border)!important;border-radius:var(--ete-rad)!important;box-shadow:none!important
+}
+html[data-theme] .at-btn.primary,html[data-theme] .at-btn.at-primary{
+ background:var(--ete-action)!important;border-color:var(--ete-action)!important;color:var(--ete-action-text)!important
+}
+html[data-theme] .at-input,html[data-theme] .at-select,html[data-theme] .at-textarea,
+html[data-theme] .at-search-wrap{
+ background:var(--ete-surface)!important;color:var(--ete-ink)!important;
+ border-color:var(--ete-border)!important;box-shadow:none!important;border-radius:var(--ete-rad)!important
+}
+html[data-theme] .at-table th,html[data-theme] .at-table td{border-color:var(--ete-border)!important}
+html[data-theme] .at-table th{color:var(--ete-secondary)!important}
+html[data-theme] .at-badge{box-shadow:none!important}
+html[data-theme="light"] select,html[data-theme="light"] input,
+html[data-theme="light"] textarea{color-scheme:light!important}
+html[data-theme="dark"] select,html[data-theme="dark"] input,
+html[data-theme="dark"] textarea{color-scheme:dark!important}
+@media(max-width:820px){
+ html[data-theme] .ete-portal-shell{width:min(100% - 24px,1180px)}
+ html[data-theme] .at-app-content,html[data-theme] .content{min-width:0}
+}
+@media(prefers-reduced-motion:reduce){
+ html[data-theme] .btn,html[data-theme] .ete-system-card,html[data-theme] .at-btn{transition:none!important}
+}
