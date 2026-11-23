@@ -218,6 +218,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=3");
     ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=4");
     ensureStylesheet("controlVisualAuditFixesStyles", "visual-audit-fixes.css?v=3");
+    ensureStylesheet("controlSubtleMotionStyles", "subtle-motion.css?v=1");
 
     ensureScript("controlLoginUsabilityScript", "login-usability.js?v=2");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
