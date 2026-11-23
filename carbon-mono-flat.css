@@ -421,3 +421,144 @@ html[data-theme] body #eteCentralPortal :is(
   grid-column:2!important;min-width:0!important;justify-content:flex-start!important
  }
 }
+
+
+/* Refinamento localizado das quatro telas identificadas nas capturas:
+   pedidos, pesquisas, listagem de alunos e notebooks.
+   Não altera status, dados, elementos ocultos, layout de filtros ou permissões. */
+html[data-theme="dark"]{
+ --flat-card:#191b1d;--flat-subcard:#25282b;--flat-filter:#151719;
+ --flat-card-border:#363a3e;--flat-card-text:#ededed;
+ --flat-card-muted:#a7adb1;
+}
+html[data-theme="light"]{
+ --flat-card:#f9f9f9;--flat-subcard:#eeeeee;--flat-filter:#fff;
+ --flat-card-border:#d0d0d0;--flat-card-text:#252525;
+ --flat-card-muted:#656565;
+}
+/* Solicitações — caixas de dados, motivo e comandos. */
+html[data-theme] body #page-requests .request-card,
+html[data-theme] body #page-requests .request-card-body,
+html[data-theme] body #page-requests .request-card-top{
+ background:var(--flat-card)!important;background-image:none!important;
+ border-color:var(--flat-card-border)!important;box-shadow:none!important
+}
+html[data-theme] body #page-requests :is(.request-info-box,.request-reason){
+ background:var(--flat-subcard)!important;background-image:none!important;
+ border:1px solid var(--flat-card-border)!important;
+ color:var(--flat-card-text)!important;box-shadow:none!important;border-radius:7px!important;
+}
+html[data-theme] body #page-requests :is(.request-info-box strong,.request-reason p){
+ color:var(--flat-card-text)!important
+}
+html[data-theme] body #page-requests :is(.request-info-box span,.request-reason .label){
+ color:var(--flat-card-muted)!important
+}
+html[data-theme] body #page-requests :is(.request-search-wrap,.request-search-wrap input,.request-tabs,.request-sort){
+ background:var(--flat-filter)!important;background-image:none!important;
+ border-color:var(--flat-card-border)!important;
+ color:var(--flat-card-text)!important;box-shadow:none!important;border-radius:7px!important;
+}
+html[data-theme] body #page-requests .request-search-wrap input::placeholder{
+ color:var(--flat-card-muted)!important
+}
+html[data-theme] body #page-requests .request-tab{
+ background:transparent!important;background-image:none!important;
+ border-color:transparent!important;color:var(--flat-card-muted)!important;
+ box-shadow:none!important;border-radius:6px!important
+}
+html[data-theme] body #page-requests .request-tab:hover{
+ background:var(--flat-subcard)!important;color:var(--flat-card-text)!important
+}
+html[data-theme] body #page-requests .request-tab.active{
+ background:var(--flat-subcard)!important;color:var(--flat-card-text)!important;
+ border-color:var(--flat-card-border)!important;box-shadow:none!important
+}
+/* Alunos — barra de pesquisa, filtro, lista e detalhes expansíveis. */
+html[data-theme] body #page-students :is(.student-toolbar,#studentRows){
+ background:transparent!important;background-image:none!important;
+ border-color:var(--flat-card-border)!important;box-shadow:none!important;
+}
+html[data-theme] body #page-students :is(#studentSearch,.student-filter-button,.student-filter-popover,
+ .student-filter-field select,.student-filter-reset){
+ background:var(--flat-filter)!important;background-image:none!important;
+ border-color:var(--flat-card-border)!important;
+ color:var(--flat-card-text)!important;box-shadow:none!important;border-radius:7px!important
+}
+html[data-theme] body #page-students #studentSearch::placeholder{
+ color:var(--flat-card-muted)!important
+}
+html[data-theme] body #page-students #studentRows .student-card{
+ background:var(--flat-card)!important;background-image:none!important;
+ border:1px solid var(--flat-card-border)!important;box-shadow:none!important;
+ border-radius:8px!important
+}
+html[data-theme] body #page-students #studentRows .student-card-head,
+html[data-theme] body #page-students #studentRows .student-card-body,
+html[data-theme] body #page-students #studentRows .student-card-foot{
+ background:var(--flat-card)!important;background-image:none!important;
+ border-color:var(--flat-card-border)!important;box-shadow:none!important
+}
+html[data-theme] body #page-students #studentRows .student-avatar,
+html[data-theme] body #page-students #studentRows .student-row-usage,
+html[data-theme] body #page-students #studentRows .student-row-chevron{
+ background:var(--flat-subcard)!important;background-image:none!important;
+ color:var(--flat-card-text)!important;border-color:var(--flat-card-border)!important;
+ box-shadow:none!important;border-radius:7px!important
+}
+html[data-theme] body #page-students #studentRows .student-card-title strong{
+ color:var(--flat-card-text)!important
+}
+html[data-theme] body #page-students #studentRows :is(.student-card-title small,.student-last-use){
+ color:var(--flat-card-muted)!important
+}
+html[data-theme] body #page-students #studentRows .student-meta{
+ background:var(--flat-subcard)!important;border-color:var(--flat-card-border)!important;
+ box-shadow:none!important
+}
+/* Notebooks — cabeçalho, disponibilidade, tombamento, código e local. */
+html[data-theme] body #page-computers :is(.computer-item,.computer-item-head,
+ .computer-item-body,.computer-item-foot,.computer-card){
+ background:var(--flat-card)!important;background-image:none!important;
+ border-color:var(--flat-card-border)!important;box-shadow:none!important;
+}
+html[data-theme] body #page-computers :is(.computer-owner,.computer-meta-box,.computer-info-box,
+ .computer-availability,.computer-details,.computer-card-meta){
+ background:var(--flat-subcard)!important;background-image:none!important;
+ border-color:var(--flat-card-border)!important;box-shadow:none!important;
+ border-radius:7px!important;
+}
+html[data-theme] body #page-computers :is(.computer-device-icon,.computer-tab,.computer-search-wrap){
+ background:var(--flat-subcard)!important;background-image:none!important;
+ color:var(--flat-card-text)!important;border-color:var(--flat-card-border)!important;
+ box-shadow:none!important
+}
+html[data-theme] body #page-computers :is(.computer-code-wrap strong,.computer-meta-box strong,
+ .computer-owner strong){
+ color:var(--flat-card-text)!important
+}
+html[data-theme] body #page-computers :is(.computer-code-wrap span,.computer-meta-box span,
+ .computer-owner span,.computer-state-note){
+ color:var(--flat-card-muted)!important
+}
+html[data-theme] body #page-computers :is(#computerSearch,.computer-tabs,.computer-search-wrap,
+ .computer-filter,.computer-sort){
+ background:var(--flat-filter)!important;border-color:var(--flat-card-border)!important;
+ color:var(--flat-card-text)!important;box-shadow:none!important
+}
+/* Outras áreas com blocos e campos equivalentes. */
+html[data-theme] body :is(#page-permissions,#page-history)
+ :is(.permission-card,.permission-item,.history-event,.history-filter-menu){
+ background:var(--flat-card)!important;background-image:none!important;
+ border-color:var(--flat-card-border)!important;box-shadow:none!important
+}
+html[data-theme] body :is(#page-permissions,#page-history)
+ :is(.permission-info-box,.permission-note,.history-icon,.history-filter-option){
+ background:var(--flat-subcard)!important;background-image:none!important;
+ border-color:var(--flat-card-border)!important;box-shadow:none!important
+}
+/* Status semânticos permanecem distinguíveis sem retornar às bordas azuis. */
+html[data-theme] body :is(#page-requests,#page-computers,#page-students)
+ :is(.status,.status.done,.status.use,.status.wait,.status.late){
+ box-shadow:none!important;text-shadow:none!important
+}
