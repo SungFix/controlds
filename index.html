@@ -4356,6 +4356,76 @@ body.auth-locked .shell{
   color:#f0adb6 !important;
 }
 
+
+/* Control ETE — animações discretas (seleção 14,15,18,19,20,22–25) */
+:root{--ete-motion-fast:140ms;--ete-motion-medium:240ms;--ete-motion-slow:380ms}
+@keyframes eteMotionDots{0%,65%,100%{opacity:.28;transform:translateY(0)}32%{opacity:1;transform:translateY(-3px)}}
+@keyframes eteMotionSkeleton{to{background-position-x:-200%}}
+@keyframes eteMotionProgress{0%{transform:translateX(-110%) scaleX(.22)}55%{transform:translateX(35%) scaleX(.55)}100%{transform:translateX(120%) scaleX(.28)}}
+@keyframes eteMotionModal{from{opacity:.65;transform:translateY(12px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes eteMotionToast{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+/* 14 — transição de borda, sem brilho */
+.btn,.nav button,.student-card,.request-card,.permission-card,.computer-item,.quick-card,
+.group-picker-trigger,.interval-picker-trigger,.student-picker-trigger{
+  transition:border-color var(--ete-motion-medium) ease,background-color var(--ete-motion-medium) ease,transform var(--ete-motion-fast) ease;
+}
+.student-card:hover,.request-card:hover,.permission-card:hover,.computer-item:hover{
+  border-color:#46515d;
+}
+.btn:focus-visible,.nav button:focus-visible,.group-picker-trigger:focus-visible,
+.interval-picker-trigger:focus-visible,.student-picker-trigger:focus-visible{
+  outline:2px solid #91a5bb;outline-offset:2px;
+}
+/* 15 — pressionar; preserva botões desativados */
+.btn:not(:disabled):active,.nav button:not(:disabled):active,
+.group-picker-trigger:not(:disabled):active,.interval-picker-trigger:not(:disabled):active,
+.student-picker-trigger:not(:disabled):active{transform:scale(.975)}
+/* 18 e 20 — status reais de sincronização: pontos e barra */
+#syncPill[data-sync-state="loading"]::after,#syncPill[data-sync-state="saving"]::after{
+  content:"•••";display:inline-block;margin-left:4px;letter-spacing:2px;
+  animation:eteMotionDots 1.1s ease-in-out infinite;
+}
+body[data-ete-sync="loading"] .topbar::after,
+body[data-ete-sync="saving"] .topbar::after{
+  content:"";position:absolute;bottom:0;left:0;width:100%;height:2px;
+  background:#72869e;transform-origin:left;animation:eteMotionProgress 1.7s ease-in-out infinite;
+  pointer-events:none;
+}
+/* 19 — skeleton somente durante carregamento e antes de existir conteúdo */
+body[data-ete-sync="loading"] #studentRows:empty::before,
+body[data-ete-sync="loading"] #requestRows:empty::before{
+  content:"";display:block;min-height:105px;border-radius:12px;
+  background:linear-gradient(100deg,#20252c 22%,#353d47 48%,#20252c 72%);
+  background-size:200% 100%;animation:eteMotionSkeleton 1.5s linear infinite;
+}
+body[data-ete-sync="loading"] #studentRows:empty::after,
+body[data-ete-sync="loading"] #requestRows:empty::after{
+  content:"Carregando registros…";display:block;padding:12px;color:#aab2bc;font-size:11px;
+}
+/* 22 — controles alternáveis mantêm o estado controlado pelo código existente */
+[role="switch"],[aria-pressed],.control-theme-toggle{
+  transition:background-color var(--ete-motion-medium) ease,border-color var(--ete-motion-medium) ease,transform var(--ete-motion-fast) ease;
+}
+[role="switch"]:active,[aria-pressed]:active,.control-theme-toggle:active{transform:scale(.96)}
+/* 23 — expansão dos seletores existentes */
+.group-picker-popup.open,.interval-picker-popup.open,.student-picker-popup.open,
+.time-popup.open{animation:eteMotionModal var(--ete-motion-medium) ease-out both}
+.student-picker-chevron svg{transition:transform var(--ete-motion-medium) ease}
+/* 24 — janelas existentes */
+dialog[open] > .modal{animation:eteMotionModal var(--ete-motion-slow) cubic-bezier(.2,.8,.2,1) both}
+dialog::backdrop{background:rgba(0,0,0,.74)}
+/* 25 — avisos existentes */
+.toast.show{animation:eteMotionToast var(--ete-motion-medium) ease-out both}
+@media(prefers-reduced-motion:reduce){
+  #syncPill::after,body[data-ete-sync] .topbar::after,
+  body[data-ete-sync] #studentRows:empty::before,body[data-ete-sync] #requestRows:empty::before,
+  .toast.show,dialog[open] > .modal,.group-picker-popup.open,
+  .interval-picker-popup.open,.student-picker-popup.open,.time-popup.open{animation:none!important}
+  .btn,.nav button,.student-card,.request-card,.permission-card,.computer-item,.quick-card,
+  .group-picker-trigger,.interval-picker-trigger,.student-picker-trigger,
+  [role="switch"],[aria-pressed],.control-theme-toggle{transition:none!important}
+}
+
 </style>
 </head>
 <body class="auth-locked">
@@ -5624,6 +5694,8 @@ function setSyncState(state){
   };
   const [a,b]=map[state]||map.error;
   pill.textContent=a;
+  pill.dataset.syncState=state;
+  document.body.dataset.eteSync=state;
   if(state==="online") pill.classList.add("online");
   if(state==="error") pill.classList.add("error");
   if(label) label.textContent=state==="online"?"Supabase conectado":state==="error"?"Modo local":"Sincronização";
