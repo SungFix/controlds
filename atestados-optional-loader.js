@@ -50,6 +50,9 @@
     refreshAtestadosLightPolishOrder();
     refreshAtestadosLightFixesOrder();
     refreshAtestadosFormVisibilityOrder();
+    // A identidade escolhida deve permanecer após os estilos opcionais.
+    const identity=document.getElementById("controlCarbonMonoStudioStyles");
+    if(identity && identity.parentNode===document.head)document.head.appendChild(identity);
   }
 
   function ensureScript(id,src){
