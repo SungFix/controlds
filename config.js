@@ -68,8 +68,8 @@ window.ETE_CONFIG = {
 
   function finalizeLoginStyles(){
     const loginStyle = document.querySelector('link[href^="login-simple-v2.css"]');
-    if (loginStyle && loginStyle.getAttribute("href") !== "login-simple-v2.css?v=9") {
-      loginStyle.href = "login-simple-v2.css?v=9";
+    if (loginStyle && loginStyle.getAttribute("href") !== "login-simple-v2.css?v=10") {
+      loginStyle.href = "login-simple-v2.css?v=10";
     }
 
     const paletteStyle = document.getElementById("controlLightPaletteSageStyles");
@@ -226,12 +226,12 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlMobileFormReadabilityStyles", "mobile-form-readability.css?v=6");
     ensureStylesheet("controlMobileGroupPickerFlowStyles", "mobile-group-picker-flow.css?v=4");
     ensureStylesheet("controlMobileTextareaExpandStyles", "mobile-textarea-expand.css?v=2");
-    ensureStylesheet("controlPortalStyles", "portal.css?v=11");
-    ensureStylesheet("controlPortalAdminStyles", "portal-admin.css?v=2");
+    ensureStylesheet("controlPortalStyles", "portal.css?v=12");
+    ensureStylesheet("controlPortalAdminStyles", "portal-admin.css?v=3");
     ensureStylesheet("controlPortalAdminV2Styles", "portal-admin-v2.css?v=2");
-    ensureStylesheet("controlPortalAdminIconFixStyles", "portal-admin-icon-fix.css?v=1");
-    ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=3");
-    ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=4");
+    ensureStylesheet("controlPortalAdminIconFixStyles", "portal-admin-icon-fix.css?v=2");
+    ensureStylesheet("controlVisualStabilityFinalStyles", "visual-stability-final.css?v=4");
+    ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=5");
     ensureStylesheet("controlVisualAuditFixesStyles", "visual-audit-fixes.css?v=3");
     ensureStylesheet("controlSubtleMotionStyles", "subtle-motion.css?v=1");
     ensureStylesheet("controlCarbonMonoStudioStyles", "carbon-mono-studio.css?v=2");
@@ -262,7 +262,7 @@ window.ETE_CONFIG = {
     ensureScript("controlMobileLogoutIconScript", "mobile-logout-icon.js?v=2");
     ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=3");
     ensureScript("controlAtestadosOptionalLoaderScript", "atestados-optional-loader.js?v=4");
-    ensureScript("controlPortalScript", "portal.js?v=20");
+    ensureScript("controlPortalScript", "portal.js?v=21");
     ensureScript("controlAdminFunctionAuthFixScript", "admin-function-auth-fix.js?v=1");
     ensureScript("controlPortalAdminScript", "portal-admin.js?v=3");
     ensureScript("controlPortalAdminCornerScript", "portal-admin-corner.js?v=4");
