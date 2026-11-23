@@ -1060,3 +1060,17 @@ html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open)
   grid-template-columns:minmax(0,1fr)!important;gap:10px!important;
  }
 }
+
+
+/* Marca ETE existente no cabeçalho do Portal, nos dois temas. */
+html[data-theme] body #eteCentralPortal .ete-portal-mark{
+ display:grid!important;place-items:center!important;
+ width:42px!important;height:42px!important;padding:2px!important;
+ flex:0 0 42px!important;overflow:hidden!important;
+ border:0!important;border-radius:9px!important;
+ background:transparent!important;box-shadow:none!important;
+}
+html[data-theme] body #eteCentralPortal .ete-portal-logo{
+ display:block;width:38px;height:38px;max-width:100%;
+ object-fit:contain;border-radius:8px;
+}
