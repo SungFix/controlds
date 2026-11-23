@@ -226,3 +226,63 @@ html[data-theme] :is(button,input,select,textarea):disabled{
 @media(prefers-reduced-motion:reduce){
  html[data-theme] :is(.ete-admin-tab,.ete-exit-option,.at-btn,.at-date-trigger,.at-room-trigger){transition:none!important}
 }
+
+/* Contraste de tipografia em conteúdos que antes usavam tinta fixa clara. */
+html[data-theme="light"][data-theme="light"] :is(.ete-portal,.ete-admin-layer,.ete-exit-card,.ete-atestados)
+ :is(h1,h2,h3,h4,h5,strong,b,label,th){
+ color:#252525!important;
+}
+html[data-theme="dark"][data-theme="dark"] :is(.ete-portal,.ete-admin-layer,.ete-exit-card,.ete-atestados)
+ :is(h1,h2,h3,h4,h5,strong,b,label,th){
+ color:#ededed!important;
+}
+html[data-theme] :is(.ete-portal,.ete-admin-layer,.ete-exit-card,.ete-atestados)
+ :is(button,a,[role="button"],.at-badge,.at-status,.ete-system-status,.ete-admin-cap-badge) :is(strong,b){
+ color:inherit!important;
+}
+html[data-theme] :is(.ete-admin-layer,.ete-atestados,.ete-exit-card)
+ :is(p,small,.at-help,.at-field-help,.ete-admin-view-head p,.ete-admin-user-title small,.ete-admin-toggle-copy small){
+ color:var(--audit-muted)!important;
+}
+/* Força o acabamento dentro do Portal onde estilos antigos usavam o ID. */
+html[data-theme] body #eteCentralPortal.ete-portal{
+ background:var(--audit-bg)!important;color:var(--audit-text)!important;
+}
+html[data-theme] body #eteCentralPortal.ete-portal:not(.module-open)
+ :is(.ete-portal-topbar,.ete-system-card,.ete-portal-hero,.ete-module-panel,.ete-module-note){
+ background:var(--audit-panel)!important;border-color:var(--audit-border)!important;
+ color:var(--audit-text)!important;box-shadow:none!important;backdrop-filter:none!important;
+}
+html[data-theme] body #eteCentralPortal.ete-portal.module-open
+ :is(.ete-portal-topbar,.ete-portal-module,.at-control-shell,.at-control-sidebar,.at-app-topbar,.at-app-content,.at-view,.at-form-card,.at-card,.at-metric,.at-report-card,.at-records-card,.at-table-wrap){
+ border-color:var(--audit-border)!important;box-shadow:none!important;
+ color:var(--audit-text)!important;
+}
+html[data-theme] body #eteCentralPortal.ete-portal.module-open
+ :is(.ete-portal-topbar,.at-control-sidebar,.at-app-topbar,.at-form-card,.at-card,.at-metric,.at-report-card,.at-records-card,.at-table-wrap){
+ background:var(--audit-panel)!important;
+}
+html[data-theme] body #eteCentralPortal.ete-portal.module-open
+ :is(.ete-portal-module,.at-app-content,.at-view,.at-app-main,.at-control-shell){
+ background:var(--audit-bg)!important;
+}
+html[data-theme] body #eteCentralPortal.ete-portal.module-open
+ :is(.at-control-brandmark,.at-control-navicon,.at-metric-icon,.at-metric-marker,.at-head-icon){
+ background:var(--audit-surface)!important;border-color:var(--audit-border)!important;
+ color:var(--audit-text)!important;box-shadow:none!important;
+}
+html[data-theme] body #eteCentralPortal.ete-portal.module-open
+ :is(.at-room-trigger,.at-reason-trigger,.at-time-trigger,.at-date-trigger,.at-room-groups,.at-reason-list,.at-time-popover,.at-date-popover){
+ background:var(--audit-panel)!important;border-color:var(--audit-border)!important;
+ color:var(--audit-text)!important;box-shadow:none!important;
+}
+/* Estados de seleção e erros continuam destacados sem gradientes. */
+html[data-theme] :is(.at-date-day.selected,.at-time-option.selected,
+.at-room-option.selected,.at-reason-option.selected){
+ background:var(--audit-accent)!important;border-color:var(--audit-accent)!important;
+ color:#fff!important;
+}
+html[data-theme] :is(.at-status.error,.at-status[data-state="error"],
+.ete-admin-form-error,.login-error.show){
+ color:var(--audit-danger)!important;
+}
