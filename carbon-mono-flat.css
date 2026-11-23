@@ -666,3 +666,137 @@ html[data-theme] body #page-permissions :is(.permission-info-box,.permission-car
   width:100%!important;min-width:0!important
  }
 }
+
+
+/* Refinamento do cartão de notebook — correção da sobreposição de disponibilidade.
+   Escopo visual: não altera botões, condições de uso, disponibilidade ou dados. */
+html[data-theme] body #page-computers .computer-item{
+ display:flex!important;flex-direction:column!important;
+ min-width:0!important;height:auto!important;overflow:hidden!important;
+ background:var(--flat-card)!important;
+ border:1px solid var(--flat-card-border)!important;
+ border-radius:10px!important;box-shadow:none!important;
+}
+html[data-theme] body #page-computers .computer-item-head{
+ min-height:76px!important;padding:17px 19px!important;
+ display:flex!important;align-items:center!important;justify-content:space-between!important;
+ gap:12px!important;border-bottom:1px solid var(--flat-card-border)!important;
+ background:var(--flat-card)!important
+}
+html[data-theme] body #page-computers .computer-identity{
+ min-width:0!important;display:flex!important;align-items:center!important;gap:12px!important
+}
+html[data-theme] body #page-computers .computer-device-icon{
+ width:43px!important;height:43px!important;flex:none!important;
+ border:1px solid var(--flat-card-border)!important;
+ background:var(--flat-subcard)!important;border-radius:8px!important
+}
+html[data-theme] body #page-computers .computer-code-wrap{
+ min-width:0!important
+}
+html[data-theme] body #page-computers .computer-code-wrap span{
+ font-size:10px!important;letter-spacing:.065em!important;font-weight:650!important;
+ color:var(--flat-card-muted)!important
+}
+html[data-theme] body #page-computers .computer-code-wrap strong{
+ margin-top:4px!important;font-size:22px!important;line-height:1.15!important;
+ font-weight:750!important;letter-spacing:-.025em!important;
+ color:var(--flat-card-text)!important
+}
+/* Corrige o erro visual: disponibilidade acima dos dados, sem interseção de bordas. */
+html[data-theme] body #page-computers .computer-item-body{
+ display:flex!important;flex-direction:column!important;align-items:stretch!important;
+ gap:14px!important;min-height:0!important;
+ padding:18px 19px!important;background:var(--flat-card)!important;
+}
+html[data-theme] body #page-computers .computer-item-body > *{
+ min-width:0!important;position:relative!important;
+}
+html[data-theme] body #page-computers .computer-owner{
+ display:flex!important;flex-direction:column!important;
+ gap:5px!important;margin:0!important;padding:0 0 14px!important;
+ background:transparent!important;border:0!important;
+ border-bottom:1px solid var(--flat-card-border)!important;
+ border-radius:0!important;box-shadow:none!important;
+}
+html[data-theme] body #page-computers .computer-owner span{
+ color:var(--flat-card-muted)!important;
+ font-size:10px!important;font-weight:650!important;letter-spacing:.06em!important;
+}
+html[data-theme] body #page-computers .computer-owner strong{
+ color:var(--flat-card-text)!important;font-weight:650!important;
+ font-size:12px!important;margin:0!important;line-height:1.5!important;
+}
+/* Identificação, tombamento e local ficam em cartões independentes,
+   com espaço real entre as bordas e sem sobreposição. */
+html[data-theme] body #page-computers .computer-meta-grid{
+ display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+ align-items:stretch!important;gap:10px!important;
+ margin:0!important;padding:0!important;width:100%!important;min-height:0!important;
+}
+html[data-theme] body #page-computers .computer-meta-box{
+ display:flex!important;flex-direction:column!important;
+ min-width:0!important;min-height:75px!important;
+ gap:5px!important;padding:13px 14px!important;
+ border:1px solid var(--flat-card-border)!important;
+ border-radius:8px!important;
+ background:var(--flat-subcard)!important;
+ box-shadow:none!important;transform:none!important;
+}
+html[data-theme] body #page-computers .computer-meta-box span{
+ display:block!important;color:var(--flat-card-muted)!important;
+ font-size:9.5px!important;font-weight:650!important;letter-spacing:.055em!important;
+ line-height:1.3!important;white-space:normal!important
+}
+html[data-theme] body #page-computers .computer-meta-box strong{
+ display:block!important;margin:0!important;color:var(--flat-card-text)!important;
+ font-size:12px!important;line-height:1.4!important;
+ font-weight:650!important;overflow-wrap:anywhere!important
+}
+html[data-theme] body #page-computers .computer-item-foot{
+ display:flex!important;align-items:center!important;justify-content:space-between!important;
+ gap:14px!important;padding:14px 19px!important;min-height:68px!important;
+ background:var(--flat-card)!important;
+ border-top:1px solid var(--flat-card-border)!important;
+}
+html[data-theme] body #page-computers .computer-state-note{
+ font-size:11px!important;line-height:1.5!important;color:var(--flat-card-muted)!important;
+}
+html[data-theme] body #page-computers .computer-item-foot .btn{
+ min-height:36px!important;padding:8px 13px!important;border-radius:7px!important;
+ font-size:11px!important;flex-shrink:0!important;
+}
+html[data-theme] body #page-computers .computer-item-foot .btn:disabled{
+ opacity:.52!important
+}
+/* Inventário enriquecido: mesmos espaçamentos, caso campos extras sejam injetados. */
+html[data-theme] body #page-computers .computer-item :is(.computer-availability,.computer-details){
+ position:relative!important;min-width:0!important;
+ margin:0!important;padding:0!important;transform:none!important;
+}
+html[data-theme] body #page-computers .computer-item .computer-availability{
+ border-bottom:1px solid var(--flat-card-border)!important;padding-bottom:14px!important;
+ background:transparent!important
+}
+@media(max-width:1000px){
+ html[data-theme] body #page-computers .computer-meta-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ }
+}
+@media(max-width:600px){
+ html[data-theme] body #page-computers .computer-item-head{
+  padding:14px!important;min-height:69px!important
+ }
+ html[data-theme] body #page-computers .computer-item-body{
+  padding:14px!important;gap:12px!important
+ }
+ html[data-theme] body #page-computers .computer-meta-grid{
+  grid-template-columns:1fr!important;gap:8px!important
+ }
+ html[data-theme] body #page-computers .computer-meta-box{
+  min-height:0!important;padding:12px!important
+ }
+ html[data-theme] body #page-computers .computer-item-foot{
+  padding:13px 14px!important;flex-wrap:wrap!important
+ }
+}
