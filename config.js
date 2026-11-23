@@ -236,7 +236,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlSubtleMotionStyles", "subtle-motion.css?v=1");
     ensureStylesheet("controlCarbonMonoStudioStyles", "carbon-mono-studio.css?v=3");
     ensureStylesheet("controlCarbonMonoAuditStyles", "carbon-mono-audit.css?v=4");
-    ensureStylesheet("controlCarbonMonoFlatStyles", "carbon-mono-flat.css?v=7");
+    ensureStylesheet("controlCarbonMonoFlatStyles", "carbon-mono-flat.css?v=8");
 
     ensureScript("controlLoginUsabilityScript", "login-usability.js?v=2");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
@@ -262,7 +262,7 @@ window.ETE_CONFIG = {
     ensureScript("controlMobileLogoutIconScript", "mobile-logout-icon.js?v=2");
     ensureScript("controlMobileTextareaExpandScript", "mobile-textarea-expand.js?v=3");
     ensureScript("controlAtestadosOptionalLoaderScript", "atestados-optional-loader.js?v=6");
-    ensureScript("controlPortalScript", "portal.js?v=22");
+    ensureScript("controlPortalScript", "portal.js?v=23");
     ensureScript("controlAdminFunctionAuthFixScript", "admin-function-auth-fix.js?v=1");
     ensureScript("controlPortalAdminScript", "portal-admin.js?v=3");
     ensureScript("controlPortalAdminCornerScript", "portal-admin-corner.js?v=4");
