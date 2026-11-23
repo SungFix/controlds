@@ -13,7 +13,7 @@ html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locke
 }
 html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate::before{
   opacity:.22!important;
-  background-image:linear-gradient(rgba(100,118,128,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(100,118,128,.08) 1px,transparent 1px)!important;
+  background-image:none!important;
 }
 html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card{
   background:#fff!important;
@@ -213,7 +213,7 @@ html[data-theme="light"] body:not(.auth-locked):not(.portal-open) .control-theme
    Nao atinge .module-open, portanto o Atestados permanece exatamente como esta.
    ========================= */
 html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open){background:#f8fafb!important;color:#203039!important}
-html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open)::before{opacity:.22!important;background-image:linear-gradient(rgba(100,118,128,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(100,118,128,.08) 1px,transparent 1px)!important}
+html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open)::before{opacity:.22!important;background-image:none!important}
 html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-portal-topbar,
 html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-system-card,
 html[data-theme="light"] body:not(.auth-locked) .ete-portal:not(.module-open) .ete-module-panel{background:#fff!important;border-color:#dce4e8!important;color:#203039!important;box-shadow:0 14px 32px rgba(32,48,57,.06)!important}
