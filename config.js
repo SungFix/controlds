@@ -230,7 +230,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlVisualAuditFixesStyles", "visual-audit-fixes.css?v=3");
     ensureStylesheet("controlSubtleMotionStyles", "subtle-motion.css?v=1");
     ensureStylesheet("controlCarbonMonoStudioStyles", "carbon-mono-studio.css?v=2");
-    ensureStylesheet("controlCarbonMonoAuditStyles", "carbon-mono-audit.css?v=1");
+    ensureStylesheet("controlCarbonMonoAuditStyles", "carbon-mono-audit.css?v=2");
 
     ensureScript("controlLoginUsabilityScript", "login-usability.js?v=2");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
