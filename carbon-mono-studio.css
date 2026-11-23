@@ -220,8 +220,7 @@ html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-
  background:none!important;background-image:none!important;opacity:0!important
 }
 html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) .ete-portal .ete-portal-topbar,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) .ete-portal .ete-system-card,
-html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) .ete-portal .ete-portal-hero{
+html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) .ete-portal .ete-system-card{
  background:#f9f9f9!important;border-color:#d0d0d0!important;color:#252525!important;box-shadow:none!important;backdrop-filter:none!important
 }
 html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) .ete-portal .ete-system-card:not(.locked):not(:disabled):hover{
@@ -232,4 +231,11 @@ html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-
 }
 html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked):not(.portal-open) .btn.primary{
  background:#4c4c4c!important;border-color:#4c4c4c!important;color:#fff!important
+}
+
+
+/* Portal home: sem cartão de fundo envolvendo o título no Mono Studio */
+html[data-theme="light"] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-hero{
+ background:transparent!important;border:0!important;border-radius:0!important;
+ box-shadow:none!important;backdrop-filter:none!important;
 }
