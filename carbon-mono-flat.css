@@ -575,6 +575,7 @@ html[data-theme] body #page-students #studentRows :is(.student-card-head,.studen
  box-shadow:none!important;
 }
 html[data-theme] body #page-students #studentRows .student-card-body{
+ grid-template-columns:repeat(3,minmax(0,1fr))!important;
  gap:10px!important
 }
 html[data-theme] body #page-students #studentRows :is(.student-meta,.student-reputation){
