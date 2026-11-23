@@ -930,9 +930,7 @@ html[data-theme="light"] .history-tools{
 /* Fundo escuro com profundidade muito sutil */
 html:not([data-theme="light"]) body:not(.portal-open):not(.auth-locked){
   background:
-    radial-gradient(circle at 78% -12%,rgba(120,149,168,.055),transparent 30%),
-    radial-gradient(circle at 18% 112%,rgba(94,155,117,.025),transparent 28%),
-    linear-gradient(180deg,#090b0e 0%,#0b0e12 48%,#090b0e 100%)!important;
+    #0d0f11!important;
 }
 
 /* Cabeçalho com aspecto mais refinado em desktop */
@@ -966,7 +964,7 @@ html:not([data-theme="light"]) body:not(.portal-open):not(.auth-locked){
   width:108px;
   height:108px;
   border-radius:50%;
-  background:radial-gradient(circle,rgba(120,149,168,.085),transparent 67%);
+  background:transparent;
   pointer-events:none;
   z-index:-1;
 }
