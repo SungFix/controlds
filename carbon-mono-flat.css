@@ -972,3 +972,91 @@ html[data-theme="light"] body #requestModal :is(.modalactions,.request-section-h
   min-width:0!important
  }
 }
+
+
+/* Portal ETE — corrige o bloco cinza limitado e o alinhamento do título.
+   Só a home do Portal: mantém a composição dos módulos internos. */
+html[data-theme="light"] body.portal-open #eteCentralPortal.ete-portal:not(.module-open){
+ background:#e8e8e8!important;background-image:none!important;
+ min-width:100%!important;min-height:100dvh!important;
+ overflow-x:hidden!important;
+}
+html[data-theme="dark"] body.portal-open #eteCentralPortal.ete-portal:not(.module-open){
+ background:#0d0f11!important;background-image:none!important;
+ min-width:100%!important;min-height:100dvh!important;
+ overflow-x:hidden!important;
+}
+html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-shell{
+ background:transparent!important;background-image:none!important;
+ box-shadow:none!important;min-height:100dvh!important;
+ width:min(1120px,calc(100% - 40px))!important;
+ max-width:1120px!important;margin:0 auto!important;
+ padding:24px 0 72px!important;
+}
+html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-home{
+ background:transparent!important;background-image:none!important;
+ color:var(--flat-text)!important;
+ width:100%!important;max-width:100%!important;
+ margin:0!important;padding:0!important;
+}
+html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-topbar{
+ width:100%!important;margin:0 0 52px!important;
+ border:1px solid var(--flat-line)!important;border-radius:9px!important;
+ background:var(--flat-panel)!important;box-shadow:none!important;
+}
+html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-hero{
+ width:100%!important;max-width:100%!important;
+ display:block!important;position:relative!important;
+ padding:0 0 26px!important;margin:0 0 28px!important;
+ border:0!important;border-bottom:1px solid var(--flat-line)!important;
+ border-radius:0!important;box-shadow:none!important;
+ background:transparent!important;background-image:none!important;
+ backdrop-filter:none!important;filter:none!important;overflow:visible!important;
+}
+html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-hero :is(h1,p,.ete-portal-kicker){
+ position:static!important;transform:none!important;
+ max-width:100%!important;background:transparent!important;
+ box-shadow:none!important;text-shadow:none!important;
+}
+html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-hero h1{
+ margin:10px 0 0!important;font-size:clamp(30px,3.4vw,45px)!important;
+ line-height:1.14!important;letter-spacing:-.04em!important;font-weight:740!important;
+ color:var(--flat-text)!important;
+}
+html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-hero p{
+ margin:12px 0 0!important;color:var(--flat-muted)!important;
+ font-size:13px!important;line-height:1.6!important;
+}
+html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-section-head{
+ width:100%!important;max-width:100%!important;
+ margin:0 0 14px!important;padding:0!important;
+ background:transparent!important;
+}
+html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-grid{
+ width:100%!important;max-width:100%!important;
+ grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ align-items:stretch!important;gap:14px!important;
+}
+html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-card{
+ min-width:0!important;min-height:202px!important;padding:22px!important;
+ background:var(--flat-panel)!important;border:1px solid var(--flat-line)!important;
+ border-radius:9px!important;box-shadow:none!important;
+}
+html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-system-open{
+ background:var(--flat-raised)!important;color:var(--flat-text)!important;
+ border-color:var(--flat-line)!important;border-radius:7px!important;
+}
+@media(max-width:720px){
+ html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-shell{
+  width:calc(100% - 24px)!important;padding:12px 0 36px!important;
+ }
+ html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-topbar{
+  margin-bottom:30px!important
+ }
+ html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-hero{
+  padding-bottom:20px!important;margin-bottom:22px!important;
+ }
+ html[data-theme] body.portal-open #eteCentralPortal.ete-portal:not(.module-open) .ete-portal-grid{
+  grid-template-columns:minmax(0,1fr)!important;gap:10px!important;
+ }
+}
