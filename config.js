@@ -234,9 +234,9 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=7");
     ensureStylesheet("controlVisualAuditFixesStyles", "visual-audit-fixes.css?v=3");
     ensureStylesheet("controlSubtleMotionStyles", "subtle-motion.css?v=1");
-    ensureStylesheet("controlCarbonMonoStudioStyles", "carbon-mono-studio.css?v=2");
+    ensureStylesheet("controlCarbonMonoStudioStyles", "carbon-mono-studio.css?v=3");
     ensureStylesheet("controlCarbonMonoAuditStyles", "carbon-mono-audit.css?v=4");
-    ensureStylesheet("controlCarbonMonoFlatStyles", "carbon-mono-flat.css?v=6");
+    ensureStylesheet("controlCarbonMonoFlatStyles", "carbon-mono-flat.css?v=7");
 
     ensureScript("controlLoginUsabilityScript", "login-usability.js?v=2");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
