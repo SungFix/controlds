@@ -172,9 +172,7 @@ html[data-theme="light"] #eteCentralPortal #etePortalExit::before{
 /* Tema claro do Portal: suave, legível e com superfícies distinguíveis */
 html[data-theme="light"] #eteCentralPortal{
   background:
-    radial-gradient(circle at 13% 0%,rgba(116,157,176,.18),transparent 34%),
-    radial-gradient(circle at 88% 4%,rgba(126,166,143,.14),transparent 31%),
-    linear-gradient(180deg,#e5ecef 0%,#dce6e9 55%,#d5e1e4 100%)!important;
+    #e8e8e8!important;
   color:#465a64!important;
 }
 
@@ -320,8 +318,7 @@ html[data-theme="light"] #eteCentralPortal .ete-module-panel p{
 /* Tema claro da administração do Portal */
 html[data-theme="light"] .ete-admin-layer{
   background:
-    radial-gradient(circle at 12% 0%,rgba(116,157,176,.16),transparent 34%),
-    linear-gradient(180deg,#e4ecef,#d7e3e6)!important;
+    #e8e8e8!important;
   color:#465a64!important;
 }
 
