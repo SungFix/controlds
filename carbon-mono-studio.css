@@ -190,3 +190,46 @@ html[data-theme="dark"] textarea{color-scheme:dark!important}
 @media(prefers-reduced-motion:reduce){
  html[data-theme] .btn,html[data-theme] .ete-system-card,html[data-theme] .at-btn{transition:none!important}
 }
+
+
+/* Prioridade intencional sobre paletas claras antigas de maior especificidade. */
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate{
+ background:#e8e8e8!important;color:#252525!important
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate::before{
+ opacity:0!important;background:none!important;background-image:none!important
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card{
+ background:#f9f9f9!important;border-color:#d0d0d0!important;color:#252525!important;box-shadow:none!important;border-radius:15px!important
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card .login-brand{
+ background:#efefef!important;border-color:#d0d0d0!important;color:#252525!important
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card::before{
+ background:#d0d0d0!important;box-shadow:none!important
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card .login-mark{
+ background:#f9f9f9!important;border-color:#d0d0d0!important;color:#252525!important;box-shadow:none!important
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card #loginTitle,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body.auth-locked .login-gate .login-card .login-brand strong{color:#252525!important}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) .ete-portal{
+ background:#e8e8e8!important;color:#252525!important
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) .ete-portal::before{
+ background:none!important;background-image:none!important;opacity:0!important
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) .ete-portal .ete-portal-topbar,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) .ete-portal .ete-system-card,
+html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) .ete-portal .ete-portal-hero{
+ background:#f9f9f9!important;border-color:#d0d0d0!important;color:#252525!important;box-shadow:none!important;backdrop-filter:none!important
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked) .ete-portal .ete-system-card:not(.locked):not(:disabled):hover{
+ background:#efefef!important;border-color:#bdbdbd!important;box-shadow:none!important
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked):not(.portal-open) .btn{
+ background:#efefef!important;border-color:#d0d0d0!important;color:#252525!important;box-shadow:none!important
+}
+html[data-theme="light"][data-theme="light"][data-theme="light"] body:not(.auth-locked):not(.portal-open) .btn.primary{
+ background:#4c4c4c!important;border-color:#4c4c4c!important;color:#fff!important
+}
