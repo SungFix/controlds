@@ -20,9 +20,7 @@ html[data-theme="light"]{
 
 html[data-theme="light"] body{
   color:var(--text);
-  background:
-    radial-gradient(circle at 72% -10%,rgba(79,111,145,.045),transparent 34%),
-    linear-gradient(180deg,#ecece9 0%,#e5e5e1 50%,#ddddda 100%);
+  background:#e8e8e8!important;
 }
 html[data-theme="light"] .sidebar{
   background:linear-gradient(180deg,rgba(70,76,84,.025),transparent 30%),#f1f1ee;
