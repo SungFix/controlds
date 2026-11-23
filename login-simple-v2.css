@@ -21,9 +21,7 @@ body.auth-locked .login-gate{
   padding:28px !important;
   overflow:auto !important;
   background:
-    radial-gradient(circle at 18% 18%,rgba(95,127,174,.13),transparent 31%),
-    radial-gradient(circle at 82% 80%,rgba(94,155,117,.08),transparent 28%),
-    linear-gradient(135deg,#080b0f 0%,#0b0f14 52%,#080b0e 100%) !important;
+    #0d0f11 !important;
 }
 
 body.auth-locked .login-gate::before{
@@ -85,8 +83,7 @@ body.auth-locked .login-gate .login-card .login-brand{
   border-right:1px solid #29323b !important;
   border-radius:0 !important;
   background:
-    radial-gradient(circle at 50% 30%,rgba(95,127,174,.13),transparent 35%),
-    linear-gradient(180deg,#171d24 0%,#13191f 100%) !important;
+    #202427 !important;
   text-align:center !important;
   box-shadow:none !important;
 }
@@ -340,9 +337,7 @@ body.auth-locked .login-gate .login-note{
 /* Tema claro: mantém todas as superfícies claras e separadas por tons suaves. */
 html[data-theme="light"] body.auth-locked .login-gate{
   background:
-    radial-gradient(circle at 18% 18%,rgba(122,151,139,.18),transparent 31%),
-    radial-gradient(circle at 82% 80%,rgba(126,153,180,.12),transparent 28%),
-    linear-gradient(135deg,#e9e5da 0%,#e4e8df 52%,#e4e9e8 100%) !important;
+    #e8e8e8 !important;
 }
 
 html[data-theme="light"] body.auth-locked .login-gate::before{
@@ -362,8 +357,7 @@ html[data-theme="light"] body.auth-locked .login-gate .login-card{
 html[data-theme="light"] body.auth-locked .login-gate .login-card .login-brand{
   border-right-color:#c2cbc2 !important;
   background:
-    radial-gradient(circle at 50% 30%,rgba(126,153,180,.14),transparent 35%),
-    linear-gradient(180deg,#dce4db 0%,#d5dfd8 100%) !important;
+    #eeeeee !important;
 }
 
 html[data-theme="light"] body.auth-locked .login-gate .login-card .login-brand::after{
