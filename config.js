@@ -219,6 +219,7 @@ window.ETE_CONFIG = {
     ensureStylesheet("controlLightPaletteSageStyles", "theme-light-palette-sage.css?v=4");
     ensureStylesheet("controlVisualAuditFixesStyles", "visual-audit-fixes.css?v=3");
     ensureStylesheet("controlSubtleMotionStyles", "subtle-motion.css?v=1");
+    ensureStylesheet("controlStudentCopyDetailsStyles", "student-copy-details.css?v=1");
 
     ensureScript("controlLoginUsabilityScript", "login-usability.js?v=2");
     ensureScript("controlMobileMenuScript", "mobile-menu-enhance.js?v=3");
@@ -238,6 +239,7 @@ window.ETE_CONFIG = {
     ensureScript("controlUserProfileScript", "user-profile.js?v=1");
     ensureScript("controlStudentCardActionsScript", "student-card-actions.js?v=3");
     ensureScript("controlStudentReputationScript", "student-reputation.js?v=5");
+    ensureScript("controlStudentCopyDetailsScript", "student-copy-details.js?v=1");
     ensureScript("controlStudentListOrganizerScript", "student-list-organizer.js?v=10");
     ensureScript("controlPermissionFilterLabelFixScript", "permission-filter-label-fix.js?v=1");
     ensureScript("controlHistoryFilterPolishScript", "history-filter-polish.js?v=2");
